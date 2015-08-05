@@ -1,0 +1,69 @@
+<tool id="hcluster_sg" name="hcluster_sg" version="0.5.1">
+    <description>Hierarchically clustering on a sparse graph</description>
+    <requirements>
+        <requirement type="package" version="0.5.1">hcluster_sg</requirement>
+    </requirements>
+    <command>
+    <![CDATA[
+hcluster_sg
+-w $w
+-s $s
+-m $m
+$c
+-b $b
+$O.O_selector
+#if $O.O_selector == '-O'
+    -r $O.r
+#end if
+#if $C
+    -C $C
+#end if
+-L $L
+$inputFile
+> $outputFile
+    ]]>
+    </command>
+    <inputs>
+        <param name="inputFile" type="data" format="tabular" label="Weight file" help="3-columns format: id-1 id-2 integer-weight" />
+        <param name="w" type="integer" min="0" value="20" label="Minimum edge weight" help="(-w)" />
+        <param name="s" type="float" value="0.5" label="Minimum edge density between a join" help="(-s)" />
+        <param name="m" type="integer" value="500" label="Maximum size" help="(-m)" />
+        <param name="c" type="boolean" truevalue="-c" falsevalue="" label="Only find single-linkage clusters" help="Bypass h-cluster (-c)" />
+        <param name="b" type="float" value="0.1" label="Breaking edge density" help="(-b)" />
+        <conditional name="O">
+            <param name="O_selector" type="select" label="Use once-fail-inactive-forever mode" help="(-O)">
+                <option value="-O">Yes</option>
+                <option value="" selected="true">No</option>
+            </param>
+            <when value="-O">
+                <param name="r" type="integer" value="5" label="Weight resolution" help="(-r)" />
+            </when>
+            <when value="" />            
+        </conditional>
+        <param name="C" type="data" format="tabular" optional="true" label="Category file" help="(-C)" />
+        <param name="L" type="integer" value="2" label="Stringency level" help="(-L)" />
+    </inputs>
+    <outputs>
+        <data format="tabular" name="outputFile" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputFile" ftype="tabular" value="exam-1.txt" />
+            <output name="outputFile" file="hcluster_sg1.txt" />
+        </test>
+        <test>
+            <param name="inputFile" ftype="tabular" value="exam-1.txt" />
+            <param name="c" value="true" />
+            <output name="outputFile" file="hcluster_sg2.txt" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+Simple wrapper for `hcluster_sg`_.
+
+.. _hcluster_sg: https://github.com/douglasgscofield/hcluster
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
