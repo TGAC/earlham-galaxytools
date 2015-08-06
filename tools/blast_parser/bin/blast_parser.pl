@@ -25,7 +25,7 @@ while (my $line = <$fh1>) {
 	my $weight = 100;
 	
 	#if(0 then skipping)
-	if($row[10] != 0 || $row[10] != 0.0){
+	if($row[10] != 0 && $row[10] != 0.0){
 		$weight = min(100, log10($row[10]));
 	}
     	print"$row[0]\t$row[1]\t$weight\n";	
