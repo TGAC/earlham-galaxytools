@@ -14,7 +14,7 @@ open my $fh1, '<', $file1;
 
 my $score = 0;
 while (my $line = <$fh1>) {
-	my @row = split(/\s+/, $line);
+	my @row = split(/\t/, $line);
 	
 	if($row[0] == $row[1]){
 	
