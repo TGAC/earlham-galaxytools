@@ -1,4 +1,4 @@
-<tool id="treebest_wrapper" name="TreeBest best" version="1.9.2">
+<tool id="treebest_best_wrapper" name="TreeBest best" version="1.9.2">
 	<description>
 		Generate a Phylogeny tree using CDS alignment and species tree
 	</description>
@@ -116,6 +116,6 @@ Simple wrapper for `treebest`_.
     ]]>
 	</help>
 	<citations>
-			<citation type="doi">10.1080/10635150390235520</citation>
+		<citation type="doi">10.1080/10635150390235520</citation>
 	</citations>
 </tool>
