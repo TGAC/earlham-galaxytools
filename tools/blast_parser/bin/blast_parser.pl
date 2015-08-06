@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use List::Util qw(min max);
-use Math::Round;
+
 
 #A simple perl parser to convert BLAST 12-column output onto 3-column input for hcluster_hg (id1, id2, weight)
 #parse_blast.pl <file>
@@ -26,9 +26,9 @@ while (my $line = <$fh1>) {
 	my $weight = 100;
 	
 	#if(0 then skipping)
-	if($row[10] != 0 && $row[10] != 0.0){
-		$weight = min(100, -1*(log10($row[10])));
-	}
+	if($row[10] != 0 || $row[10] != 0.0){
+        $weight = min(100, int(-1*log10($row[10])+0.5));
+    }
     	print"$row[0]\t$row[1]\t$weight\n";	
 	}
 	
@@ -38,5 +38,5 @@ close $fh1;
 #log subroutine 
 sub log10 {
         my $n = shift;
-        return round(log($n)/log(10));
+        return (log($n)/log(10));
 }
