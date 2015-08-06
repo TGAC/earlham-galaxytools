@@ -1,10 +1,8 @@
 <tool id="blast_parser_wrapper" name="blast_parser" version="0.1.1">
 	<description>
-		Parse 12 column BLAST result into 3 column hcluster_sg input
+		Parse 12-column BLAST result into 3-column hcluster_sg input
 	</description>
-	 <requirements>
-        <requirement type="package" version="0.1.1">blast_parser</requirement>
-    </requirements>
+	 
 	<command>
 		<![CDATA[
 blast_parser.pl 
