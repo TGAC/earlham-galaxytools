@@ -1,34 +1,34 @@
 <tool id="blast_parser_wrapper" name="blast_parser" version="0.1.1">
-	<description>
-		Parse 12-column BLAST result into 3-column hcluster_sg input
-	</description>
-	 
-	<command>
-		<![CDATA[
-blast_parser.pl 
+    <description>
+        Parse 12-column BLAST result into 3-column hcluster_sg input
+    </description>
+     
+    <command>
+        <![CDATA[
+perl $__tool_directory__/blast_parser.pl 
 $input
 > $output
 
 ]]>
-	</command>
+    </command>
 
-	<inputs>
-		<param name="input" type="data" format="tabular" label="Tabular data" help="BLAST 12 column tabular format data"/>
-		
-	</inputs>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Tabular data" help="BLAST 12 column tabular format data"/>
+        
+    </inputs>
 
-	<outputs>
+    <outputs>
         <data name="output" format="tabular" label="$tool.name on ${on_string}" />
-		
-	</outputs>
+        
+    </outputs>
 
-	<help> <![CDATA[
+    <help> <![CDATA[
 Simple wrapper for blast_parser.
 
 
     ]]>
-	</help>
-	<citations>
-			
-	</citations>
+    </help>
+    <citations>
+            
+    </citations>
 </tool>
