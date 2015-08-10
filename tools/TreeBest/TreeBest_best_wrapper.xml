@@ -1,0 +1,120 @@
+<tool id="treebest_best_wrapper" name="TreeBest best" version="1.9.2">
+    <description>
+        Generate a Phylogeny tree using CDS alignment and species tree
+    </description>
+     <requirements>
+        <requirement type="package" version="1.9.2">treebest</requirement>
+    </requirements>
+    <command>
+		<![CDATA[
+		treebest best 
+		-f $species_tree
+		$P
+		$S
+		$A
+		#if $C
+		    -C $C
+		#end if
+		$s
+		$g
+		$N
+		-c $c
+		-d $d
+		-l $l
+		-L $L
+		-b $b
+		#if $K.K_selector == 'yes'
+		    -k e 
+		#else 
+		    -k $K.k
+		#end if
+
+		#if $A_option.A_selector == 'yes'
+		    -a e 
+		#else 
+		    -a $A_option.a
+		#end if
+
+		-F $F
+		$aln
+		-p "Galaxy_TreeBest_Best"
+		> $output
+		]]>
+    </command>
+
+    <inputs>
+        <param name="species_tree" type="data" format="nhx" label="Species file in Newick format" help="-f"/>
+        
+        <param name="aln" type="data" format="fasta" label="CDS alignment in FASTA format"/>
+        
+        <param name="P" type="boolean" truevalue="-P" falsevalue="" label="Skip PHYML" help="(-P)" />
+         
+        <param name="S" type="boolean" truevalue="-S" falsevalue="" label="Ignore the prob. of gene evolution (NOT recommended)" help="(-S)" />
+
+        <param name="A" type="boolean" truevalue="-A" falsevalue="" label="Apply constraint to PHYML" help="(-A)" />
+    
+        <param name="r" type="boolean" truevalue="-r" falsevalue="" label="Discard species that do not appear at all" help="(-r)" />
+
+        <param name="C" type="data" format="nhx" optional="true" label="Constraining tree" help="(-C)" />
+
+        <param name="s" type="boolean" truevalue="-s" falsevalue="" label="Only build tree for genes from sequenced species" help="(-s)" />         
+
+        <param name="g" type="boolean" truevalue="-g" falsevalue="" label="Collapse alternative splicing forms" help="(-g)" />         
+
+        <param name="N" type="boolean" truevalue="-N" falsevalue="" label="Do not mask low-scoring segments" help="(-N)" />     
+
+        <param name="F" type="integer" min="1" value="11" label="Quality cut-off" help="(-F)" />    
+ 
+        <param name="c" type="integer" min="1" value="2" label="Number of rate categories for PHYML-HKY" help="(-c)" />    
+
+        <conditional name="K">
+            <param name="K_selector" type="select" label="tv/ts ratio (kappa)" help="(-k)">
+                <option value="yes">Estimate e</option>
+                <option value="no">Use float</option>
+            </param>
+            <when value="no">
+                <param name="k" type="float" value="0.0" label="tv/ts ratio (kappa)" help="(-k)" />    
+            </when>
+        </conditional>    
+        
+
+        <conditional name="A_option">
+            <param name="A_selector" type="select" label="Alpha parameter for Gamma distribution" help="(-a)">
+                <option value="yes">Estimate e</option>
+                <option value="no">Use float</option>
+            </param>
+            <when value="no">
+                <param name="a" type="float" value="0.0" label="Alpha parameter for Gamma distribution" help="(-a)" />    
+            </when>
+        </conditional>    
+        
+
+        <param name="d" type="float" min="0" value="0.15" label="Duplication probability" help="(-d)" />    
+
+        <param name="l" type="float" min="0" value="0.10" label="Probability of a loss following a speciation" help="(-l)" />    
+
+        <param name="L" type="float" min="0" value="0.20" label="Probability of a loss following a duplication" help="(-L)" />    
+
+        <param name="b" type="float" min="0" value="0.01" label="Probability of the presence of an inconsistent branch" help="(-b)" />    
+
+
+    </inputs>
+
+    <outputs>
+        <data name="output" format="nhx" label="$tool.name on ${on_string}" />
+        
+        <data name="output_nj_dn" format="nhx" label="$tool.name on ${on_string}" from_work_dir="Galaxy_TreeBest_Best.nj-dn.nhx" />
+        
+    </outputs>
+
+    <help> 
+		<![CDATA[
+		Simple wrapper for `treebest`_.
+
+		.. _treebest: http://treesoft.sourceforge.net/treebest.shtml
+		]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1080/10635150390235520</citation>
+    </citations>
+</tool>
