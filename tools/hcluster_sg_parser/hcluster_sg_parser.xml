@@ -1,0 +1,30 @@
+<tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1" force_history_refresh="True">
+     <description>Hierarchically clustering on a sparse graph</description>
+     <command>
+     <![CDATA[
+          perl $__tool_directory__/table_row_to_column.pl
+          $inputFile
+     ]]>
+     </command>
+     <inputs>
+          <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size     integer-weight cluster-member" />
+     </inputs>
+     <outputs>
+     <data format="txt" name="report">
+          <discover_datasets pattern="__designation_and_ext__" visible="true" />
+     </data>
+
+     </outputs>
+     <tests>
+          <test>
+                <param name="inputFile" ftype="tabular" value="hcluster.tabular" />
+          </test>
+     </tests>
+     <help>
+     <![CDATA[
+          Simple wrapper for `hcluster_sg output parser
+     ]]>
+     </help>
+     <citations>
+     </citations>
+</tool>
