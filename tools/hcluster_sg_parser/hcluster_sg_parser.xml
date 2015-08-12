@@ -1,5 +1,5 @@
 <tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1" force_history_refresh="True">
-     <description>Hierarchically clustering on a sparse graph</description>
+     <description>Converts cluster_hg 3-column output into list of ids</description>
      <command>
      <![CDATA[
           perl $__tool_directory__/table_row_to_column.pl
