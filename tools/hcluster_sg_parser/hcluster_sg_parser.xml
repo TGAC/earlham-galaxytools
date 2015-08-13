@@ -17,7 +17,7 @@
      </outputs>
      <tests>
           <test>
-                <param name="inputFile" ftype="tabular" value="hcluster.tabular" />
+                <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
                 <output name="outputFile" file="0_output.txt" />
                 <output name="outputFile" file="1_output.txt" />
                 <output name="outputFile" file="2_output.txt" />
