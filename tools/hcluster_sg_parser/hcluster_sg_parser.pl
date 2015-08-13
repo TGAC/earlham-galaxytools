@@ -20,8 +20,6 @@ while (my $line = <$fh1>) {
    
     push @cluster_ids, $row[0];
    
-    print @row,"\n";
-   
     my @list = split(/\,/, $row[2]);
    
     for(my $j=0; $j<$#list; $j++)
