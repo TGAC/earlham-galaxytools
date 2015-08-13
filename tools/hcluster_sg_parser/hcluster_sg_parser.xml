@@ -1,13 +1,13 @@
 <tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1" force_history_refresh="True">
-     <description>Converts hcluster_sg 3-column output into list of ids</description>
+     <description>Converts hcluster_sg 3-column output into lists of ids</description>
      <command>
      <![CDATA[
-          perl $__tool_directory__/table_row_to_column.pl
+          perl $__tool_directory__/hcluster_sg_parser.pl
           $inputFile
      ]]>
      </command>
      <inputs>
-          <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size     integer-weight cluster-member" />
+          <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size  cluster-member" />
      </inputs>
      <outputs>
      <data format="txt" name="report">
@@ -18,6 +18,10 @@
      <tests>
           <test>
                 <param name="inputFile" ftype="tabular" value="hcluster.tabular" />
+                <output name="outputFile" file="0_output.txt" />
+                <output name="outputFile" file="1_output.txt" />
+                <output name="outputFile" file="2_output.txt" />
+                <output name="outputFile" file="3_output.txt" />
           </test>
      </tests>
      <help>

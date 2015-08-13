@@ -21,11 +21,8 @@ while (my $line = <$fh1>) {
     push @cluster_ids, $row[0];
    
     my @list = split(/\,/, $row[2]);
+    $table[$i] = [@list];
    
-    for(my $j=0; $j<$#list; $j++)
-    {
-        $table[$i][$j] = $list[$j];
-    }
     
     $i++;
 }
@@ -33,7 +30,7 @@ close $fh1;
 
 $i = 0;
 
-#writess into separate files with name of cluster_id
+#write into separate files with name of cluster_id
 foreach my $row (@table) {
     open(my $fh, '>', $cluster_ids[$i]."_output.txt") or die "Could not open file '$i' $!";
     
