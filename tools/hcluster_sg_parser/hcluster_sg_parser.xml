@@ -1,34 +1,36 @@
 <tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1" force_history_refresh="True">
-     <description>Converts hcluster_sg 3-column output into lists of ids</description>
-     <command>
-     <![CDATA[
-          perl $__tool_directory__/hcluster_sg_parser.pl
-          $inputFile
-     ]]>
-     </command>
-     <inputs>
-          <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size  cluster-member" />
-     </inputs>
-     <outputs>
-     <data format="txt" name="report">
-          <discover_datasets pattern="__designation_and_ext__" visible="true" />
-     </data>
-
-     </outputs>
-     <tests>
-          <test>
-                <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
-                <output name="outputFile" file="0_output.txt" />
-                <output name="outputFile" file="1_output.txt" />
-                <output name="outputFile" file="2_output.txt" />
-                <output name="outputFile" file="3_output.txt" />
-          </test>
-     </tests>
-     <help>
-     <![CDATA[
-          Simple wrapper for `hcluster_sg output parser
-     ]]>
-     </help>
-     <citations>
-     </citations>
+    <description>Converts hcluster_sg 3-column output into lists of ids</description>
+    <command>
+<![CDATA[
+perl $__tool_directory__/hcluster_sg_parser.pl
+$inputFile
+> $report
+]]>
+    </command>
+    <inputs>
+        <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size cluster-members" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="report" hidden="true">
+            <discover_datasets pattern="__designation_and_ext__" visible="true" />
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
+            <output name="report" file="empty_file" hidden="true">
+                <discovered_dataset designation="0_output" file="0_output.txt" />
+                <discovered_dataset designation="1_output" file="1_output.txt" />
+                <discovered_dataset designation="2_output" file="2_output.txt" />
+                <discovered_dataset designation="3_output" file="3_output.txt" />
+            </output>
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+Simple wrapper for hcluster_sg output parser.
+]]>
+    </help>
+    <citations>
+    </citations>
 </tool>
