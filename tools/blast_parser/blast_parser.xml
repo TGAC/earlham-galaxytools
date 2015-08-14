@@ -1,4 +1,4 @@
-<tool id="blast_parser_wrapper" name="blast_parser" version="0.1.1">
+<tool id="blast_parser" name="blast_parser" version="0.1.1">
     <description>
         Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
     </description>
