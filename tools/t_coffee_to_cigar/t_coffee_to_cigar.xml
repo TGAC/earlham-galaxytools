@@ -1,10 +1,10 @@
-<tool id="t_coffee_to_cigar_wrapper" name="T-Coffee to CIGAR" version="0.1.1">
+<tool id="t_coffee_to_cigar" name="T-Coffee to CIGAR" version="0.1.1">
     <description>
         Converts T-Coffee FASTA alignments to CIGAR strings
     </description>
     <command>
 <![CDATA[
-perl $__tool_directory__/TCoffee_to_cigar.pl
+perl $__tool_directory__/t_coffee_to_cigar.pl
 $input
 > $output
 ]]>
