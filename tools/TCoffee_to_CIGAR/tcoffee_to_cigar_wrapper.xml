@@ -1,37 +1,35 @@
-<tool id="t_coffee_to_cigar_wrapper" name="t_coffee_to_cigar" version="0.1.1">
+<tool id="t_coffee_to_cigar_wrapper" name="T-Coffee to CIGAR" version="0.1.1">
     <description>
-        Converts fasta alignment output from TCoffee into CIGAR strings. 
+        Converts T-Coffee FASTA alignments to CIGAR strings
     </description>
-     
     <command>
-        <![CDATA[
-            perl $__tool_directory__/TCoffee_to_cigar.pl 
-            $input
-            > $output
-        ]]>
+<![CDATA[
+perl $__tool_directory__/TCoffee_to_cigar.pl
+$input
+> $output
+]]>
     </command>
 
     <inputs>
-        <param name="input" type="data" format="tabular" label="Tabular data" help="2-column tabular format data, where first column is fasta_id and second is alignment."/>
-        
+        <param name="input" type="data" format="tabular" label="2-column tabular dataset from T-Coffee" help="Columns should be sequence id and FASTA alignment" />
     </inputs>
 
     <outputs>
-        <data name="output" format="tabular" label="$tool.name on ${on_string}" />
+        <data name="output" format="tabular" label="${tool.name} on ${on_string}" />
     </outputs>
 
     <tests>
-          <test>
-                <param name="inputFile" ftype="tabular" value="test.tabular" />
-                <output name="outputFile" file="out.tabular" />
-          </test>
-     </tests>
+        <test>
+            <param name="input" ftype="tabular" value="test.tabular" />
+            <output name="output" file="out.tabular" />
+        </test>
+    </tests>
 
-    <help> <![CDATA[
-        Simple wrapper for TCoffeee to convert fasta alignment output into CIGAR. TCoffee output needs to be converted into tabular form where first column is fasta_id and second is alignment.
-    ]]>
+    <help>
+<![CDATA[
+Simple tool to convert FASTA alignment produced by T-Coffee to CIGAR format. T-Coffee output needs to be converted into tabular format using the FASTA-to-Tabular converter.
+]]>
     </help>
     <citations>
-            
     </citations>
 </tool>
