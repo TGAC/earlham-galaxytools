@@ -17,6 +17,12 @@
          <data name="output" format="txt" label="$tool.name on ${on_string}" />
     </outputs>
 
+    <tests>
+        <test>
+            <param name="inputFile" ftype="nhxr" value="tree.newick" />
+            <output name="output" file="tree.txt" />
+        </test>
+    </tests>
     <help> 
         <![CDATA[
         Simple tool to convert a newick format tree into a JSON formated tree.
