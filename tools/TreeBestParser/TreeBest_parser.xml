@@ -1,7 +1,8 @@
 <tool id="newick_to_JSON_wrapper" name="Newick to JSON" version="0.1.1">
-    <description>
-        Generate a JSON formated tree from Newick format
-    </description>
+    <description>Generate a JSON formated tree from Newick format</description>
+    <requirements>
+        <requirement type="package" version="1.6">bioperl</requirement>
+    </requirements>
     <command>
         <![CDATA[
         perl $__tool_directory__/TreeBest_parser.pl 
