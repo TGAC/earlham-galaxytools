@@ -15,7 +15,7 @@ open my $fh1, '<', $file1;
 while (my $line = <$fh1>) {
     my @row = split(/\t/, $line);
 
-    if ($row[0] == $row[1]) {
+    if ($row[0] eq $row[1]) {
         # ignore self matching hits
     } else {
         # Convert evalue to an integer weight with max 100
