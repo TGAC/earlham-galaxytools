@@ -73,7 +73,6 @@ sub mrnatoJSON(){
 }
 
 sub exontoJSON(){
-
     my %exon;
     my @data = @_;
     my @note = split(";",$data[8]);

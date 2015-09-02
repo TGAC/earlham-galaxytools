@@ -41,10 +41,13 @@ our $genome = $file;
 
 
 while (<FILE>) { # Read lines from file(s) specified on command line. Store in $_.
-    s/#.*//; # Remove comments from $_.
+    my $line = $_;
+    $line =~ s/#.*//; # Remove comments from $_.
+    $line =~ s/\r|\n//g; # 
+    
     next unless /\S/; # \S matches non-whitespace.  If not found in $_, skip to next line.
     chomp;
-    my @f = split (/\t/); 
+    my @f = split (/\t/, $line); 
 
     if($f[2] eq "gene") {
         # Gene:
