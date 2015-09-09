@@ -151,20 +151,20 @@ sub fiveutrtoJSON(){
     my @note = split(";",$data[8]);
 
     $utr{'start'} = $data[3];
-    $utr{'end'} = $data[4];
+    # $utr{'end'} = $data[4];
 
-    if($data[6] eq '+'){
-        $utr{'strand'} = 1;
-    }else{
-        $utr{'strand'} = -1;
-    }
+    # if($data[6] eq '+'){
+    #     $utr{'strand'} = 1;
+    # }else{
+    #     $utr{'strand'} = -1;
+    # }
     
-    foreach my $attr(@note){
-        my @node = split("=",$attr);
-        $utr{$node[0]} = $node[1];
-    }
+    # foreach my $attr(@note){
+    #     my @node = split("=",$attr);
+    #     $utr{$node[0]} = $node[1];
+    # }
 
-    $gff2JSON::fiveutr_hash{$utr{'ID'}} = \%utr;
+    $gff2JSON::fiveutr_hash{$utr{'Parent'}} = $utr{'start'};
 
 }
 
@@ -174,21 +174,21 @@ sub threeutrtoJSON(){
     my @data = @_;
     my @note = split(";",$data[8]);
 
-    $utr{'start'} = $data[3];
+    # $utr{'start'} = $data[3];
     $utr{'end'} = $data[4];
 
-    if($data[6] eq '+'){
-        $utr{'strand'} = 1;
-    }else{
-        $utr{'strand'} = -1;
-    }
+    # if($data[6] eq '+'){
+    #     $utr{'strand'} = 1;
+    # }else{
+    #     $utr{'strand'} = -1;
+    # }
     
-    foreach my $attr(@note){
-        my @node = split("=",$attr);
-        $utr{$node[0]} = $node[1];
-    }
+    # foreach my $attr(@note){
+    #     my @node = split("=",$attr);
+    #     $utr{$node[0]} = $node[1];
+    # }
 
-    $gff2JSON::threeutr_hash{$utr{'ID'}} = \%utr;
+    $gff2JSON::threeutr_hash{$utr{'Parent'}} = $utr{'end'} ;
 
 }
 
@@ -226,22 +226,23 @@ sub joinJSON(){
     }
 
     foreach my $key (keys %gff2JSON::threeutr_hash) {
-        my $parent = $gff2JSON::threeutr_hash{$key}{'Parent'};
-        if($gff2JSON::mRNA_hash{$parent}){
-            push $gff2JSON::mRNA_hash{$parent}{'UTR3'}, $gff2JSON::threeutr_hash{$key};
+        if($gff2JSON::mRNA_hash{$key}){
+            $gff2JSON::mRNA_hash{$key}{'UTR3'} =  $gff2JSON::threeutr_hash{$key};
         }
     }
 
     foreach my $key (keys %gff2JSON::fiveutr_hash) {
-        my $parent = $gff2JSON::fiveutr_hash{$key}{'Parent'};
-        if($gff2JSON::mRNA_hash{$parent}){
-            push $gff2JSON::mRNA_hash{$parent}{'UTR5'}, $gff2JSON::fiveutr_hash{$key};
+        if($gff2JSON::mRNA_hash{$key}){
+            $gff2JSON::mRNA_hash{$key}{'UTR5'} = $gff2JSON::fiveutr_hash{$key};
         }
     }
 
-    for my $cds ( keys %gff2JSON::cds_hash ) {
-        my @temp_cds  =  @{ $gff2JSON::cds_hash{$cds} };
-        my @temp_exon  =  @{ $gff2JSON::exon_hash{$cds} };
+      for my $key ( keys %gff2JSON::cds_hash ) {
+        if(int($gff2JSON::mRNA_hash{$key}{'UTR3'}) == 0 && int($gff2JSON::mRNA_hash{$key}{'UTR5'}) == 0 ){
+            print "adding cds\n";
+        my @temp_cds  =  @{ $gff2JSON::cds_hash{$key} };
+        my @temp_exon  =  @{ $gff2JSON::exon_hash{$key} };
+        
 
         my $exon_start =0;
         my $exon_end =0;
@@ -264,13 +265,15 @@ sub joinJSON(){
             {
                 $j++;
                  if(int($cds_start) > 0){
-                    if(int($gff2JSON::mRNA_hash{$cds}{'UTR3'}) == 0 ){
-                        $gff2JSON::mRNA_hash{$cds}{'UTR3'} = $cds_start;
+                    if(int($gff2JSON::mRNA_hash{$key}{'UTR3'}) == 0 ){
+                        $gff2JSON::mRNA_hash{$key}{'UTR3'} = $cds_start;
                     }
-                    $gff2JSON::mRNA_hash{$cds}{'UTR5'} = $cds_end;    
+                    $gff2JSON::mRNA_hash{$key}{'UTR5'} = $cds_end;    
                 }
             } 
         }
+        }
+        
     }
 
     foreach my $key (keys %gff2JSON::mRNA_hash) {
@@ -288,7 +291,7 @@ sub joinJSON(){
      my @Transcripts = $temp{'gene'}->{'Transcript'};
 
     }
-    print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
+   # print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
 
 }
 1;
