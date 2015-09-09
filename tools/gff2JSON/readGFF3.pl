@@ -32,7 +32,7 @@ our %mRNA_hash;
 our %exon_hash;
 our %threeutr_hash;
 our %fiveutr_hash;
-
+our %cds_hash;
 # GFF3 file
 open(FILE,$fullspec) or die "$!";
 
@@ -68,6 +68,10 @@ while (<FILE>) { # Read lines from file(s) specified on command line. Store in $
     elsif($f[2] =~ /three_prime_UTR/i) {
         # 3'UTR
         &threeutrtoJSON(@f);
+    }
+    elsif($f[2] =~ /cds/i) {
+        # 3'UTR
+        &cdstoJSON(@f);
     }
 }
 joinJSON();
