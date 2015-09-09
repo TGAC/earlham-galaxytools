@@ -218,7 +218,7 @@ sub joinJSON(){
 
         $gff2JSON::cds_hash{$key} = [];
         
-        push $gff2JSON::exon_hash{$key}, @sorted;
+        push $gff2JSON::cds_hash{$key}, @sorted;
 
         if($gff2JSON::mRNA_hash{$key}){
             $gff2JSON::mRNA_hash{$key}{'CDS'} =  $gff2JSON::cds_hash{$key};
