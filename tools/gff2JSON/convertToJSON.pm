@@ -8,7 +8,6 @@
 
 package gff2JSON;
 use strict;
-#use warnings;
 
 
 use Bio::JSON;
