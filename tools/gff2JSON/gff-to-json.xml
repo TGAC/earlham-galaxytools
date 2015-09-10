@@ -5,12 +5,19 @@
     <command>
         <![CDATA[
         perl $__tool_directory__/gff-to-json.pl 
-        $inputFile > $output
+        $inputFile 
+        #for $q in $queries
+            ${q.input2}
+        #end for
+        > $output
         ]]>
     </command>
 
     <inputs>
         <param name="inputFile" type="data" format="gff3" label="GFF file" help="GFF3 file format" />
+        <repeat name="queries" title="Dataset">
+            <param name="input2" type="data" format="gff3"  label="GFF file" />
+        </repeat>
     </inputs>
 
     <outputs>

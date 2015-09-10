@@ -14,6 +14,16 @@ use Bio::JSON;
 use convertToJSON;
 use File::Basename;
 
+my $gene_id="";
+my $mrna_id="";
+our %gene_hash;
+our %mRNA_hash;
+our %exon_hash;
+our %threeutr_hash;
+our %fiveutr_hash;
+our %cds_hash;
+
+
 my $usage = "
     Read GFF file
 
@@ -23,59 +33,56 @@ my $usage = "
 
     \n";
 
-my $fullspec = shift or die $usage;
+my @files = @ARGV or die $usage ;
 
-my $gene_id="";
-my $mrna_id="";
-our %gene_hash;
-our %mRNA_hash;
-our %exon_hash;
-our %threeutr_hash;
-our %fiveutr_hash;
-our %cds_hash;
-# GFF3 file
-open(FILE,$fullspec) or die "$!";
+for my $i ( @files ) { 
 
-my($file, $dir, $ext) = fileparse($fullspec, qr/\.[^.]*/);
-our $genome = $file;
+    my $fullspec = $i;
 
+    open(FILE,$fullspec) or die "$!";
 
-while (<FILE>) { # Read lines from file(s) specified on command line. Store in $_.
-    my $line = $_;
-    $line =~ s/#.*//; # Remove comments from $_.
-    $line =~ s/\r|\n//g; # 
-    
-    next unless /\S/; # \S matches non-whitespace.  If not found in $_, skip to next line.
-    chomp;
-    my @f = split (/\t/, $line); 
+    my($file, $dir, $ext) = fileparse($fullspec, qr/\.[^.]*/);
+    our $genome = $file;
 
-    if($f[2] eq "gene") {
-        # Gene:
-        &genetoJSON(@f);
+    while (<FILE>) { # Read lines from file(s) specified on command line. Store in $_.
+        my $line = $_;
+        $line =~ s/#.*//; # Remove comments from $_.
+        $line =~ s/\r|\n//g; # 
+
+        next unless /\S/; # \S matches non-whitespace.  If not found in $_, skip to next line.
+        chomp;
+        my @f = split (/\t/, $line); 
+
+        if($f[2] eq "gene") {
+            # Gene:
+            &genetoJSON(@f);
+        }
+        elsif($f[2] eq "mRNA" || $f[2] eq "transcript") {
+            # mRNA 
+            &mrnatoJSON(@f);
+        }
+        elsif($f[2] eq "exon") {
+            # exon
+            &exontoJSON(@f);
+        }
+        elsif($f[2] =~ /five_prime_UTR/i) {
+            # 5'UTR
+            &fiveutrtoJSON(@f);
+        }
+        elsif($f[2] =~ /three_prime_UTR/i) {
+            # 3'UTR
+            &threeutrtoJSON(@f);
+        }
+        elsif($f[2] =~ /cds/i) {
+            # CDS
+            &cdstoJSON(@f);
+        }
     }
-    elsif($f[2] eq "mRNA" || $f[2] eq "transcript") {
-        # mRNA 
-        &mrnatoJSON(@f);
-    }
-    elsif($f[2] eq "exon") {
-        # exon
-        &exontoJSON(@f);
-    }
-    elsif($f[2] =~ /five_prime_UTR/i) {
-        # 5'UTR
-        &fiveutrtoJSON(@f);
-    }
-    elsif($f[2] =~ /three_prime_UTR/i) {
-        # 3'UTR
-        &threeutrtoJSON(@f);
-    }
-    elsif($f[2] =~ /cds/i) {
-        # 3'UTR
-        &cdstoJSON(@f);
-    }
+    close(FILE);
+
 }
-joinJSON();
-
-close(FILE);
+if (eof(ARGV)) {
+    joinJSON();
+}
 
 exit;

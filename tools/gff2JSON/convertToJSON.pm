@@ -8,7 +8,7 @@
 
 package gff2JSON;
 use strict;
-use warnings;
+#use warnings;
 
 
 use Bio::JSON;
@@ -23,7 +23,7 @@ sub genetoJSON(){
 
     $gene{'start'} = $data[3];
     $gene{'end'} = $data[4];
-    $gene{'referece'} = $data[0];
+    $gene{'reference'} = $data[0];
 
 
     if($data[6] eq '+'){
@@ -53,11 +53,11 @@ sub mrnatoJSON(){
     my @note = split(";",$data[8]);
     $mrna{'Exon'} = [];
     $mrna{'CDS'} = [];
-    $mrna{'UTR3'} = 0;
-    $mrna{'UTR5'} = 0;
+    $mrna{'translation_start'} = 0;
+    $mrna{'translation_end'} = 0;
     $mrna{'start'} = $data[3];
     $mrna{'end'} = $data[4];
-    $mrna{'referece'} = $data[0];
+    $mrna{'reference'} = $data[0];
 
     if($data[6] eq '+'){
         $mrna{'strand'} = 1;
@@ -227,19 +227,18 @@ sub joinJSON(){
 
     foreach my $key (keys %gff2JSON::threeutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'UTR3'} =  $gff2JSON::threeutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'translation_start'} =  $gff2JSON::threeutr_hash{$key};
         }
     }
 
     foreach my $key (keys %gff2JSON::fiveutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'UTR5'} = $gff2JSON::fiveutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'translation_end'} = $gff2JSON::fiveutr_hash{$key};
         }
     }
 
       for my $key ( keys %gff2JSON::cds_hash ) {
-        if(int($gff2JSON::mRNA_hash{$key}{'UTR3'}) == 0 && int($gff2JSON::mRNA_hash{$key}{'UTR5'}) == 0 ){
-            print "adding cds\n";
+        if(int($gff2JSON::mRNA_hash{$key}{'translation_start'}) == 0 && int($gff2JSON::mRNA_hash{$key}{'translation_end'}) == 0 ){
         my @temp_cds  =  @{ $gff2JSON::cds_hash{$key} };
         my @temp_exon  =  @{ $gff2JSON::exon_hash{$key} };
         
@@ -248,7 +247,7 @@ sub joinJSON(){
         my $exon_end =0;
         my $cds_start =0;
 
-        my $cds_end =0;
+        my $cds_end = 0;
         my $j = 0;    
         for my $i ( 0 .. $#temp_exon ) {
             for my $role ( keys %{ $temp_exon[$i] } ) {
@@ -265,10 +264,10 @@ sub joinJSON(){
             {
                 $j++;
                  if(int($cds_start) > 0){
-                    if(int($gff2JSON::mRNA_hash{$key}{'UTR3'}) == 0 ){
-                        $gff2JSON::mRNA_hash{$key}{'UTR3'} = $cds_start;
+                    if(int($gff2JSON::mRNA_hash{$key}{'translation_start'}) == 0 ){
+                        $gff2JSON::mRNA_hash{$key}{'translation_start'} = $cds_start;
                     }
-                    $gff2JSON::mRNA_hash{$key}{'UTR5'} = $cds_end;    
+                    $gff2JSON::mRNA_hash{$key}{'translation_end'} = $cds_end;    
                 }
             } 
         }
@@ -291,7 +290,7 @@ sub joinJSON(){
      my @Transcripts = $temp{'gene'}->{'Transcript'};
 
     }
-   # print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
+    print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
 
 }
 1;
