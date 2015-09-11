@@ -1,0 +1,39 @@
+<tool id="aequatus-parser" name="aequatus parser" version="0.1.1">
+    <description>Aquatus</description>
+    <requirements>
+        <requirement type="package" version="0.5.1">aequatus</requirement>
+    </requirements>
+    <command>
+    <![CDATA[
+perl $__tool_directory__/aequatus.pl 
+$treeFile 
+$genesFile
+$alignmentFile
+> $outputFile
+    ]]>
+    </command>
+    <inputs>
+        <param name="treeFile" type="data" format="nhx" label="Tree file" help="Tree file in Newick format" />
+        <param name="genesFile" type="data" format="txt" label="Gene file" help="Gene file in JSON format" />
+        <param name="alignmentFile" type="data" format="tabular" label="Alignment file" help="Alignment file in tabular format" />        
+    </inputs>
+    <outputs>
+        <data type="json" format="aequatus" name="outputFile" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="treeFile" ftype="nhx" value="tree.nhx" />
+            <param name="genesFile" ftype="txt" value="gene.json" />
+            <param name="alignmentFile" ftype="tabular" value="cigar.tabular" />
+            <param name="outputFile" ftype="aequatus" value="test.aequatus" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+Simple wrapper for Aequatus
+
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>

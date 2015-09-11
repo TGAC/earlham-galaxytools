@@ -1,0 +1,978 @@
+{
+    "tree": "(ENSPTRG00000005766,ENSG00000139618);",
+    "cigar": {
+        "ENSPTRG00000005766": "3419M",
+        "ENSG00000139618": "3419M"
+    },
+    "member": {
+        "ENSPTRG00000005766": {
+            "genome": "ENSPTRG00000005766_2",
+            "reference": "13",
+            "end": "32040817",
+            "biotype": "protein_coding",
+            "strand": 1,
+            "ID": "ENSPTRG00000005766",
+            "start": "31957353",
+            "member_id": null,
+            "Name": "ENSPTRG00000005766",
+            "Transcript": [
+                {
+                    "biotype": "protein_coding",
+                    "Parent": "ENSPTRG00000005766",
+                    "strand": 1,
+                    "Exon": [
+                        {
+                            "Name": "ENSPTRE00000057821",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 188,
+                            "ID": "ENSPTRT0000001060545",
+                            "start": "31957353",
+                            "end": "31957540"
+                        },
+                        {
+                            "length": 106,
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000426608",
+                            "end": "31958400",
+                            "start": "31958295",
+                            "ID": "ENSPTRT0000001060573"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060557",
+                            "end": "31961212",
+                            "start": "31960964",
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000440119",
+                            "strand": 1,
+                            "length": 249
+                        },
+                        {
+                            "Name": "ENSPTRE00000427449",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 109,
+                            "ID": "ENSPTRT0000001060560",
+                            "start": "31966960",
+                            "end": "31967068"
+                        },
+                        {
+                            "length": 50,
+                            "Name": "ENSPTRE00000425703",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "31967984",
+                            "end": "31968033",
+                            "ID": "ENSPTRT0000001060576"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060531",
+                            "start": "31968125",
+                            "end": "31968165",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000417408",
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 41
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060552",
+                            "end": "31968496",
+                            "start": "31968382",
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000438874",
+                            "length": 115
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060511",
+                            "end": "31971396",
+                            "start": "31971347",
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000429097",
+                            "strand": 1,
+                            "length": 50
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060536",
+                            "start": "31972823",
+                            "end": "31972934",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000425339",
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 112
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000439419",
+                            "strand": 1,
+                            "length": 1116,
+                            "ID": "ENSPTRT0000001060564",
+                            "end": "31975284",
+                            "start": "31974169"
+                        },
+                        {
+                            "length": 4932,
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000429431",
+                            "strand": 1,
+                            "end": "31983087",
+                            "start": "31978156",
+                            "ID": "ENSPTRT000000106050"
+                        },
+                        {
+                            "end": "31986269",
+                            "start": "31986174",
+                            "ID": "ENSPTRT000000106057",
+                            "length": 96,
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000418376",
+                            "strand": 1
+                        },
+                        {
+                            "length": 70,
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000430027",
+                            "strand": 1,
+                            "end": "31988512",
+                            "start": "31988443",
+                            "ID": "ENSPTRT0000001060574"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060562",
+                            "start": "31996480",
+                            "end": "31996907",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000441668",
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 428
+                        },
+                        {
+                            "Name": "ENSPTRE00000432474",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 182,
+                            "ID": "ENSPTRT0000001060530",
+                            "start": "31998043",
+                            "end": "31998224"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000414634",
+                            "strand": 1,
+                            "length": 188,
+                            "ID": "ENSPTRT0000001060553",
+                            "end": "31999542",
+                            "start": "31999355"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060577",
+                            "start": "32004405",
+                            "end": "32004575",
+                            "Name": "ENSPTRE00000438530",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 171
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSPTRE00000424183",
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 355,
+                            "ID": "ENSPTRT0000001060549",
+                            "start": "32005061",
+                            "end": "32005415"
+                        },
+                        {
+                            "end": "32012387",
+                            "start": "32012232",
+                            "ID": "ENSPTRT0000001060543",
+                            "length": 156,
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000403052"
+                        },
+                        {
+                            "length": 145,
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000433451",
+                            "end": "32012934",
+                            "start": "32012790",
+                            "ID": "ENSPTRT0000001060569"
+                        },
+                        {
+                            "end": "32017802",
+                            "start": "32017681",
+                            "ID": "ENSPTRT0000001060571",
+                            "length": 122,
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000384999"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060567",
+                            "end": "32020523",
+                            "start": "32020325",
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRE00000234811",
+                            "strand": 1,
+                            "length": 199
+                        },
+                        {
+                            "length": 164,
+                            "Name": "ENSPTRE00000439273",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "32020758",
+                            "end": "32020921",
+                            "ID": "ENSPTRT0000001060545"
+                        },
+                        {
+                            "Name": "ENSPTRE00000426465",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 139,
+                            "ID": "ENSPTRT0000001060537",
+                            "start": "32021015",
+                            "end": "32021153"
+                        },
+                        {
+                            "start": "32035849",
+                            "end": "32036093",
+                            "ID": "ENSPTRT0000001060541",
+                            "length": 245,
+                            "strand": 1,
+                            "Name": "ENSPTRE00000428569",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060531",
+                            "end": "32038196",
+                            "start": "32038050",
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRE00000435856",
+                            "length": 147
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060528",
+                            "start": "32039315",
+                            "end": "32040362",
+                            "Name": "ENSPTRE00000411880",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 1048
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060535",
+                            "start": "32040758",
+                            "end": "32040817",
+                            "Name": "ENSPTRE00000429500",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "length": 60
+                        }
+                    ],
+                    "translation_start": "31958295",
+                    "reference": "13",
+                    "end": "32040817",
+                    "translation_end": "32040362",
+                    "Name": "ENSPTRT00000010605",
+                    "CDS": [
+                        {
+                            "start": "31958295",
+                            "end": "31958400",
+                            "ID": "ENSPTRT0000001060584",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "31960964",
+                            "end": "31961212",
+                            "ID": "ENSPTRT0000001060592"
+                        },
+                        {
+                            "start": "31966960",
+                            "end": "31967068",
+                            "ID": "ENSPTRT0000001060584",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "start": "31967984",
+                            "end": "31968033",
+                            "ID": "ENSPTRT0000001060529",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "ID": "ENSPTRT0000001060576",
+                            "end": "31968165",
+                            "start": "31968125"
+                        },
+                        {
+                            "start": "31968382",
+                            "end": "31968496",
+                            "ID": "ENSPTRT0000001060532",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "31971347",
+                            "end": "31971396",
+                            "ID": "ENSPTRT000000106051"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "end": "31972934",
+                            "start": "31972823",
+                            "ID": "ENSPTRT000000106055"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605",
+                            "ID": "ENSPTRT0000001060519",
+                            "start": "31974169",
+                            "end": "31975284"
+                        },
+                        {
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "31978156",
+                            "end": "31983087",
+                            "ID": "ENSPTRT0000001060529"
+                        },
+                        {
+                            "start": "31986174",
+                            "end": "31986269",
+                            "ID": "ENSPTRT000000106059",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "ID": "ENSPTRT0000001060581",
+                            "start": "31988443",
+                            "end": "31988512"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060573",
+                            "end": "31996907",
+                            "start": "31996480",
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1
+                        },
+                        {
+                            "ID": "ENSPTRT000000106051",
+                            "start": "31998043",
+                            "end": "31998224",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "ID": "ENSPTRT000000106050",
+                            "end": "31999542",
+                            "start": "31999355"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605",
+                            "ID": "ENSPTRT0000001060566",
+                            "start": "32004405",
+                            "end": "32004575"
+                        },
+                        {
+                            "start": "32005061",
+                            "end": "32005415",
+                            "ID": "ENSPTRT0000001060586",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "end": "32012387",
+                            "start": "32012232",
+                            "ID": "ENSPTRT0000001060514"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "end": "32012934",
+                            "start": "32012790",
+                            "ID": "ENSPTRT000000106054"
+                        },
+                        {
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "ID": "ENSPTRT0000001060575",
+                            "start": "32017681",
+                            "end": "32017802"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "end": "32020523",
+                            "start": "32020325",
+                            "ID": "ENSPTRT0000001060597"
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "end": "32020921",
+                            "start": "32020758",
+                            "ID": "ENSPTRT0000001060568"
+                        },
+                        {
+                            "start": "32021015",
+                            "end": "32021153",
+                            "ID": "ENSPTRT0000001060561",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605"
+                        },
+                        {
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1,
+                            "Parent": "ENSPTRT00000010605",
+                            "start": "32035849",
+                            "end": "32036093",
+                            "ID": "ENSPTRT0000001060524"
+                        },
+                        {
+                            "ID": "ENSPTRT0000001060578",
+                            "end": "32038196",
+                            "start": "32038050",
+                            "Parent": "ENSPTRT00000010605",
+                            "Name": "ENSPTRP00000009812",
+                            "strand": 1
+                        },
+                        {
+                            "Parent": "ENSPTRT00000010605",
+                            "strand": 1,
+                            "Name": "ENSPTRP00000009812",
+                            "ID": "ENSPTRT0000001060546",
+                            "end": "32040362",
+                            "start": "32039315"
+                        }
+                    ],
+                    "ID": "ENSPTRT00000010605",
+                    "start": "31957353"
+                }
+            ]
+        },
+        "ENSG00000139618": {
+            "strand": 1,
+            "biotype": "protein_coding",
+            "genome": "ENST00000380152_2",
+            "end": "32400266",
+            "reference": "13",
+            "Name": "ENSG00000139618",
+            "member_id": 1,
+            "Transcript": [
+                {
+                    "Exon": [
+                        {
+                            "start": "32315474",
+                            "end": "32315667",
+                            "ID": "ENST0000038015277",
+                            "length": 194,
+                            "strand": 1,
+                            "Name": "ENSE00001184784",
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "start": "32316422",
+                            "end": "32316527",
+                            "ID": "ENST0000038015285",
+                            "length": 106,
+                            "Name": "ENSE00001484009",
+                            "strand": 1,
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "end": "32319325",
+                            "start": "32319077",
+                            "ID": "ENST0000038015289",
+                            "length": 249,
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00003666217",
+                            "strand": 1
+                        },
+                        {
+                            "start": "32325076",
+                            "end": "32325184",
+                            "ID": "ENST0000038015262",
+                            "length": 109,
+                            "Name": "ENSE00003659301",
+                            "strand": 1,
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSE00003739878",
+                            "Parent": "ENST00000380152",
+                            "length": 50,
+                            "ID": "ENST0000038015226",
+                            "start": "32326101",
+                            "end": "32326150"
+                        },
+                        {
+                            "ID": "ENST000003801526",
+                            "end": "32326282",
+                            "start": "32326242",
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00003747332",
+                            "strand": 1,
+                            "length": 41
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00003749714",
+                            "strand": 1,
+                            "length": 115,
+                            "ID": "ENST0000038015242",
+                            "end": "32326613",
+                            "start": "32326499"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00003714754",
+                            "strand": 1,
+                            "length": 50,
+                            "ID": "ENST0000038015224",
+                            "end": "32329492",
+                            "start": "32329443"
+                        },
+                        {
+                            "length": 112,
+                            "strand": 1,
+                            "Name": "ENSE00003731761",
+                            "Parent": "ENST00000380152",
+                            "start": "32330919",
+                            "end": "32331030",
+                            "ID": "ENST0000038015277"
+                        },
+                        {
+                            "length": 1116,
+                            "strand": 1,
+                            "Name": "ENSE00000939167",
+                            "Parent": "ENST00000380152",
+                            "start": "32332272",
+                            "end": "32333387",
+                            "ID": "ENST0000038015272"
+                        },
+                        {
+                            "ID": "ENST0000038015240",
+                            "end": "32341196",
+                            "start": "32336265",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939168",
+                            "length": 4932
+                        },
+                        {
+                            "length": 96,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939169",
+                            "end": "32344653",
+                            "start": "32344558",
+                            "ID": "ENST0000038015254"
+                        },
+                        {
+                            "ID": "ENST0000038015288",
+                            "start": "32346827",
+                            "end": "32346896",
+                            "strand": 1,
+                            "Name": "ENSE00000939171",
+                            "Parent": "ENST00000380152",
+                            "length": 70
+                        },
+                        {
+                            "start": "32354861",
+                            "end": "32355288",
+                            "ID": "ENST0000038015281",
+                            "length": 428,
+                            "strand": 1,
+                            "Name": "ENSE00000939173",
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "ID": "ENST0000038015277",
+                            "start": "32356428",
+                            "end": "32356609",
+                            "Name": "ENSE00000939174",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "length": 182
+                        },
+                        {
+                            "Name": "ENSE00000939175",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "length": 188,
+                            "ID": "ENST0000038015264",
+                            "start": "32357742",
+                            "end": "32357929"
+                        },
+                        {
+                            "end": "32362693",
+                            "start": "32362523",
+                            "ID": "ENST0000038015251",
+                            "length": 171,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00001394102"
+                        },
+                        {
+                            "length": 355,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939177",
+                            "end": "32363533",
+                            "start": "32363179",
+                            "ID": "ENST0000038015285"
+                        },
+                        {
+                            "ID": "ENST000003801529",
+                            "start": "32370402",
+                            "end": "32370557",
+                            "strand": 1,
+                            "Name": "ENSE00000939178",
+                            "Parent": "ENST00000380152",
+                            "length": 156
+                        },
+                        {
+                            "ID": "ENST000003801523",
+                            "end": "32371100",
+                            "start": "32370956",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939180",
+                            "length": 145
+                        },
+                        {
+                            "length": 122,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00003461148",
+                            "end": "32376791",
+                            "start": "32376670",
+                            "ID": "ENST0000038015260"
+                        },
+                        {
+                            "end": "32379515",
+                            "start": "32379317",
+                            "ID": "ENST000003801521",
+                            "length": 199,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939183"
+                        },
+                        {
+                            "ID": "ENST0000038015278",
+                            "end": "32379913",
+                            "start": "32379750",
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00000939185",
+                            "strand": 1,
+                            "length": 164
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00000939187",
+                            "length": 139,
+                            "ID": "ENST0000038015238",
+                            "end": "32380145",
+                            "start": "32380007"
+                        },
+                        {
+                            "end": "32394933",
+                            "start": "32394689",
+                            "ID": "ENST0000038015260",
+                            "length": 245,
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00000939189",
+                            "strand": 1
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSE00003560258",
+                            "strand": 1,
+                            "length": 147,
+                            "ID": "ENST0000038015276",
+                            "end": "32397044",
+                            "start": "32396898"
+                        },
+                        {
+                            "end": "32400266",
+                            "start": "32398162",
+                            "ID": "ENST0000038015296",
+                            "length": 2105,
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSE00003717596"
+                        }
+                    ],
+                    "biotype": "protein_coding",
+                    "Parent": "ENSG00000139618",
+                    "strand": 1,
+                    "end": "32400266",
+                    "translation_end": "32400266",
+                    "reference": "13",
+                    "translation_start": "32316422",
+                    "Name": "ENST00000380152",
+                    "start": "32315474",
+                    "ID": "ENST00000380152",
+                    "CDS": [
+                        {
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "ID": "ENST0000038015298",
+                            "end": "32316527",
+                            "start": "32316422"
+                        },
+                        {
+                            "start": "32319077",
+                            "end": "32319325",
+                            "ID": "ENST0000038015226",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "ID": "ENST0000038015229",
+                            "start": "32325076",
+                            "end": "32325184"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "start": "32326101",
+                            "end": "32326150",
+                            "ID": "ENST0000038015269"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152",
+                            "ID": "ENST0000038015292",
+                            "start": "32326242",
+                            "end": "32326282"
+                        },
+                        {
+                            "ID": "ENST0000038015240",
+                            "end": "32326613",
+                            "start": "32326499",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "start": "32329443",
+                            "end": "32329492",
+                            "ID": "ENST0000038015263"
+                        },
+                        {
+                            "ID": "ENST0000038015262",
+                            "start": "32330919",
+                            "end": "32331030",
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "start": "32332272",
+                            "end": "32333387",
+                            "ID": "ENST0000038015261",
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152",
+                            "start": "32336265",
+                            "end": "32341196",
+                            "ID": "ENST0000038015210"
+                        },
+                        {
+                            "ID": "ENST0000038015247",
+                            "start": "32344558",
+                            "end": "32344653",
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "end": "32346896",
+                            "start": "32346827",
+                            "ID": "ENST0000038015219",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "ID": "ENST0000038015290",
+                            "end": "32355288",
+                            "start": "32354861"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "ID": "ENST0000038015243",
+                            "end": "32356609",
+                            "start": "32356428"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "end": "32357929",
+                            "start": "32357742",
+                            "ID": "ENST0000038015236"
+                        },
+                        {
+                            "ID": "ENST0000038015286",
+                            "start": "32362523",
+                            "end": "32362693",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "ID": "ENST0000038015263",
+                            "end": "32363533",
+                            "start": "32363179",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "ID": "ENST0000038015236",
+                            "start": "32370402",
+                            "end": "32370557"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "ID": "ENST0000038015221",
+                            "end": "32371100",
+                            "start": "32370956"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "ID": "ENST0000038015228",
+                            "start": "32376670",
+                            "end": "32376791"
+                        },
+                        {
+                            "end": "32379515",
+                            "start": "32379317",
+                            "ID": "ENST0000038015275",
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSP00000369497",
+                            "strand": 1
+                        },
+                        {
+                            "end": "32379913",
+                            "start": "32379750",
+                            "ID": "ENST0000038015234",
+                            "Parent": "ENST00000380152",
+                            "strand": 1,
+                            "Name": "ENSP00000369497"
+                        },
+                        {
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "Parent": "ENST00000380152",
+                            "start": "32380007",
+                            "end": "32380145",
+                            "ID": "ENST0000038015245"
+                        },
+                        {
+                            "Parent": "ENST00000380152",
+                            "Name": "ENSP00000369497",
+                            "strand": 1,
+                            "ID": "ENST0000038015224",
+                            "end": "32394933",
+                            "start": "32394689"
+                        },
+                        {
+                            "ID": "ENST0000038015298",
+                            "start": "32396898",
+                            "end": "32397044",
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152"
+                        },
+                        {
+                            "strand": 1,
+                            "Name": "ENSP00000369497",
+                            "Parent": "ENST00000380152",
+                            "ID": "ENST0000038015211",
+                            "start": "32398162",
+                            "end": "32400266"
+                        }
+                    ]
+                }
+            ],
+            "ID": "ENSG00000139618",
+            "start": "32315474"
+        }
+    }
+}

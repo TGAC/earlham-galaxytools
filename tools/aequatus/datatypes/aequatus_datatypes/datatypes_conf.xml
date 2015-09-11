@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<datatypes>
+  <registration converters_path="lib/galaxy/datatypes/converters" display_path="display_applications">
+    <datatype extension="aequatus" type="galaxy.datatypes.text:Aequatus" mimetype="application/json" display_in_upload="true"/>
+  </registration>
+  <sniffers>
+    <sniffer type="galaxy.datatypes.text:Aequatus"/>
+  </sniffers>
+</datatypes>
