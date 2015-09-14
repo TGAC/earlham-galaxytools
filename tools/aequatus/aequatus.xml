@@ -1,11 +1,11 @@
-<tool id="aequatus-parser" name="aequatus parser" version="0.1.1">
+<tool id="aequatus-generator" name="aequatus parser" version="0.1.1">
     <description>Aquatus</description>
     <requirements>
         <requirement type="package" version="0.5.1">aequatus</requirement>
     </requirements>
     <command>
     <![CDATA[
-perl $__tool_directory__/aequatus.pl 
+perl $__tool_directory__/aequatus-generator.pl 
 $treeFile 
 $genesFile
 $alignmentFile
