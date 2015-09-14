@@ -5,18 +5,20 @@
     <command>
         <![CDATA[
         perl $__tool_directory__/gff-to-json.pl 
-        $inputFile 
+        ${genome1}:$inputFile 
         #for $q in $queries
-            ${q.input2}
+            ${q.genome2}:${q.input2}
         #end for
         > $output
         ]]>
     </command>
 
     <inputs>
-        <param name="inputFile" type="data" format="gff3" label="GFF file" help="GFF3 file format" />
-        <repeat name="queries" title="Dataset">
-            <param name="input2" type="data" format="gff3"  label="GFF file" />
+    <param name="inputFile" type="data" format="gff3"  label="GFF file" help="GFF3 file format" />
+    <param name="genome1" type="text" format="text" label="Genome name" help="Genome name without white space or special character" />
+        <repeat name="queries" title="Series">
+            <param name="input2" type="data" format="gff3" label="Dataset"/>
+            <param name="genome2" type="text" format="text" label="Genome name" help="Genome name without white space or special character" />
         </repeat>
     </inputs>
 
@@ -27,6 +29,8 @@
     <tests>
         <test>
             <param name="inputFile" ftype="gff3" value="test.gff" />
+            <param name="genome1" ftype="text" value="test" />
+
             <output name="output" file="test.json" />
         </test>
     </tests>

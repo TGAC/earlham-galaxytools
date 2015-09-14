@@ -36,7 +36,7 @@ sub genetoJSON(){
         $gene{$node[0]} = $node[1];
     }
 
-    $gene{'genome'} = $gff2JSON::genome;
+    $gene{'genome'} = $data[-1];
     $gene{'member_id'} = $gff2JSON::gene_id;
 
     $gff2JSON::gene_id++;
@@ -278,17 +278,20 @@ sub joinJSON(){
         my $parent = $gff2JSON::mRNA_hash{$key}{'Parent'};
         if($gff2JSON::gene_hash{$parent}){
             push $gff2JSON::gene_hash{$parent}{'Transcript'}, $gff2JSON::mRNA_hash{$key};
+            my $species = $gff2JSON::gene_hash{$parent}{'genome'};
+            $gff2JSON::gene_hash{$species."_".$parent} = $gff2JSON::gene_hash{$parent};
+            delete $gff2JSON::gene_hash{$parent};
         }
     }
 
 
-    foreach my $key (%gff2JSON::gene_hash) {
-     my %temp;
+    # foreach my $key (%gff2JSON::gene_hash) {
+    #  my %temp;
 
-     $temp{'gene'} = $gff2JSON::gene_hash{$key};
-     my @Transcripts = $temp{'gene'}->{'Transcript'};
+    #  $temp{'gene'} = $gff2JSON::gene_hash{$key};
+    #  my @Transcripts = $temp{'gene'}->{'Transcript'};
 
-    }
+    # }
     print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
 
 }

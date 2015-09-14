@@ -36,12 +36,11 @@ my @files = @ARGV or die $usage ;
 
 for my $i ( @files ) { 
 
-    my $fullspec = $i;
+    my ($genome, $fullspec) = split(':', $i);
 
     open(FILE,$fullspec) or die "$!";
 
     my($file, $dir, $ext) = fileparse($fullspec, qr/\.[^.]*/);
-    our $genome = $file;
 
     while (<FILE>) { # Read lines from file(s) specified on command line. Store in $_.
         my $line = $_;
@@ -54,7 +53,7 @@ for my $i ( @files ) {
 
         if($f[2] eq "gene") {
             # Gene:
-            &genetoJSON(@f);
+            &genetoJSON(@f, $genome);
         }
         elsif($f[2] eq "mRNA" || $f[2] eq "transcript") {
             # mRNA 
