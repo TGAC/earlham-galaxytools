@@ -10,7 +10,7 @@ package gff2JSON;
 use strict;
 
 
-use Bio::JSON;
+use JSON;
 
 sub genetoJSON(){
 
@@ -279,7 +279,7 @@ sub joinJSON(){
         if($gff2JSON::gene_hash{$parent}){
             push $gff2JSON::gene_hash{$parent}{'Transcript'}, $gff2JSON::mRNA_hash{$key};
             my $species = $gff2JSON::gene_hash{$parent}{'genome'};
-            $gff2JSON::gene_hash{$species."_".$parent} = $gff2JSON::gene_hash{$parent};
+            $gff2JSON::gene_hash{$parent."_".$species} = $gff2JSON::gene_hash{$parent};
             delete $gff2JSON::gene_hash{$parent};
         }
     }

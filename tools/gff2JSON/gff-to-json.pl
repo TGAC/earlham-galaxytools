@@ -9,7 +9,6 @@
 package gff2JSON;
 use strict;
 
-use Bio::JSON;
 use convertToJSON;
 use File::Basename;
 
