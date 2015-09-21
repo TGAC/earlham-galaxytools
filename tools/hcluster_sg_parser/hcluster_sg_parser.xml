@@ -11,17 +11,17 @@ $inputFile
     </inputs>
     <outputs>
         <collection name="ids_lists" type="list" label="${tool.name} on ${on_string}">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)_output\.txt" format="txt" />
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)_output\.txt" ext="txt" />
         </collection>
     </outputs>
     <tests>
         <test>
             <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
             <output_collection name="ids_lists" type="list">
-                <element name="0" file="0_output.txt" />
-                <element name="1" file="1_output.txt" />
-                <element name="2" file="2_output.txt" />
-                <element name="3" file="3_output.txt" />
+                <element name="0" file="0_output.txt" ftype="txt" />
+                <element name="1" file="1_output.txt" ftype="txt" />
+                <element name="2" file="2_output.txt" ftype="txt" />
+                <element name="3" file="3_output.txt" ftype="txt" />
             </output_collection>
         </test>
     </tests>
