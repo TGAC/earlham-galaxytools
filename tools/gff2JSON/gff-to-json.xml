@@ -28,8 +28,8 @@
 
     <tests>
         <test>
-            <param name="inputFile" ftype="gff3" value="test.gff" />
-            <param name="genome1" ftype="text" value="test" />
+            <param name="inputFile" ftype="gff3" value="ENSCAFT00000026349.gff" />
+            <param name="genome1" ftype="text" value="ss" />
 
             <output name="output" file="test.json" />
         </test>
