@@ -14,11 +14,11 @@ $alignmentFile
     </command>
     <inputs>
         <param name="treeFile" type="data" format="nhx" label="Tree file" help="Tree file in Newick format" />
-        <param name="genesFile" type="data" format="txt" label="Gene file" help="Gene file in JSON format" />
+        <param name="genesFile" type="data" format="json" label="Gene file" help="Gene file in JSON format" />
         <param name="alignmentFile" type="data" format="tabular" label="Alignment file" help="Alignment file in tabular format" />        
     </inputs>
     <outputs>
-        <data type="json" format="aequatus" name="outputFile" label="${tool.name} on ${on_string}" />
+        <data type="data" format="aequatus" name="outputFile" label="${tool.name} on ${on_string}" />
     </outputs>
     <tests>
         <test>
@@ -30,7 +30,14 @@ $alignmentFile
     </tests>
     <help>
     <![CDATA[
-Simple wrapper for Aequatus
+Simple wrapper for Aequatus. 
+
+Aequatus is an open-source homology browser developed with novel rendering approaches to visualise homologous, orthologous and paralogous gene structures.
+
+Homepage: aequatus_.
+
+.. _aequatus: http://aequatus.tgac.ac.uk 
+
 
     ]]>
     </help>
