@@ -150,19 +150,7 @@ sub fiveutrtoJSON(){
     my @note = split(";",$data[8]);
 
     $utr{'start'} = $data[3];
-    # $utr{'end'} = $data[4];
-
-    # if($data[6] eq '+'){
-    #     $utr{'strand'} = 1;
-    # }else{
-    #     $utr{'strand'} = -1;
-    # }
-    
-    # foreach my $attr(@note){
-    #     my @node = split("=",$attr);
-    #     $utr{$node[0]} = $node[1];
-    # }
-
+  
     $gff2JSON::fiveutr_hash{$utr{'Parent'}} = $utr{'start'};
 
 }
@@ -173,19 +161,7 @@ sub threeutrtoJSON(){
     my @data = @_;
     my @note = split(";",$data[8]);
 
-    # $utr{'start'} = $data[3];
     $utr{'end'} = $data[4];
-
-    # if($data[6] eq '+'){
-    #     $utr{'strand'} = 1;
-    # }else{
-    #     $utr{'strand'} = -1;
-    # }
-    
-    # foreach my $attr(@note){
-    #     my @node = split("=",$attr);
-    #     $utr{$node[0]} = $node[1];
-    # }
 
     $gff2JSON::threeutr_hash{$utr{'Parent'}} = $utr{'end'} ;
 
@@ -285,13 +261,6 @@ sub joinJSON(){
     }
 
 
-    # foreach my $key (%gff2JSON::gene_hash) {
-    #  my %temp;
-
-    #  $temp{'gene'} = $gff2JSON::gene_hash{$key};
-    #  my @Transcripts = $temp{'gene'}->{'Transcript'};
-
-    # }
     print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
 
 }

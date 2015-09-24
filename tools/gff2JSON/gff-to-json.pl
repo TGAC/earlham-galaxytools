@@ -25,7 +25,7 @@ our %cds_hash;
 my $usage = "
     Read GFF file
 
-    Usage: perl $0 <file.gff>
+    Usage: perl $0 [species_name:<file.gff>, ... species_name:<file.gff>]
 
     OUTPUT to STDOUT
 
@@ -36,7 +36,6 @@ my @files = @ARGV or die $usage ;
 for my $i ( @files ) { 
 
     my ($genome, $fullspec) = split(':', $i);
-
     open(FILE,$fullspec) or die "$!";
 
     my($file, $dir, $ext) = fileparse($fullspec, qr/\.[^.]*/);
