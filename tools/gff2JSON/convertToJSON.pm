@@ -38,7 +38,6 @@ sub genetoJSON(){
 
     $gene{'genome'} = $data[-1];
     $gene{'member_id'} = $gff2JSON::gene_id;
-
     $gff2JSON::gene_id++;
     $gff2JSON::gene_hash{$gene{'ID'}} = \%gene;
 
@@ -52,8 +51,9 @@ sub mrnatoJSON(){
     my @note = split(";",$data[8]);
     $mrna{'Exon'} = [];
     $mrna{'CDS'} = [];
-    $mrna{'translation_start'} = 0;
-    $mrna{'translation_end'} = 0;
+    # $gene{'Translation'} = {};
+    # $mrna{'translation_start'} = 0;
+    # $mrna{'translation_end'} = 0;
     $mrna{'start'} = $data[3];
     $mrna{'end'} = $data[4];
     $mrna{'reference'} = $data[0];
@@ -202,18 +202,18 @@ sub joinJSON(){
 
     foreach my $key (keys %gff2JSON::threeutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'translation_start'} =  $gff2JSON::threeutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} =  $gff2JSON::threeutr_hash{$key};
         }
     }
 
     foreach my $key (keys %gff2JSON::fiveutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'translation_end'} = $gff2JSON::fiveutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = $gff2JSON::fiveutr_hash{$key};
         }
     }
 
       for my $key ( keys %gff2JSON::cds_hash ) {
-        if(int($gff2JSON::mRNA_hash{$key}{'translation_start'}) == 0 && int($gff2JSON::mRNA_hash{$key}{'translation_end'}) == 0 ){
+        if(int($gff2JSON::mRNA_hash{$key}{'Translation'}{'start'}) == 0 && int($gff2JSON::mRNA_hash{$key}{'Translation'}{'end'}) == 0 ){
         my @temp_cds  =  @{ $gff2JSON::cds_hash{$key} };
         my @temp_exon  =  @{ $gff2JSON::exon_hash{$key} };
         
@@ -239,10 +239,10 @@ sub joinJSON(){
             {
                 $j++;
                  if(int($cds_start) > 0){
-                    if(int($gff2JSON::mRNA_hash{$key}{'translation_start'}) == 0 ){
-                        $gff2JSON::mRNA_hash{$key}{'translation_start'} = $cds_start;
+                    if(int($gff2JSON::mRNA_hash{$key}{'Translation'}{'start'}) == 0 ){
+                        $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} = $cds_start;
                     }
-                    $gff2JSON::mRNA_hash{$key}{'translation_end'} = $cds_end;    
+                    $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = $cds_end;    
                 }
             } 
         }
