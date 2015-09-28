@@ -9,8 +9,11 @@
 package gff3_to_json;
 use strict;
 
+use FindBin;
+use lib $FindBin::Bin;
+
 use convertToJSON;
-use File::Basename;
+use File::Basename; # for fileparse()
 
 my $gene_id="";
 my $mrna_id="";
