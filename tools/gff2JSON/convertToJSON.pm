@@ -51,9 +51,6 @@ sub mrnatoJSON(){
     my @note = split(";",$data[8]);
     $mrna{'Exon'} = [];
     $mrna{'CDS'} = [];
-    # $gene{'Translation'} = {};
-    # $mrna{'translation_start'} = 0;
-    # $mrna{'translation_end'} = 0;
     $mrna{'start'} = $data[3];
     $mrna{'end'} = $data[4];
     $mrna{'reference'} = $data[0];
