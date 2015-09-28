@@ -7,36 +7,37 @@
         <![CDATA[
         perl $__tool_directory__/gff3_to_json.pl
         #for $q in $queries
-            "${q.genome2}:${q.input2}"
+            "${q.genome}:${q.gff3_input}"
         #end for
         > $output
         ]]>
     </command>
 
     <inputs>
-        <repeat min="1" name="queries" title="Series">
-            <param name="input2" type="data" format="gff3" label="Dataset"/>
-            <param name="genome2" type="text" label="Genome name" help="Genome name without white space or special character" />
+        <repeat min="1" name="queries" title="GFF3 dataset">
+            <param name="gff3_input" type="data" format="gff3" label="GFF3 dataset"/>
+            <param name="genome" type="text" label="Genome name" help="Genome name without whitespaces or special characters">
+                <validator type="empty_field" />
+            </param>
         </repeat>
     </inputs>
 
     <outputs>
-         <data name="output" format="json" label="$tool.name on ${on_string}" />
+         <data name="output" format="json" label="${tool.name} on ${on_string}" />
     </outputs>
 
     <tests>
         <test>
-            <param name="inputFile" ftype="gff3" value="ENSCAFT00000026349.gff" />
-            <param name="genome1" ftype="text" value="ss" />
-
-            <output name="output" file="test.json" />
+            <param name="gff3_input" ftype="gff3" value="ENSCAFT00000026349.gff" />
+            <param name="genome" ftype="text" value="ss" />
+            <output name="output" file="test.json" ftype="json" />
         </test>
     </tests>
-    <help> 
+    <help>
 <![CDATA[
-Simple tool to convert a GFF3 file format into a JSON format.
+Simple tool to convert a set of GFF3 datasets into JSON format.
 
-Example GFF::
+Example GFF3 file::
 
     scaffold_0  MYZPE13164_Clone_G006_v1.0  gene            44968   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030;Name=MYZPE13164_G006_v1.0_000000030;biotype=protein_coding
     scaffold_0  MYZPE13164_Clone_G006_v1.0  mRNA            44968   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1;Parent=MYZPE13164_G006_v1.0_000000030;Name=MYZPE13164_G006_v1.0_000000030.1;biotype=protein_coding;_AED=0.31
@@ -53,10 +54,9 @@ Example GFF::
     scaffold_0  MYZPE13164_Clone_G006_v1.0  five_prime_utr  68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.5utr2;Parent=MYZPE13164_G006_v1.0_000000030.1
     scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon5;Parent=MYZPE13164_G006_v1.0_000000030.1
 
-Where **Gene, mRNA** and **exon** features are mendatory and UTR and CDS are optional, and **ID** and **Parent** tags are mendatory for making relation
+Warning: **Gene**, **mRNA** and **exon** features are mandatory, UTR and CDS are optional. Also, **ID** and **Parent** tags are needed to create relations.
 ]]>
     </help>
     <citations>
-        
     </citations>
 </tool>
