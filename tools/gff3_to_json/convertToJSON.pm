@@ -22,7 +22,7 @@ sub genetoJSON(){
 
     $gene{'start'} = $data[3];
     $gene{'end'} = $data[4];
-    $gene{'reference'} = $data[0];
+    $gene{'seq_region_name'} = $data[0];
 
 
     if($data[6] eq '+'){
@@ -36,10 +36,10 @@ sub genetoJSON(){
         $gene{$node[0]} = $node[1];
     }
 
-    $gene{'genome'} = $data[-1];
+    $gene{'species'} = $data[-1];
     $gene{'member_id'} = $gff2JSON::gene_id;
     $gff2JSON::gene_id++;
-    $gff2JSON::gene_hash{$gene{'ID'}} = \%gene;
+    $gff2JSON::gene_hash{$gene{'id'}} = \%gene;
 
 
 }
@@ -51,9 +51,12 @@ sub mrnatoJSON(){
     my @note = split(";",$data[8]);
     $mrna{'Exon'} = [];
     $mrna{'CDS'} = [];
+    # $gene{'Translation'} = {};
+    # $mrna{'translation_start'} = 0;
+    # $mrna{'translation_end'} = 0;
     $mrna{'start'} = $data[3];
     $mrna{'end'} = $data[4];
-    $mrna{'reference'} = $data[0];
+    $mrna{'seq_region_name'} = $data[0];
 
     if($data[6] eq '+'){
         $mrna{'strand'} = 1;
@@ -66,7 +69,7 @@ sub mrnatoJSON(){
         $mrna{$node[0]} = $node[1];
     }
 
-    $gff2JSON::mRNA_hash{$mrna{'ID'}} = \%mrna;
+    $gff2JSON::mRNA_hash{$mrna{'id'}} = \%mrna;
 }
 
 sub exontoJSON(){
@@ -89,10 +92,10 @@ sub exontoJSON(){
         my @node = split("=",$attr);
         $exon{$node[0]} = $node[1];
     }
-    if($exon{'ID'}){
+    if($exon{'id'}){
 
     }else{
-        $exon{'ID'} = $exon{'Parent'}.int(rand(100))
+        $exon{'id'} = $exon{'Parent'}.int(rand(100))
     }
     if($exon{'Parent'}){
         if(exists $gff2JSON::exon_hash{$exon{'Parent'}}){
@@ -123,10 +126,10 @@ sub cdstoJSON(){
         my @node = split("=",$attr);
         $cds{$node[0]} = $node[1];
     }
-    if($cds{'ID'}){
+    if($cds{'id'}){
 
         }else{
-            $cds{'ID'} = $cds{'Parent'}.int(rand(100))
+            $cds{'id'} = $cds{'Parent'}.int(rand(100))
         }
 
     if($cds{'Parent'}){
@@ -251,7 +254,7 @@ sub joinJSON(){
         my $parent = $gff2JSON::mRNA_hash{$key}{'Parent'};
         if($gff2JSON::gene_hash{$parent}){
             push $gff2JSON::gene_hash{$parent}{'Transcript'}, $gff2JSON::mRNA_hash{$key};
-            my $species = $gff2JSON::gene_hash{$parent}{'genome'};
+            my $species = $gff2JSON::gene_hash{$parent}{'species'};
             $gff2JSON::gene_hash{$parent."_".$species} = $gff2JSON::gene_hash{$parent};
             delete $gff2JSON::gene_hash{$parent};
         }
