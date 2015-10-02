@@ -1,0 +1,56 @@
+<tool id="get_gene_info_wrapper" name="get_gene_info_from_Ensembl" version="0.1.1">
+    <description>
+        Retrieves Gene information from Ensembl server using REST API
+    </description>
+     
+    <command>
+        <![CDATA[
+            python $__tool_directory__/get_gene_info.py 
+            -e $expand
+            -u $utr
+            -f $format_selector
+            -i $input
+            > $output
+        ]]>
+    </command>
+
+    <inputs>
+    <param name="input" type="data" format="txt" label="Ensembl ID"/>
+  
+    <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand" help="Expands the search to include any connected features. e.g. If the object is a gene, its transcripts, translations and exons will be returned as well." />
+  
+    <param name="utr" type="boolean" truevalue="1" falsevalue="0" label="UTR" help="Include 5' and 3' UTR features. Only available if the expand option is used." />
+  
+    <param name="format_selector" type="select" label="format" help="Specify the formats to emit from this endpoint">
+      <option value="full" selected="true">Full</option>
+        <option value="condensed">Condensed</option>
+    </param>
+           
+        
+    </inputs>
+
+    <outputs>
+        <data name="output" format="json" label="$(tool.name) on ${on_string}" />
+    </outputs>
+
+    <tests>
+          <test>
+                <param name="inputFile" ftype="txt" value="input.txt" />
+                <param name="expand" value="false" />
+                <param name="utr" ftype="boolean" value="0" />
+                <output name="outputFile" file="out.json" />
+          </test>
+     </tests>
+
+    <help> <![CDATA[
+        Simple wrapper for Ensembl REST API to retrieve gene information from Ensembl server. 
+
+        Ensembl REST: ensembl_.
+
+        .. _ensembl: http://rest.ensembl.org/documentation/info/lookup_post
+    ]]>
+    </help>
+    <citations>
+            
+    </citations>
+</tool>
