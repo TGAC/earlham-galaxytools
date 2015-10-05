@@ -72,6 +72,7 @@
                 <option value="yes">Estimate e</option>
                 <option value="no">Use float</option>
             </param>
+            <when value="yes" />
             <when value="no">
                 <param name="k" type="float" value="0.0" label="tv/ts ratio (kappa)" help="(-k)" />    
             </when>
@@ -83,6 +84,7 @@
                 <option value="yes">Estimate e</option>
                 <option value="no">Use float</option>
             </param>
+            <when value="yes" />
             <when value="no">
                 <param name="a" type="float" value="0.0" label="Alpha parameter for Gamma distribution" help="(-a)" />    
             </when>
