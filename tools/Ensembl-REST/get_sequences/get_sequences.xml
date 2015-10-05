@@ -1,5 +1,8 @@
 <tool id="get_sequences" name="Get sequences by Ensembl ID" version="0.1.1">
     <description>using REST API</description>
+    <requirements>
+        <requirement type="package" version="2.7">requests</requirement>
+    </requirements>
     <command>
         <![CDATA[
             python $__tool_directory__/get_sequences.py
