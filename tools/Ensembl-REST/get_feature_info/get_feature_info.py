@@ -1,6 +1,5 @@
-# A simple script to connect to the Ensembl server and retrieve feature
-# information using Ensembl REST API:
-# get_feature_info.py -e [0|1] -f [full|condensed] -i <file-with-list-of-ids>
+# A simple tool to connect to the Ensembl server and retrieve feature
+# information using the Ensembl REST API.
 import json
 import optparse
 import requests

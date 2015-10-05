@@ -11,7 +11,7 @@
     </command>
 
     <inputs>
-    <param name="input" type="data" format="txt" label="Ensembl IDs"/>
+    <param name="input" type="data" format="txt" label="Ensembl IDs" />
     <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand" help="Expands the search to include any connected features. e.g. If the object is a gene, its transcripts, translations and exons will be returned as well." />
     <param name="format_selector" type="select" label="format" help="Specify the formats to emit from this endpoint">
         <option value="full" selected="true">Full</option>
