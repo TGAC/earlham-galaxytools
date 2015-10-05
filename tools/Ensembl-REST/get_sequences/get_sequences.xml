@@ -1,0 +1,50 @@
+<tool id="get_sequences" name="Get sequences by Ensembl ID" version="0.1.1">
+    <description>using REST API</description>
+    <command>
+        <![CDATA[
+            python $__tool_directory__/get_sequences.py
+            --expand_3prime $expand_3prime
+            --expand_5prime $expand_5prime
+            -t $type_selector
+            -i ${input}
+            > $output
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="input" type="data" format="txt" label="Ensembl IDs" />
+        <param name="expand_3prime" type="integer" value="0" label="expand_3prime" help="Expand the sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
+        <param name="expand_5prime" type="integer" value="0" label="expand_5prime" help="Expand the sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
+        <param name="type_selector" type="select" label="Type" help="Type of sequence. Defaults to genomic where applicable, i.e. not translations. cdna refers to the spliced transcript sequence with UTR; cds refers to the spliced transcript sequence without UTR">
+            <option value="genomic" selected="true">Genomic</option>
+            <option value="cds">CDS</option>
+            <option value="cdna">cDNA</option>
+            <option value="protein">Protein</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="json" label="$(tool.name) on ${on_string}" />
+    </outputs>
+
+    <tests>
+          <test>
+                <param name="input" ftype="txt" value="input.txt" />
+                <param name="expand_3prime" value="0" />
+                <param name="expand_5prime" value="0" />
+                <param name="type_selector" value="genomic" />
+                <output name="output" file="sequences.json" />
+          </test>
+     </tests>
+
+    <help> <![CDATA[
+        Simple wrapper for Ensembl REST API to retrieve sequences from Ensembl server.
+
+        Ensembl REST: ensembl_.
+
+        .. _ensembl: http://rest.ensembl.org/documentation/info/sequence_id_post
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
