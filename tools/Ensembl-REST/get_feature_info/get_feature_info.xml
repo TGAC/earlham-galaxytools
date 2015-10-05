@@ -1,8 +1,8 @@
-<tool id="get_gene_info" name="Get gene info from Ensembl" version="0.1.1">
+<tool id="get_feature_info" name="Get Ensembl features by ID" version="0.1.1">
     <description>using REST API</description>
     <command>
         <![CDATA[
-            python $__tool_directory__/get_gene_info.py
+            python $__tool_directory__/get_feature_info.py
             -e $expand
             -f $format_selector
             -i $input
@@ -32,7 +32,7 @@
      </tests>
 
     <help> <![CDATA[
-        Simple wrapper for Ensembl REST API to retrieve gene information from Ensembl server.
+        Simple wrapper for Ensembl REST API to retrieve feature information from Ensembl server.
 
         Ensembl REST: ensembl_.
 

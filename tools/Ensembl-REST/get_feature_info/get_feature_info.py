@@ -1,6 +1,6 @@
-# A simple script to connect to Ensembl server and retrieve gene information
-# using Ensembl REST API:
-# get_gene_info.py -e [0|1] -f [full|condensed] -i <file-with-list-of-ids>
+# A simple script to connect to the Ensembl server and retrieve feature
+# information using Ensembl REST API:
+# get_feature_info.py -e [0|1] -f [full|condensed] -i <file-with-list-of-ids>
 import json
 import optparse
 import requests
