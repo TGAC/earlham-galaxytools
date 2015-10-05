@@ -1,62 +1,36 @@
-import requests
-import sys
+# A simple script to connect to Ensembl server and retrieve gene information
+# using Ensembl REST API:
+# get_gene_info.py -e [0|1] -f [full|condensed] -i <file-with-list-of-ids>
 import json
 import optparse
-
-#
-# A simple script to connect to Ensembl server and retrieve gene information using Ensembl REST API
-# get_gene_info.py -e [0|1] -u [0|1] -f [full|condensec] -i <file-with-list-of-ids>
-#
+import requests
+from urlparse import urljoin
 
 server = "http://rest.ensembl.org"
-ext = "/lookup/id"
+ext = "lookup/id"
 
 parser = optparse.OptionParser()
-parser.add_option('-i', '--input', 
-                  dest="input_filename", 
-                  default="default.in",
-                  )
-
-parser.add_option('-f', '--format', 
-                  dest="format", 
-                  default="full",
-                  )
-
-
-parser.add_option('-e', '--expand', 
-                  dest="expand", 
+parser.add_option('-i', '--input', dest="input_filename",
+                  help='List of Ensembl IDs')
+parser.add_option('-e', '--expand', type='choice', choices=['0', '1'],
                   default="0",
-                  )
+                  help='Expands the search to include any connected features. e.g. If the object is a gene, its transcripts, translations and exons will be returned as well.')
+parser.add_option('-f', '--format', type='choice',
+                  choices=['full', 'condensed'], default="full",
+                  help='Specify the formats to emit from this endpoint')
+options, args = parser.parse_args()
+if options.input_filename is None:
+    raise Exception('-i option must be specified')
 
-parser.add_option('-u', '--utr', 
-                  dest="utr", 
-                  default="0",
-                  )
-
-options, remainder = parser.parse_args()
-
-f = open(options.input_filename)
-
-ids = []
-
-for line in f:
-	ids.append(line.strip()),
-
-headers = {"Content-Type" : "application/json", "Accept" : "application/json"}
-
-params = "?format=" + options.format + ";expand=" + options.expand + ";utr=" + options.utr
-
-list = '{ "ids" : ["' + '", "'.join(ids) + '"]}'
-
-r = requests.post(server + ext + params, headers=headers, data=list)
+headers = {"Content-Type": "application/json", "Accept": "application/json"}
+params = dict((k, getattr(options, k)) for k in ['format', 'expand'])
+with open(options.input_filename) as f:
+    ids = [line.strip() for line in f]
+data = {'ids': ids}
+r = requests.post(urljoin(server, ext), params=params, headers=headers,
+                  data=json.dumps(data))
 
 if not r.ok:
-	r.raise_for_status()
-	sys.exit()
+    r.raise_for_status()
 
-decoded = r.json()
-
-
-var = json.dumps(decoded)
-
-print var
+print r.text
