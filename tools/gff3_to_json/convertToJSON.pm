@@ -6,7 +6,7 @@
 #
 #
 
-package gff2JSON;
+package gff3_to_json;
 use strict;
 
 
