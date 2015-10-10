@@ -29,8 +29,22 @@
     <tests>
         <test>
             <param name="gff3_input" ftype="gff3" value="ENSCAFT00000026349.gff" />
-            <param name="genome" ftype="text" value="ss" />
-            <output name="output" file="test.json" ftype="json" />
+            <param name="genome" ftype="text" value="canisfamiliaris" />
+ 
+            <param name="gff3_input" ftype="gff3" value="ENSMUST00000005671.gff" />
+            <param name="genome" ftype="text" value="musmusculus" />
+
+            <param name="gff3_input" ftype="gff3" value="ENSMUST00000091291.gff" />
+            <param name="genome" ftype="text" value="musmusculus" />
+
+            <param name="gff3_input" ftype="gff3" value="ENSPTRT00000013802.gff" />
+            <param name="genome" ftype="text" value="pantroglodytes" />
+
+            <param name="gff3_input" ftype="gff3" value="ENSRNOT00000019267.gff" />
+            <param name="genome" ftype="text" value="rattusnorvegicus" />
+
+           <output name="output" file="test.json" ftype="json" />
+
         </test>
     </tests>
     <help>

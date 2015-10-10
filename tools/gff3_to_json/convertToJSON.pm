@@ -6,7 +6,7 @@
 #
 #
 
-package gff3_to_json;
+package gff2JSON;
 use strict;
 
 
@@ -20,8 +20,8 @@ sub genetoJSON(){
     my @note = split(";",$data[8]);
     $gene{'Transcript'} = [];
 
-    $gene{'start'} = $data[3];
-    $gene{'end'} = $data[4];
+    $gene{'start'} = int($data[3]);
+    $gene{'end'} = int($data[4]);
     $gene{'seq_region_name'} = $data[0];
 
 
@@ -33,14 +33,18 @@ sub genetoJSON(){
     
     foreach my $attr(@note){
         my @node = split("=",$attr);
-        $gene{$node[0]} = $node[1];
+
+        if($node[0] eq 'ID'){
+            $gene{'id'} = $node[1];
+        }else{
+            $gene{$node[0]} = $node[1];
+        }
     }
 
     $gene{'species'} = $data[-1];
     $gene{'member_id'} = $gff2JSON::gene_id;
     $gff2JSON::gene_id++;
     $gff2JSON::gene_hash{$gene{'id'}} = \%gene;
-
 
 }
 
@@ -54,8 +58,8 @@ sub mrnatoJSON(){
     # $gene{'Translation'} = {};
     # $mrna{'translation_start'} = 0;
     # $mrna{'translation_end'} = 0;
-    $mrna{'start'} = $data[3];
-    $mrna{'end'} = $data[4];
+    $mrna{'start'} = int($data[3]);
+    $mrna{'end'} = int($data[4]);
     $mrna{'seq_region_name'} = $data[0];
 
     if($data[6] eq '+'){
@@ -66,7 +70,12 @@ sub mrnatoJSON(){
     
     foreach my $attr(@note){
         my @node = split("=",$attr);
-        $mrna{$node[0]} = $node[1];
+
+        if($node[0] eq "ID"){
+            $mrna{'id'} = $node[1];
+        }else{
+            $mrna{$node[0]} = $node[1];
+        }
     }
 
     $gff2JSON::mRNA_hash{$mrna{'id'}} = \%mrna;
@@ -77,8 +86,8 @@ sub exontoJSON(){
     my @data = @_;
     my @note = split(";",$data[8]);
 
-    $exon{'start'} = $data[3];
-    $exon{'end'} = $data[4];
+    $exon{'start'} = int($data[3]);
+    $exon{'end'} = int($data[4]);
     $exon{'length'} = $data[4] - $data[3] + 1;
 
 
@@ -90,9 +99,14 @@ sub exontoJSON(){
     
     foreach my $attr(@note){
         my @node = split("=",$attr);
-        $exon{$node[0]} = $node[1];
+
+        if($node[0] eq "ID"){
+            $exon{'id'} = $node[1];
+        }else{
+            $exon{$node[0]} = $node[1];
+        }
     }
-    if($exon{'id'}){
+    if($exon{'ID'} or $exon{'id'}){
 
     }else{
         $exon{'id'} = $exon{'Parent'}.int(rand(100))
@@ -113,8 +127,8 @@ sub cdstoJSON(){
     my @data = @_;
     my @note = split(";",$data[8]);
 
-    $cds{'start'} = $data[3];
-    $cds{'end'} = $data[4];
+    $cds{'start'} = int($data[3]);
+    $cds{'end'} = int($data[4]);
 
     if($data[6] eq '+'){
         $cds{'strand'} = 1;
@@ -202,13 +216,13 @@ sub joinJSON(){
 
     foreach my $key (keys %gff2JSON::threeutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} =  $gff2JSON::threeutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} =  int($gff2JSON::threeutr_hash{$key});
         }
     }
 
     foreach my $key (keys %gff2JSON::fiveutr_hash) {
         if($gff2JSON::mRNA_hash{$key}){
-            $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = $gff2JSON::fiveutr_hash{$key};
+            $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = int($gff2JSON::fiveutr_hash{$key});
         }
     }
 
@@ -240,9 +254,9 @@ sub joinJSON(){
                 $j++;
                  if(int($cds_start) > 0){
                     if(int($gff2JSON::mRNA_hash{$key}{'Translation'}{'start'}) == 0 ){
-                        $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} = $cds_start;
+                        $gff2JSON::mRNA_hash{$key}{'Translation'}{'start'} = int($cds_start);
                     }
-                    $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = $cds_end;    
+                    $gff2JSON::mRNA_hash{$key}{'Translation'}{'end'} = int($cds_end);
                 }
             } 
         }
@@ -255,11 +269,10 @@ sub joinJSON(){
         if($gff2JSON::gene_hash{$parent}){
             push $gff2JSON::gene_hash{$parent}{'Transcript'}, $gff2JSON::mRNA_hash{$key};
             my $species = $gff2JSON::gene_hash{$parent}{'species'};
-            $gff2JSON::gene_hash{$parent."_".$species} = $gff2JSON::gene_hash{$parent};
-            delete $gff2JSON::gene_hash{$parent};
+            $gff2JSON::gene_hash{$parent} = $gff2JSON::gene_hash{$parent};
+
         }
     }
-
 
     print JSON->new->pretty->encode(\%gff2JSON::gene_hash);
 
