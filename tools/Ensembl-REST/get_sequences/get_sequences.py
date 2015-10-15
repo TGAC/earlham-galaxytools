@@ -19,16 +19,16 @@ parser.add_option('--expand_3prime', type='int', default=0,
 parser.add_option('--expand_5prime', type='int', default=0,
                   help='Expand the sequence upstream of the sequence by this many basepairs. Only available when using genomic sequence type')
 parser.add_option('-f', '--format', type='choice', 
-          choices=['json', 'fasta'],
-          default="fasta", help='Output type, can be either JSON or Fasta')
+                  choices=['json', 'fasta'],
+                  default="fasta", help='Output type, can be either JSON or Fasta')
 options, args = parser.parse_args()
 if options.input_filename is None:
     raise Exception('-i option must be specified')
 
 if options.format == "json":
-  headers = {"Content-Type": "application/json", "Accept": "application/json"}
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
 elif options.format == "fasta": 
-  headers = {"Content-Type": "text/x-fasta", "Accept": "text/x-fasta"}
+    headers = {"Content-Type": "text/x-fasta", "Accept": "text/x-fasta"}
 
 
 params = dict((k, getattr(options, k)) for k in ['type', 'expand_3prime', 'expand_5prime'])

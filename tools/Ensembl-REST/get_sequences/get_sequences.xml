@@ -45,6 +45,7 @@
                 <param name="expand_3prime" value="0" />
                 <param name="expand_5prime" value="0" />
                 <param name="type_selector" value="genomic" />
+                <param name="format_selector" value="json" />
                 <output name="output" file="sequences.json" />
           </test>
      </tests>
