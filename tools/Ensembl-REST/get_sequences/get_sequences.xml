@@ -9,6 +9,7 @@
             --expand_3prime $expand_3prime
             --expand_5prime $expand_5prime
             -t $type_selector
+            -f $format_selector
             -i ${input}
             > $output
         ]]>
@@ -24,10 +25,18 @@
             <option value="cdna">cDNA</option>
             <option value="protein">Protein</option>
         </param>
+        <param name="format_selector" type="select" label="Format" help="Format of the data">
+            <option value="fasta" selected="true">Fasta</option>
+            <option value="json">JSON</option>
+        </param>
     </inputs>
 
     <outputs>
-        <data name="output" format="json" label="$(tool.name) on ${on_string}" />
+        <data name="output" format="fasta" label="$(tool.name) on ${on_string}">
+            <change_format>
+                <when input="format_selector" value="json" format="json" />
+            </change_format>
+        </data>
     </outputs>
 
     <tests>
