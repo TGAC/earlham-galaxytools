@@ -1,0 +1,113 @@
+<tool id="get_genetree" name="Get Gene Tree by Ensembl ID" version="0.1.1">
+    <description>Retrieves a gene tree dump for a gene tree stable identifier or gene stable identifier</description>
+    <requirements>
+        <requirement type="package" version="2.7">requests</requirement>
+    </requirements>
+    <command>
+        <![CDATA[
+            python $__tool_directory__/get_genetree.py
+            -s $sequence_selector
+            -c $cigar_selector
+            -a $aligned_selector
+            --nh_format $nh_format_selector
+            --format $format_selector
+            -i ${input}
+            --id_type $input_selector
+            > $output
+        ]]>
+    </command>
+
+    <inputs>
+         <param name="input_selector" type="select" label="Input Type" help="The type of sinput either Ensembl Gene/Transcript ID or genetree ID.">
+            <option value="gene_id" selected="true">Gene ID</option>
+            <option value="gene_tree_id">Gene Tree ID</option>
+        </param>
+        <param name="input" type="text" label="Ensembl ID" />
+        <param name="nh_format_selector" type="select" label="nh_format" help="The format of a NH (New Hampshire) request.">
+            <option value="simple" selected="true">Simple</option>
+            <option value="display_label_composite">display_label_composite</option>
+            <option value="species">species</option>
+            <option value="species_short_name">species_short_name</option>
+            <option value="ncbi_taxon">ncbi_taxon</option>
+            <option value="ncbi_name">ncbi_name</option>
+            <option value="njtree">njtree</option>
+            <option value="phylip">phylip</option>
+        </param>
+        <param name="sequence_selector" type="select" label="sequence" help="The type of sequence to bring back. Setting it to none results in no sequence being returned.">
+            <option value="protein" selected="true">Protein</option>
+            <option value="cdna">cdna</option>
+            <option value="none">none</option>
+        </param>
+        <param name="cigar_selector" type="select" label="cigar_line" help="Return the aligned sequence encoded in CIGAR format.">
+            <option value="0" selected="true">No</option>
+            <option value="1">Yes</option>
+        </param>
+        <param name="aligned_selector" type="select" label="aligned" help="Return the aligned string if true. Otherwise, return the original sequence (no insertions).">
+            <option value="0" selected="true">No</option>
+            <option value="1">Yes</option>
+        </param>
+        <param name="format_selector" type="select" label="format" help="Output format type.">
+            <option value="json" selected="true">json</option>
+            <option value="orthoxml">orthoxml</option>
+            <option value="phyloxml">phyloxml</option>
+            <option value="nh">nh</option>
+        </param>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="fasta" label="$(tool.name) on ${input_selector} ${input}">
+            <change_format>
+                <when input="format_selector" value="json" format="json" />
+                <when input="format_selector" value="orthoxml" format="orthoxml" />
+                <when input="format_selector" value="phyloxml" format="phyloxml" />
+                <when input="format_selector" value="nhx" format="nh" />
+            </change_format>
+        </data>
+    </outputs>
+
+    <tests>
+          <test>
+                <param name="input_selector" value="gene_id">
+                <param name="input" value="ENSGALP00000027524" />
+                <param name="sequence_selector" value="protein" />
+                <param name="cigar_selector" value="0" />
+                <param name="aligned_selector" value="0" />
+                <param name="format_selector" value="json" />
+                <output name="output" file="genetree.json" />
+          </test>
+          <test>
+                <param name="input_selector" value="gene_tree_id">
+                <param name="input" value="ENSGT00390000003602" />
+                <param name="sequence_selector" value="protein" />
+                <param name="cigar_selector" value="0" />
+                <param name="aligned_selector" value="0" />
+                <param name="format_selector" value="json" />
+                <output name="output" file="genetree.json" />
+          </test>
+          <test>
+                <param name="input_selector" value="gene_tree_id">
+                <param name="input" value="ENSGT00390000003602" />
+                <param name="sequence_selector" value="protein" />
+                <param name="cigar_selector" value="0" />
+                <param name="aligned_selector" value="0" />
+                <param name="format_selector" value="phyloxml" />
+                <output name="output" file="genetree.phyloxml" />
+          </test>
+     </tests>
+
+    <help> <![CDATA[
+        Simple wrapper for Ensembl REST API to retrieve genetree from Ensembl server using genetree stable identifier or gene stable identifier.
+        Simple wrapper for Ensembl REST API to retrieve genetree from Ensembl server using genetree stable identifier or gene stable identifier.
+
+        Ensembl genetree REST by genetree_id: ensembl_genetree_.
+
+        Ensembl genetree REST by gene_id: ensembl_genetree_by_geneid_.
+
+        .. _ensembl_genetree: http://rest.ensembl.org/documentation/info/genetree
+
+        .. _ensembl_genetree_by_geneid: http://rest.ensembl.org/documentation/info/genetree_member_id
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
