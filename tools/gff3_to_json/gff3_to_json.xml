@@ -43,8 +43,7 @@
             <param name="gff3_input" ftype="gff3" value="ENSRNOT00000019267.gff" />
             <param name="genome" ftype="text" value="rattusnorvegicus" />
 
-           <output name="output" file="test.json" ftype="json" />
-
+            <output name="output" file="test.json" ftype="json" compare="sim_size" />
         </test>
     </tests>
     <help>
