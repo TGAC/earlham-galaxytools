@@ -18,7 +18,7 @@ parser.add_option('-s', '--sequence', type='choice',
                   choices=['none','cdna', 'protein'],
                   default="protein", help='The type of sequence to bring back. Setting it to none results in no sequence being returned')
 
-parser.add_option('-c', '--cigarline', type='choice', 
+parser.add_option('-c', '--cigar_line', type='choice', 
                   choices=['0','1'],
                   default="0", help='Return the aligned sequence encoded in CIGAR format')
 
@@ -54,12 +54,9 @@ elif options.format == "phyloxml":
 elif options.format == "nh": 
     headers = {"Content-Type": "text/x-nh"}
 
-params = ""
+params = dict((k, getattr(options, k)) for k in ['sequence', 'cigar_line', 'aligned', 'nh_format'])
 
-for k in ['sequence', 'cigarline', 'aligned', 'nh_format']:
-    params += k + "="+ getattr( options , k)+";"
-
-r = requests.get(server+ext+options.input+"?"+params, headers=headers)
+r = requests.get(server+ext+options.input, params=params, headers=headers)
 
 if not r.ok:
     r.raise_for_status()
