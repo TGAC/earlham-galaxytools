@@ -66,33 +66,33 @@
     </outputs>
 
     <tests>
-          <test>
-                <param name="input_selector" value="gene_id">
-                <param name="input" value="ENSGALP00000027524" />
-                <param name="sequence_selector" value="protein" />
-                <param name="cigar_selector" value="0" />
-                <param name="aligned_selector" value="0" />
-                <param name="format_selector" value="json" />
-                <output name="output" file="genetree.json" />
-          </test>
-          <test>
-                <param name="input_selector" value="gene_tree_id">
-                <param name="input" value="ENSGT00390000003602" />
-                <param name="sequence_selector" value="protein" />
-                <param name="cigar_selector" value="0" />
-                <param name="aligned_selector" value="0" />
-                <param name="format_selector" value="json" />
-                <output name="output" file="genetree.json" />
-          </test>
-          <test>
-                <param name="input_selector" value="gene_tree_id">
-                <param name="input" value="ENSGT00390000003602" />
-                <param name="sequence_selector" value="protein" />
-                <param name="cigar_selector" value="0" />
-                <param name="aligned_selector" value="0" />
-                <param name="format_selector" value="phyloxml" />
-                <output name="output" file="genetree.phyloxml" />
-          </test>
+        <test>
+            <param name="input_selector" value="gene_id" />
+            <param name="input" value="ENSGALP00000027524" />
+            <param name="sequence_selector" value="protein" />
+            <param name="cigar_selector" value="0" />
+            <param name="aligned_selector" value="0" />
+            <param name="format_selector" value="json" />
+            <output name="output" file="genetree.json" />
+        </test>
+        <test>
+            <param name="input_selector" value="gene_tree_id" />
+            <param name="input" value="ENSGT00390000003602" />
+            <param name="sequence_selector" value="protein" />
+            <param name="cigar_selector" value="0" />
+            <param name="aligned_selector" value="0" />
+            <param name="format_selector" value="json" />
+            <output name="output" file="genetree.json" />
+        </test>
+        <test>
+            <param name="input_selector" value="gene_tree_id" />
+            <param name="input" value="ENSGT00390000003602" />
+            <param name="sequence_selector" value="protein" />
+            <param name="cigar_selector" value="0" />
+            <param name="aligned_selector" value="0" />
+            <param name="format_selector" value="phyloxml" />
+            <output name="output" file="genetree.phyloxml" />
+        </test>
      </tests>
 
     <help> <![CDATA[
