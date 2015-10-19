@@ -1,120 +1,98 @@
-<tool id="treebest_best_wrapper" name="TreeBest best" version="1.9.2">
-    <description>
-        Generate a Phylogeny tree using CDS alignment and species tree
-    </description>
+<tool id="treebest_best_wrapper" name="TreeBeST best" version="1.9.2">
+    <description>Generate a phylogenetic tree using CDS alignment and species tree</description>
      <requirements>
         <requirement type="package" version="1.9.2">treebest</requirement>
     </requirements>
     <command>
-		<![CDATA[
-		treebest best 
-		-f $species_tree
-		$P
-		$S
-		$A
-		#if $C
-		    -C $C
-		#end if
-		$s
-		$g
-		$N
-		-c $c
-		-d $d
-		-l $l
-		-L $L
-		-b $b
-		#if $K.K_selector == 'yes'
-		    -k e 
-		#else 
-		    -k $K.k
-		#end if
-
-		#if $A_option.A_selector == 'yes'
-		    -a e 
-		#else 
-		    -a $A_option.a
-		#end if
-
-		-F $F
-		$aln
-		-p "Galaxy_TreeBest_Best"
-		> $output
-		]]>
+<![CDATA[
+treebest best
+-f $species_tree
+$P
+$S
+$A
+#if $C
+    -C $C
+#end if
+$s
+$g
+$N
+-c $c
+-d $d
+-l $l
+-L $L
+-b $b
+#if $K.K_selector == 'yes'
+    -k e
+#else
+    -k $K.k
+#end if
+#if $A_option.A_selector == 'yes'
+    -a e
+#else
+    -a $A_option.a
+#end if
+-F $F
+-p "Galaxy_TreeBest_Best"
+$aln
+> $output
+]]>
     </command>
 
     <inputs>
         <param name="species_tree" type="data" format="nhx" label="Species file in Newick format" help="-f"/>
-        
         <param name="aln" type="data" format="fasta" label="CDS alignment in FASTA format"/>
-        
         <param name="P" type="boolean" truevalue="-P" falsevalue="" label="Skip PHYML" help="(-P)" />
-         
-        <param name="S" type="boolean" truevalue="-S" falsevalue="" label="Ignore the prob. of gene evolution (NOT recommended)" help="(-S)" />
-
+        <param name="S" type="boolean" truevalue="-S" falsevalue="" label="Ignore the probability of gene evolution (NOT recommended)" help="(-S)" />
         <param name="A" type="boolean" truevalue="-A" falsevalue="" label="Apply constraint to PHYML" help="(-A)" />
-    
         <param name="r" type="boolean" truevalue="-r" falsevalue="" label="Discard species that do not appear at all" help="(-r)" />
-
-        <param name="C" type="data" format="nhx" optional="true" label="Constraining tree" help="(-C)" />
-
-        <param name="s" type="boolean" truevalue="-s" falsevalue="" label="Only build tree for genes from sequenced species" help="(-s)" />         
-
-        <param name="g" type="boolean" truevalue="-g" falsevalue="" label="Collapse alternative splicing forms" help="(-g)" />         
-
-        <param name="N" type="boolean" truevalue="-N" falsevalue="" label="Do not mask low-scoring segments" help="(-N)" />     
-
-        <param name="F" type="integer" min="1" value="11" label="Quality cut-off" help="(-F)" />    
- 
-        <param name="c" type="integer" min="1" value="2" label="Number of rate categories for PHYML-HKY" help="(-c)" />    
-
+        <param name="C" type="data" format="nhx" optional="true" label="Constraining tree" help="Optional (-C)" />
+        <param name="s" type="boolean" truevalue="-s" falsevalue="" label="Only build tree for genes from sequenced species" help="(-s)" />
+        <param name="g" type="boolean" truevalue="-g" falsevalue="" label="Collapse alternative splicing forms" help="(-g)" />
+        <param name="N" type="boolean" truevalue="-N" falsevalue="" label="Do not mask low-scoring segments" help="(-N)" />
+        <param name="F" type="integer" min="1" value="11" label="Quality cut-off" help="(-F)" />
+        <param name="c" type="integer" min="1" value="2" label="Number of rate categories for PHYML-HKY" help="(-c)" />
         <conditional name="K">
             <param name="K_selector" type="select" label="tv/ts ratio (kappa)" help="(-k)">
-                <option value="yes">Estimate e</option>
-                <option value="no">Use float</option>
+                <option value="yes">Estimate (e)</option>
+                <option value="no">Specify value</option>
             </param>
             <when value="yes" />
             <when value="no">
-                <param name="k" type="float" value="0.0" label="tv/ts ratio (kappa)" help="(-k)" />    
+                <param name="k" type="float" value="0.0" label="tv/ts ratio (kappa)" />
             </when>
-        </conditional>    
-        
-
+        </conditional>
         <conditional name="A_option">
             <param name="A_selector" type="select" label="Alpha parameter for Gamma distribution" help="(-a)">
-                <option value="yes">Estimate e</option>
-                <option value="no">Use float</option>
+                <option value="yes">Estimate (e)</option>
+                <option value="no">Specify value</option>
             </param>
             <when value="yes" />
             <when value="no">
-                <param name="a" type="float" value="0.0" label="Alpha parameter for Gamma distribution" help="(-a)" />    
+                <param name="a" type="float" value="0.0" label="Alpha parameter for Gamma distribution" />
             </when>
-        </conditional>    
-        
-
-        <param name="d" type="float" min="0" value="0.15" label="Duplication probability" help="(-d)" />    
-
-        <param name="l" type="float" min="0" value="0.10" label="Probability of a loss following a speciation" help="(-l)" />    
-
-        <param name="L" type="float" min="0" value="0.20" label="Probability of a loss following a duplication" help="(-L)" />    
-
-        <param name="b" type="float" min="0" value="0.01" label="Probability of the presence of an inconsistent branch" help="(-b)" />    
-
-
+        </conditional>
+        <param name="d" type="float" min="0" value="0.15" label="Duplication probability" help="(-d)" />
+        <param name="l" type="float" min="0" value="0.10" label="Probability of a loss following a speciation" help="(-l)" />
+        <param name="L" type="float" min="0" value="0.20" label="Probability of a loss following a duplication" help="(-L)" />
+        <param name="b" type="float" min="0" value="0.01" label="Probability of the presence of an inconsistent branch" help="(-b)" />
     </inputs>
 
     <outputs>
         <data name="output" format="nhx" label="$tool.name on ${on_string}" />
-        
-        <data name="output_nj_dn" format="nhx" label="$tool.name on ${on_string}" from_work_dir="Galaxy_TreeBest_Best.nj-dn.nhx" />
-        
     </outputs>
 
-    <help> 
-		<![CDATA[
-		Simple wrapper for `treebest`_.
+    <help>
+<![CDATA[
+**What it does**
 
-		.. _treebest: http://treesoft.sourceforge.net/treebest.shtml
-		]]>
+`TreeBeST`_ (gene Tree Building guided by Species Tree) is a versatile program that builds, manipulates and displays phylogenetic trees. It is particularly designed for building gene trees with a known species tree and is highly efficient and accurate.
+
+The `best' command builds the best gene tree from a species tree and a CDS alignment. The resultant tree will be bootstrapped for 100 times, reconciled with the species tree and rooted by minimizing with the number of duplications and losses. Duplications and losses are also stored in the NHX format.
+
+Note that TreeBeST first determines the topology of resultant tree with a complex procedure, and then performs a hundred times of resampling with an improved neighbour-joining algorithm. Branch lengths are finally estimated with the standard ML method under the HKY model.
+
+.. _TreeBeST: http://treesoft.sourceforge.net/treebest.shtml
+]]>
     </help>
     <citations>
         <citation type="doi">10.1080/10635150390235520</citation>

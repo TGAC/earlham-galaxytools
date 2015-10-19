@@ -4,19 +4,19 @@
         <requirement type="package" version="2.7">requests</requirement>
     </requirements>
     <command>
-        <![CDATA[
-            python $__tool_directory__/get_feature_info.py
-            -e $expand
-            -f $format_selector
-            -i $input
-            > $output
-        ]]>
+<![CDATA[
+python $__tool_directory__/get_feature_info.py
+-e $expand
+-f $format_selector
+-i "$input"
+> "$output"
+]]>
     </command>
 
     <inputs>
-    <param name="input" type="data" format="txt" label="Ensembl IDs" />
-    <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand" help="Expands the search to include any connected features. e.g. If the object is a gene, its transcripts, translations and exons will be returned as well." />
-    <param name="format_selector" type="select" label="format" help="Specify the formats to emit from this endpoint">
+    <param name="input" type="data" format="txt" label="List of Ensembl IDs" />
+    <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand" help="Expands the search to include any connected features. For example, if the object is a gene, its transcripts, translations and exons will be returned as well." />
+    <param name="format_selector" type="select" label="format" help="Output format">
         <option value="full" selected="true">Full</option>
         <option value="condensed">Condensed</option>
     </param>
@@ -27,20 +27,23 @@
     </outputs>
 
     <tests>
-          <test>
-                <param name="input" ftype="txt" value="input.txt" />
-                <param name="expand" value="false" />
-                <output name="outputFile" file="out.json" />
-          </test>
-     </tests>
+        <test>
+            <param name="input" ftype="txt" value="input.txt" />
+            <param name="expand" value="false" />
+            <output name="outputFile" file="out.json" />
+        </test>
+    </tests>
 
-    <help> <![CDATA[
-        Simple wrapper for Ensembl REST API to retrieve feature information from Ensembl server.
+    <help>
+<![CDATA[
+**What it does**
 
-        Ensembl REST: ensembl_.
+Retrieve feature information in JSON format from Ensembl server using REST API.
 
-        .. _ensembl: http://rest.ensembl.org/documentation/info/lookup_post
-    ]]>
+Uses `"POST lookup/id"`_ API endpoint.
+
+.. _POST lookup/id: http://rest.ensembl.org/documentation/info/lookup_post
+]]>
     </help>
     <citations>
     </citations>

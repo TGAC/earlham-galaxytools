@@ -4,29 +4,29 @@
         <requirement type="package" version="2.7">requests</requirement>
     </requirements>
     <command>
-        <![CDATA[
-            python $__tool_directory__/get_sequences.py
-            --expand_3prime $expand_3prime
-            --expand_5prime $expand_5prime
-            -t $type_selector
-            -f $format_selector
-            -i ${input}
-            > $output
-        ]]>
+<![CDATA[
+python $__tool_directory__/get_sequences.py
+--expand_3prime $expand_3prime
+--expand_5prime $expand_5prime
+-t $type_selector
+-f $format_selector
+-i "$input"
+> "$output"
+]]>
     </command>
 
     <inputs>
-        <param name="input" type="data" format="txt" label="Ensembl IDs" />
-        <param name="expand_3prime" type="integer" value="0" label="expand_3prime" help="Expand the sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
-        <param name="expand_5prime" type="integer" value="0" label="expand_5prime" help="Expand the sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
-        <param name="type_selector" type="select" label="Type" help="Type of sequence. Defaults to genomic where applicable, i.e. not translations. cdna refers to the spliced transcript sequence with UTR; cds refers to the spliced transcript sequence without UTR">
+        <param name="input" type="data" format="txt" label="List of Ensembl IDs" />
+        <param name="expand_3prime" type="integer" value="0" min="0" label="expand_3prime" help="Expand each sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
+        <param name="expand_5prime" type="integer" value="0" min="0" label="expand_5prime" help="Expand each sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
+        <param name="type_selector" type="select" label="Type" help="Type of sequence. Defaults to genomic where applicable, i.e. not translations. cDNA refers to the spliced transcript sequence with UTR; CDS refers to the spliced transcript sequence without UTR">
             <option value="genomic" selected="true">Genomic</option>
             <option value="cds">CDS</option>
             <option value="cdna">cDNA</option>
             <option value="protein">Protein</option>
         </param>
         <param name="format_selector" type="select" label="Format" help="Format of the data">
-            <option value="fasta" selected="true">Fasta</option>
+            <option value="fasta" selected="true">FASTA</option>
             <option value="json">JSON</option>
         </param>
     </inputs>
@@ -50,13 +50,16 @@
           </test>
      </tests>
 
-    <help> <![CDATA[
-        Simple wrapper for Ensembl REST API to retrieve sequences from Ensembl server.
+    <help>
+<![CDATA[
+**What it does**
 
-        Ensembl REST: ensembl_.
+Retrieves sequences from Ensembl server using REST API.
 
-        .. _ensembl: http://rest.ensembl.org/documentation/info/sequence_id_post
-    ]]>
+Uses `"POST sequence/id"`_ API endpoint.
+
+.. _"POST sequence/id": http://rest.ensembl.org/documentation/info/sequence_id_post
+]]>
     </help>
     <citations>
     </citations>

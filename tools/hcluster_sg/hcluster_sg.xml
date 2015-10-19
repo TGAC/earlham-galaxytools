@@ -4,7 +4,7 @@
         <requirement type="package" version="0.5.1">hcluster_sg</requirement>
     </requirements>
     <command>
-    <![CDATA[
+<![CDATA[
 hcluster_sg
 -w $w
 -s $s
@@ -21,7 +21,7 @@ $O.O_selector
 -L $L
 $inputFile
 > $outputFile
-    ]]>
+]]>
     </command>
     <inputs>
         <param name="inputFile" type="data" format="tabular" label="Weight file" help="3-columns format: id-1 id-2 integer-weight" />
@@ -58,11 +58,11 @@ $inputFile
         </test>
     </tests>
     <help>
-    <![CDATA[
+<![CDATA[
 Simple wrapper for `hcluster_sg`_.
 
 .. _hcluster_sg: https://github.com/douglasgscofield/hcluster
-    ]]>
+]]>
     </help>
     <citations>
     </citations>
