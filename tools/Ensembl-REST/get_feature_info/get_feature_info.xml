@@ -14,7 +14,7 @@ python $__tool_directory__/get_feature_info.py
     </command>
 
     <inputs>
-    <param name="input" type="data" format="txt" label="List of Ensembl IDs" />
+    <param name="input" type="data" format="txt" label="List of Ensembl IDs" help="Max 1000 IDs" />
     <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand" help="Expands the search to include any connected features. For example, if the object is a gene, its transcripts, translations and exons will be returned as well." />
     <param name="format_selector" type="select" label="format" help="Output format">
         <option value="full" selected="true">Full</option>
