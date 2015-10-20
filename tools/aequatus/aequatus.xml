@@ -13,7 +13,19 @@ $alignmentFile
     ]]>
     </command>
     <inputs>
-        <param name="treeFile" type="data" format="nhx" label="Tree file" help="Tree file in Newick format" />
+        <conditional name="source">
+            <param name="input_selector" type="select" label="Input Type" help="The type of input either Newick or JSON from ensembl REST API.">
+                <option value="newick" selected="true">Newick</option>
+                <option value="json">JSON</option>
+            </param>
+            <when value="newick">
+                <param name="treeFile" type="data" format="nhx" label="Tree file" help="Tree file in Newick format" />
+            </when>
+            <when value="json">
+                <param name="treeFile" type="data" format="json" label="Tree file" help="Tree file in Newick format" />
+            </when>
+        </conditional>
+
         <param name="genesFile" type="data" format="json" label="Gene file" help="Gene file in JSON format" />
         <param name="alignmentFile" type="data" format="tabular" label="Alignment file" help="Alignment file in tabular format" />        
     </inputs>
