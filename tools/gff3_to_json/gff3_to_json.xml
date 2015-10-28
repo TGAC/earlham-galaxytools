@@ -3,21 +3,27 @@
     <command>
 <![CDATA[
 python $__tool_directory__/gff3_to_json.py
-$sort
 #for $q in $queries
-    "${q.genome}:${q.gff3_input}"
+    --gff3 "${q.genome}:${q.gff3_input}"
 #end for
+#if str($json) != 'None'
+    #for $v in $json
+        --json "$v"
+    #end for
+#end if
+$sort
 > "$output"
 ]]>
     </command>
 
     <inputs>
-        <repeat min="1" name="queries" title="GFF3 dataset">
-            <param name="gff3_input" type="data" format="gff3" label="GFF3 dataset"/>
+        <repeat name="queries" title="GFF3 dataset">
+            <param name="gff3_input" type="data" format="gff3" label="GFF3 dataset" />
             <param name="genome" type="text" label="Genome name" help="Genome name without whitespaces or special characters">
                 <validator type="empty_field" />
             </param>
         </repeat>
+        <param name="json" type="data" format="json" multiple="true" optional="true" label="JSON datasets to merge" />
         <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the JSON" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
     </inputs>
 

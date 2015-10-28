@@ -11,7 +11,6 @@ three_prime_utr_parent_dict = dict()
 
 
 def gene_to_json(cols, species):
-    global gene_dict
     global gene_count
 
     gene = {
@@ -35,8 +34,6 @@ def gene_to_json(cols, species):
 
 
 def transcript_to_json(cols, species):
-    global transcript_dict
-
     transcript = {
         'end': int(cols[4]),
         'object_type': 'Transcript',
@@ -55,8 +52,6 @@ def transcript_to_json(cols, species):
 
 
 def exon_to_json(cols, species):
-    global exon_parent_dict
-
     exon = {
         'end': int(cols[4]),
         'length': int(cols[4]) - int(cols[3]) + 1,
@@ -81,8 +76,6 @@ def exon_to_json(cols, species):
 
 
 def five_prime_utr_to_json(cols):
-    global five_prime_utr_parent_dict
-
     five_prime_utr = {
         'start': int(cols[3]),
     }
@@ -98,8 +91,6 @@ def five_prime_utr_to_json(cols):
 
 
 def three_prime_utr_to_json(cols):
-    global three_prime_utr_parent_dict
-
     three_prime_utr = {
         'end': int(cols[4]),
     }
@@ -115,8 +106,6 @@ def three_prime_utr_to_json(cols):
 
 
 def cds_to_json(cols):
-    global cds_parent_dict
-
     cds = {
         'end': int(cols[4]),
         'start': int(cols[3]),
@@ -142,7 +131,7 @@ def cds_to_json(cols):
                 cds_parent_dict[parent].append(cds)
 
 
-def join_json(outfile=None, sort_keys=False):
+def join_dicts():
     for parent, exon_list in exon_parent_dict.iteritems():
         exon_list.sort(key=lambda exon: exon['start'])
         if parent in transcript_dict:
@@ -208,6 +197,17 @@ def join_json(outfile=None, sort_keys=False):
         if 'Parent' in transcript and transcript['Parent'] in gene_dict:
             gene_dict[transcript['Parent']]['Transcript'].append(transcript)
 
+
+def merge_dicts(json_arg):
+    with open(json_arg) as f:
+        dict_from_json = json.load(f)
+    gene_intersection = set(gene_dict.keys()) & set(dict_from_json.keys())
+    if gene_intersection:
+        raise Exception("JSON file '%s' contains information for genes '%s', which are also present in other files" % (json_arg, ', '.join(gene_intersection)))
+    gene_dict.update(dict_from_json)
+
+
+def write_json(outfile=None, sort_keys=False):
     if outfile:
         with open(outfile, 'w') as f:
             json.dump(gene_dict, f)
@@ -217,17 +217,19 @@ def join_json(outfile=None, sort_keys=False):
 
 def __main__():
     parser = optparse.OptionParser()
+    parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
+    parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
     parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
     parser.add_option('-s', '--sort', action="store_true", help='Sort the keys in the JSON')
     options, args = parser.parse_args()
 
-    if not args:
-        raise Exception('No input provided')
-    for arg in args:
+    if args:
+        raise Exception('Use options to provide inputs')
+    for gff3_arg in options.gff3:
         try:
-            (species, filename) = arg.split(':')
+            (species, filename) = gff3_arg.split(':')
         except ValueError:
-            raise Exception("Argument '%s' is not in the SPECIES:FILENAME format" % arg)
+            raise Exception("Argument for --gff3 '%s' is not in the SPECIES:FILENAME format" % gff3_arg)
         with open(filename) as f:
             for i, line in enumerate(f):
                 line = line.strip()
@@ -254,7 +256,12 @@ def __main__():
                     cds_to_json(cols)
                 else:
                     raise Exception("Line %i in file '%s': '%s' is not an implemented type")
-    join_json(options.output, options.sort)
+    join_dicts()
+
+    for json_arg in options.json:
+        merge_dicts(json_arg)
+
+    write_json(options.output, options.sort)
 
 
 if __name__ == '__main__':
