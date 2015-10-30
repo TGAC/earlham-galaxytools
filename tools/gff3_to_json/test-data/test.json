@@ -1,0 +1,2201 @@
+{
+   "ENSCAFG00000024151": {
+      "Name": "ENSCAFG00000024151", 
+      "Transcript": [
+         {
+            "Exon": [
+               {
+                  "Name": "ENSCAFE00000180286", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41161537, 
+                  "length": 141, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41161397, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180288", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41165078, 
+                  "length": 552, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41164527, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180303", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41166852, 
+                  "length": 304, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41166549, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180319", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41167087, 
+                  "length": 143, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41166945, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180337", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41167452, 
+                  "length": 145, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41167308, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180353", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41168494, 
+                  "length": 215, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41168280, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180364", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41168862, 
+                  "length": 127, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41168736, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180374", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41170462, 
+                  "length": 239, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41170224, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180385", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41171006, 
+                  "length": 168, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41170839, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180394", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41171295, 
+                  "length": 196, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41171100, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180397", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41171445, 
+                  "length": 42, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41171404, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180399", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41171741, 
+                  "length": 221, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41171521, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180402", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41172093, 
+                  "length": 137, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41171957, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180416", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41172341, 
+                  "length": 163, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41172179, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180432", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41172655, 
+                  "length": 106, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41172550, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180442", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41173309, 
+                  "length": 53, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41173257, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180448", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41173697, 
+                  "length": 230, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41173468, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180452", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41174306, 
+                  "length": 111, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41174196, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180460", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41174601, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41174442, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180475", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41175223, 
+                  "length": 130, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41175094, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000180481", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41175480, 
+                  "length": 135, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41175346, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSCAFE00000309098", 
+                  "Parent": "ENSCAFT00000026349", 
+                  "end": 41176758, 
+                  "length": 1059, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "canisfamiliaris", 
+                  "start": 41175700, 
+                  "strand": 1
+               }
+            ], 
+            "Name": "ENSCAFT00000026349", 
+            "Parent": "ENSCAFG00000024151", 
+            "Translation": {
+               "CDS": [
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41161537, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41161397, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41165078, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41164527, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41166852, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41166549, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41167087, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41166945, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41167452, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41167308, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41168494, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41168280, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41168862, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41168736, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41170462, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41170224, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41171006, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41170839, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41171295, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41171100, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41171445, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41171404, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41171741, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41171521, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41172093, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41171957, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41172341, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41172179, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41172655, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41172550, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41173309, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41173257, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41173697, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41173468, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41174306, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41174196, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41174601, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41174442, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41175223, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41175094, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41175480, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41175346, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSCAFP00000024471", 
+                     "Parent": "ENSCAFT00000026349", 
+                     "end": 41176758, 
+                     "id": "ENSCAFP00000024471", 
+                     "start": 41175700, 
+                     "strand": 1
+                  }
+               ], 
+               "end": 41176758, 
+               "id": "ENSCAFP00000024471", 
+               "object_type": "Translation", 
+               "species": "canisfamiliaris", 
+               "start": 41161397
+            }, 
+            "biotype": "protein_coding", 
+            "end": 41176758, 
+            "id": "ENSCAFT00000026349", 
+            "object_type": "Transcript", 
+            "seq_region_name": "7", 
+            "species": "canisfamiliaris", 
+            "start": 41161397, 
+            "strand": 1
+         }
+      ], 
+      "biotype": "protein_coding", 
+      "end": 41176758, 
+      "id": "ENSCAFG00000024151", 
+      "member_id": 4, 
+      "object_type": "Gene", 
+      "seq_region_name": "7", 
+      "species": "canisfamiliaris", 
+      "start": 41161397, 
+      "strand": 1
+   }, 
+   "ENSMUSG00000005533": {
+      "Name": "ENSMUSG00000005533", 
+      "Transcript": [
+         {
+            "Exon": [
+               {
+                  "Name": "ENSMUSE00000261783", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 67952952, 
+                  "length": 94, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 67952859, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261773", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68004355, 
+                  "length": 546, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68003810, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261767", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68165305, 
+                  "length": 313, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68164993, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261754", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68170048, 
+                  "length": 152, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68169897, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261748", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68173375, 
+                  "length": 145, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68173231, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261743", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68183558, 
+                  "length": 215, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68183344, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261736", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68184857, 
+                  "length": 127, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68184731, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261728", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68187228, 
+                  "length": 239, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68186990, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261725", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68189740, 
+                  "length": 168, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68189573, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261719", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68190150, 
+                  "length": 205, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68189946, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261714", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68193630, 
+                  "length": 284, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68193347, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200356", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68195105, 
+                  "length": 137, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68194969, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200354", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68195749, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68195590, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200353", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68201346, 
+                  "length": 103, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68201244, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200349", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68201972, 
+                  "length": 71, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68201902, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200360", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68207480, 
+                  "length": 230, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68207251, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000530700", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68207873, 
+                  "length": 111, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68207763, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000261691", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68212156, 
+                  "length": 163, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68211994, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000530699", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68215048, 
+                  "length": 130, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68214919, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000200350", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68218536, 
+                  "length": 135, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68218402, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSMUSE00000331286", 
+                  "Parent": "ENSMUST00000005671", 
+                  "end": 68226780, 
+                  "length": 761, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "7", 
+                  "species": "musmusculus", 
+                  "start": 68226020, 
+                  "strand": 1
+               }
+            ], 
+            "Name": "ENSMUST00000005671", 
+            "Parent": "ENSMUSG00000005533", 
+            "Translation": {
+               "CDS": [
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 67952952, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 67952859, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68004355, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68003810, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68165305, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68164993, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68170048, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68169897, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68173375, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68173231, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68183558, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68183344, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68184857, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68184731, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68187228, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68186990, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68189740, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68189573, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68190150, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68189946, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68193630, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68193347, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68195105, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68194969, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68195749, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68195590, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68201346, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68201244, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68201972, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68201902, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68207480, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68207251, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68207873, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68207763, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68212156, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68211994, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68215048, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68214919, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68218536, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68218402, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000005671", 
+                     "Parent": "ENSMUST00000005671", 
+                     "end": 68226780, 
+                     "id": "ENSMUSP00000005671", 
+                     "start": 68226020, 
+                     "strand": 1
+                  }
+               ], 
+               "end": 68226780, 
+               "id": "ENSMUSP00000005671", 
+               "object_type": "Translation", 
+               "species": "musmusculus", 
+               "start": 67952859
+            }, 
+            "biotype": "protein_coding", 
+            "end": 68226780, 
+            "id": "ENSMUST00000005671", 
+            "object_type": "Transcript", 
+            "seq_region_name": "7", 
+            "species": "musmusculus", 
+            "start": 67952859, 
+            "strand": 1
+         }
+      ], 
+      "biotype": "protein_coding", 
+      "end": 68226780, 
+      "id": "ENSMUSG00000005533", 
+      "member_id": 3, 
+      "object_type": "Gene", 
+      "seq_region_name": "7", 
+      "species": "musmusculus", 
+      "start": 67952859, 
+      "strand": 1
+   }, 
+   "ENSMUSG00000005534": {
+      "Name": "ENSMUSG00000005534", 
+      "Transcript": [
+         {
+            "Exon": [
+               {
+                  "Name": "ENSMUSE00000569243", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3156023, 
+                  "length": 5102, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3150922, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611272", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3158830, 
+                  "length": 135, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3158696, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611273", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3159582, 
+                  "length": 130, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3159453, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611274", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3161498, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3161339, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611276", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3161791, 
+                  "length": 111, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3161681, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611277", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3163481, 
+                  "length": 245, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3163237, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611278", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3165585, 
+                  "length": 68, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3165518, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611279", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3167604, 
+                  "length": 103, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3167502, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611280", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3169868, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3169709, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000233970", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3173619, 
+                  "length": 140, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3173480, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000233977", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3174888, 
+                  "length": 275, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3174614, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611282", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3185152, 
+                  "length": 202, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3184951, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611285", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3189292, 
+                  "length": 168, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3189125, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611286", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3192802, 
+                  "length": 257, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3192546, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611287", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3194921, 
+                  "length": 127, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3194795, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000638453", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3198275, 
+                  "length": 215, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3198061, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611267", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3203034, 
+                  "length": 145, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3202890, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611293", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3204778, 
+                  "length": 149, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3204630, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000611294", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3211700, 
+                  "length": 322, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3211379, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00001230539", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3258934, 
+                  "length": 552, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3258383, 
+                  "strand": -1
+               }, 
+               {
+                  "Name": "ENSMUSE00000771349", 
+                  "Parent": "ENSMUST00000091291", 
+                  "end": 3279617, 
+                  "length": 589, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "8", 
+                  "species": "musmusculus", 
+                  "start": 3279029, 
+                  "strand": -1
+               }
+            ], 
+            "Name": "ENSMUST00000091291", 
+            "Parent": "ENSMUSG00000005534", 
+            "Translation": {
+               "CDS": [
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3156023, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3150922, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3158830, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3158696, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3159582, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3159453, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3161498, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3161339, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3161791, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3161681, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3163481, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3163237, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3165585, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3165518, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3167604, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3167502, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3169868, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3169709, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3173619, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3173480, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3174888, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3174614, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3185152, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3184951, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3189292, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3189125, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3192802, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3192546, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3194921, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3194795, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3198275, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3198061, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3203034, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3202890, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3204778, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3204630, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3211700, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3211379, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3258934, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3258383, 
+                     "strand": -1
+                  }, 
+                  {
+                     "Name": "ENSMUSP00000088837", 
+                     "Parent": "ENSMUST00000091291", 
+                     "end": 3279617, 
+                     "id": "ENSMUSP00000088837", 
+                     "start": 3279029, 
+                     "strand": -1
+                  }
+               ], 
+               "end": 3279617, 
+               "id": "ENSMUSP00000088837", 
+               "object_type": "Translation", 
+               "species": "musmusculus", 
+               "start": 3150922
+            }, 
+            "biotype": "protein_coding", 
+            "end": 3279617, 
+            "id": "ENSMUST00000091291", 
+            "object_type": "Transcript", 
+            "seq_region_name": "8", 
+            "species": "musmusculus", 
+            "start": 3150922, 
+            "strand": -1
+         }
+      ], 
+      "biotype": "protein_coding", 
+      "end": 3279617, 
+      "id": "ENSMUSG00000005534", 
+      "member_id": 2, 
+      "object_type": "Gene", 
+      "seq_region_name": "8", 
+      "species": "musmusculus", 
+      "start": 3150922, 
+      "strand": -1
+   }, 
+   "ENSPTRG00000007489": {
+      "Name": "ENSPTRG00000007489", 
+      "Transcript": [
+         {
+            "Exon": [
+               {
+                  "Name": "ENSPTRE00000075393", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96157076, 
+                  "length": 126, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96156951, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075406", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96216947, 
+                  "length": 546, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96216402, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075404", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96403764, 
+                  "length": 313, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96403452, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075400", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96409024, 
+                  "length": 149, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96408876, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075399", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96411724, 
+                  "length": 145, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96411580, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075389", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96421011, 
+                  "length": 215, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96420797, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075398", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96423539, 
+                  "length": 127, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96423413, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000340876", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96425385, 
+                  "length": 239, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96425147, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075396", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96428232, 
+                  "length": 168, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96428065, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075392", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96428974, 
+                  "length": 205, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96428770, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075387", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96434522, 
+                  "length": 284, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96434239, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075390", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96436101, 
+                  "length": 137, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96435965, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075386", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96436773, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96436614, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075407", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96441760, 
+                  "length": 103, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96441658, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075405", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96442407, 
+                  "length": 71, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96442337, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075403", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96447141, 
+                  "length": 230, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96446912, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075397", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96447515, 
+                  "length": 111, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96447405, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075394", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96451443, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96451284, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000423172", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96455136, 
+                  "length": 130, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96455007, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075402", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96460789, 
+                  "length": 135, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96460655, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSPTRE00000075401", 
+                  "Parent": "ENSPTRT00000013802", 
+                  "end": 96470984, 
+                  "length": 1202, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "15", 
+                  "species": "pantroglodytes", 
+                  "start": 96469783, 
+                  "strand": 1
+               }
+            ], 
+            "Name": "ENSPTRT00000013802", 
+            "Parent": "ENSPTRG00000007489", 
+            "Translation": {
+               "CDS": [
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96157076, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96156951, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96216947, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96216402, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96403764, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96403452, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96409024, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96408876, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96411724, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96411580, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96421011, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96420797, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96423539, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96423413, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96425385, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96425147, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96428232, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96428065, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96428974, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96428770, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96434522, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96434239, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96436101, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96435965, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96436773, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96436614, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96441760, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96441658, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96442407, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96442337, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96447141, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96446912, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96447515, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96447405, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96451443, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96451284, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96455136, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96455007, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96460789, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96460655, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSPTRP00000012792", 
+                     "Parent": "ENSPTRT00000013802", 
+                     "end": 96470984, 
+                     "id": "ENSPTRP00000012792", 
+                     "start": 96469783, 
+                     "strand": 1
+                  }
+               ], 
+               "end": 96470984, 
+               "id": "ENSPTRP00000012792", 
+               "object_type": "Translation", 
+               "species": "pantroglodytes", 
+               "start": 96156951
+            }, 
+            "biotype": "protein_coding", 
+            "end": 96470984, 
+            "id": "ENSPTRT00000013802", 
+            "object_type": "Transcript", 
+            "seq_region_name": "15", 
+            "species": "pantroglodytes", 
+            "start": 96156951, 
+            "strand": 1
+         }
+      ], 
+      "biotype": "protein_coding", 
+      "end": 96470984, 
+      "id": "ENSPTRG00000007489", 
+      "member_id": 1, 
+      "object_type": "Gene", 
+      "seq_region_name": "15", 
+      "species": "pantroglodytes", 
+      "start": 96156951, 
+      "strand": 1
+   }, 
+   "ENSRNOG00000014187": {
+      "Name": "ENSRNOG00000014187", 
+      "Transcript": [
+         {
+            "Exon": [
+               {
+                  "Name": "ENSRNOE00000137027", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 128925059, 
+                  "length": 94, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 128924966, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135455", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 128978649, 
+                  "length": 546, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 128978104, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135507", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129142833, 
+                  "length": 313, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129142521, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135552", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129147211, 
+                  "length": 152, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129147060, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135606", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129149837, 
+                  "length": 145, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129149693, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135651", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129159326, 
+                  "length": 215, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129159112, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135775", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129161294, 
+                  "length": 127, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129161168, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000137123", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129162965, 
+                  "length": 239, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129162727, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000135864", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129167030, 
+                  "length": 168, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129166863, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000137165", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129167431, 
+                  "length": 205, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129167227, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000137211", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129172531, 
+                  "length": 284, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129172248, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136003", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129174216, 
+                  "length": 137, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129174080, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136044", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129174841, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129174682, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136080", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129180769, 
+                  "length": 104, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129180666, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000520956", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129180803, 
+                  "length": 31, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129180773, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136171", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129187229, 
+                  "length": 260, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129186970, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000362520", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129187622, 
+                  "length": 111, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129187512, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136274", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129192151, 
+                  "length": 160, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129191992, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000329647", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129195410, 
+                  "length": 130, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129195281, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000136353", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129198902, 
+                  "length": 135, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129198768, 
+                  "strand": 1
+               }, 
+               {
+                  "Name": "ENSRNOE00000137303", 
+                  "Parent": "ENSRNOT00000019267", 
+                  "end": 129206516, 
+                  "length": 385, 
+                  "object_type": "Exon", 
+                  "seq_region_name": "1", 
+                  "species": "rattusnorvegicus", 
+                  "start": 129206132, 
+                  "strand": 1
+               }
+            ], 
+            "Name": "ENSRNOT00000019267", 
+            "Parent": "ENSRNOG00000014187", 
+            "Translation": {
+               "CDS": [
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 128925059, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 128924966, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 128978649, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 128978104, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129142833, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129142521, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129147211, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129147060, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129149837, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129149693, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129159326, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129159112, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129161294, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129161168, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129162965, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129162727, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129167030, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129166863, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129167431, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129167227, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129172531, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129172248, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129174216, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129174080, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129174841, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129174682, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129180769, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129180666, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129180803, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129180773, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129187229, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129186970, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129187622, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129187512, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129192151, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129191992, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129195410, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129195281, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129198902, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129198768, 
+                     "strand": 1
+                  }, 
+                  {
+                     "Name": "ENSRNOP00000019267", 
+                     "Parent": "ENSRNOT00000019267", 
+                     "end": 129206516, 
+                     "id": "ENSRNOP00000019267", 
+                     "start": 129206132, 
+                     "strand": 1
+                  }
+               ], 
+               "end": 129206516, 
+               "id": "ENSRNOP00000019267", 
+               "object_type": "Translation", 
+               "species": "rattusnorvegicus", 
+               "start": 128924966
+            }, 
+            "biotype": "protein_coding", 
+            "end": 129206516, 
+            "id": "ENSRNOT00000019267", 
+            "object_type": "Transcript", 
+            "seq_region_name": "1", 
+            "species": "rattusnorvegicus", 
+            "start": 128924966, 
+            "strand": 1
+         }
+      ], 
+      "biotype": "protein_coding", 
+      "end": 129206516, 
+      "id": "ENSRNOG00000014187", 
+      "member_id": 0, 
+      "object_type": "Gene", 
+      "seq_region_name": "1", 
+      "species": "rattusnorvegicus", 
+      "start": 128924966, 
+      "strand": 1
+   }
+}
