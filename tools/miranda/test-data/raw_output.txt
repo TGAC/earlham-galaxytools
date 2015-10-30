@@ -1,0 +1,92 @@
+
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+miranda v3.3a    microRNA Target Scanning Algorithm
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+(c) 2003 Memorial Sloan-Kettering Cancer Center, New York
+
+Authors: Anton Enright, Bino John, Chris Sander and Debora Marks
+(mirnatargets (at) cbio.mskcc.org - reaches all authors)
+
+Software written by: Anton Enright
+Distributed for anyone to use under the GNU Public License (GPL),
+See the files 'COPYING' and 'LICENSE' for details
+
+If you use this software please cite:
+Enright AJ, John B, Gaul U, Tuschl T, Sander C and Marks DS;
+(2003) Genome Biology; 5(1):R1.
+
+   miranda comes with ABSOLUTELY NO WARRANTY;
+   This is free software, and you are welcome to redistribute it
+   under certain conditions; type `miranda --license' for details.
+
+Current Settings:
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Query Filename: 	/tmp/tmpCIUFbf/files/000/dataset_109.dat
+Reference Filename:	/tmp/tmpCIUFbf/files/000/dataset_110.dat
+Gap Open Penalty:	-9.000000
+Gap Extend Penalty:	-4.000000
+Score Threshold:	140.000000
+Energy Threshold:	1.000000 kcal/mol
+Scaling Parameter:	4.000000
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Read Sequence:gi|29565487|emb|AJ550546.1| Drosophila melanogaster microRNA miR-bantam(21 nt)
+Read Sequence:gi|945100|gb|U31226.1|DMU31226 Drosophila melanogaster head involution defective protein (hid) mRNA, complete cds (3'UTR only)(3902 nt)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Performing Scan: gi|29565487|emb|AJ550546.1| vs gi|945100|gb|U31226.1|DMU31226
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+   Forward:	Score: 167.000000  Q:2 to 20  R:3340 to 3360 Align Len (18) (83.33%) (94.44%)
+
+   Query:    3' gtCGAAAGTTTTACTAGAGTg 5'
+                  |:||||| |||||||||: 
+   Ref:      5' taGTTTTCACAATGATCTCGg 3'
+
+   Energy:  -24.540001 kCal/Mol
+
+Scores for this hit:
+>gi|29565487|emb|AJ550546.1|	gi|945100|gb|U31226.1|DMU31226	167.00	-24.54	2 20	3340 3360	18	83.33%	94.44%
+
+
+   Forward:	Score: 156.000000  Q:2 to 17  R:2505 to 2525 Align Len (15) (86.67%) (93.33%)
+
+   Query:    3' gtcgaAAGTTTTACTAGAGTg 5'
+                     |||||| ||:||||| 
+   Ref:      5' tcataTTCAAATTGGTCTCAc 3'
+
+   Energy:  -20.030001 kCal/Mol
+
+Scores for this hit:
+>gi|29565487|emb|AJ550546.1|	gi|945100|gb|U31226.1|DMU31226	156.00	-20.03	2 17	2505 2525	15	86.67%	93.33%
+
+
+   Forward:	Score: 155.000000  Q:2 to 16  R:2852 to 2872 Align Len (14) (78.57%) (85.71%)
+
+   Query:    3' gtcgaaAGTTTTACTAGAGTg 5'
+                      ||: | |||||||| 
+   Ref:      5' caaaaaTCGCATTGATCTCAt 3'
+
+   Energy:  -14.570000 kCal/Mol
+
+Scores for this hit:
+>gi|29565487|emb|AJ550546.1|	gi|945100|gb|U31226.1|DMU31226	155.00	-14.57	2 16	2852 2872	14	78.57%	85.71%
+
+
+   Forward:	Score: 152.000000  Q:2 to 18  R:3820 to 3841 Align Len (17) (76.47%) (76.47%)
+
+   Query:    3' gtcgAAAGT-TTTACTAGAGTg 5'
+                    | |||  | |||||||| 
+   Ref:      5' taaaTATCATTATTGATCTCAt 3'
+
+   Energy:  -14.180000 kCal/Mol
+
+Scores for this hit:
+>gi|29565487|emb|AJ550546.1|	gi|945100|gb|U31226.1|DMU31226	152.00	-14.18	2 18	3820 3841	17	76.47%	76.47%
+
+Score for this Scan:
+Seq1,Seq2,Tot Score,Tot Energy,Max Score,Max Energy,Strand,Len1,Len2,Positions
+>>gi|29565487|emb|AJ550546.1|	gi|945100|gb|U31226.1|DMU31226	630.00	-73.32	167.00	-24.54	1	21	3902	 3340 2505 2852 3820
+Complete
+
+Scan Complete
+

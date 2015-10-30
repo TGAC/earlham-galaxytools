@@ -1,0 +1,44 @@
+<tool id="miranda" name="miRanda" version="3.3a">
+    <requirements>
+        <requirement type="package" version="3.3a">miranda</requirement>
+    </requirements>
+    <version_command>miranda --version|grep 'miranda v'</version_command>
+    <command>
+<![CDATA[
+miranda "$microrna" "$query"
+#if str($sc)
+    -sc $sc
+#end if
+#if str($en)
+    -en $en
+#end if
+-out $raw_output
+&&
+python $__tool_directory__/miranda_parser.py $raw_output $tabular_output
+]]>
+    </command>
+    <inputs>
+        <param name="microrna" type="data" format="fasta" label="MicroRNA sequences" help="FASTA format" />
+        <param name="query" type="data" format="fasta" label="Query sequences" help="FASTA format" />
+        <param name="sc" type="float" min="0.0" value="140.0" optional="true" label="Alignment score threshold" help="Only alignments with score greater or equal to this value will be used for further analysis (-sc)" />
+        <param name="en" type="float" value="1.0" optional="true" label="Set energy threshold to -E kcal/mol" help="Only alignments with energy less or equal to this value will be used for further analysis. A negative value is required for filtering to occur (-en)" />
+    </inputs>
+    <outputs>
+        <data name="raw_output" format="txt" label="${tool.name} on ${on_string}: raw output" />
+        <data name="tabular_output" format="tabular" label="${tool.name} on ${on_string}: tabular output" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="microrna" ftype="fasta" value="microrna.fasta" />
+            <param name="query" ftype="fasta" value="query.fasta" />
+            <output name="raw_output" file="raw_output.txt" lines_diff="4" />
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1186/gb-2003-5-1-r1</citation>
+    </citations>
+</tool>
