@@ -15,7 +15,6 @@ def printme( str ):
 
 def printid( str ):
 	protein_file.write(str['id'][0]['accession'])
-	protein_file.write(str['id'][0]['accession'])
 	protein_file.write("\t")
 	protein_file.write(str['mol_seq']['cigar_line'])
 	protein_file.write("\n")
