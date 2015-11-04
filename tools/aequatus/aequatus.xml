@@ -1,14 +1,17 @@
-<tool id="aequatus-generator" name="aequatus" version="0.1.1">
-    <description>Aequatus data format generator</description>
+<tool id="aequatus-generator" name="aequatus parser" version="0.1.1">
+    <description>Aquatus</description>
      <requirements>
         <requirement type="package" version="2.90">perl_json</requirement>
     </requirements>
     <command>
     <![CDATA[
-perl $__tool_directory__/aequatus-generator.pl 
-$treeFile 
-$genesFile
-$alignmentFile
+python $__tool_directory__/aequatus-generator.py 
+-t $treeFile 
+-g $genesFile
+-f $source.input_selector
+#if $source.input_selector=="newick"
+    -c $alignmentFile
+#end if
 > $outputFile
     ]]>
     </command>
@@ -20,6 +23,7 @@ $alignmentFile
             </param>
             <when value="newick">
                 <param name="treeFile" type="data" format="nhx" label="Tree file" help="Tree file in Newick format" />
+                <param name="alignmentFile" type="data" format="tabular" label="Alignment file" help="Alignment file in tabular format" />        
             </when>
             <when value="json">
                 <param name="treeFile" type="data" format="json" label="Tree file" help="Tree file in Newick format" />
@@ -27,7 +31,6 @@ $alignmentFile
         </conditional>
 
         <param name="genesFile" type="data" format="json" label="Gene file" help="Gene file in JSON format" />
-        <param name="alignmentFile" type="data" format="tabular" label="Alignment file" help="Alignment file in tabular format" />        
     </inputs>
     <outputs>
         <data type="data" format="aequatus" name="outputFile" label="${tool.name} on ${on_string}" />
