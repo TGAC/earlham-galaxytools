@@ -1,4 +1,4 @@
-<tool id="aequatus-generator" name="aequatus parser" version="0.1.1">
+<tool id="aequatus-generator" name="aequatus generator" version="0.1.1">
     <description>Aquatus</description>
      <requirements>
         <requirement type="package" version="2.90">perl_json</requirement>
