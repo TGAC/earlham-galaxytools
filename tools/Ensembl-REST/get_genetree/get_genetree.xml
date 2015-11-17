@@ -1,0 +1,141 @@
+<tool id="get_genetree" name="Get gene tree by Ensembl ID" version="0.1.1">
+    <description>using REST API</description>
+    <macros>
+        <xml name="sequence_conditional">
+            <conditional name="sequence">
+                <param name="sequence_selector" type="select" label="Sequence type" help="The type of sequence to bring back. If 'None', no sequence is returned">
+                    <option value="protein" selected="true">Protein</option>
+                    <option value="cdna">cDNA</option>
+                    <option value="none">None</option>
+                </param>
+                <when value="protein">
+                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned string" help="If 'No', return the original sequence (no insertions)" />
+                    <yield />
+                </when>
+                <when value="cdna">
+                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned string" help="If 'No', return the original sequence (no insertions)" />
+                    <yield />
+                </when>
+                <when value="none" />
+            </conditional>
+        </xml>
+    </macros>
+    <requirements>
+        <requirement type="package" version="2.7">requests</requirement>
+    </requirements>
+    <command>
+<![CDATA[
+python $__tool_directory__/get_genetree.py
+--id_type $input_type
+-i "$input"
+--format ${output_format.output_format_selector}
+#if $output_format.output_format_selector == 'json'
+    -s ${output_format.sequence.sequence_selector}
+    #if $output_format.sequence.sequence_selector != 'none'
+        -a ${output_format.sequence.aligned}
+        -c ${output_format.sequence.cigar}
+    #end if
+#elif $output_format.output_format_selector == 'phyloxml'
+    -s ${output_format.sequence.sequence_selector}
+    #if $output_format.sequence.sequence_selector != 'none'
+        -a ${output_format.sequence.aligned}
+    #end if
+#else
+    --nh_format $output_format.nh_format
+#end if
+> "$output"
+]]>
+    </command>
+
+    <inputs>
+         <param name="input_type" type="select" label="Input type">
+            <option value="gene_id" selected="true">Ensembl gene ID</option>
+            <option value="gene_tree_id">Ensembl genetree ID</option>
+        </param>
+        <param name="input" type="text" label="Ensembl ID">
+            <validator type="empty_field" />
+        </param>
+        <conditional name="output_format">
+            <param name="output_format_selector" type="select" label="Output format">
+                <option value="json" selected="true">JSON</option>
+                <!-- <option value="orthoxml">OrthoXML</option> -->
+                <option value="phyloxml">phyloXML</option>
+                <option value="nh">Newick</option>
+            </param>
+            <when value="json">
+                <expand macro="sequence_conditional">
+                    <param name="cigar" type="boolean" truevalue="1" falsevalue="0" label="Use CIGAR format for the aligned sequence" help="Does not work for phyloXML output format" />
+                </expand>
+            </when>
+            <when value="phyloxml">
+                <expand macro="sequence_conditional" />
+            </when>
+            <when value="nh">
+                <param name="nh_format" type="select" label="NH format" help="The format of a NH (New Hampshire) request">
+                    <option value="simple" selected="true">simple</option>
+                    <option value="full">full</option>
+                    <option value="display_label_composite">display_label_composite</option>
+                    <option value="species">species</option>
+                    <option value="species_short_name">species_short_name</option>
+                    <option value="ncbi_taxon">ncbi_taxon</option>
+                    <option value="ncbi_name">ncbi_name</option>
+                    <option value="njtree">njtree</option>
+                    <option value="phylip">phylip</option>
+                </param>
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="json" label="$(tool.name) on ${input_type} ${input}">
+            <change_format>
+                <when input="output_format.output_format_selector" value="phyloxml" format="phyloxml" />
+                <when input="output_format.output_format_selector" value="nh" format="nhx" />
+            </change_format>
+        </data>
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input_type" value="gene_id" />
+            <param name="input" value="ENSGALP00000027524" />
+            <param name="output_format_selector" value="json" />
+            <param name="sequence_selector" value="protein" />
+            <param name="aligned" value="0" />
+            <param name="cigar" value="0" />
+            <output name="output" file="genetree.json" ftype="json" />
+        </test>
+        <test>
+            <param name="input_type" value="gene_tree_id" />
+            <param name="input" value="ENSGT00390000003602" />
+            <param name="output_format_selector" value="json" />
+            <param name="sequence_selector" value="protein" />
+            <param name="aligned" value="0" />
+            <param name="cigar" value="0" />
+            <output name="output" file="genetree.json" fype="json" />
+        </test>
+        <test>
+            <param name="input_type" value="gene_tree_id" />
+            <param name="input" value="ENSGT00390000003602" />
+            <param name="output_format_selector" value="phyloxml" />
+            <param name="sequence_selector" value="protein" />
+            <param name="aligned" value="0" />
+            <output name="output" file="genetree.phyloxml" ftype="phyloxml" compare="sim_size" />
+        </test>
+    </tests>
+
+    <help>
+<![CDATA[
+**What it does**
+
+Retrieve a gene tree from Ensembl using its REST API.
+
+Uses the `"GET genetree/id"`_ and `"GET genetree/member/id"`_ API endpoint.
+
+.. _"GET genetree/id": http://rest.ensembl.org/documentation/info/genetree
+.. _"GET genetree/member/id": http://rest.ensembl.org/documentation/info/genetree_member_id
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
