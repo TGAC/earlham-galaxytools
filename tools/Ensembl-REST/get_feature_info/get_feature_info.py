@@ -2,8 +2,9 @@
 # information using the Ensembl REST API.
 import json
 import optparse
-import requests
 from urlparse import urljoin
+
+import requests
 
 server = 'http://rest.ensembl.org'
 ext = 'lookup/id'

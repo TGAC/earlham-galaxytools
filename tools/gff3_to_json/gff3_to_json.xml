@@ -54,7 +54,9 @@ $sort
     </tests>
     <help>
 <![CDATA[
-Simple tool to convert a set of GFF3 datasets into JSON format.
+**What it does**
+
+Simple tool to convert a set of GFF3 datasets into JSON format and to merge with other JSON files.
 
 Example GFF3 file::
 
