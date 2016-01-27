@@ -1,4 +1,4 @@
-<tool id="Aequatus-generator" name="aequatus generator" version="0.1.1">
+<tool id="aequatus-generator" name="Aequatus generator" version="0.1.1">
     <description>Aquatus generator takes tree, gene and alignment information and join them in as aequatus format.</description>
      <requirements>
         <requirement type="package" version="2.90">perl_json</requirement>
