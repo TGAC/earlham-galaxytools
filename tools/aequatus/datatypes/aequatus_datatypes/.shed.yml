@@ -1,5 +1,5 @@
 name: aequatus_datatypes
-owner: anilthanki
+owner: tgac 
 homepage_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/aequatus/datatypes/
 remote_repository_url: https://github.com/anilthanki/tgac-galaxytools/tree/master/tools/aequatus/datatypes/
 description: Datatypes for Aequatus visualisation plugin 
