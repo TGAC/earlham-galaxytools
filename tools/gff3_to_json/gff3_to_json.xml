@@ -46,7 +46,7 @@ $sort
             <param name="genome" ftype="text" value="pantroglodytes" />
 
             <param name="gff3_input" ftype="gff3" value="ENSRNOT00000019267.gff" />
-            <param name="genome" ftype="text" value="rattusnorvegicus" />
+            <param name="genome" value="rattusnorvegicus" />
 
             <param name="sort" value="-s" />
             <output name="output" file="test.json" ftype="json" />
