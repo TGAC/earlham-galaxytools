@@ -12,6 +12,6 @@ log = logging.getLogger(__name__)
 
 
 class Aequatus( Json ):
-    file_ext = "aquatus"
+    file_ext = "aequatus"
 
 
