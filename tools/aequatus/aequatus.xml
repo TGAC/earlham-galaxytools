@@ -1,5 +1,5 @@
 <tool id="aequatus-generator" name="Aequatus generator" version="0.1.1">
-    <description>takes tree, gene and alignment information and join them in as aequatus format.</description>
+    <description>generates aequatus format from tree, gene and alignment information.</description>
     <command>
     <![CDATA[
 "python $__tool_directory__/aequatus-generator.py" 
