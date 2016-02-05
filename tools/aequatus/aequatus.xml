@@ -2,7 +2,7 @@
     <description>generates aequatus format from tree, gene and alignment information.</description>
     <command>
     <![CDATA[
-"python $__tool_directory__/aequatus-generator.py" 
+python "$__tool_directory__/aequatus-generator.py" 
 -t "$treeFile" 
 -g "$genesFile"
 -f $source.input_selector
