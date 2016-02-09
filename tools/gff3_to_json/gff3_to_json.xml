@@ -24,7 +24,7 @@ $sort
             </param>
         </repeat>
         <param name="json" type="data" format="json" multiple="true" optional="true" label="JSON datasets to merge" />
-        <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the JSON" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
+        <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the JSON output" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
     </inputs>
 
     <outputs>
