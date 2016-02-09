@@ -13,7 +13,7 @@ python "$__tool_directory__/aequatus-generator.py"
     ]]>
     </command>
     <inputs>
-        <conditional name="source"
+        <conditional name="source">
             <param name="input_selector" type="select" label="Input type">
                 <option value="newick" selected="true">Newick</option>
                 <option value="json">JSON</option>

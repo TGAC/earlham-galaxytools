@@ -7,10 +7,10 @@ checker = None
 
 
 def write_json(outfile=None, sort_keys=False):
-    if outfile:
-        with open(outfile, 'w') as f:
+	if outfile:
+		with open(outfile, 'w') as f:
 			json.dump(aequatus_dict, f)
-    else:
+	else:
 		print json.dumps(aequatus_dict, indent=3, sort_keys=sort_keys)
 
 def cigar_to_json(fname):
