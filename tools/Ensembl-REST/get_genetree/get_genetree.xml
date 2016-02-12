@@ -3,17 +3,17 @@
     <macros>
         <xml name="sequence_conditional">
             <conditional name="sequence">
-                <param name="sequence_selector" type="select" label="Sequence type" help="The type of sequence to bring back. If 'None', no sequence is returned">
+                <param name="sequence_selector" type="select" label="Sequence type" help="The type of sequences to bring back. If 'None', no sequence is returned">
                     <option value="protein" selected="true">Protein</option>
                     <option value="cdna">cDNA</option>
                     <option value="none">None</option>
                 </param>
                 <when value="protein">
-                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned string" help="If 'No', return the original sequence (no insertions)" />
+                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned sequences instead of the original ones" help="The original sequences contain no insertions" />
                     <yield />
                 </when>
                 <when value="cdna">
-                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned string" help="If 'No', return the original sequence (no insertions)" />
+                    <param name="aligned" type="boolean" truevalue="1" falsevalue="0" label="Return the aligned sequences instead of the original ones" help="The original sequences contain no insertions" />
                     <yield />
                 </when>
                 <when value="none" />
@@ -64,7 +64,7 @@ python $__tool_directory__/get_genetree.py
             </param>
             <when value="json">
                 <expand macro="sequence_conditional">
-                    <param name="cigar" type="boolean" truevalue="1" falsevalue="0" label="Use CIGAR format for the aligned sequence" help="Does not work for phyloXML output format" />
+                    <param name="cigar" type="boolean" truevalue="1" falsevalue="0" label="Output the sequences also in CIGAR format" />
                 </expand>
             </when>
             <when value="phyloxml">
