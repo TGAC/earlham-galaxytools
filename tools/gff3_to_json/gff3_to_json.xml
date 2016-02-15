@@ -24,7 +24,7 @@ $sort
             </param>
         </repeat>
         <param name="json" type="data" format="json" multiple="true" optional="true" label="JSON datasets to merge" />
-        <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the JSON" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
+        <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the JSON output" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
     </inputs>
 
     <outputs>
@@ -46,7 +46,7 @@ $sort
             <param name="genome" ftype="text" value="pantroglodytes" />
 
             <param name="gff3_input" ftype="gff3" value="ENSRNOT00000019267.gff" />
-            <param name="genome" ftype="text" value="rattusnorvegicus" />
+            <param name="genome" value="rattusnorvegicus" />
 
             <param name="sort" value="-s" />
             <output name="output" file="test.json" ftype="json" />
@@ -54,7 +54,9 @@ $sort
     </tests>
     <help>
 <![CDATA[
-Simple tool to convert a set of GFF3 datasets into JSON format.
+**What it does**
+
+Simple tool to convert a set of GFF3 datasets into JSON format and to merge with other JSON files.
 
 Example GFF3 file::
 

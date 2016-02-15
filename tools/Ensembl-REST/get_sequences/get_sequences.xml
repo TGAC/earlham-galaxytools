@@ -44,9 +44,9 @@ python $__tool_directory__/get_sequences.py
 <![CDATA[
 **What it does**
 
-Retrieves sequences from Ensembl server using REST API.
+Retrieves FASTA sequences from Ensembl using its REST API.
 
-Uses `"POST sequence/id"`_ API endpoint.
+Uses the `"POST sequence/id"`_ API endpoint.
 
 .. _"POST sequence/id": http://rest.ensembl.org/documentation/info/sequence_id_post
 ]]>

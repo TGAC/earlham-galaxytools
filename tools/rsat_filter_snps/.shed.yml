@@ -1,0 +1,8 @@
+categories:
+- ChIP-seq
+- Systems Biology
+description: Filter SNPs in RSAT Matrix Scan output
+name: rsat_filter_snps
+owner: tgac
+remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/rsat_filter_snps
+type: unrestricted

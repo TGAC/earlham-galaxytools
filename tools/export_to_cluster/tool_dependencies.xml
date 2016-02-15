@@ -1,0 +1,5 @@
+<tool_dependency>
+    <set_environment version="1.0">
+        <environment_variable name="EXPORT_DIR_PREFIX" action="set_to"></environment_variable>
+    </set_environment>
+</tool_dependency>

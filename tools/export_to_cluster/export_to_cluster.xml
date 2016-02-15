@@ -1,0 +1,30 @@
+<tool id="export_to_cluster" name="Export datasets to cluster" version="0.0.1">
+    <requirements>
+        <requirement type="set_environment">EXPORT_DIR_PREFIX</requirement>
+    </requirements>
+    <command>
+<![CDATA[
+python $__tool_directory__/export_to_cluster.py -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
+#for $d in $datasets
+    '$d' '$d.hid: $d.name'
+#end for
+> $log
+]]>
+    </command>
+    <inputs>
+        <param name="datasets" type="data" format="data" multiple="true" label="Datasets to export" />
+        <param name="export_dir" type="text" value="" label="Directory where to export the datasets" help="Must be writable by the Galaxy user">
+            <validator type="empty_field" />
+            <sanitizer sanitize="false" />
+        </param>
+    </inputs>
+    <outputs>
+        <data name="log" format="txt" />
+    </outputs>
+    <tests>
+    </tests>
+    <help>
+Simple tool to copy datasets to a directory on the cluster.
+    </help>
+    <citations/>
+</tool>

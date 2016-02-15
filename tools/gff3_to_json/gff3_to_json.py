@@ -210,7 +210,7 @@ def merge_dicts(json_arg):
 def write_json(outfile=None, sort_keys=False):
     if outfile:
         with open(outfile, 'w') as f:
-            json.dump(gene_dict, f)
+            json.dump(gene_dict, f, sort_keys=sort_keys)
     else:
         print json.dumps(gene_dict, indent=3, sort_keys=sort_keys)
 
@@ -219,8 +219,8 @@ def __main__():
     parser = optparse.OptionParser()
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
+    parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
     parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
-    parser.add_option('-s', '--sort', action="store_true", help='Sort the keys in the JSON')
     options, args = parser.parse_args()
 
     if args:
