@@ -1,1 +1,7 @@
-(ENSPTRG00000005766,ENSG00000139618);
+((ENSPTRT00000014542_pantroglodytes:0.003191[&&NHX:S=pantroglodytes],
+ENST00000261584_homosapiens:0.00246[&&NHX:S=homosapiens]
+):0.107894[&&NHX:D=N:E=$-rod:S=prim:B=100],
+(ENSCAFT00000049192_canisfamiliaris:0.096181[&&NHX:S=canisfamiliaris],
+ENSSSCT00000011810_susscrofa:0.139027[&&NHX:S=susscrofa]
+):0[&&NHX:D=N:S=laur:B=100]
+)[&&NHX:D=N:S=mamm:B=0];
