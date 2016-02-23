@@ -1,4 +1,5 @@
 <tool id="miranda" name="miRanda" version="3.3a">
+    <description>finds potential target sites for miRNAs in genomic sequences</description>
     <requirements>
         <requirement type="package" version="3.3a">miranda</requirement>
     </requirements>
