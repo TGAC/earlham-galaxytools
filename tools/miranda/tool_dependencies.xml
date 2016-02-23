@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="miranda" version="3.3a">
+        <install version="1.0">
+            <actions>
+                <action type="download_by_url" target_filename="miRanda-3.3a.tar.gz" sha256sum="a671da562cf4636ef5085b27349df2df2f335774663fd423deb08f31212ec778">http://cbio.mskcc.org/microrna_data/miRanda-aug2010.tar.gz</action>
+                <action type="autoconf" />
+                <action type="set_environment">
+                    <environment_variable name="PATH" action="prepend_to">$INSTALL_DIR/bin</environment_variable>
+                </action>
+            </actions>
+        </install>
+        <readme>
+miRanda finds potential target sites for miRNAs in genomic sequences.
+        </readme>
+    </package>
+</tool_dependency>
