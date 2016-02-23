@@ -37,6 +37,17 @@ python $__tool_directory__/miranda_parser.py $raw_output $tabular_output
     </tests>
     <help>
 <![CDATA[
+`miRanda`_ is an algorithm for the detection of potential microRNA target sites in genomic sequences.
+
+One or more miRNA sequences are scanned against all query sequences and potential target sites are reported. Potential target sites are identified using a two-step strategy. First a dynamic programming local alignment is carried out between the query miRNA sequence and the reference sequence. This alignment procedure scores based on sequence complementarity and not on sequence identity. In other words we look for A:U and G:C matches instead of A:A, G:G, etc. The G:U wobble bair is also permitted, but generally scores less than the more optimal matches.
+
+The second phase of the algorithm takes high-scoring alignments (i.e. those above the alignment score threshold) detected from phase 1 and estimates the thermodynamic stability of RNA duplexes based on these alignments. This second phase of the method utilizes folding routines from the RNAlib library, which is part of the ViennaRNA package written by Ivo Hofacker. At this stage we generate a constrained fictional single-stranded RNA composed of the query sequence, a linker and the reference sequence (reversed). This structure is then folded using RNAlib and the minimum free energy (DG kcal/mol) is calculated for that structure.
+
+Finally, detected targets with energies less than a chosen energy threshold are selected as potential target sites. Target site alignments passing both thresholds and other information is produced as output.
+
+View the original miRanda manual: http://cbio.mskcc.org/microrna_data/manual.html
+
+.. _miRanda: http://www.microrna.org/
 ]]>
     </help>
     <citations>
