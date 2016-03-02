@@ -21,7 +21,7 @@ $input
 
     <help>
 <![CDATA[
-Simple tool to convert a 12- or 24- column BLAST output into a 3-column hcluster_sg input.
+Simple tool to convert a 12- or 24-column BLAST output into a 3-column format (qseqid, sseqid, round(-1 * log10(evalue))) usable as input for the hcluster_sg tool.
 ]]>
     </help>
     <citations>
