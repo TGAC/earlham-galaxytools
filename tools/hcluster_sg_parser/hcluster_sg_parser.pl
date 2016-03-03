@@ -2,43 +2,24 @@
 #
 use strict;
 use warnings;
+# A simple perl parser to convert hcluster_sg 3-column output into list of ids in separate files
+# hcluster_sg_parser.pl <file>
 
-
-#A simple perl parser to convert hcluster_sg 3-column output into list of ids in separate files
-#hcluster_sg_parser.pl <file>
-#
-
-my @table;
-my @cluster_ids;
 my $file1 = $ARGV[0];
 open my $fh1, '<', $file1;
-my $i = 0;
 
-#reads through file
 while (my $line = <$fh1>) {
     chomp $line;
     my @row = split(/\t/, $line);
 
-    push @cluster_ids, $row[0];
+    my $cluster_id = $row[0];
+    my $id_list = $row[2];
+    # Change commas to newlines
+    $id_list =~ s/\,/\n/g;
 
-    my @list = split(/\,/, $row[2]);
-    $table[$i] = [@list];
-
-    $i++;
+    my $outfile = $cluster_id."_output.txt";
+    open(my $fh, '>', $outfile) or die "Could not open file '$outfile' for writing: $!";
+    print $fh $id_list;
+    close $fh;
 }
 close $fh1;
-
-$i = 0;
-
-#write into separate files with name of cluster_id
-foreach my $row (@table) {
-    my $outfile = $cluster_ids[$i]."_output.txt";
-    open(my $fh, '>', $outfile) or die "Could not open file '$outfile' for writing: $!";
-
-    foreach my $element (@$row) {
-        print $fh $element, "\n";
-    }
-
-    close $fh;
-    $i++;
-}
