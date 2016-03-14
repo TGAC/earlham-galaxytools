@@ -5,18 +5,17 @@
     </requirements>
     <command>
 <![CDATA[
-    run_CrossValidation.sh $expr_levels $network_nodes $classes $lambda $n_folds $max_iter ./ &&
-    cd genepen_out &&
-    mv weights_lambda$lambda.txt weights.txt &&
-    mv weights_lambda$lambda.mat weights.mat &&
-    mv vts_lambda$lambda.txt vts.txt &&
-    mv vts_lambda$lambda.mat vts.mat
+    run_CrossValidation.sh "$expr_levels" "$network_nodes" "$classes" $lambda $n_folds $max_iter ./ &&
+    mv weights_lambda${lambda}.txt weights.txt &&
+    mv weights_lambda${lambda}.mat weights.mat &&
+    mv vts_lambda${lambda}.txt vts.txt &&
+    mv vts_lambda${lambda}.mat vts.mat
 ]]>
     </command>
     <inputs>
         <param name="expr_levels" type="data" format="tabular" label="Expression levels" help="" />
         <param name="network_nodes" type="data" format="tabular" label="Network nodes" help="" />
-        <param name="classes" type="data" format="tabular" label="Classes for the samples" help="" />
+        <param name="classes" type="data" format="txt" label="Classes for the samples" help="" />
         <param name="lambda" type="float" value="" label="Lambda for the optimisation" help="" />
         <param name="n_folds" type="integer" value="" label="N-folds for cross validation" help="" />
         <param name="max_iter" type="integer" value="" label="Maximum number of iterations" />
