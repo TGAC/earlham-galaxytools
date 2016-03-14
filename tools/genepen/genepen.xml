@@ -3,6 +3,9 @@
     <requirements>
         <requirement type="package" version="0.0.1">genepen</requirement>
     </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
     <command>
 <![CDATA[
     run_CrossValidation.sh "$expr_levels" "$network_nodes" "$classes" $lambda $n_folds $max_iter ./ &&
