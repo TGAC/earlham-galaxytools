@@ -9,6 +9,7 @@ refProtein = None
 gene_dict = None
 version = "0.0.1"
 
+
 def write_json(aequatus_dict, outfile=None, sort_keys=False):
     if outfile:
         with open(outfile, 'w') as f:
@@ -27,7 +28,7 @@ def cigar_to_json(fname):
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
             cigar_dict[getProteinIDfromGeneJSON(seq_id)] = cigar
-    
+
     cd = list(cigar_dict)
 
     if refProtein is None:
@@ -65,19 +66,21 @@ def join_json(tree_dict, gene_dict, cigar_dict):
     aequatus_dict['protein_id'] = refProtein
     aequatus_dict['transcript_id'] = refTrancript
     aequatus_dict['version'] = version
-    
+
     return aequatus_dict
 
+
 def parseGeneJSON(obj, id):
-    global refProtein
     global refGene
+    global refTrancript
 
     if "Transcript" in obj:
         for each in obj["Transcript"]:
             if "Translation" in each:
                 if each["Translation"]["id"] == id:
                     refGene = obj["id"]
-                    refTrancript = each["id"]    
+                    refTrancript = each["id"]
+
 
 def getProteinIDfromGeneJSON(id):
     global gene_dict
@@ -85,7 +88,7 @@ def getProteinIDfromGeneJSON(id):
         if "Transcript" in gene_dict[obj]:
             for each in gene_dict[obj]["Transcript"]:
                 if each["id"] == id:
-                    return each["Translation"]["id"]    
+                    return each["Translation"]["id"]
 
 
 def parseTree(obj):
@@ -102,6 +105,7 @@ def parseTree(obj):
     else:
         for child in obj["children"]:
             parseTree(child)
+
 
 def __main__():
     global gene_dict
@@ -125,7 +129,7 @@ def __main__():
         cigar_dict = dict()
         tree_dict = jsontree_to_json(options.tree)
         parseTree(tree_dict)
-        
+
     aequatus_dict = join_json(tree_dict, gene_dict, cigar_dict)
 
     write_json(aequatus_dict, options.output, options.sort)
