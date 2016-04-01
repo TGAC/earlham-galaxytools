@@ -17,7 +17,6 @@ def write_json(aequatus_dict, outfile=None, sort_keys=False):
 
 
 def cigar_to_json(fname):
-    global refTrancript
     global refProtein
     global gene_dict
 
@@ -52,8 +51,6 @@ def gene_to_json(fname):
 
 
 def join_json(tree_dict, gene_dict, cigar_dict):
-    global version
-
     aequatus_dict = {'tree': tree_dict,
                      'member': gene_dict}
 
@@ -91,8 +88,6 @@ def getProteinIDfromGeneJSON(id):
 
 def parseTree(obj):
     global refProtein
-    global refGene
-    global refTrancript
     if "children" not in obj:
         if refProtein is None:
             refProtein = obj["sequence"]["id"][0]["accession"]
