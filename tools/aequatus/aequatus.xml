@@ -2,7 +2,7 @@
     <description>generates datasets that can be visualised with Aequatus</description>
     <command>
 <![CDATA[
-python "$__tool_directory__/aequatus-generator.py"
+python "$__tool_directory__/aequatus.py"
 -t "$treeFile"
 -f $source.input_selector
 #if $source.input_selector == 'newick'
