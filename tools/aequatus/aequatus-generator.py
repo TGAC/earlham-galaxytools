@@ -1,8 +1,6 @@
 import json
 import optparse
 
-jsonArrayGene = []
-jsonArrayTranscript = []
 refTrancript = None
 refGene = None
 refProtein = None
@@ -96,8 +94,6 @@ def parseTree(obj):
     global refGene
     global refTrancript
     if "children" not in obj:
-        jsonArrayGene.append(obj["id"]["accession"])
-        jsonArrayTranscript.append(obj["sequence"]["id"][0]["accession"])
         if refProtein is None:
             refProtein = obj["sequence"]["id"][0]["accession"]
             for each in gene_dict:
