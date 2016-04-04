@@ -1,10 +1,6 @@
 import json
 import optparse
 
-refTrancript = None
-refGene = None
-refProtein = None
-gene_dict = None
 version = "0.0.1"
 
 
@@ -16,112 +12,101 @@ def write_json(aequatus_dict, outfile=None, sort_keys=False):
         print json.dumps(aequatus_dict, indent=4, sort_keys=sort_keys)
 
 
-def cigar_to_json(fname):
-    global refProtein
-    global gene_dict
-
+def cigar_to_dict(fname, gene_dict):
     cigar_dict = dict()
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            cigar_dict[getProteinIDfromGeneJSON(seq_id)] = cigar
+            cigar_dict[get_protein_id_from_transcript_id(gene_dict, seq_id)] = cigar
 
-    cd = list(cigar_dict)
-
-    if refProtein is None:
-        refProtein = cd[0]
-        for each in gene_dict:
-            parseGeneJSON(gene_dict[each], refProtein)
     return cigar_dict
 
 
-def newicktree_to_json(fname):
+def newicktree_to_string(fname):
     with open(fname) as f:
         return f.read().replace('\n', '')
 
 
-def jsontree_to_json(fname):
+def jsontree_to_dict(fname):
     with open(fname) as f:
         return json.load(f)['tree']
 
 
-def gene_to_json(fname):
+def gene_json_to_dict(fname):
     with open(fname) as f:
         return json.load(f)
 
 
-def join_json(tree_dict, gene_dict, cigar_dict):
-    aequatus_dict = {'tree': tree_dict,
+def join_json(tree, gene_dict, cigar_dict, ref_gene, ref_protein, ref_transcript):
+    aequatus_dict = {'tree': tree,
                      'member': gene_dict}
 
     if cigar_dict:
         aequatus_dict['cigar'] = cigar_dict
 
-    aequatus_dict['ref'] = refGene
-    aequatus_dict['protein_id'] = refProtein
-    aequatus_dict['transcript_id'] = refTrancript
+    aequatus_dict['ref'] = ref_gene
+    aequatus_dict['protein_id'] = ref_protein
+    aequatus_dict['transcript_id'] = ref_transcript
     aequatus_dict['version'] = version
 
     return aequatus_dict
 
 
-def parseGeneJSON(obj, id):
-    global refGene
-    global refTrancript
-
-    if "Transcript" in obj:
-        for each in obj["Transcript"]:
-            if "Translation" in each:
-                if each["Translation"]["id"] == id:
-                    refGene = obj["id"]
-                    refTrancript = each["id"]
+def get_gene_and_transcript_ids_from_protein_id(gene_dict, protein_id):
+    for gene in gene_dict.values():
+        if "Transcript" in gene:
+            for transcript in gene["Transcript"]:
+                if 'Translation' in transcript and 'id' in transcript["Translation"]:
+                    if transcript["Translation"]["id"] == protein_id:
+                        return (gene["id"], transcript["id"])
 
 
-def getProteinIDfromGeneJSON(id):
-    global gene_dict
-    for obj in gene_dict:
-        if "Transcript" in gene_dict[obj]:
-            for each in gene_dict[obj]["Transcript"]:
-                if each["id"] == id:
-                    return each["Translation"]["id"]
+def get_protein_id_from_transcript_id(gene_dict, transcript_id):
+    for gene in gene_dict.values():
+        if "Transcript" in gene:
+            for transcript in gene["Transcript"]:
+                if transcript['id'] == transcript_id:
+                    if 'Translation' in transcript and 'id' in transcript['Translation']:
+                        return transcript["Translation"]["id"]
+                    else:
+                        break
 
 
-def parseTree(obj):
-    global refProtein
-    if "children" not in obj:
-        if refProtein is None:
-            refProtein = obj["sequence"]["id"][0]["accession"]
-            for each in gene_dict:
-                parseGeneJSON(gene_dict[each], refProtein)
+def get_first_protein_id_from_tree(tree_el):
+    if "children" not in tree_el:
+        return tree_el["sequence"]["id"][0]["accession"]
     else:
-        for child in obj["children"]:
-            parseTree(child)
+        # Depth-first search
+        first_child = tree_el["children"][0]
+        return get_first_protein_id_from_tree(first_child)
 
 
 def __main__():
-    global gene_dict
     parser = optparse.OptionParser()
-    parser.add_option('-t', '--tree', help='Tree file')
-    parser.add_option('-f', '--format', type='choice', choices=['newick', 'json'], default='json', help='Tree Format')
-    parser.add_option('-c', '--cigar', help='CIGAR file in table format (only if tree is in newick format)')
-    parser.add_option('-g', '--gene', help='Gene file in JSON format')
+    parser.add_option('-t', '--tree', help='Gene tree file')
+    parser.add_option('-f', '--format', type='choice', choices=['newick', 'json'], default='json', help='Gene tree format')
+    parser.add_option('-c', '--cigar', help='CIGAR alignments of CDS file in tabular format (only if tree is in newick format)')
+    parser.add_option('-g', '--gene', help='Gene features file in JSON format')
     parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
     parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
 
-    gene_dict = gene_to_json(options.gene)
+    gene_dict = gene_json_to_dict(options.gene)
 
     if options.format == "newick":
-        cigar_dict = cigar_to_json(options.cigar)
-        tree_dict = newicktree_to_json(options.tree)
+        cigar_dict = cigar_to_dict(options.cigar, gene_dict)
+        tree = newicktree_to_string(options.tree)
+        # Pick a random protein as reference
+        ref_protein = next(iter(cigar_dict))
     else:
         cigar_dict = dict()
-        tree_dict = jsontree_to_json(options.tree)
-        parseTree(tree_dict)
+        tree = jsontree_to_dict(options.tree)
+        ref_protein = get_first_protein_id_from_tree(tree)
 
-    aequatus_dict = join_json(tree_dict, gene_dict, cigar_dict)
+    ref_gene, ref_transcript = get_gene_and_transcript_ids_from_protein_id(gene_dict, ref_protein)
+    aequatus_dict = join_json(tree, gene_dict, cigar_dict, ref_gene, ref_protein, ref_transcript)
 
     write_json(aequatus_dict, options.output, options.sort)
 
