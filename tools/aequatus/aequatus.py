@@ -1,3 +1,4 @@
+from __future__ import print_function
 import json
 import optparse
 
@@ -9,7 +10,7 @@ def write_json(aequatus_dict, outfile=None, sort_keys=False):
         with open(outfile, 'w') as f:
             json.dump(aequatus_dict, f, sort_keys=sort_keys)
     else:
-        print json.dumps(aequatus_dict, indent=4, sort_keys=sort_keys)
+        print(json.dumps(aequatus_dict, indent=4, sort_keys=sort_keys))
 
 
 def cigar_to_dict(fname, gene_dict):
@@ -17,7 +18,7 @@ def cigar_to_dict(fname, gene_dict):
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            cigar_dict[get_protein_id_from_transcript_id(gene_dict, seq_id)] = cigar
+            cigar_dict[get_protein_id_from_seq_id(gene_dict, seq_id)] = cigar
 
     return cigar_dict
 
@@ -59,17 +60,21 @@ def get_gene_and_transcript_ids_from_protein_id(gene_dict, protein_id):
                 if 'Translation' in transcript and 'id' in transcript["Translation"]:
                     if transcript["Translation"]["id"] == protein_id:
                         return (gene["id"], transcript["id"])
+    print("Protein id %s not found in gene dictionary" % protein_id)
+    return (None, None)
 
 
-def get_protein_id_from_transcript_id(gene_dict, transcript_id):
+def get_protein_id_from_seq_id(gene_dict, seq_id):
     for gene in gene_dict.values():
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
-                if transcript['id'] == transcript_id:
+                if transcript['id'] == seq_id:
                     if 'Translation' in transcript and 'id' in transcript['Translation']:
                         return transcript["Translation"]["id"]
                     else:
                         break
+                elif 'Translation' in transcript and 'id' in transcript['Translation'] and transcript["Translation"]["id"] == seq_id:
+                    return seq_id
 
 
 def get_first_protein_id_from_tree(tree_el):
