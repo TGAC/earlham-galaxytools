@@ -45,7 +45,7 @@ $sort
         </test>
         <test>
             <param name="input_selector" value="json" />
-            <param name="treeFile" ftype="nhx" value="tree.json" />
+            <param name="treeFile" ftype="json" value="tree.json" />
             <param name="genesFile" ftype="json" value="gene.json" />
             <param name="sort" value="-s" />
             <output name="outputFile" ftype="aequatus" file="test2.aequatus" />
