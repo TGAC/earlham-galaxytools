@@ -41,7 +41,14 @@ $sort
             <param name="alignmentFile" ftype="tabular" value="cigar.tabular" />
             <param name="genesFile" ftype="json" value="gene.json" />
             <param name="sort" value="-s" />
-            <output name="outputFile" ftype="aequatus" file="test.aequatus" />
+            <output name="outputFile" ftype="aequatus" file="test1.aequatus" />
+        </test>
+        <test>
+            <param name="input_selector" value="json" />
+            <param name="treeFile" ftype="nhx" value="tree.json" />
+            <param name="genesFile" ftype="json" value="gene.json" />
+            <param name="sort" value="-s" />
+            <output name="outputFile" ftype="aequatus" file="test2.aequatus" />
         </test>
     </tests>
     <help>
