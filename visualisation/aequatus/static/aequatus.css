@@ -1,6 +1,5 @@
 .circleBase {
     border-radius: 50%;
-    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
 }
 
 .type2 {
@@ -89,6 +88,8 @@
     left: 0px; 
     top: 0px; 
     position: relative;
+    background: darkcyan none repeat scroll 0% 0%; 
+    padding: 2px;
 }
 
 #popup_body{
@@ -106,7 +107,6 @@
 
 .bubbleright {
      background-color: white;
-     background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
      border: 1px solid #888888;
      box-shadow: 10px 10px 35px #888888;
      color: #333333;

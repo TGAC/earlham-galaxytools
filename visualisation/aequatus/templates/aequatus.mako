@@ -3,7 +3,6 @@
 
     # Use root for resource loading.
     root = h.url_for( '/' )
-    history_id = trans.security.encode_id( trans.history.id )
     app_root    = root + "plugins/visualizations/aequatus/static/"
 %>
 ## ----------------------------------------------------------------------------
@@ -55,18 +54,14 @@
 ## ----------------------------------------------------------------------------
 <body style="cursor: auto; height: 100%; position: absolute; width: 100%; z-index: 1999;">
 
-<script>
-
-        console.log("here")
+<script type="text/javascript">
 
         kickOff();
 
-        var history_id = '${ trans.security.encode_id( trans.history.id ) }'
-
         var hda_id = '${ trans.security.encode_id( hda.id ) }'
 
-        var ajax_url = '/api/histories/' + '${ trans.security.encode_id( trans.history.id ) }/contents/' + '${ trans.security.encode_id( hda.id ) }'+ '/display'
-
+        var ajax_url = "${h.url_for( controller='/datasets', action='index')}/" + hda_id + "/display"
+        
         var json_result;
 
         var datasetFetch = jQuery.ajax( {
@@ -172,22 +167,13 @@
 
 <div id="popup" class="bubbleleft" >
     <div id="popup_header">
-        <table width="100%" cellspacing="0" border="0">
-            <thead>
-            <tr>
-                <td bgcolor="darkcyan">
-                    <div id="stable_id_header">
-                        <span id="name_label"></span>
-                        <i onclick="removePopup();" class="fa fa-close "  style="color: white; position: absolute; right: 5px; cursor: pointer; "></i>
-                    </div>
-                </td>
-            </tr>
-            </thead>
-        </table>
-
+        <div id="stable_id_header">
+            <span id="name_label"></span>
+            <i onclick="removePopup();" class="fa fa-close "  style="color: white; position: absolute; right: 5px; cursor: pointer; "></i>
+        </div>
     </div>
     <div id="popup_body">
-        <table width=100% cellspacing="0" border="0">
+        <table width="100%"" cellspacing="0" border="0">
             <tbody>
             <tr>
                 <td>
@@ -210,8 +196,8 @@
                 </td>
             </tr>
             <tr align="right">
-                <td align="">
-                    <table >
+                <td>
+                    <table>
                         <tbody>
                         <tr>
                             <td>
@@ -231,3 +217,5 @@
 <span id="ruler"></span>
       
 </body>
+
+</html>
