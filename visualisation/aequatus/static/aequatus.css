@@ -3,12 +3,6 @@
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
 }
 
-.type1 {
-    width: 100px;
-    height: 100px;
-    background: yellow;
-    border: 3px solid red;
-}
 .type2 {
     width: 20px;
     height: 20px;
