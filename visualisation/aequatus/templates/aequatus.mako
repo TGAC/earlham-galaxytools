@@ -173,7 +173,7 @@
         </div>
     </div>
     <div id="popup_body">
-        <table width="100%"" cellspacing="0" border="0">
+        <table width="100%" cellspacing="0" border="0">
             <tbody>
             <tr>
                 <td>
