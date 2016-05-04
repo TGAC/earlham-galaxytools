@@ -32,6 +32,45 @@ def jsontree_to_dict(fname):
     with open(fname) as f:
         return json.load(f)['tree']
 
+def trim_gene_dict(gene_dict, cigar_dict):
+    trimmed_gene_dict = dict()
+
+    for gene in gene_dict.values():
+        flag = False;
+        if "Transcript" in gene:
+            for transcript in gene["Transcript"]:
+                if 'Translation' in transcript and 'id' in transcript["Translation"]:
+                    if transcript["Translation"]["id"] in cigar_dict:
+                        flag = True
+                    elif transcript["id"] in cigar_dict:
+                        flag = True
+
+        if flag:
+            trimmed_gene_dict[gene["id"]]=gene
+
+    return trimmed_gene_dict
+
+def trim_gene_dict_from_tree(gene_dict, tree):
+    trimmed_gene_dict = dict()
+
+    def recursive_check(element):
+        for child in element["children"]:
+            if "children" in child:
+                recursive_check(child)
+            else:
+                getID(child)
+
+    def getID(element):
+        trimmed_gene_dict[element["id"]["accession"]] = gene_dict[element["id"]["accession"]]
+
+    for child in tree["children"]:
+        if "children" in child:
+            recursive_check(child)
+        else:
+            getID(child)
+
+    return trimmed_gene_dict          
+
 
 def gene_json_to_dict(fname):
     with open(fname) as f:
@@ -103,11 +142,14 @@ def __main__():
     if options.format == "newick":
         cigar_dict = cigar_to_dict(options.cigar, gene_dict)
         tree = newicktree_to_string(options.tree)
+        gene_dict = trim_gene_dict(gene_dict, cigar_dict)
+        
         # Pick a random protein as reference
         ref_protein = next(iter(cigar_dict))
     else:
         cigar_dict = dict()
         tree = jsontree_to_dict(options.tree)
+        gene_dict = trim_gene_dict_from_tree(gene_dict, tree)
         ref_protein = get_first_protein_id_from_tree(tree)
 
     ref_gene, ref_transcript = get_gene_and_transcript_ids_from_protein_id(gene_dict, ref_protein)
