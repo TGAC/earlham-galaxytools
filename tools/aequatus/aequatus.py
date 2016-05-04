@@ -32,11 +32,12 @@ def jsontree_to_dict(fname):
     with open(fname) as f:
         return json.load(f)['tree']
 
+
 def trim_gene_dict(gene_dict, cigar_dict):
     trimmed_gene_dict = dict()
 
     for gene in gene_dict.values():
-        flag = False;
+        flag = False
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 if 'Translation' in transcript and 'id' in transcript["Translation"]:
@@ -46,9 +47,10 @@ def trim_gene_dict(gene_dict, cigar_dict):
                         flag = True
 
         if flag:
-            trimmed_gene_dict[gene["id"]]=gene
+            trimmed_gene_dict[gene["id"]] = gene
 
     return trimmed_gene_dict
+
 
 def trim_gene_dict_from_tree(gene_dict, tree):
     trimmed_gene_dict = dict()
@@ -69,7 +71,7 @@ def trim_gene_dict_from_tree(gene_dict, tree):
         else:
             getID(child)
 
-    return trimmed_gene_dict          
+    return trimmed_gene_dict
 
 
 def gene_json_to_dict(fname):
@@ -143,7 +145,7 @@ def __main__():
         cigar_dict = cigar_to_dict(options.cigar, gene_dict)
         tree = newicktree_to_string(options.tree)
         gene_dict = trim_gene_dict(gene_dict, cigar_dict)
-        
+
         # Pick a random protein as reference
         ref_protein = next(iter(cigar_dict))
     else:
