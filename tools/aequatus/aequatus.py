@@ -15,12 +15,14 @@ def write_json(aequatus_dict, outfile=None, sort_keys=False):
 
 def cigar_to_dict(fname, gene_dict):
     cigar_dict = dict()
+    matched_gene_ids = set()
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            cigar_dict[get_protein_id_from_seq_id(gene_dict, seq_id)] = cigar
-
-    return cigar_dict
+            (protein_id, gene_id) = get_protein_and_gene_id_from_seq_id(gene_dict, seq_id)
+            cigar_dict[protein_id] = cigar
+            matched_gene_ids.add(gene_id)
+    return cigar_dict, matched_gene_ids
 
 
 def newicktree_to_string(fname):
@@ -33,45 +35,18 @@ def jsontree_to_dict(fname):
         return json.load(f)['tree']
 
 
-def trim_gene_dict(gene_dict, cigar_dict):
-    trimmed_gene_dict = dict()
-
-    for gene in gene_dict.values():
-        flag = False
-        if "Transcript" in gene:
-            for transcript in gene["Transcript"]:
-                if 'Translation' in transcript and 'id' in transcript["Translation"]:
-                    if transcript["Translation"]["id"] in cigar_dict:
-                        flag = True
-                    elif transcript["id"] in cigar_dict:
-                        flag = True
-
-        if flag:
-            trimmed_gene_dict[gene["id"]] = gene
-
-    return trimmed_gene_dict
-
-
-def trim_gene_dict_from_tree(gene_dict, tree):
-    trimmed_gene_dict = dict()
+def match_gene_ids_from_tree(gene_dict, tree):
 
     def recursive_check(element):
-        for child in element["children"]:
-            if "children" in child:
-                recursive_check(child)
+        for tree_el in element["children"]:
+            if "children" in tree_el:
+                recursive_check(tree_el)
             else:
-                getID(child)
+                matched_gene_ids.add(tree_el["id"]["accession"])
 
-    def getID(element):
-        trimmed_gene_dict[element["id"]["accession"]] = gene_dict[element["id"]["accession"]]
-
-    for child in tree["children"]:
-        if "children" in child:
-            recursive_check(child)
-        else:
-            getID(child)
-
-    return trimmed_gene_dict
+    matched_gene_ids = set()
+    recursive_check(tree)
+    return matched_gene_ids
 
 
 def gene_json_to_dict(fname):
@@ -105,17 +80,21 @@ def get_gene_and_transcript_ids_from_protein_id(gene_dict, protein_id):
     return (None, None)
 
 
-def get_protein_id_from_seq_id(gene_dict, seq_id):
+def get_protein_and_gene_id_from_seq_id(gene_dict, seq_id):
+    """
+    Search inside gene_dict for a gene having a transcript id or protein id
+    equal to seq_id. Returns the protein id and the gene id.
+    """
     for gene in gene_dict.values():
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 if transcript['id'] == seq_id:
                     if 'Translation' in transcript and 'id' in transcript['Translation']:
-                        return transcript["Translation"]["id"]
+                        return transcript["Translation"]["id"], gene['id']
                     else:
                         break
                 elif 'Translation' in transcript and 'id' in transcript['Translation'] and transcript["Translation"]["id"] == seq_id:
-                    return seq_id
+                    return seq_id, gene['id']
 
 
 def get_first_protein_id_from_tree(tree_el):
@@ -142,18 +121,18 @@ def __main__():
     gene_dict = gene_json_to_dict(options.gene)
 
     if options.format == "newick":
-        cigar_dict = cigar_to_dict(options.cigar, gene_dict)
+        cigar_dict, matched_gene_ids = cigar_to_dict(options.cigar, gene_dict)
         tree = newicktree_to_string(options.tree)
-        gene_dict = trim_gene_dict(gene_dict, cigar_dict)
-
         # Pick a random protein as reference
         ref_protein = next(iter(cigar_dict))
     else:
         cigar_dict = dict()
         tree = jsontree_to_dict(options.tree)
-        gene_dict = trim_gene_dict_from_tree(gene_dict, tree)
+        matched_gene_ids = match_gene_ids_from_tree(gene_dict, tree)
         ref_protein = get_first_protein_id_from_tree(tree)
 
+    # Trim gene_dict
+    gene_dict = dict((_, gene_dict[_]) for _ in matched_gene_ids)
     ref_gene, ref_transcript = get_gene_and_transcript_ids_from_protein_id(gene_dict, ref_protein)
     aequatus_dict = join_json(tree, gene_dict, cigar_dict, ref_gene, ref_protein, ref_transcript)
 
