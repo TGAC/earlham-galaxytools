@@ -17,6 +17,6 @@ script:
   - cd $TRAVIS_BUILD_DIR && flake8 -v --exclude=.git .
   - |
     if [ -s changed_repositories.list ]; then
-      for DIR in `cat changed_repositories.list`; do planemo conda_install; done
+      for DIR in `cat changed_repositories.list`; do planemo conda_install $DIR; done
       for DIR in `cat changed_repositories.list`; do planemo test --conda_dependency_resolution --galaxy_branch $GALAXY_RELEASE $DIR || exit 1; done
     fi
