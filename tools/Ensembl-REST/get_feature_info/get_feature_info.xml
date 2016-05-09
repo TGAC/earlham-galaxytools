@@ -9,12 +9,17 @@ python $__tool_directory__/get_feature_info.py
 -e $expand
 -f $format_selector
 -i "$input"
+-s $species_selector
 > "$output"
 ]]>
     </command>
 
     <inputs>
     <param name="input" type="data" format="txt" label="List of Ensembl IDs" help="Max 1000 IDs" />
+    <param name="species_selector" type="select" label="Select Species">
+        <option value="ensembl" selected="true">Vertebrates</option>
+        <option value="ensemblgenomes">Other species</option>
+    </param>
     <param name="expand" type="boolean" truevalue="1" falsevalue="0" label="Expand the search to include any connected features" help="For example, if the object is a gene, its transcripts, translations and exons will be returned as well" />
     <param name="format_selector" type="select" label="Output format">
         <option value="full" selected="true">Full</option>

@@ -5,8 +5,6 @@ from urlparse import urljoin
 
 import requests
 
-server = 'http://rest.ensembl.org'
-
 parser = optparse.OptionParser()
 parser.add_option('--id_type', type='choice', default='gene_id',
                   choices=['gene_id', 'gene_tree_id'], help='Input type')
@@ -17,6 +15,11 @@ parser.add_option('--format', type='choice',
 parser.add_option('-s', '--sequence', type='choice',
                   choices=['protein', 'cdna', 'none'], default='protein',
                   help='The type of sequence to bring back. Setting it to none results in no sequence being returned')
+
+parser.add_option('-g', '--species', type='choice',
+                  choices=['ensembl', 'ensemblgenomes'], default='ensembl',
+                  help='Specify the genome databases for vertebrates and other eukaryotic species')
+
 parser.add_option('-a', '--aligned', type='choice', choices=['0', '1'],
                   default='0', help='Return the aligned string if true. Otherwise, return the original sequence (no insertions)')
 parser.add_option('-c', '--cigar_line', type='choice', choices=['0', '1'],
@@ -29,6 +32,8 @@ parser.add_option('--nh_format', type='choice',
 options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
+
+server = 'http://rest.%s.org' % options.species
 
 if options.id_type == 'gene_id':
     ext = 'genetree/member/id'
