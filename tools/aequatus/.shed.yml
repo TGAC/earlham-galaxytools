@@ -4,5 +4,5 @@ remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tool
 description: Datatypes for Aequatus visualisation plugin 
   This is a repository for Aequatus, which includes Aequatus_generator, Aequatus visualisation plugin and aequatus datatype.
 categories:
-- visualisation
+- visualization
 type: unrestricted
