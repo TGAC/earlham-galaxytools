@@ -7,11 +7,13 @@ from urlparse import urljoin
 
 import requests
 
-server = 'http://rest.ensembl.org'
-ext = 'sequence/id'
-
 parser = optparse.OptionParser()
 parser.add_option('-i', '--input', help='List of Ensembl IDs')
+
+parser.add_option('-s', '--species', type='choice',
+                  choices=['ensembl', 'ensemblgenomes'], default='ensembl',
+                  help='Specify the genome databases for vertebrates and other eukaryotic species')
+
 parser.add_option('-t', '--type', type='choice',
                   choices=['genomic', 'cds', 'cdna', 'protein'],
                   default='genomic', help='Type of sequence')
@@ -22,6 +24,9 @@ parser.add_option('--expand_5prime', type='int', default=0,
 options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
+
+server = 'http://rest.%s.org' % options.species
+ext = 'sequence/id'
 
 headers = {'Content-Type': 'text/x-fasta', 'Accept': 'text/x-fasta'}
 params = dict((k, getattr(options, k)) for k in ['type', 'expand_3prime', 'expand_5prime'])

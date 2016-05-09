@@ -28,6 +28,7 @@
 python $__tool_directory__/get_genetree.py
 --id_type $input_type
 -i "$input"
+-g $species_selector
 --format ${output_format.output_format_selector}
 #if $output_format.output_format_selector == 'json'
     -s ${output_format.sequence.sequence_selector}
@@ -54,6 +55,10 @@ python $__tool_directory__/get_genetree.py
         </param>
         <param name="input" type="text" label="Ensembl ID">
             <validator type="empty_field" />
+        </param>
+        <param name="species_selector" type="select" label="Select Species">
+            <option value="ensembl" selected="true">Vertebrates</option>
+            <option value="ensemblgenomes">Other species</option>
         </param>
         <conditional name="output_format">
             <param name="output_format_selector" type="select" label="Output format">
