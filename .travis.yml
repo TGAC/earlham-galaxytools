@@ -3,8 +3,20 @@ language: python
 python:
   - "2.7"
 
+before_install:
+  - export GALAXY_RELEASE=release_16.01
+
 install:
-  - pip install flake8
+  - pip install flake8 planemo
+  - planemo conda_init
+  - planemo shed_lint --report_level warn --tools --fail_level error --recursive .
+  - git diff --name-only $TRAVIS_COMMIT_RANGE | xargs -n1 dirname | ./filter_directories.py | sort -u > changed_repositories.list
+  - cat changed_repositories.list
 
 script:
   - cd $TRAVIS_BUILD_DIR && flake8 -v --exclude=.git .
+  - |
+    if [ -s changed_repositories.list ]; then
+      for DIR in `cat changed_repositories.list`; do planemo conda_install; done
+      for DIR in `cat changed_repositories.list`; do planemo test --conda_dependency_resolution --galaxy_branch $GALAXY_RELEASE $DIR || exit 1; done
+    fi
