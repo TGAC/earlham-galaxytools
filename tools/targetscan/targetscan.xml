@@ -1,0 +1,62 @@
+<tool id="targetscan" name="TargetScan" version="7.0.2">
+    <description>Prediction of microRNA targets</description>
+    <requirements>
+        <requirement type="package" version="7.0.2">targetscan</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <command>
+<![CDATA[
+targetscan_70.pl "$miR_Family_info" "$UTR_Sequences" targetscan_70_output.txt &&
+targetscan_70_BL_bins.pl "$UTR_Sequences" > "$UTRs_median_BLs_bins" &&
+targetscan_70_BL_PCT.pl "$miR_Family_info" targetscan_70_output.txt "$UTRs_median_BLs_bins" > "$BL_PCT" &&
+ln -s "$ORF_Sequences" ORF_Sequences.txt &&
+targetscan_count_8mers.pl "$miR_Family_info" ORF_Sequences.txt > "$ORF_8mer_counts" &&
+targetscan_70_context_scores.pl "$miR_for_context_scores" "$UTR_Sequences" "$BL_PCT" ORF_Sequences.lengths.txt "$ORF_8mer_counts" "$All_cell_lines_AIRs" Targets.BL_PCT.context_scores.txt
+]]>
+    </command>
+    <inputs>
+        <param name="miR_Family_info" type="data" format="tabular" label="MicroRNA seed sequences" help="3 tab-separated columns: MicroRNA family ID, 7 nucleotide long seed region sequence, Semicolon-delimited list of species IDs of this microRNA family" />
+        <param name="UTR_Sequences" type="data" format="tabular" label="Multiple sequence alignment of the gene 3'-UTRs" help="3 tab-separated columns: Gene symbol or transcript ID, Species ID (matching species IDs in the microRNA seed sequences dataset), Aligned 3'-UTR sequence (all uppercase except for regions that overlap an ORF, which will be flagged as such and ignored for subsequent PCT calculation)" />
+        <param name="ORF_Sequences" type="data" format="tabular" label="ORF sequences corresponding to each 3'-UTR" help="3 tab-separated columns: Gene symbol or transcript ID, Species ID (matching species IDs in the microRNA seed sequences dataset), ORF sequence" />
+        <param name="miR_for_context_scores" type="data" format="tabular" label="Mature microRNA information" help="4 tab-separated columns: MicroRNA family ID, Species ID (matching species IDs in the microRNA seed sequences dataset), Mature microRNA sequence ID, Mature microRNA sequence" />
+        <param name="All_cell_lines_AIRs" type="data" format="tabular" label="Affected isoform ratios (AIRs) by 3'-UTR region" help="4 tab-separated columns: 3'-UTR ID, 3'-UTR region start for this AIR, 3'-UTR region end for this AIR, AIR (float between 0 to 100)" />
+    </inputs>
+    <outputs>
+        <data format="tabular" name="targetscan_70_output" label="${tool.name} on ${on_string}: microRNA target predictions" from_work_dir="targetscan_70_output.txt" />
+        <data format="tabular" name="UTRs_median_BLs_bins" label="${tool.name} on ${on_string}: mean branch lengths" hidden="true" />
+        <data format="tabular" name="BL_PCT" label="${tool.name} on ${on_string}: branch length (BL) and probability of conserved targeting (PCT)" />
+        <data format="tabular" name="ORF_8mer_counts" label="${tool.name} on ${on_string}: ORF 8mer counts" hidden="true" />
+        <data format="tabular" name="context_scores" label="${tool.name} on ${on_string}: context++ scores" from_work_dir="Targets.BL_PCT.context_scores.txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="miR_Family_info" ftype="tabular" value="miR_Family_info_sample.txt" />
+            <param name="UTR_Sequences" ftype="tabular" value="UTR_Sequences_sample.txt" />
+            <param name="ORF_Sequences" ftype="tabular" value="ORF_Sequences_sample.txt" />
+            <param name="miR_for_context_scores" ftype="tabular" value="miR_for_context_scores.sample.txt" />
+            <param name="All_cell_lines_AIRs" ftype="tabular" value="All_cell_lines.AIRs.txt" />
+            <output name="targetscan_70_output" file="targetscan_70_output.txt" />
+            <output name="UTRs_median_BLs_bins" file="UTRs_median_BLs_bins.txt" />
+            <output name="BL_PCT" file="targetscan_70_output.BL_PCT.txt" />
+            <output name="ORF_8mer_counts" file="ORF_8mer_counts_sample.txt" />
+            <output name="context_scores" file="Targets.BL_PCT.context_scores.txt" />
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+Wrapper for the `TargetScan`_ pipeline to predict microRNA targets.
+
+.. _TargetScan: http://www.targetscan.org/
+]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1016/j.cell.2004.12.035</citation>
+        <citation type="doi">10.1016/j.molcel.2007.06.017</citation>
+        <citation type="doi">10.1101/gr.082701.108</citation>
+        <citation type="doi">10.1016/j.molcel.2010.06.005</citation>
+        <citation type="doi">10.1016/j.molcel.2014.02.013</citation>
+        <citation type="doi">10.7554/eLife.05005</citation>
+    </citations>
+</tool>
