@@ -1,6 +1,7 @@
 <tool id="targetscan" name="TargetScan" version="7.0.2">
     <description>Prediction of microRNA targets</description>
     <requirements>
+        <requirement type="package" version="2.2.5">viennarna</requirement>
         <requirement type="package" version="7.0.2">targetscan</requirement>
     </requirements>
     <stdio>
