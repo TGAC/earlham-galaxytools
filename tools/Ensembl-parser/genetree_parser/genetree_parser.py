@@ -37,7 +37,7 @@ def recursiveGenes(str):
     children = str['children']
 
     while children_len >= 0:
-        if 'sequence' in children[children_len]: 
+        if 'sequence' in children[children_len]:
             geneLevel(children[children_len])
         else:
             recursiveGenes(children[children_len])
@@ -47,7 +47,7 @@ def recursiveGenes(str):
 
 parser = optparse.OptionParser()
 parser.add_option('-i', '--input', dest="input_filename",
-                    help='Gene Tree from Ensembl in JSON format')
+    help='Gene Tree from Ensembl in JSON format')
 
 options, args = parser.parse_args()
 
@@ -66,10 +66,9 @@ protein_file = open("protein.tabular", 'w')
 speciesFile = open("species.txt", 'w')
 
 while children_len >= 0:
-    if 'sequence' in children[children_len]: 
+    if 'sequence' in children[children_len]:
         geneLevel(children[children_len])
     else:
         recursiveGenes(children[children_len])
 
     children_len -= 1
-    
