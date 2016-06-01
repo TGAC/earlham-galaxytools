@@ -50,6 +50,6 @@ for leaf in tree:
 newickTree = tree.write(format=int(options.format)).replace(";", "")
 
 if(options.treebest == "yes"):
-    newickTree = newickTree+"root;"
+    newickTree = newickTree + "root;"
 
 print newickTree
