@@ -10,7 +10,7 @@ def readgene(gene):
 
 parser = optparse.OptionParser()
 parser.add_option('-j', '--json', dest="input_gene_filename",
-                help='Gene Tree from Ensembl in JSON format')
+                  help='Gene Tree from Ensembl in JSON format')
 
 options, args = parser.parse_args()
 

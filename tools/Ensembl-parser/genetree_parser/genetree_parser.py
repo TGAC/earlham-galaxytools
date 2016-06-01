@@ -47,7 +47,7 @@ def recursiveGenes(str):
 
 parser = optparse.OptionParser()
 parser.add_option('-i', '--input', dest="input_filename",
-    help='Gene Tree from Ensembl in JSON format')
+                  help='Gene Tree from Ensembl in JSON format')
 
 options, args = parser.parse_args()
 
