@@ -1,0 +1,81 @@
+<tool id="species_tree_generator" name="species tree generator" version="0.1.1">
+    <description>Generates species tree from list of species using NCBI</description>
+     <requirements>
+        <requirement type="package">ete3</requirement>
+    </requirements>
+    <command>
+    <![CDATA[
+python $__tool_directory__/ete_tree_generator.py 
+-s $speciesFile
+#if $output_format.treebest == 'yes'
+    -f 8
+#else
+    -f ${output_format.format_selector}
+#end if
+-t $output_format.treebest
+> $outputFile
+    ]]>
+    </command>
+    <inputs>
+        <param name="speciesFile" type="data" format="text" label="Species file" help="Species file with list one in each line" />        
+        <conditional name="output_format">
+            <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if specie tree to be used in TreeBest">
+                <option value="yes">Yes</option>
+                <option value="no" selected="true">No</option>
+            </param>
+            <when value="no">
+                <param name="format_selector" type="select" label="Output format">
+                    <option value="0" selected="true">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="100">100</option>
+                </param>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data type="data" format="nhx" name="outputFile" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="fastaFile" ftype="text" value="species.txt" />
+            <param name="treebest" type="select" value="yes" />
+            <param name="outputFile" ftype="nhx" value="out.nhx" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+
+Species tree generator from list of species for TreeBest.
+
+**Output format:**
+
+======= ============================================= ========================================================================================
+FORMAT  DESCRIPTION                                     SAMPLE
+------- --------------------------------------------- ----------------------------------------------------------------------------------------
+0       flexible with support values                    ((D:0.723274,F:0.567784)1.000000:0.067192,(B:0.279326,H:0.756049)1.000000:0.807788);
+1       flexible with internal node names               ((D:0.723274,F:0.567784)E:0.067192,(B:0.279326,H:0.756049)B:0.807788);
+2       all branches + leaf names + internal supports   ((D:0.723274,F:0.567784)1.000000:0.067192,(B:0.279326,H:0.756049)1.000000:0.807788);
+3       all branches + all names                        ((D:0.723274,F:0.567784)E:0.067192,(B:0.279326,H:0.756049)B:0.807788);
+4       leaf branches + leaf names                      ((D:0.723274,F:0.567784),(B:0.279326,H:0.756049));
+5       internal and leaf branches + leaf names         ((D:0.723274,F:0.567784):0.067192,(B:0.279326,H:0.756049):0.807788);
+6       internal branches + leaf names                  ((D,F):0.067192,(B,H):0.807788);
+7       leaf branches + all names                       ((D:0.723274,F:0.567784)E,(B:0.279326,H:0.756049)B);
+8       all names                                       ((D,F)E,(B,H)B);
+9       leaf names                                      ((D,F),(B,H));
+100     topology only                                   ((,),(,));
+======= ============================================= ========================================================================================
+
+
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
