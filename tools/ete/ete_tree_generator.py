@@ -14,12 +14,12 @@ parser.add_option('-f', '--format', type='choice', choices=['0', '1', '2', '3', 
 parser.add_option('-t', '--treebest', type='choice', choices=['yes', 'no'], dest="treebest",
                   default='no', help='To be used in TreeBest')
 
-parser.add_option('-d', '--database', type='choice', choices=['yes','no'], dest="database",
+parser.add_option('-d', '--database', type='choice', choices=['yes', 'no'], dest="database",
                   default='no', help='Update database')
 
 options, args = parser.parse_args()
 
-if options.database  == "yes":
+if options.database == "yes":
     try:
         ncbi.update_taxonomy_database()
     except:
