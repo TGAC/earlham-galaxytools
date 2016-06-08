@@ -3,6 +3,10 @@
      <requirements>
         <requirement type="package">ete3</requirement>
     </requirements>
+    <stdio>
+        <!-- Anything other than zero is an error -->
+        <exit_code range="1:" />
+    </stdio>
     <command>
     <![CDATA[
 python $__tool_directory__/ete_tree_generator.py 
@@ -13,7 +17,7 @@ python $__tool_directory__/ete_tree_generator.py
     -f ${output_format.format_selector}
 #end if
 -t $output_format.treebest
-> $outputFile
+-d $database
     ]]>
     </command>
     <inputs>
@@ -24,24 +28,28 @@ python $__tool_directory__/ete_tree_generator.py
                 <option value="no" selected="true">No</option>
             </param>
             <when value="no">
-                <param name="format_selector" type="select" label="Output format">
-                    <option value="0" selected="true">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="100">100</option>
+                <param name="format_selector" type="select" label="Output format" help="See table below">
+                    <option value="0" selected="true">Flexible with support values (0)</option>
+                    <option value="1">Flexible with internal node names (1)</option>
+                    <option value="2">All branches + leaf names + internal supports (2)</option>
+                    <option value="3">All branches + all names (3)</option>
+                    <option value="4">Leaf branches + leaf names (4)</option>
+                    <option value="5">Internal and leaf branches + leaf names (5)</option>
+                    <option value="6">Internal branches + leaf names (6)</option>
+                    <option value="7">Leaf branches + all names (7)</option>
+                    <option value="8">All names (8)</option>
+                    <option value="9">Leaf names (9)</option>
+                    <option value="100">Topology only (100)</option>
                 </param>
             </when>
         </conditional>
+        <param name="database" type="select" label="Update database" help="Update database from NCBI (slower)">
+            <option value="no" selected="true">No</option>
+            <option value="yes">Yes</option>
+        </param>
     </inputs>
     <outputs>
-        <data type="data" format="nhx" name="outputFile" label="${tool.name} on ${on_string}" />
+        <data type="data" format="nhx" name="outputFile" label="${tool.name} on ${on_string}" from_work_dir="newickTree.nhx"/>
     </outputs>
     <tests>
         <test>
@@ -77,5 +85,6 @@ FORMAT  DESCRIPTION                                     SAMPLE
     ]]>
     </help>
     <citations>
+        <citation type="doi">10.1093/molbev/msw046</citation>
     </citations>
 </tool>
