@@ -58,5 +58,5 @@ if options.treebest == "yes":
     newickTree = newickTree.rstrip(';')
     newickTree = newickTree + "root;"
 
-newickFile = open("newickTree.nhx", 'w')
-newickFile.write(newickTree)
+with open('newickTree.nhx', 'w') as newickFile:
+    newickFile.write(newickTree)
