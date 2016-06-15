@@ -28,14 +28,8 @@ if options.database == "yes":
 if options.input_species_filename is None:
     raise Exception('-s option must be specified, Species list in text format one species in each line')
 
-
-with open(options.input_species_filename) as f:
-    species_name = f.readlines()
-
-
 with open(options.input_species_filename) as f:
     species_name = [_.strip().replace('_', ' ') for _ in f.readlines()]
-
 
 name2taxid = ncbi.get_name_translator(species_name)
 
