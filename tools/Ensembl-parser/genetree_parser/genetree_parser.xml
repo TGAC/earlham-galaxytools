@@ -13,7 +13,7 @@
 
     <outputs>
         <data name="output_genelist" format="txt" label="Gene list for $tool.name on ${on_string}" from_work_dir="gene.txt" />
-        <data name="output_cigarlist" format="tabular" label="CIGARs fpr $tool.name on ${on_string}" from_work_dir="protein.tabular" />
+        <data name="output_cigarlist" format="tabular" label="CIGARs for $tool.name on ${on_string}" from_work_dir="protein.tabular" />
         <data name="output_specieslist" format="txt" label="Species list for $tool.name on ${on_string}" from_work_dir="species.txt" />
     </outputs>
 
