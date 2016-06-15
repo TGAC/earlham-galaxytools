@@ -61,7 +61,7 @@ python $__tool_directory__/ete_tree_generator.py
     <help>
     <![CDATA[
 
-Species tree generator from list of species for TreeBest.
+Species tree generator from list of species.
 
 **Output format:**
 

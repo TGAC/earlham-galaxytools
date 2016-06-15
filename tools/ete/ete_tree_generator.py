@@ -33,8 +33,8 @@ with open(options.input_species_filename) as f:
     species_name = f.readlines()
 
 
-for index, species in enumerate(species_name):
-    species_name[index] = species.strip().replace("_", " ")
+with open(options.input_species_filename) as f:
+    species_name = [_.strip().replace('_', ' ') for _ in f.readlines()]
 
 
 name2taxid = ncbi.get_name_translator(species_name)
