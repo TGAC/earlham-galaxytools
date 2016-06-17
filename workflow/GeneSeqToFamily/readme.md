@@ -1,10 +1,9 @@
-GeneSeqToFamily
-=================
-Description: 
-=================
 GeneSeqToFamily: the Ensembl GeneTrees pipeline as a Galaxy workflow
+=================
 
-GeneSeqToFamily, an open-source Galaxy workflow based on the Ensembl GeneTrees pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises  clustering, multiple alignment, and tree generation (using TreeBeST), to discover familial relationship. 
+
+# Introduction 
+ GeneSeqToFamily, an open-source Galaxy workflow based on the Ensembl GeneTrees pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises  clustering, multiple alignment, and tree generation (using TreeBeST), to discover familial relationship. 
 
 # Workflow and inputs
 
