@@ -13,12 +13,33 @@ GeneSeqToFamily is distributed in the hope that it will be useful, but WITHOUT A
 You should have received a copy of the GNU General Public License along with GeneSeqToFamily. If not, see http://www.gnu.org/licenses/.
 
 #Input
-Input for GeneSeqToFamily workflows are as below
+GeneSeqToFamily requires the following inputs:
 * CDS sequences
-* Species Tree
-* Gene feature file in JSON format
+* A species tree
+* Gene feature information in JSON format
 
-#Required Tools
+# Workflow
+
+The pipeline is made up of 7 main steps:
+* Translation from CDS to protein sequences
+* all-vs-all BLASTP of protein sequences
+* Cluster sequences using hcluster_sg 
+* Multiple sequence alignment (MSA) for each cluster using T-Coffee 
+* Generate gene trees from MSAs using TreeBest
+* Create Aequatus dataset from MSA, gene tree and gene feature information using Aequatus generator 
+* Visualise Aequatus dataset
+
+
+# Helper tools:
+We have developed various tools to help with data preparation for the workflow. This includes tools for retrieving sequences, features and gene trees from Ensembl using its REST API, and tools to parse Ensembl results into the required formats for the workflow. We also developed a tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format, which is then used to generate the Aequatus dataset.
+
+
+# Result
+Resulted gene families can be visualised using the Aequatus.js interactive tool, which is developed as part of the Aequatus software.
+
+The Aequatus.js plugin provides an interactive visual representation of the phylogenetic and structural relationships among the homologous genes, using a shared colour scheme for coding regions to represent homology in internal gene structure alongside their corresponding gene trees. It is also able to indicate insertions and deletions in homologous genes with respect to shared ancestors.
+
+# List of tools
 GeneSeqToFamily requires the following tools to run workflow successfully:
 * TranSeq
 * filter fasta by ID
@@ -36,10 +57,15 @@ Some tools for data conversion during workflow:
 * Fasta width
 * Fasta to tabular
 
-We have developed various tools to help with data preparation for the workflow:
-* Ensembl REST API -  This includes tools for retrieving sequences, features and gene trees from Ensembl using its REST API, 
-* Ensembl Parser - Tools to parse Ensembl results into the required format for workflow. 
-* gff3-to-json - We also developed tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format. 
+Helper tools for data preparation
+Ensembl REST API - This includes tools for retrieving sequences, features and gene trees from Ensembl using its REST API,
+Ensembl Parser - Tools to parse Ensembl results into the required format for workflow.
+gff3-to-json - We also developed tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format.
+
+
+# Reference:
+* Vilella AJ, Severin J, Ureta-Vidal A, Heng L, Durbin R, Birney E: EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates. Genome Res. 2009, 19(2):327–335. 
+* Thanki AS, Ayling S, Herrero J, Davey RP: Aequatus: An open-source homology browser. bioRxiv 055632; doi: http://dx.doi.org/10.1101/055632
 
 # <a name="contacts"></a> Project contacts: 
 * Anil Thanki <Anil.Thanki@tgac.ac.uk>
