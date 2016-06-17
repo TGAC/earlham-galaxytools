@@ -4,15 +4,17 @@ Description:
 =================
 GeneSeqToFamily: the Ensembl GeneTrees pipeline as a Galaxy workflow
 
+GeneSeqToFamily, an open-source Galaxy workflow based on the Ensembl GeneTrees pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises  clustering, multiple alignment, and tree generation (using TreeBeST), to discover familial relationship. 
 
+# Workflow and inputs
 
-#Input
+## Input
 GeneSeqToFamily requires the following inputs:
 * CDS sequences
 * A species tree
 * Gene feature information in JSON format
 
-# Workflow
+## Workflow
 
 The pipeline is made up of 7 main steps:
 * Translation from CDS to protein sequences
@@ -24,7 +26,7 @@ The pipeline is made up of 7 main steps:
 * Visualise Aequatus dataset
 
 
-# Helper tools:
+## Helper tools:
 We have developed various tools to help with data preparation for the workflow. This includes tools for retrieving sequences, features and gene trees from Ensembl using its REST API, and tools to parse Ensembl results into the required formats for the workflow. We also developed a tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format, which is then used to generate the Aequatus dataset.
 
 
@@ -66,7 +68,7 @@ gff3-to-json - We also developed tool to merge gene feature files and convert th
 * Nicola Soranzo <Nicola.Soranzo@tgac.ac.uk>
 * Robert Davey <Robert.Davey@tgac.ac.uk>
  
-#Licence
+# Licence
 © 2016. The Genome Analysis Centre, Norwich, UK
 
 GeneSeqToFamily is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
