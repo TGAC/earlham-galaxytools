@@ -1,5 +1,5 @@
-<tool id="species_tree_generator" name="species tree generator" version="0.1.1">
-    <description>Generates species tree from list of species using NCBI</description>
+<tool id="species_tree_generator" name="Species tree generator" version="0.1.1">
+    <description>from a list of species using the ETE Toolkit</description>
      <requirements>
         <requirement type="package">ete3</requirement>
     </requirements>
@@ -27,6 +27,7 @@ python $__tool_directory__/ete_tree_generator.py
                 <option value="yes">Yes</option>
                 <option value="no" selected="true">No</option>
             </param>
+            <when value="yes" />
             <when value="no">
                 <param name="format_selector" type="select" label="Output format" help="See table below">
                     <option value="0" selected="true">Flexible with support values (0)</option>
@@ -55,13 +56,14 @@ python $__tool_directory__/ete_tree_generator.py
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="treebest" type="select" value="yes" />
-            <param name="outputFile" ftype="nhx" value="out.nhx" />
+            <output name="outputFile" file="out.nhx" />
         </test>
     </tests>
     <help>
     <![CDATA[
+Generate a species tree from a list of species using the `ETE Toolkit`_.
 
-Species tree generator from list of species.
+.. _ETE Toolkit: http://etetoolkit.org/
 
 **Output format:**
 
@@ -80,8 +82,6 @@ FORMAT  DESCRIPTION                                     SAMPLE
 9       leaf names                                      ((D,F),(B,H));
 100     topology only                                   ((,),(,));
 ======= ============================================= ========================================================================================
-
-
     ]]>
     </help>
     <citations>
