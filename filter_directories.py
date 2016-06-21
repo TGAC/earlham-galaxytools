@@ -8,7 +8,7 @@ with open('.tt_blacklist') as handle:
 
 for directory in sys.stdin:
     directory = directory.strip()
-    if directory.startswith('packages') or directory.startswith('data_managers'):
+    if directory.startswith('data_managers') or directory.startswith('packages') or directory.startswith('visualisations') or directory.startswith('workflows'):
         continue
     while directory:
         if os.path.exists(os.path.join(directory, '.shed.yml')) or os.path.exists(os.path.join(directory, '.shed.yaml')):

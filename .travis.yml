@@ -4,7 +4,7 @@ python:
   - "2.7"
 
 before_install:
-  - export GALAXY_RELEASE=release_16.01
+  - export GALAXY_RELEASE=release_16.04
 
 install:
   - pip install flake8 planemo
@@ -14,9 +14,9 @@ install:
   - cat changed_repositories.list
 
 script:
-  - cd $TRAVIS_BUILD_DIR && flake8 -v --exclude=.git .
+  - cd "$TRAVIS_BUILD_DIR" && flake8 -v --exclude=.git .
   - |
     if [ -s changed_repositories.list ]; then
-      for DIR in `cat changed_repositories.list`; do planemo conda_install $DIR; done
-      for DIR in `cat changed_repositories.list`; do planemo test --conda_dependency_resolution --galaxy_branch $GALAXY_RELEASE $DIR || exit 1; done
+      while read -r DIR; do planemo conda_install "$DIR"; done < changed_repositories.list
+      while read -r DIR; do planemo test --conda_dependency_resolution --galaxy_branch $GALAXY_RELEASE "$DIR" || exit 1; done < changed_repositories.list
     fi
