@@ -1,0 +1,9 @@
+categories:
+- Phylogenetics
+description: Generates species tree from a list of species using the ETE Toolkit
+long_description: |
+	Generate a species tree from a list of species using the `ETE Toolkit`
+name: ete
+owner: tgac
+remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/ete
+type: unrestricted

@@ -1,0 +1,7 @@
+name: blast_parser
+owner: tgac 
+remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/blast_parser 
+description: Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
+categories:
+- Phylogenetics
+type: unrestricted
