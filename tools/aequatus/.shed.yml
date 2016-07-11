@@ -1,8 +1,7 @@
 name: aequatus
-owner: tgac 
+owner: earlhaminst 
 remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/aequatus/ 
-description: Datatypes for Aequatus visualisation plugin 
-  This is a repository for Aequatus, which includes Aequatus_generator, Aequatus visualisation plugin and aequatus datatype.
+description: Datatypes for Aequatus visualisation plugin. This is a repository for Aequatus, which includes Aequatus_generator, Aequatus visualisation plugin and aequatus datatype.
 categories:
 - visualization
 type: unrestricted
