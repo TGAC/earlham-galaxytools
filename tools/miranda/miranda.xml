@@ -6,16 +6,16 @@
     <version_command>miranda --version|grep 'miranda v'</version_command>
     <command>
 <![CDATA[
-miranda "$microrna" "$query"
+miranda '$microrna' '$query'
 #if str($sc)
     -sc $sc
 #end if
 #if str($en)
     -en $en
 #end if
--out $raw_output
+-out '$raw_output'
 &&
-python $__tool_directory__/miranda_parser.py $raw_output $tabular_output
+python '$__tool_directory__/miranda_parser.py' '$raw_output' '$tabular_output'
 ]]>
     </command>
     <inputs>
