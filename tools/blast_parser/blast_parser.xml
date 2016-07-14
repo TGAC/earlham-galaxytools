@@ -19,6 +19,12 @@ $input
         <data name="output" format="tabular" label="$tool.name on ${on_string}" />
     </outputs>
 
+    <tests>
+        <test>
+            <param name="input" ftype="tabular" value="input.tabular" />
+            <output name="output" file="output.tabular" />
+        </test>
+    </tests>
     <help>
 <![CDATA[
 Simple tool to convert a 12- or 24-column BLAST output into a 3-column format (qseqid, sseqid, round(-1 * log10(evalue))) usable as input for the hcluster_sg tool.
