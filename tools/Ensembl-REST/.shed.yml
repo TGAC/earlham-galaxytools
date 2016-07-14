@@ -1,13 +1,15 @@
 ---
 name: Ensembl-REST
+category: 
+- Data Source
 owner: earlhaminst
 description: Ensembl-REST wrappers
 long_description: http://rest.ensembl.org
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/Ensembl-REST
 type: unrestricted
 auto_tool_repositories:
-  name_template: "Ensembl {{ tool_id }}"
-  description_template: "Wrapper for Ensebl-REST {{ tool_name }}."
+  name_template: "ensembl_{{ tool_id }}"
+  description_template: "{{ tool_name }} (from the Ensebl-REST tool suite)"
 suite:
   name: "Ensembl-REST suite"
   description: "A suite of Galaxy tools designed to work with Ensembl REST API."

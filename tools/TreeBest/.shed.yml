@@ -1,7 +1,8 @@
 categories:
 - Phylogenetics
 description: treebest_best_wrapper
-long_description: Generate a phylogenetic tree using CDS alignment and species tree.
+long_description: |
+  Generate a phylogenetic tree using CDS alignment and species tree.
 name: treebest_best_wrapper 
 owner: earlhaminst 
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/TreeBest

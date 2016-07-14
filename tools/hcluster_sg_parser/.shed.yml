@@ -1,7 +1,8 @@
 categories:
 - Phylogenetics
 description: Converts hcluster_sg 3-column output into lists of ids
-long_description: Simple wrapper for hcluster_sg output parser.
+long_description: |
+  Simple wrapper for hcluster_sg output parser.
 name: hcluster_sg_parser
 owner: earlhaminst 
 remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/hcluster_sg_parser
