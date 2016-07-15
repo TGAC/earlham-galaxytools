@@ -1,0 +1,8 @@
+categories:
+- Convert Formats
+description: GFF3 to JSON converter
+long_description: Converts a set of GFF3 datasets into JSON format
+name: gff3_to_json
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/gff3_to_json
+type: unrestricted

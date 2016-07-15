@@ -1,0 +1,9 @@
+categories:
+- Phylogenetics
+description: TreeBeST best
+homepage_url: http://treesoft.sourceforge.net/treebest.shtml
+long_description: Generate a phylogenetic tree using CDS alignment and species tree.
+name: treebest_best
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/TreeBest
+type: unrestricted

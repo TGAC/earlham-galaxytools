@@ -1,8 +1,9 @@
 name: aequatus
-owner: tgac 
-remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/aequatus/ 
-description: Datatypes for Aequatus visualisation plugin 
-  This is a repository for Aequatus, which includes Aequatus_generator, Aequatus visualisation plugin and aequatus datatype.
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/aequatus/
+description: Generate datasets that can be visualised with Aequatus
+homepage_url: http://aequatus.tgac.ac.uk
+long_description: Aequatus is an open-source homology browser developed with novel rendering approaches to visualise homologous, orthologous and paralogous gene structures.
 categories:
-- visualization
+- Visualization
 type: unrestricted
