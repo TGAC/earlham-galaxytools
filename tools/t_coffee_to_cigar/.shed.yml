@@ -1,9 +1,10 @@
 categories:
-- Phylogenetics 
+- Convert Formats
+- Phylogenetics
 description: Converts T-Coffee FASTA alignments to CIGAR strings
 long_description: |
-  simple tool to convert FASTA alignment produced by T-Coffee to CIGAR format. T-Coffee output needs to be converted into tabular format using the FASTA-to-Tabular converter.
+    Simple tool to convert FASTA alignment produced by T-Coffee to CIGAR format. T-Coffee output needs to be converted into tabular format using the FASTA-to-Tabular converter.
 name: t_coffee_to_cigar
-owner: earlhaminst 
-remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/t_coffee_to_cigar
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/t_coffee_to_cigar
 type: unrestricted

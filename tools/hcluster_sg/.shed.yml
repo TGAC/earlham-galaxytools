@@ -1,11 +1,8 @@
 categories:
 - Phylogenetics
 description: Hierarchically clustering on a sparse graph
-long_description: | 
-  hcluster_sg is a tool for hierarchically clustering on a sparse graph. 
-
-  https://github.com/douglasgscofield/hcluster
+homepage_url: https://github.com/douglasgscofield/hcluster
 name: hcluster_sg
-owner: earlhaminst 
-remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/hcluster_sg
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/hcluster_sg
 type: unrestricted

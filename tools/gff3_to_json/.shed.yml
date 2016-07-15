@@ -1,9 +1,8 @@
 categories:
-- Text Manipulation
+- Convert Formats
 description: GFF3 to JSON converter
-long_description: |
-  Converts GFF3 into JSON formated Gene Feature File
+long_description: Converts a set of GFF3 datasets into JSON format
 name: gff3_to_json
-owner: earlhaminst 
-remote_repository_url: https://github.com/TGAC/tgac-galaxytools/tree/master/tools/gff3_to_json
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/gff3_to_json
 type: unrestricted
