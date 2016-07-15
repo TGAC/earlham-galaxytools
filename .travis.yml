@@ -7,6 +7,8 @@ before_install:
   - export GALAXY_RELEASE=release_16.04
 
 install:
+  # html5lib (planemo dep) requires setuptools >= 18.5
+  - pip install --upgrade setuptools
   - pip install flake8 planemo
   - planemo conda_init
   - planemo shed_lint --report_level warn --tools --fail_level error --recursive .
