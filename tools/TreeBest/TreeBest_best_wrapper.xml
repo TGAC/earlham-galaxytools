@@ -92,7 +92,7 @@ $aln
             <param name="l" value="0.10" />
             <param name="L" value="0.20" />
             <param name="b" value="0.01" />
-            <output name="output" file="gene_tree.nhx" />
+            <output name="output" file="genetree.nhx" />
         </test>
     </tests>
     <help>
