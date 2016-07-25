@@ -63,9 +63,9 @@ gff3-to-json - We also developed tool to merge gene feature files and convert th
 * Thanki AS, Ayling S, Herrero J, Davey RP: Aequatus: An open-source homology browser. bioRxiv 055632; doi: http://dx.doi.org/10.1101/055632
 
 # Project contacts: 
-* Anil Thanki <Anil.Thanki@tgac.ac.uk>
-* Nicola Soranzo <Nicola.Soranzo@tgac.ac.uk>
-* Robert Davey <Robert.Davey@tgac.ac.uk>
+* Anil Thanki <Anil.Thanki@earlham.ac.uk>
+* Nicola Soranzo <Nicola.Soranzo@earlham.ac.uk>
+* Robert Davey <Robert.Davey@earlham.ac.uk>
 
 
-&copy; 2016. The Genome Analysis Centre, Norwich, UK
+&copy; 2016. Earlham Institute, Norwich, UK
