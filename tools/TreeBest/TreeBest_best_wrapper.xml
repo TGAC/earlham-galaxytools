@@ -81,6 +81,20 @@ $aln
         <data name="output" format="nhx" label="$tool.name on ${on_string}" />
     </outputs>
 
+    <tests>
+        <test>
+            <param name="species_tree" ftype="nhx" value="species.nhx" />
+            <param name="aln" ftype="fasta" value="dna_alignment.fasta" />
+            <param name="F" value="11" />
+            <param name="K_selector" value="yes" />
+            <param name="A_selector" value="yes" />
+            <param name="d" value="0.15" />
+            <param name="l" value="0.10" />
+            <param name="L" value="0.20" />
+            <param name="b" value="0.01" />
+            <output name="output" file="genetree.nhx" />
+        </test>
+    </tests>
     <help>
 <![CDATA[
 **What it does**
