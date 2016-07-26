@@ -30,7 +30,7 @@ We have developed various tools to help with data preparation for the workflow. 
 
 
 # Result
-Resulted gene families can be visualised using the Aequatus.js interactive tool, which is developed as part of the Aequatus software.
+Resulted gene families can be visualised using the [Aequatus.js](https://github.com/TGAC/aequatus.js) interactive tool, which is developed as part of the [Aequatus software](https://github.com/TGAC/aequatus) [2].
 
 The Aequatus.js plugin provides an interactive visual representation of the phylogenetic and structural relationships among the homologous genes, using a shared colour scheme for coding regions to represent homology in internal gene structure alongside their corresponding gene trees. It is also able to indicate insertions and deletions in homologous genes with respect to shared ancestors.
 
@@ -59,8 +59,8 @@ gff3-to-json - We also developed tool to merge gene feature files and convert th
 
 
 # Reference:
-* Vilella AJ, Severin J, Ureta-Vidal A, Heng L, Durbin R, Birney E: EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates. Genome Res. 2009, 19(2):327–335. 
-* Thanki AS, Ayling S, Herrero J, Davey RP: Aequatus: An open-source homology browser. bioRxiv 055632; doi: http://dx.doi.org/10.1101/055632
+1. Vilella AJ, Severin J, Ureta-Vidal A, Heng L, Durbin R, Birney E: EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates. Genome Res. 2009, 19(2):327–335. 
+2. Thanki AS, Ayling S, Herrero J, Davey RP: Aequatus: An open-source homology browser. bioRxiv 055632; doi: http://dx.doi.org/10.1101/055632
 
 # Project contacts: 
 * Anil Thanki <Anil.Thanki@earlham.ac.uk>
