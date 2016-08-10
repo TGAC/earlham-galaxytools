@@ -6,6 +6,7 @@ import os
 import os.path
 import shutil
 import sys
+import re 
 
 parser = optparse.OptionParser()
 parser.add_option('-d', '--export_dir', help='Directory where to export the datasets')
@@ -32,8 +33,14 @@ if not os.path.isdir(real_export_dir):
 dataset_paths = args[::2]
 dataset_names = args[1::2]
 for dp, dn in zip(dataset_paths, dataset_names):
+    """
+    Copied from get_valid_filename from django
+    https://github.com/django/django/blob/master/django/utils/text.py
+    """
+    dn_safe = dn.strip().replace(' ', '_')
+    dn_safe = re.sub(r'(?u)[^-\w.]', '', dn_safe)
     try:
-        shutil.copy2(dp, os.path.join(real_export_dir, dn))
-        print("'%s' copied" % dn)
+        shutil.copy2(dp, os.path.join(real_export_dir, dn_safe))
+        print("'%s' copied" % dn_safe)
     except Exception as e:
-        print("Error copying '%s', %s" % (dn, e))
+    sys.exit("Error copying '%s', %s" % (dn_safe, e))

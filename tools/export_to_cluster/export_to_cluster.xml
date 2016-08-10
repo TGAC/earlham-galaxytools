@@ -6,7 +6,7 @@
 <![CDATA[
 python $__tool_directory__/export_to_cluster.py -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
 #for $d in $datasets
-    '$d' '$d.hid: $d.name'
+    '$d' '$d.hid: $d.name.$d.ext'
 #end for
 > $log
 ]]>
