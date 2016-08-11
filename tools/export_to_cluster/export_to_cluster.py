@@ -4,9 +4,9 @@ from __future__ import print_function
 import optparse
 import os
 import os.path
+import re
 import shutil
 import sys
-import re
 
 parser = optparse.OptionParser()
 parser.add_option('-d', '--export_dir', help='Directory where to export the datasets')
@@ -30,20 +30,21 @@ if not os.path.exists(real_export_dir):
 if not os.path.isdir(real_export_dir):
     sys.exit("%s is not a directory" % options.export_dir)
 
-dataset_paths = args[::2]
-dataset_names = args[1::2]
-for dp, dn in zip(dataset_paths, dataset_names):
+dataset_paths = args[::3]
+dataset_names = args[1::3]
+dataset_exts = args[2::3]
+for dp, dn, de in zip(dataset_paths, dataset_names, dataset_exts):
     """
     Copied from get_valid_filename from django
     https://github.com/django/django/blob/master/django/utils/text.py
     """
-    dn_safe = dn.strip().replace(' ', '_')
-    dn_safe = re.sub(r'(?u)[^-\w.]', '', dn_safe)
-    dest = os.path.join(real_export_dir, dn_safe)
+    dn_de = "%s.%s" % (dn, de)
+    dn_de_safe = re.sub(r'(?u)[^-\w.]', '', dn_de.strip().replace(' ', '_'))
+    dest = os.path.join(real_export_dir, dn_de_safe)
     try:
         shutil.copy2(dp, dest)
-        print("'%s' copied to '%s'" % (dn, dest))
+        print("Dataset '%s' copied to '%s'" % (dn, dest))
     except Exception as e:
-        msg = "Error copying '%s' to '%s', %s" % (dn, dest, e)
+        msg = "Error copying dataset '%s' to '%s', %s" % (dn, dest, e)
         print(msg)
         sys.stderr.write(msg)
