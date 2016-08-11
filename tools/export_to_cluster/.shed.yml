@@ -1,0 +1,9 @@
+categories:
+- Data Export
+description: Export datasets to cluster
+homepage_url: https://github.com/TGAC/earlham-galaxytools/
+long_description: Simple tool to copy datasets to a directory on the cluster.
+name: export_to_cluster
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/export_to_cluster/
+type: unrestricted
