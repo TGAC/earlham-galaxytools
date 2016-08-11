@@ -6,7 +6,7 @@ import os
 import os.path
 import shutil
 import sys
-import re 
+import re
 
 parser = optparse.OptionParser()
 parser.add_option('-d', '--export_dir', help='Directory where to export the datasets')
@@ -39,8 +39,11 @@ for dp, dn in zip(dataset_paths, dataset_names):
     """
     dn_safe = dn.strip().replace(' ', '_')
     dn_safe = re.sub(r'(?u)[^-\w.]', '', dn_safe)
+    dest = os.path.join(real_export_dir, dn_safe)
     try:
-        shutil.copy2(dp, os.path.join(real_export_dir, dn_safe))
-        print("'%s' copied" % dn_safe)
+        shutil.copy2(dp, dest)
+        print("'%s' copied to '%s'" % (dn, dest))
     except Exception as e:
-    sys.exit("Error copying '%s', %s" % (dn_safe, e))
+        msg = "Error copying '%s' to '%s', %s" % (dn, dest, e)
+        print(msg)
+        sys.stderr.write(msg)
