@@ -101,7 +101,7 @@ $aln
 
 `TreeBeST`_ (gene Tree Building guided by Species Tree) is a versatile program that builds, manipulates and displays phylogenetic trees. It is particularly designed for building gene trees with a known species tree and is highly efficient and accurate.
 
-The `best' command builds the best gene tree from a species tree and a CDS alignment. The resultant tree will be bootstrapped for 100 times, reconciled with the species tree and rooted by minimizing with the number of duplications and losses. Duplications and losses are also stored in the NHX format.
+The 'best' command builds the best gene tree from a species tree and a CDS alignment. The resultant tree will be bootstrapped for 100 times, reconciled with the species tree and rooted by minimizing with the number of duplications and losses. Duplications and losses are also stored in the NHX format.
 
 Note that TreeBeST first determines the topology of resultant tree with a complex procedure, and then performs a hundred times of resampling with an improved neighbour-joining algorithm. Branch lengths are finally estimated with the standard ML method under the HKY model.
 
