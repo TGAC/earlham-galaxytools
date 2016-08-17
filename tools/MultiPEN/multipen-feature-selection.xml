@@ -1,0 +1,58 @@
+<tool id="multipen-feature-selection" name="featureSelection" version="0.0.2">
+    <description>feature selection from expression levels</description>
+    <requirements>
+        <requirement type="package" version="0.0.2">MultiPEN</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <command>
+<![CDATA[
+    run_MultiPEN.sh featureSelection ./ "$expr_levels" "$interaction_network" "$classes" $lambda "$features_annot" "$samples_annot" $max_iter ./ &&
+    mv MultiPEN-Rankings_lambda${lambda}.txt Rankings.txt &&
+    mv MultiPEN_Rankings_lambda${lambda}.mat Rankings.mat &&
+    mv MultiPEN-vts_lambda${lambda}.txt vts.txt &&
+    mv MultiPEN-Rankings_lambda${lambda}_genes-higher-in-cases.txt Rankings-higherInCases.txt &&
+    mv MultiPEN-Rankings_lambda${lambda}_genes-higher-in-control.txt Rankings-higherInControl.txt &&
+    
+]]>
+    </command>
+    <inputs>
+        <param name="expr_levels" type="data" format="tabular" label="Expression levels for features" help="Gene expression and/or metabolite levels" />
+        <param name="interaction_network" type="data" format="tabular" label="Interaction Network" help="Matrix with the interactions, each interaction is of the form: [node, node, interaction_weight]" />
+        <param name="classes" type="data" format="txt" label="Classes for the samples" help="1 for case or 0 for control" />
+        <param name="lambda" type="float" value="" label="Lambda for the optimisation function" help="" />
+        <param name="fatures_annot" type="data" format="txt" label="Feature names" help="use symbol names for genes or chEBI IDs for metabolites" />
+        <param name="samples_annot" type="data" format="txt" label="Samples" help="Specify the name for each sample" />
+        <param name="max_iter" type="integer" value="" label="Maximum number of iterations for optimisation" help="Optional parameter, by default this is set to 100" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="Rankings" label="${tool.name} on ${on_string} (lambda $lambda): Rankings" from_work_dir="Rankings.txt" />
+        <data format="matlab" name="Rankings_mat" label="${tool.name} on ${on_string} (lambda $lambda): Rankings MATLAB" hidden="true" from_work_dir="Rankings.mat" />
+        <data format="txt" name="vts" label="${tool.name} on ${on_string} (lambda $lambda): vts" from_work_dir="vts.txt" />
+        <data format="txt" name="Rankings-higherInCases" label="${tool.name} on ${on_string} (lambda $lambda): Rankings-higherInCases" from_work_dir="Rankings-higherInCases.txt" />
+        <data format="txt" name="Rankings-higherInControl" label="${tool.name} on ${on_string} (lambda $lambda): Rankings-higherInControl" from_work_dir="Rankings-higherInControl.txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="expr_levels" ftype="tabular" value="X.txt" />
+            <param name="network_nodes" ftype="tabular" value="E.txt" />
+            <param name="classes" ftype="tabular" value="Y.txt" />
+            <param name="lambda" value="0.1" />
+            <param name="features_annot" ftype="tabular" value="features.txt" />
+            <param name="samples_annot" ftype="tabular" value="samples.txt" />
+    
+            <output name="Rankings" file="MultiPEN-Rankings_lambda0.1.txt" ftype="txt" />
+            <output name="Rankings_mat" file="MultiPEN-Rankings_lambda0.1.mat" />
+            <output name="vts" file="MultiPEN-vts_lambda0.1.txt" ftype="txt" />
+            <output name="Rankings-higherInCases" file="MultiPEN-Rankings_lambda0.1_genes-higher-in-cases.txt" ftype="txt" />
+            <output name="Rankings-higherInControl" file="MultiPEN-Rankings_lambda0.1_genes-higher-in-control.txt" ftype="txt" />
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
