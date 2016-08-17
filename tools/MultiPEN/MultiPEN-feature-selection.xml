@@ -8,7 +8,7 @@
     </stdio>
     <command>
 <![CDATA[
-    run_MultiPEN.sh featureSelection ./ "$expr_levels" "$interaction_network" "$classes" $lambda "$features_annot" "$samples_annot" $max_iter ./ &&
+    run_MultiPEN.sh featureSelection ./ "$expr_levels" "$interaction_network" "$classes" $lambda "$features_annot" "$samples_annot" $max_iter &&
     mv MultiPEN-Rankings_lambda${lambda}.txt Rankings.txt &&
     mv MultiPEN_Rankings_lambda${lambda}.mat Rankings.mat &&
     mv MultiPEN-vts_lambda${lambda}.txt vts.txt &&
