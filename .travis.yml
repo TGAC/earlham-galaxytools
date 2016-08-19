@@ -18,7 +18,7 @@ install:
 
 script:
   - cd "$TRAVIS_BUILD_DIR" && flake8 -v --exclude=.git .
-  - planemo shed_lint --report_level warn --tools --fail_level error --recursive .
+  - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive .
   - |
     if [ -s changed_repositories.list ]; then
       while read -r DIR; do planemo conda_install "$DIR"; done < changed_repositories.list

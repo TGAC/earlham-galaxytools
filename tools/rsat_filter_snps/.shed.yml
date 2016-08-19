@@ -2,6 +2,7 @@ categories:
 - ChIP-seq
 - Systems Biology
 description: Filter SNPs in RSAT Matrix Scan output
+homepage_url: https://github.com/TGAC/earlham-galaxytools/
 name: rsat_filter_snps
 owner: earlham
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/rsat_filter_snps
