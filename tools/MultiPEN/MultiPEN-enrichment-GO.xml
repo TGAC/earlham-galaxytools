@@ -1,0 +1,40 @@
+<tool id="MultiPEN-enrichment-GO" name="enrichmentGO" version="0.0.2">
+    <description>MultiPEN: over-representation analysis with Gene Ontology</description>
+    <requirements>
+        <requirement type="package" version="0.0.2">MultiPEN</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <command>
+<![CDATA[
+    run_MultiPEN.sh enrichmentGO ./ "$rankings"
+    
+]]>
+    </command>
+    <inputs>
+        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of features (genes and/or metabolites) computed by the step of feature selection. The rankings must be specified in a tab delimited text file with the columns 'name' (use symbol names for genes or chEBI IDs for metabolites) and 'ranking'. " />
+    </inputs>
+    <outputs>
+        <data format="txt" name="enrichment-GO" label="${tool.name}: Enrichment for Gene Ontology" from_work_dir="enrichment-GO.txt" />
+        <data format="pdf" name="enrichment-GO_BP" label="${tool.name}: Enrichment for Gene Ontology - Biological Processes" from_work_dir="enrichment-GO_BP.pdf" />
+        <data format="pdf" name="enrichment-GO_MF" label="${tool.name}: Enrichment for Gene Ontology - Molecular Functions" from_work_dir="enrichment-GO_MF.pdf" />
+        <data format="pdf" name="enrichment-GO_CC" label="${tool.name}: Enrichment for Gene Ontology - Cellular Components" from_work_dir="enrichment-GO_CC.pdf" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="rankings" ftype="tabular" value="MultiPEN-Rankings_lambda0.1.txt" />
+            <output name="enrichment-GO" file="enrichment-GO" ftype="txt" />
+            <output name="enrichment-GO_BP" file="enrichment-GO_BP" ftype="pdf" />
+            <output name="enrichment-GO_MF" file="enrichment-GO_MF" ftype="pdf" />
+            <output name="enrichment-GO_CC" file="enrichment-GO_CC" ftype="pdf" />
+            
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
