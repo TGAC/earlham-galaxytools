@@ -22,7 +22,7 @@
         <param name="interaction_network" type="data" format="tabular" label="Interaction Network" help="Matrix with the interactions, each interaction is of the form: [node, node, interaction_weight]" />
         <param name="classes" type="data" format="txt" label="Classes for the samples" help="1 for case or 0 for control" />
         <param name="lambda" type="float" value="" label="Lambda for the optimisation function" help="" />
-        <param name="fatures_annot" type="data" format="txt" label="Feature names" help="use symbol names for genes or chEBI IDs for metabolites" />
+        <param name="features_annot" type="data" format="txt" label="Feature names" help="use symbol names for genes or chEBI IDs for metabolites" />
         <param name="samples_annot" type="data" format="txt" label="Samples" help="Specify the name for each sample" />
         <param name="max_iter" type="integer" value="" optional="true" label="Maximum number of iterations for optimisation" help="Optional parameter, by default this is set to 100" />
     </inputs>
