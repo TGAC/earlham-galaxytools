@@ -254,8 +254,8 @@ def __main__():
                     three_prime_utr_to_json(cols)
                 elif cols[2] == 'CDS':
                     cds_to_json(cols)
-                else:
-                    raise Exception("Line %i in file '%s': '%s' is not an implemented type")
+                # else:
+                    # raise Exception("Line %i in file '%s': '%s' is not an implemented type")
     join_dicts()
 
     for json_arg in options.json:
