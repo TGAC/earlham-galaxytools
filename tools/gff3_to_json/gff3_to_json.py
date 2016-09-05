@@ -162,26 +162,18 @@ def join_dicts():
             found_translation = True
         else:
             if transcript_id in five_prime_utr_parent_dict:
-                # if found_translation and \
-                #         five_prime_utr_parent_dict[transcript_id]['end'] + 1 != translation['start']:
-                #     raise Exception("The first CDS of transcript '%s' does not start immediately after the 5' UTR" % transcript_id)
-                # else:
-                    if transcript['strand'] == 1:
-                        translation['start'] = five_prime_utr_parent_dict[transcript_id]['end'] + 1
-                    else:
-                        translation['end'] = five_prime_utr_parent_dict[transcript_id]['start'] + 1
+                if transcript['strand'] == 1:
+                    translation['start'] = five_prime_utr_parent_dict[transcript_id]['end'] + 1
+                else:
+                    translation['end'] = five_prime_utr_parent_dict[transcript_id]['start'] + 1
 
-                    found_translation = True
+                found_translation = True
             if transcript_id in three_prime_utr_parent_dict:
-                # if found_translation and \
-                #         three_prime_utr_parent_dict[transcript_id]['start'] - 1 != translation['end']:
-                #     raise Exception("The last CDS of transcript '%s' does not end immediately before the 3' UTR" % transcript_id)
-                # else:
-                    if transcript['strand'] == 1:
-                        translation['end'] = three_prime_utr_parent_dict[transcript_id]['start'] - 1
-                    else:
-                        translation['start'] = three_prime_utr_parent_dict[transcript_id]['end'] - 1
-                    found_translation = True
+                if transcript['strand'] == 1:
+                    translation['end'] = three_prime_utr_parent_dict[transcript_id]['start'] - 1
+                else:
+                    translation['start'] = three_prime_utr_parent_dict[transcript_id]['end'] - 1
+                found_translation = True
         if found_translation:
             transcript['Translation'] = translation
 
@@ -189,15 +181,11 @@ def join_dicts():
         if parent in transcript_dict:
             if 'Translation' not in transcript_dict[parent]:
                 transcript_dict[parent]['Translation'] = {'start': five_prime_utr['end'] + 1}
-            # else:
-               # transcript_dict[parent]['Translation']['start'] = five_prime_utr['end'] + 1
 
     for parent, three_prime_utr in three_prime_utr_parent_dict.iteritems():
         if parent in transcript_dict:
             if 'Translation' not in transcript_dict[parent]:
                 transcript_dict[parent]['Translation'] = {'end': three_prime_utr['start'] - 1}
-            # else:
-               # transcript_dict[parent]['Translation']['end'] = three_prime_utr['start'] - 1
 
     for parent, cds_list in cds_parent_dict.iteritems():
         if parent in transcript_dict:
