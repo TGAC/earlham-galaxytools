@@ -55,7 +55,7 @@ python $__tool_directory__/ete_tree_generator.py
     <tests>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="treebest" type="select" value="yes" />
+            <param name="treebest" value="yes" />
             <output name="outputFile" file="out.nhx" />
         </test>
     </tests>

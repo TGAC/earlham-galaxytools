@@ -1,4 +1,4 @@
-<tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1" force_history_refresh="True">
+<tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1">
     <description>Converts hcluster_sg 3-column output into lists of ids</description>
     <command>
 <![CDATA[
