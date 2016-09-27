@@ -1,0 +1,44 @@
+<tool id="get_uniprot_info_to_e!_id" name="Get Ensembl id from UniProt features" version="0.1.1">
+    <description>using UniProt parser</description>
+    <command>
+<![CDATA[
+perl $__tool_directory__/uniprot_feature_to_Ensembl_id.pl
+$file
+$format_selector
+> "$output"
+]]>
+    </command>
+
+    <inputs>
+    <param name="file" type="data" format="txt" label="UniProt info" help="UniProt info in txt format" />
+    <param name="format_selector" type="select" label="Output (Transcript or Protein)">
+        <option value="gene" selected="true">Gene</option>
+        <option value="transcript">Transcript</option>
+        <option value="protein">Protein</option>
+    </param>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="txt" label="$(tool.name) on ${on_string}" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="file" ftype="txt" value="uniprot.txt" />
+            <param name="format_selector" value="gene" />
+            <output name="output" file="out.txt" />
+        </test>
+    </tests>
+
+    <help>
+<![CDATA[
+**What it does**
+
+Retrieve feature information in text format from UniProt using its REST API.
+
+
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
