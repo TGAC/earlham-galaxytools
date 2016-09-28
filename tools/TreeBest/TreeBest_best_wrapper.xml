@@ -24,15 +24,15 @@ $N
 -l $l
 -L $L
 -b $b
-#if $K.K_selector == 'yes'
+#if $k.k_selector == 'yes'
     -k e
 #else
-    -k $K.k
+    -k $k.k_value
 #end if
-#if $A_option.A_selector == 'yes'
+#if $a.a_selector == 'yes'
     -a e
 #else
-    -a $A_option.a
+    -a $a.a_value
 #end if
 -F $F
 -p "Galaxy_TreeBest_Best"
@@ -54,24 +54,24 @@ $aln
         <param name="N" type="boolean" truevalue="-N" falsevalue="" label="Do not mask low-scoring segments" help="(-N)" />
         <param name="F" type="integer" min="1" value="11" label="Quality cut-off" help="(-F)" />
         <param name="c" type="integer" min="1" value="2" label="Number of rate categories for PHYML-HKY" help="(-c)" />
-        <conditional name="K">
-            <param name="K_selector" type="select" label="tv/ts ratio (kappa)" help="(-k)">
+        <conditional name="k">
+            <param name="k_selector" type="select" label="tv/ts ratio (kappa)" help="(-k)">
                 <option value="yes">Estimate (e)</option>
                 <option value="no">Specify value</option>
             </param>
             <when value="yes" />
             <when value="no">
-                <param name="k" type="float" value="0.0" label="tv/ts ratio (kappa)" />
+                <param name="k_value" type="float" value="0.0" label="tv/ts ratio (kappa)" />
             </when>
         </conditional>
-        <conditional name="A_option">
-            <param name="A_selector" type="select" label="Alpha parameter for Gamma distribution" help="(-a)">
+        <conditional name="a">
+            <param name="a_selector" type="select" label="Alpha parameter for Gamma distribution" help="(-a)">
                 <option value="yes">Estimate (e)</option>
                 <option value="no">Specify value</option>
             </param>
             <when value="yes" />
             <when value="no">
-                <param name="a" type="float" value="0.0" label="Alpha parameter for Gamma distribution" />
+                <param name="a_value" type="float" value="0.0" label="Alpha parameter for Gamma distribution" />
             </when>
         </conditional>
         <param name="d" type="float" min="0" value="0.15" label="Duplication probability" help="(-d)" />
@@ -89,8 +89,8 @@ $aln
             <param name="species_tree" ftype="nhx" value="species.nhx" />
             <param name="aln" ftype="fasta" value="dna_alignment.fasta" />
             <param name="F" value="11" />
-            <param name="K_selector" value="yes" />
-            <param name="A_selector" value="yes" />
+            <param name="k_selector" value="yes" />
+            <param name="a_selector" value="yes" />
             <param name="d" value="0.15" />
             <param name="l" value="0.10" />
             <param name="L" value="0.20" />
