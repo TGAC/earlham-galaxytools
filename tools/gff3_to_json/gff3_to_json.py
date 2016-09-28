@@ -78,7 +78,7 @@ def exon_to_json(cols, species):
 def five_prime_utr_to_json(cols):
     five_prime_utr = {
         'start': int(cols[3]),
-        'end':int(cols[4]),
+        'end': int(cols[4]),
     }
     for attr in cols[8].split(';'):
         (tag, value) = attr.split('=')
