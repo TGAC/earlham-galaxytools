@@ -117,7 +117,7 @@ python $__tool_directory__/get_genetree.py
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" fype="json" />
+            <output name="output" file="genetree.json" ftype="json" />
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />

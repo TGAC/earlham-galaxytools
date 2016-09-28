@@ -4,20 +4,22 @@ python:
   - "2.7"
 
 before_install:
-  - export GALAXY_RELEASE=release_16.04
+  - export GALAXY_RELEASE=release_16.07
 
 install:
-  # html5lib (planemo dep) requires setuptools >= 18.5
-  - pip install --upgrade setuptools
   - pip install flake8 planemo
   - planemo conda_init
   - planemo --version
   - echo $TRAVIS_COMMIT_RANGE
-  - git diff --name-only $TRAVIS_COMMIT_RANGE | xargs -n1 dirname | ./filter_directories.py | sort -u > changed_repositories.list
+  - |
+      planemo ci_find_repos --exclude_from .tt_blacklist \
+                            --exclude packages --exclude data_managers \
+                            --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
+                            --output changed_repositories.list
   - cat changed_repositories.list
 
 script:
-  - cd "$TRAVIS_BUILD_DIR" && flake8 -v --exclude=.git .
+  - cd "$TRAVIS_BUILD_DIR" && flake8 --exclude=.git .
   - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive .
   - |
     if [ -s changed_repositories.list ]; then

@@ -1,11 +1,11 @@
-((ENSLACT00000009516_latimeriachalumnae:0.149849[&&NHX:S=latimeriachalumnae],
+(ENSLOCT00000017020_lepisosteusoculatus:0.258673[&&NHX:E=$-186625:S=lepisosteusoculatus],
+(ENSLACT00000009516_latimeriachalumnae:0.149849[&&NHX:S=latimeriachalumnae],
 ((ENSLACT00000014274_latimeriachalumnae:0.011979[&&NHX:S=latimeriachalumnae],
 ENSLACT00000026689_latimeriachalumnae:0[&&NHX:S=latimeriachalumnae]
-):0.040268[&&NHX:D=Y:SIS=100:S=latimeriachalumnae:B=100],
+):0.040268[&&NHX:D=Y:SIS=100:DCS=1.0000:S=latimeriachalumnae:T=31:B=100],
 (ENSLACT00000014694_latimeriachalumnae:0.022411[&&NHX:S=latimeriachalumnae],
 ENSLACT00000014695_latimeriachalumnae:0.019166[&&NHX:S=latimeriachalumnae]
-):0.074979[&&NHX:D=Y:SIS=100:S=latimeriachalumnae:B=100]
-):0.296006[&&NHX:D=Y:SIS=100:S=latimeriachalumnae:B=100]
-):0[&&NHX:D=Y:SIS=100:E=$-32523:S=latimeriachalumnae:B=100],
-ENSLOCT00000017020_lepisosteusoculatus:0.258673[&&NHX:E=$-186625:S=lepisosteusoculatus]
+):0.074979[&&NHX:D=Y:SIS=100:DCS=1.0000:S=latimeriachalumnae:T=31:B=100]
+):0.296006[&&NHX:D=Y:SIS=100:DCS=1.0000:S=latimeriachalumnae:T=31:B=100]
+):0[&&NHX:D=Y:SIS=100:DCS=1.0000:E=$-32523:S=latimeriachalumnae:T=31:B=100]
 )[&&NHX:D=N:S=117571:B=0];
