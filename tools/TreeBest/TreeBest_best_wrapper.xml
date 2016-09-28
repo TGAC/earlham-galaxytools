@@ -1,8 +1,11 @@
 <tool id="treebest_best_wrapper" name="TreeBeST best" version="1.9.2">
     <description>Generate a phylogenetic tree using CDS alignment and species tree</description>
      <requirements>
-        <requirement type="package" version="1.9.2">treebest</requirement>
+        <requirement type="package" version="1.9.2_ep78">treebest</requirement>
     </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
     <command>
 <![CDATA[
 treebest best

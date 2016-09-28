@@ -32,7 +32,7 @@ $sort
         <param name="sort" type="boolean" truevalue="-s" falsevalue="" label="Sort the keys in the Aequatus JSON output" help="Ensure reproducibility, but can slow down the JSON creation for big files" />
     </inputs>
     <outputs>
-        <data type="data" format="aequatus" name="outputFile" label="${tool.name} on ${on_string}" />
+        <data name="outputFile" format="aequatus" label="${tool.name} on ${on_string}" />
     </outputs>
     <tests>
         <test>
