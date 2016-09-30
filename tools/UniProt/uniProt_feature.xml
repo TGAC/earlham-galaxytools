@@ -16,7 +16,7 @@ $format_selector
         <option value="fasta">Fasta</option>
         <option value="rdf">RDF</option>
         <option value="xml">XML</option>
-
+        <option value="gff">GFF</option>
     </param>
     </inputs>
 

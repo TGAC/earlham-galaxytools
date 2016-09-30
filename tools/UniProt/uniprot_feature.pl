@@ -3,7 +3,7 @@ use warnings;
 use LWP::UserAgent;
 
 my $list = $ARGV[0]; # File containg list of UniProt identifiers.
-my $format = $ARGV[1]; # Format Fasta, GFF, RDF, XML.
+my $format = $ARGV[1]; # Format Fasta, GFF, RDF, XML, TXT.
 my $base = 'http://www.uniprot.org';
 my $tool = 'batch';
 
