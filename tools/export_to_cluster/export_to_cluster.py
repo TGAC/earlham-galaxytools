@@ -16,9 +16,9 @@ if not options.export_dir:
     parser.error('Export directory cannot be empty')
 if not options.dir_prefix:
     parser.error('Directory prefix cannot be empty')
-if len(args) < 2:
+if len(args) < 3:
     parser.error('Require at least two arguments')
-if len(args) % 2 != 0:
+if len(args) % 3 != 0:
     parser.error('Require an even number of arguments')
 
 real_export_dir = os.path.realpath(options.export_dir)
