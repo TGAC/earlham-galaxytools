@@ -63,12 +63,15 @@ def exon_to_json(cols, species):
     }
     for attr in cols[8].split(';'):
         (tag, value) = attr.split('=')
-        if tag == 'ID':
-            exon['id'] = value
-        else:
-            exon[tag] = value
-    if 'Parent' in exon:
-        for parent in exon['Parent'].split(','):
+
+        tag = tag.lower()
+        exon[tag] = value
+
+    if 'id' not in exon:
+        exon['id'] = exon['name']
+
+    if 'parent' in exon:
+        for parent in exon['parent'].split(','):
             if parent not in exon_parent_dict:
                 exon_parent_dict[parent] = [exon]
             else:
