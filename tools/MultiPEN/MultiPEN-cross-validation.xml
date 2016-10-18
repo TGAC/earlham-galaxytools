@@ -1,14 +1,14 @@
-<tool id="multipen-cross-validation" name="crossValidation" version="0.0.2">
-    <description>feature selection from expression levels</description>
+<tool id="multipen-cross-validation" name="Cross validation for MultiPEN" version="0.0.1">
+    <description>Performs cross validation to test MultiPEN</description>
     <requirements>
-        <requirement type="package" version="0.0.2">MultiPEN</requirement>
+        <requirement type="package" version="0.0.1">MultiPEN</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
     </stdio>
     <command>
 <![CDATA[
-    run_MultiPEN.sh cross_validation ./ "$expr_levels" "$interaction_network" "$classes" $lambda $n_folds $max_iter
+    run_MultiPEN.sh crossValidation ./ "$expr_levels" "$interaction_network" "$classes" "$lambdas" $n_folds $max_iter
     
 ]]>
     </command>
@@ -16,7 +16,7 @@
         <param name="expr_levels" type="data" format="tabular" label="Expression levels for features" help="Gene expression and/or metabolite levels" />
         <param name="interaction_network" type="data" format="tabular" label="Interaction Network" help="Matrix with the interactions, each interaction is of the form: [node, node, interaction_weight]" />
         <param name="classes" type="data" format="txt" label="Classes for the samples" help="1 for case or 0 for control" />
-        <param name="lambda" type="float" value="" label="Lambda for the optimisation function" help="" />
+        <param name="lambdas" type="data" format="txt" label="Lambdas to perform cross validation" help="Provide a list of lambdas to test MultiPEN" />
         <param name="n_folds" type="integer" value="" label="N-folds for cross validation" help="" />
         <param name="max_iter" type="integer" value="" optional="true" label="Maximum number of iterations for optimisation" help="Optional parameter, by default this is set to 100" />
     </inputs>
@@ -29,7 +29,7 @@
             <param name="interaction_network" ftype="tabular" value="E.txt" />
             <param name="classes" ftype="txt" value="Y.txt" />
             <param name="lambda" value="0.1" />
-            <param name="n_folds" value="1" />
+            <param name="n_folds" value="3" />
     
             <output name="statistics" file="cross-validation_stats.txt" ftype="txt" />
             
