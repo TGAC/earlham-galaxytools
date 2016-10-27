@@ -1,4 +1,4 @@
-<tool id="t_coffee_to_cigar" name="T-Coffee to CIGAR" version="0.1.1">
+<tool id="t_coffee_to_cigar" name="T-Coffee to CIGAR" version="0.2.0">
     <description>
         Converts T-Coffee FASTA alignments to CIGAR strings
     </description>
