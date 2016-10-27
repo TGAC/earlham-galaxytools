@@ -11,7 +11,7 @@ $input
     </command>
 
     <inputs>
-        <param name="input" type="data" format="tabular" label="2-column tabular dataset from T-Coffee" help="Columns should be sequence id and FASTA alignment" />
+        <param name="input" type="data" format="fasta" label="FASTA alignments from T-Coffee" />
     </inputs>
 
     <outputs>
@@ -20,14 +20,14 @@ $input
 
     <tests>
         <test>
-            <param name="input" ftype="tabular" value="test.tabular" />
+            <param name="input" ftype="fasta" value="input.fasta" />
             <output name="output" file="out.tabular" />
         </test>
     </tests>
 
     <help>
 <![CDATA[
-Simple tool to convert FASTA alignment produced by T-Coffee to CIGAR format. T-Coffee output needs to be converted into tabular format using the FASTA-to-Tabular converter.
+Simple tool to convert FASTA alignments produced by T-Coffee to CIGAR format.
 ]]>
     </help>
     <citations>
