@@ -10,6 +10,7 @@ def create_table(conn):
     conn.execute('''CREATE TABLE gene_family
        (gene_family_id INT NOT NULL,
        gene_id INT KEY NOT NULL,
+       gene_symbol VARCHAR NOT NULL,
        protein_id INT KEY NOT NULL,
        alignment VARCHAR NOT NULL);''')
 
@@ -28,11 +29,11 @@ def cigar_to_db(conn, i, fname, gene_dict):
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            (protein_id, gene_id) = get_protein_and_gene_id_from_seq_id(gene_dict, seq_id)
+            (protein_id, gene_id, gene_symbol) = get_protein_and_gene_id_from_seq_id(gene_dict, seq_id)
             cigar_dict[protein_id] = cigar
 
-            conn.execute("INSERT INTO gene_family (gene_family_id, gene_id, protein_id, alignment) \
-                VALUES (?,?,?,?) ", (i, gene_id, protein_id, cigar))
+            conn.execute("INSERT INTO gene_family (gene_family_id, gene_id, protein_id, gene_symbol, alignment) \
+                VALUES (?,?,?,?,?) ", (i, gene_id, protein_id, gene_symbol, cigar))
 
             conn.commit()
             matched_gene_ids.add(gene_id)
@@ -73,16 +74,21 @@ def get_protein_and_gene_id_from_seq_id(gene_dict, seq_id):
     Search inside gene_dict for a gene having a transcript id or protein id
     equal to seq_id. Returns the protein id and the gene id.
     """
+    gene_symbol = ""
     for gene in gene_dict.values():
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 if transcript['id'] == seq_id:
                     if 'Translation' in transcript and 'id' in transcript['Translation']:
-                        return transcript["Translation"]["id"], gene['id']
+                        if 'display_name' in gene:
+                            gene_symbol = gene['display_name']
+                        return transcript["Translation"]["id"], gene['id'], gene_symbol
                     else:
                         break
                 elif 'Translation' in transcript and 'id' in transcript['Translation'] and transcript["Translation"]["id"] == seq_id:
-                    return seq_id, gene['id']
+                    if 'display_name' in gene:
+                        gene_symbol = gene['display_name']
+                    return seq_id, gene['id'], gene_symbol
 
 
 def __main__():
