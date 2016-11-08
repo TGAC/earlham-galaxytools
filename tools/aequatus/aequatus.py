@@ -1,142 +1,107 @@
-from __future__ import print_function
 import json
 import optparse
+import sqlite3
 
-version = "0.0.1"
-
-
-def write_json(aequatus_dict, outfile=None, sort_keys=False):
-    if outfile:
-        with open(outfile, 'w') as f:
-            json.dump(aequatus_dict, f, sort_keys=sort_keys)
-    else:
-        print(json.dumps(aequatus_dict, indent=4, sort_keys=sort_keys))
+version = "0.2.0"
 
 
-def cigar_to_dict(fname, gene_dict):
-    cigar_dict = dict()
-    matched_gene_ids = set()
+def create_tables(conn):
+    cur = conn.cursor()
+    cur.execute('PRAGMA foreign_keys = ON')
+    cur.execute('''CREATE TABLE gene_family_member (
+        gene_family_id INTEGER NOT NULL REFERENCES gene_family(gene_family_id),
+        protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
+        alignment VARCHAR NOT NULL,
+        PRIMARY KEY (gene_family_id, protein_id))''')
+
+    cur.execute('''CREATE TABLE gene_family (
+        gene_family_id INTEGER PRIMARY KEY,
+        gene_tree VARCHAR NOT NULL)''')
+
+    cur.execute('''CREATE TABLE gene (
+        gene_id VARCHAR PRIMARY KEY NOT NULL,
+        gene_symbol VARCHAR,
+        gene_json VARCHAR NOT NULL)''')
+    cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
+
+    cur.execute('''CREATE TABLE transcript (
+        transcript_id VARCHAR PRIMARY KEY NOT NULL,
+        protein_id VARCHAR UNIQUE,
+        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
+    conn.commit()
+
+
+def cigar_to_db(conn, i, fname):
+    cur = conn.cursor()
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            (protein_id, gene_id) = get_protein_and_gene_id_from_seq_id(gene_dict, seq_id)
-            cigar_dict[protein_id] = cigar
-            matched_gene_ids.add(gene_id)
-    return cigar_dict, matched_gene_ids
+
+            cur.execute('SELECT protein_id FROM transcript WHERE transcript_id=? OR protein_id=?',
+                        (seq_id, seq_id))
+            results = cur.fetchall()
+            if len(results) == 0:
+                raise Exception("Sequence id '%s' could not be found among the transcript and protein ids" % seq_id)
+            elif len(results) > 1:
+                raise Exception("Searching sequence id '%s' among the transcript and protein ids returned multiple results" % seq_id)
+            protein_id = results[0][0]
+
+            cur.execute('INSERT INTO gene_family_member (gene_family_id, protein_id, alignment) VALUES (?, ?, ?)',
+                        (i, protein_id, cigar))
+            conn.commit()
 
 
-def newicktree_to_string(fname):
+def newicktree_to_db(conn, i, fname):
     with open(fname) as f:
-        return f.read().replace('\n', '')
+        tree = f.read().replace('\n', '')
+
+    cur = conn.cursor()
+    cur.execute('INSERT INTO gene_family (gene_family_id, gene_tree) VALUES (?, ?)',
+                (i, tree))
+    conn.commit()
 
 
-def jsontree_to_dict(fname):
+def gene_json_to_db(conn, fname):
     with open(fname) as f:
-        return json.load(f)['tree']
+        all_genes_dict = json.load(f)
 
+    cur = conn.cursor()
+    for gene_dict in all_genes_dict.values():
+        gene_id = gene_dict['id']
+        gene_symbol = gene_dict.get('display_name', None)
+        cur.execute("INSERT INTO gene (gene_id, gene_symbol, gene_json) VALUES (?, ?, ?)",
+                    (gene_id, gene_symbol, json.dumps(gene_dict)))
 
-def match_gene_ids_from_tree(gene_dict, tree):
-
-    def recursive_check(element):
-        for tree_el in element["children"]:
-            if "children" in tree_el:
-                recursive_check(tree_el)
-            else:
-                matched_gene_ids.add(tree_el["id"]["accession"])
-
-    matched_gene_ids = set()
-    recursive_check(tree)
-    return matched_gene_ids
-
-
-def gene_json_to_dict(fname):
-    with open(fname) as f:
-        return json.load(f)
-
-
-def join_json(tree, gene_dict, cigar_dict, ref_gene, ref_protein, ref_transcript):
-    aequatus_dict = {'tree': tree,
-                     'member': gene_dict}
-
-    if cigar_dict:
-        aequatus_dict['cigar'] = cigar_dict
-
-    aequatus_dict['ref'] = ref_gene
-    aequatus_dict['protein_id'] = ref_protein
-    aequatus_dict['transcript_id'] = ref_transcript
-    aequatus_dict['version'] = version
-
-    return aequatus_dict
-
-
-def get_gene_and_transcript_ids_from_protein_id(gene_dict, protein_id):
-    for gene in gene_dict.values():
-        if "Transcript" in gene:
-            for transcript in gene["Transcript"]:
-                if 'Translation' in transcript and 'id' in transcript["Translation"]:
-                    if transcript["Translation"]["id"] == protein_id:
-                        return (gene["id"], transcript["id"])
-    print("Protein id %s not found in gene dictionary" % protein_id)
-    return (None, None)
-
-
-def get_protein_and_gene_id_from_seq_id(gene_dict, seq_id):
-    """
-    Search inside gene_dict for a gene having a transcript id or protein id
-    equal to seq_id. Returns the protein id and the gene id.
-    """
-    for gene in gene_dict.values():
-        if "Transcript" in gene:
-            for transcript in gene["Transcript"]:
-                if transcript['id'] == seq_id:
-                    if 'Translation' in transcript and 'id' in transcript['Translation']:
-                        return transcript["Translation"]["id"], gene['id']
-                    else:
-                        break
-                elif 'Translation' in transcript and 'id' in transcript['Translation'] and transcript["Translation"]["id"] == seq_id:
-                    return seq_id, gene['id']
-
-
-def get_first_protein_id_from_tree(tree_el):
-    if "children" not in tree_el:
-        return tree_el["sequence"]["id"][0]["accession"]
-    else:
-        # Depth-first search
-        first_child = tree_el["children"][0]
-        return get_first_protein_id_from_tree(first_child)
+        if "Transcript" in gene_dict:
+            for transcript in gene_dict["Transcript"]:
+                transcript_id = transcript['id']
+                if 'Translation' in transcript and 'id' in transcript['Translation']:
+                    protein_id = transcript["Translation"]["id"]
+                else:
+                    protein_id = None
+                cur.execute("INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)",
+                            (transcript_id, protein_id, gene_id))
+    conn.commit()
 
 
 def __main__():
     parser = optparse.OptionParser()
-    parser.add_option('-t', '--tree', help='Gene tree file')
-    parser.add_option('-f', '--format', type='choice', choices=['newick', 'json'], default='json', help='Gene tree format')
-    parser.add_option('-c', '--cigar', help='CIGAR alignments of CDS file in tabular format (only if tree is in newick format)')
+    parser.add_option('-t', '--tree', action='append', help='Gene tree files')
+    parser.add_option('-c', '--cigar', action='append', help='CIGAR alignments of CDS files in tabular format')
     parser.add_option('-g', '--gene', help='Gene features file in JSON format')
-    parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
-    parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
+    parser.add_option('-o', '--output', help='Path of the output file')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
 
-    gene_dict = gene_json_to_dict(options.gene)
+    conn = sqlite3.connect(options.output)
+    create_tables(conn)
 
-    if options.format == "newick":
-        cigar_dict, matched_gene_ids = cigar_to_dict(options.cigar, gene_dict)
-        tree = newicktree_to_string(options.tree)
-        # Pick a random protein as reference
-        ref_protein = next(iter(cigar_dict))
-    else:
-        cigar_dict = dict()
-        tree = jsontree_to_dict(options.tree)
-        matched_gene_ids = match_gene_ids_from_tree(gene_dict, tree)
-        ref_protein = get_first_protein_id_from_tree(tree)
+    gene_json_to_db(conn, options.gene)
 
-    # Trim gene_dict
-    gene_dict = dict((_, gene_dict[_]) for _ in matched_gene_ids)
-    ref_gene, ref_transcript = get_gene_and_transcript_ids_from_protein_id(gene_dict, ref_protein)
-    aequatus_dict = join_json(tree, gene_dict, cigar_dict, ref_gene, ref_protein, ref_transcript)
-
-    write_json(aequatus_dict, options.output, options.sort)
+    for i, (tree, cigar) in enumerate(zip(options.tree, options.cigar), start=1):
+        newicktree_to_db(conn, i, tree)
+        cigar_to_db(conn, i, cigar)
 
 if __name__ == '__main__':
     __main__()
