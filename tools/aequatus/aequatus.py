@@ -8,12 +8,6 @@ version = "0.2.0"
 def create_tables(conn):
     cur = conn.cursor()
     cur.execute('PRAGMA foreign_keys = ON')
-    cur.execute('''CREATE TABLE gene_family_member (
-        gene_family_id INTEGER NOT NULL REFERENCES gene_family(gene_family_id),
-        protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
-        alignment VARCHAR NOT NULL,
-        PRIMARY KEY (gene_family_id, protein_id))''')
-
     cur.execute('''CREATE TABLE gene_family (
         gene_family_id INTEGER PRIMARY KEY,
         gene_tree VARCHAR NOT NULL)''')
@@ -28,6 +22,12 @@ def create_tables(conn):
         transcript_id VARCHAR PRIMARY KEY NOT NULL,
         protein_id VARCHAR UNIQUE,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
+
+    cur.execute('''CREATE TABLE gene_family_member (
+        gene_family_id INTEGER NOT NULL REFERENCES gene_family(gene_family_id),
+        protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
+        alignment VARCHAR NOT NULL,
+        PRIMARY KEY (gene_family_id, protein_id))''')
     conn.commit()
 
 
