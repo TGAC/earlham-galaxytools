@@ -1,4 +1,3 @@
-from __future__ import print_function
 import json
 import optparse
 import sqlite3
@@ -6,89 +5,83 @@ import sqlite3
 version = "0.2.0"
 
 
-def create_table(conn):
-    conn.execute('''CREATE TABLE gene_family
-       (gene_family_id INT NOT NULL,
-       gene_id INT KEY NOT NULL,
-       gene_symbol VARCHAR NOT NULL,
-       protein_id INT KEY NOT NULL,
-       alignment VARCHAR NOT NULL);''')
+def create_tables(conn):
+    cur = conn.cursor()
+    cur.execute('PRAGMA foreign_keys = ON')
+    cur.execute('''CREATE TABLE gene_family_member (
+        gene_family_id INTEGER NOT NULL REFERENCES gene_family(gene_family_id),
+        protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
+        alignment VARCHAR NOT NULL,
+        PRIMARY KEY (gene_family_id, protein_id))''')
 
-    conn.execute('''CREATE TABLE gene_tree
-       (gene_family_id INT PRIMARY KEY NOT NULL,
-       gene_tree VARCHAR NOT NULL);''')
+    cur.execute('''CREATE TABLE gene_family (
+        gene_family_id INTEGER PRIMARY KEY,
+        gene_tree VARCHAR NOT NULL)''')
 
-    conn.execute('''CREATE TABLE gene_information
-       (gene_id VARCHAR PRIMARY KEY NOT NULL,
-       gene_json VARCHAR NOT NULL);''')
+    cur.execute('''CREATE TABLE gene (
+        gene_id VARCHAR PRIMARY KEY NOT NULL,
+        gene_symbol VARCHAR,
+        gene_json VARCHAR NOT NULL)''')
+    cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
+
+    cur.execute('''CREATE TABLE transcript (
+        transcript_id VARCHAR PRIMARY KEY NOT NULL,
+        protein_id VARCHAR UNIQUE,
+        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
+    conn.commit()
 
 
-def cigar_to_db(conn, i, fname, gene_dict):
-    cigar_dict = dict()
-    matched_gene_ids = set()
+def cigar_to_db(conn, i, fname):
+    cur = conn.cursor()
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
-            (protein_id, gene_id, gene_symbol) = get_protein_and_gene_id_from_seq_id(gene_dict, seq_id)
-            cigar_dict[protein_id] = cigar
 
-            conn.execute("INSERT INTO gene_family (gene_family_id, gene_id, protein_id, gene_symbol, alignment) \
-                VALUES (?,?,?,?,?) ", (i, gene_id, protein_id, gene_symbol, cigar))
+            cur.execute('SELECT protein_id FROM transcript WHERE transcript_id=? OR protein_id=?',
+                        (seq_id, seq_id))
+            results = cur.fetchall()
+            if len(results) == 0:
+                raise Exception("Sequence id '%s' could not be found among the transcript and protein ids" % seq_id)
+            elif len(results) > 1:
+                raise Exception("Searching sequence id '%s' among the transcript and protein ids returned multiple results" % seq_id)
+            protein_id = results[0][0]
 
+            cur.execute('INSERT INTO gene_family_member (gene_family_id, protein_id, alignment) VALUES (?, ?, ?)',
+                        (i, protein_id, cigar))
             conn.commit()
-            matched_gene_ids.add(gene_id)
-    return cigar_dict, matched_gene_ids
 
 
 def newicktree_to_db(conn, i, fname):
-    tree = ""
     with open(fname) as f:
         tree = f.read().replace('\n', '')
 
-    conn.execute("INSERT INTO gene_tree (gene_family_id, gene_tree) \
-                VALUES (?,?) ", (i, tree))
+    cur = conn.cursor()
+    cur.execute('INSERT INTO gene_family (gene_family_id, gene_tree) VALUES (?, ?)',
+                (i, tree))
     conn.commit()
-
-
-def gene_json_to_dict(fname):
-
-    with open(fname) as f:
-        return json.load(f)
 
 
 def gene_json_to_db(conn, fname):
-    gene = dict()
-
     with open(fname) as f:
-        gene = json.load(f)
+        all_genes_dict = json.load(f)
 
-    for key, value in gene.iteritems():
-        conn.execute("INSERT INTO gene_information (gene_id, gene_json) \
-                VALUES (?,?) ", (key, json.dumps(value)))
+    cur = conn.cursor()
+    for gene_dict in all_genes_dict.values():
+        gene_id = gene_dict['id']
+        gene_symbol = gene_dict.get('display_name', None)
+        cur.execute("INSERT INTO gene (gene_id, gene_symbol, gene_json) VALUES (?, ?, ?)",
+                    (gene_id, gene_symbol, json.dumps(gene_dict)))
 
+        if "Transcript" in gene_dict:
+            for transcript in gene_dict["Transcript"]:
+                transcript_id = transcript['id']
+                if 'Translation' in transcript and 'id' in transcript['Translation']:
+                    protein_id = transcript["Translation"]["id"]
+                else:
+                    protein_id = None
+                cur.execute("INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)",
+                            (transcript_id, protein_id, gene_id))
     conn.commit()
-
-
-def get_protein_and_gene_id_from_seq_id(gene_dict, seq_id):
-    """
-    Search inside gene_dict for a gene having a transcript id or protein id
-    equal to seq_id. Returns the protein id and the gene id.
-    """
-    gene_symbol = ""
-    for gene in gene_dict.values():
-        if "Transcript" in gene:
-            for transcript in gene["Transcript"]:
-                if transcript['id'] == seq_id:
-                    if 'Translation' in transcript and 'id' in transcript['Translation']:
-                        if 'display_name' in gene:
-                            gene_symbol = gene['display_name']
-                        return transcript["Translation"]["id"], gene['id'], gene_symbol
-                    else:
-                        break
-                elif 'Translation' in transcript and 'id' in transcript['Translation'] and transcript["Translation"]["id"] == seq_id:
-                    if 'display_name' in gene:
-                        gene_symbol = gene['display_name']
-                    return seq_id, gene['id'], gene_symbol
 
 
 def __main__():
@@ -96,25 +89,19 @@ def __main__():
     parser.add_option('-t', '--tree', action='append', help='Gene tree files')
     parser.add_option('-c', '--cigar', action='append', help='CIGAR alignments of CDS files in tabular format')
     parser.add_option('-g', '--gene', help='Gene features file in JSON format')
-    parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
-    parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
+    parser.add_option('-o', '--output', help='Path of the output file')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
 
     conn = sqlite3.connect(options.output)
-
-    create_table(conn)
-
-    gene_dict = gene_json_to_dict(options.gene)
+    create_tables(conn)
 
     gene_json_to_db(conn, options.gene)
 
-    i = 1
-    for tree, cigar in zip(options.tree, options.cigar):
-        cigar_to_db(conn, i, cigar, gene_dict)
+    for i, (tree, cigar) in enumerate(zip(options.tree, options.cigar), start=1):
         newicktree_to_db(conn, i, tree)
-        i += 1
+        cigar_to_db(conn, i, cigar)
 
 if __name__ == '__main__':
     __main__()
