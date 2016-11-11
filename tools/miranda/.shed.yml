@@ -4,6 +4,6 @@ description: Finds potential target sites for miRNAs in genomic sequences
 homepage_url: http://www.microrna.org/
 long_description: miRanda is an algorithm for the detection of potential microRNA target sites in genomic sequences.
 name: miranda
-owner: earlham
+owner: earlhaminst
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/miranda
 type: unrestricted
