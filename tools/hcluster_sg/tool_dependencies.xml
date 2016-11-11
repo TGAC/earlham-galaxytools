@@ -3,7 +3,7 @@
     <package name="hcluster_sg" version="0.5.1">
         <install version="1.0">
             <actions>
-                <action type="shell_command">git clone https://github.com/douglasgscofield/hcluster.git</action>
+                <action type="shell_command">git clone https://github.com/douglasgscofield/hcluster.git hcluster_sg</action>
                 <action type="shell_command">make</action>
                 <action type="make_directory">$INSTALL_DIR/bin</action>
                 <action type="move_file">
