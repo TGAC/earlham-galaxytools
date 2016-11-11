@@ -39,7 +39,7 @@ def cigar_to_db(conn, i, fname):
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
             # Trim seq_id by removing everything from the first underscore
-            seq_id.split('_', 1)[0]
+            seq_id = seq_id.split('_', 1)[0]
 
             cur.execute('SELECT transcript_id, protein_id FROM transcript WHERE transcript_id=? OR protein_id=?',
                         (seq_id, seq_id))
