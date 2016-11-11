@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import json
 import optparse
 import sqlite3
@@ -36,19 +38,23 @@ def cigar_to_db(conn, i, fname):
     with open(fname) as f:
         for element in f.readlines():
             seq_id, cigar = element.rstrip('\n').split('\t')
+            # Trim seq_id by removing everything from the first underscore
+            seq_id.split('_', 1)[0]
 
-            cur.execute('SELECT protein_id FROM transcript WHERE transcript_id=? OR protein_id=?',
+            cur.execute('SELECT transcript_id, protein_id FROM transcript WHERE transcript_id=? OR protein_id=?',
                         (seq_id, seq_id))
             results = cur.fetchall()
             if len(results) == 0:
                 raise Exception("Sequence id '%s' could not be found among the transcript and protein ids" % seq_id)
             elif len(results) > 1:
                 raise Exception("Searching sequence id '%s' among the transcript and protein ids returned multiple results" % seq_id)
-            protein_id = results[0][0]
-
-            cur.execute('INSERT INTO gene_family_member (gene_family_id, protein_id, alignment) VALUES (?, ?, ?)',
-                        (i, protein_id, cigar))
-            conn.commit()
+            transcript_id, protein_id = results[0]
+            if protein_id is None:
+                print("Skipping transcript '%s' with no protein id" % transcript_id)
+            else:
+                cur.execute('INSERT INTO gene_family_member (gene_family_id, protein_id, alignment) VALUES (?, ?, ?)',
+                            (i, protein_id, cigar))
+                conn.commit()
 
 
 def newicktree_to_db(conn, i, fname):
