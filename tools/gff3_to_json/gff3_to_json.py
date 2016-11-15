@@ -12,7 +12,6 @@ three_prime_utr_parent_dict = dict()
 
 def gene_to_json(cols, species):
     global gene_count
-
     gene = {
         'end': int(cols[4]),
         'member_id': gene_count,
@@ -23,12 +22,14 @@ def gene_to_json(cols, species):
         'strand': 1 if cols[6] == '+' else -1,
         'Transcript': [],
     }
+
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
-        if tag == 'ID':
-            gene['id'] = value
-        else:
-            gene[tag] = value
+        if(len(attr)>0):
+            (tag, value) = attr.split('=')
+            if tag == 'ID':
+                gene['id'] = value
+            else:
+                gene[tag] = value
     gene_dict[gene['id']] = gene
     gene_count = gene_count + 1
 
@@ -43,11 +44,12 @@ def transcript_to_json(cols, species):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
-        if tag == 'ID':
-            transcript['id'] = value
-        else:
-            transcript[tag] = value
+        if(len(attr)>0):
+            (tag, value) = attr.split('=')
+            if tag == 'ID':
+                transcript['id'] = value
+            else:
+                transcript[tag] = value
     transcript_dict[transcript['id']] = transcript
 
 
@@ -62,10 +64,11 @@ def exon_to_json(cols, species):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
+        if(len(attr)>0):
+            (tag, value) = attr.split('=')
 
-        tag = tag.lower()
-        exon[tag] = value
+            tag = tag.lower()
+            exon[tag] = value
 
     if 'id' not in exon:
         exon['id'] = exon['name']
@@ -84,11 +87,12 @@ def five_prime_utr_to_json(cols):
         'end': int(cols[4]),
     }
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
-        if tag == 'ID':
-            five_prime_utr['id'] = value
-        else:
-            five_prime_utr[tag] = value
+        if(len(attr) > 0):
+            (tag, value) = attr.split('=')
+            if tag == 'ID':
+                five_prime_utr['id'] = value
+            else:
+                five_prime_utr[tag] = value
     if 'Parent' in five_prime_utr:
         for parent in five_prime_utr['Parent'].split(','):
             five_prime_utr_parent_dict[parent] = five_prime_utr
@@ -100,11 +104,12 @@ def three_prime_utr_to_json(cols):
         'end': int(cols[4]),
     }
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
-        if tag == 'ID':
-            three_prime_utr['id'] = value
-        else:
-            three_prime_utr[tag] = value
+        if(len(attr) > 0):
+            (tag, value) = attr.split('=')
+            if tag == 'ID':
+                three_prime_utr['id'] = value
+            else:
+                three_prime_utr[tag] = value
     if 'Parent' in three_prime_utr:
         for parent in three_prime_utr['Parent'].split(','):
             three_prime_utr_parent_dict[parent] = three_prime_utr
@@ -117,11 +122,12 @@ def cds_to_json(cols):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        (tag, value) = attr.split('=')
-        if tag == 'ID':
-            cds['id'] = value
-        else:
-            cds[tag] = value
+        if(len(attr) > 0):
+            (tag, value) = attr.split('=')
+            if tag == 'ID':
+                cds['id'] = value
+            else:   
+                cds[tag] = value
     if 'id' not in cds:
         if 'Name' in cds:
             cds['id'] = cds['Name']
