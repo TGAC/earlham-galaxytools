@@ -1,5 +1,8 @@
 <tool id="gff3_to_json" name="GFF3 to JSON" version="0.1.1">
     <description>converter</description>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
     <command>
 <![CDATA[
 python $__tool_directory__/gff3_to_json.py

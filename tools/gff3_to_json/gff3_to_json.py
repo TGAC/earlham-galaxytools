@@ -1,5 +1,8 @@
+from __future__ import print_function
+
 import json
 import optparse
+import sys
 
 cds_parent_dict = dict()
 exon_parent_dict = dict()
@@ -24,7 +27,7 @@ def gene_to_json(cols, species):
     }
 
     for attr in cols[8].split(';'):
-        if(len(attr)>0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
                 gene['id'] = value
@@ -44,7 +47,7 @@ def transcript_to_json(cols, species):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        if(len(attr)>0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
                 transcript['id'] = value
@@ -64,17 +67,18 @@ def exon_to_json(cols, species):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        if(len(attr)>0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
+            if tag == 'ID':
+                exon['id'] = value
+            else:
+                exon[tag] = value
 
-            tag = tag.lower()
-            exon[tag] = value
+    if 'id' not in exon and 'Name' in exon:
+        exon['id'] = exon['Name']
 
-    if 'id' not in exon:
-        exon['id'] = exon['name']
-
-    if 'parent' in exon:
-        for parent in exon['parent'].split(','):
+    if 'Parent' in exon:
+        for parent in exon['Parent'].split(','):
             if parent not in exon_parent_dict:
                 exon_parent_dict[parent] = [exon]
             else:
@@ -87,7 +91,7 @@ def five_prime_utr_to_json(cols):
         'end': int(cols[4]),
     }
     for attr in cols[8].split(';'):
-        if(len(attr) > 0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
                 five_prime_utr['id'] = value
@@ -104,7 +108,7 @@ def three_prime_utr_to_json(cols):
         'end': int(cols[4]),
     }
     for attr in cols[8].split(';'):
-        if(len(attr) > 0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
                 three_prime_utr['id'] = value
@@ -122,11 +126,11 @@ def cds_to_json(cols):
         'strand': 1 if cols[6] == '+' else -1,
     }
     for attr in cols[8].split(';'):
-        if(len(attr) > 0):
+        if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
                 cds['id'] = value
-            else:   
+            else:
                 cds[tag] = value
     if 'id' not in cds:
         if 'Name' in cds:
@@ -143,12 +147,12 @@ def cds_to_json(cols):
 
 
 def join_dicts():
-    for parent, exon_list in exon_parent_dict.iteritems():
+    for parent, exon_list in exon_parent_dict.items():
         exon_list.sort(key=lambda exon: exon['start'])
         if parent in transcript_dict:
             transcript_dict[parent]['Exon'] = exon_list
 
-    for transcript_id, transcript in transcript_dict.iteritems():
+    for transcript_id, transcript in transcript_dict.items():
         translation = {
             'CDS': [],
             'id': None,
@@ -186,21 +190,21 @@ def join_dicts():
         if found_translation:
             transcript['Translation'] = translation
 
-    for parent, five_prime_utr in five_prime_utr_parent_dict.iteritems():
+    for parent, five_prime_utr in five_prime_utr_parent_dict.items():
         if parent in transcript_dict:
             if 'Translation' not in transcript_dict[parent]:
                 transcript_dict[parent]['Translation'] = {'start': five_prime_utr['end'] + 1}
 
-    for parent, three_prime_utr in three_prime_utr_parent_dict.iteritems():
+    for parent, three_prime_utr in three_prime_utr_parent_dict.items():
         if parent in transcript_dict:
             if 'Translation' not in transcript_dict[parent]:
                 transcript_dict[parent]['Translation'] = {'end': three_prime_utr['start'] - 1}
 
-    for parent, cds_list in cds_parent_dict.iteritems():
+    for parent, cds_list in cds_parent_dict.items():
         if parent in transcript_dict:
             pass
 
-    for transcript in transcript_dict.itervalues():
+    for transcript in transcript_dict.values():
         if 'Parent' in transcript and transcript['Parent'] in gene_dict:
             gene_dict[transcript['Parent']]['Transcript'].append(transcript)
 
@@ -219,7 +223,7 @@ def write_json(outfile=None, sort_keys=False):
         with open(outfile, 'w') as f:
             json.dump(gene_dict, f, sort_keys=sort_keys)
     else:
-        print json.dumps(gene_dict, indent=3, sort_keys=sort_keys)
+        print(json.dumps(gene_dict, indent=3, sort_keys=sort_keys))
 
 
 def __main__():
@@ -249,20 +253,21 @@ def __main__():
                 cols = line.split('\t')
                 if len(cols) != 9:
                     raise Exception("Line %i in file '%s': '%s' does not have 9 columns" % (i, filename, line))
-                if cols[2] == 'gene':
+                feature_type = cols[2]
+                if feature_type == 'gene':
                     gene_to_json(cols, species)
-                elif cols[2] == 'mRNA' or cols[2] == 'transcript':
+                elif feature_type in ('mRNA', 'transcript'):
                     transcript_to_json(cols, species)
-                elif cols[2] == 'exon':
+                elif feature_type == 'exon':
                     exon_to_json(cols, species)
-                elif cols[2] == 'five_prime_UTR':
+                elif feature_type == 'five_prime_UTR':
                     five_prime_utr_to_json(cols)
-                elif cols[2] == 'three_prime_UTR':
+                elif feature_type == 'three_prime_UTR':
                     three_prime_utr_to_json(cols)
-                elif cols[2] == 'CDS':
+                elif feature_type == 'CDS':
                     cds_to_json(cols)
-                # else:
-                    # raise Exception("Line %i in file '%s': '%s' is not an implemented type")
+                else:
+                    print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
     join_dicts()
 
     for json_arg in options.json:
