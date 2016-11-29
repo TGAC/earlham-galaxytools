@@ -13,67 +13,59 @@ transcript_dict = dict()
 three_prime_utr_parent_dict = dict()
 
 
-def gene_to_json(cols, species):
-    global gene_count
-    gene = {
+def feature_to_json(cols):
+    d = {
         'end': int(cols[4]),
-        'member_id': gene_count,
-        'object_type': 'Gene',
         'start': int(cols[3]),
-        'seq_region_name': cols[0],
-        'species': species,
-        'strand': 1 if cols[6] == '+' else -1,
-        'Transcript': [],
     }
-
     for attr in cols[8].split(';'):
         if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
-                gene['id'] = value
+                d['id'] = value
             else:
-                gene[tag] = value
+                d[tag] = value
+    if cols[6] == '+':
+        d['strand'] = 1
+    elif cols[6] == '-':
+        d['strand'] = -1
+    else:
+        raise Exception("Unrecognized strand '%s'" % cols[6])
+    return d
+
+
+def gene_to_json(cols, species):
+    global gene_count
+    gene = feature_to_json(cols)
+    gene.update({
+        'member_id': gene_count,
+        'object_type': 'Gene',
+        'seq_region_name': cols[0],
+        'species': species,
+        'Transcript': [],
+    })
     gene_dict[gene['id']] = gene
     gene_count = gene_count + 1
 
 
 def transcript_to_json(cols, species):
-    transcript = {
-        'end': int(cols[4]),
+    transcript = feature_to_json(cols)
+    transcript.update({
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
         'species': species,
-        'start': int(cols[3]),
-        'strand': 1 if cols[6] == '+' else -1,
-    }
-    for attr in cols[8].split(';'):
-        if '=' in attr:
-            (tag, value) = attr.split('=')
-            if tag == 'ID':
-                transcript['id'] = value
-            else:
-                transcript[tag] = value
+    })
     transcript_dict[transcript['id']] = transcript
 
 
 def exon_to_json(cols, species):
-    exon = {
-        'end': int(cols[4]),
+    exon = feature_to_json(cols)
+    exon.update({
         'length': int(cols[4]) - int(cols[3]) + 1,
         'object_type': 'Exon',
         'seq_region_name': cols[0],
         'species': species,
-        'start': int(cols[3]),
-        'strand': 1 if cols[6] == '+' else -1,
-    }
-    for attr in cols[8].split(';'):
-        if '=' in attr:
-            (tag, value) = attr.split('=')
-            if tag == 'ID':
-                exon['id'] = value
-            else:
-                exon[tag] = value
-
+    })
     if 'id' not in exon and 'Name' in exon:
         exon['id'] = exon['Name']
 
@@ -86,52 +78,21 @@ def exon_to_json(cols, species):
 
 
 def five_prime_utr_to_json(cols):
-    five_prime_utr = {
-        'start': int(cols[3]),
-        'end': int(cols[4]),
-    }
-    for attr in cols[8].split(';'):
-        if '=' in attr:
-            (tag, value) = attr.split('=')
-            if tag == 'ID':
-                five_prime_utr['id'] = value
-            else:
-                five_prime_utr[tag] = value
+    five_prime_utr = feature_to_json(cols)
     if 'Parent' in five_prime_utr:
         for parent in five_prime_utr['Parent'].split(','):
             five_prime_utr_parent_dict[parent] = five_prime_utr
 
 
 def three_prime_utr_to_json(cols):
-    three_prime_utr = {
-        'start': int(cols[3]),
-        'end': int(cols[4]),
-    }
-    for attr in cols[8].split(';'):
-        if '=' in attr:
-            (tag, value) = attr.split('=')
-            if tag == 'ID':
-                three_prime_utr['id'] = value
-            else:
-                three_prime_utr[tag] = value
+    three_prime_utr = feature_to_json(cols)
     if 'Parent' in three_prime_utr:
         for parent in three_prime_utr['Parent'].split(','):
             three_prime_utr_parent_dict[parent] = three_prime_utr
 
 
 def cds_to_json(cols):
-    cds = {
-        'end': int(cols[4]),
-        'start': int(cols[3]),
-        'strand': 1 if cols[6] == '+' else -1,
-    }
-    for attr in cols[8].split(';'):
-        if '=' in attr:
-            (tag, value) = attr.split('=')
-            if tag == 'ID':
-                cds['id'] = value
-            else:
-                cds[tag] = value
+    cds = feature_to_json(cols)
     if 'id' not in cds:
         if 'Name' in cds:
             cds['id'] = cds['Name']
@@ -254,20 +215,23 @@ def __main__():
                 if len(cols) != 9:
                     raise Exception("Line %i in file '%s': '%s' does not have 9 columns" % (i, filename, line))
                 feature_type = cols[2]
-                if feature_type == 'gene':
-                    gene_to_json(cols, species)
-                elif feature_type in ('mRNA', 'transcript'):
-                    transcript_to_json(cols, species)
-                elif feature_type == 'exon':
-                    exon_to_json(cols, species)
-                elif feature_type == 'five_prime_UTR':
-                    five_prime_utr_to_json(cols)
-                elif feature_type == 'three_prime_UTR':
-                    three_prime_utr_to_json(cols)
-                elif feature_type == 'CDS':
-                    cds_to_json(cols)
-                else:
-                    print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
+                try:
+                    if feature_type == 'gene':
+                        gene_to_json(cols, species)
+                    elif feature_type in ('mRNA', 'transcript'):
+                        transcript_to_json(cols, species)
+                    elif feature_type == 'exon':
+                        exon_to_json(cols, species)
+                    elif feature_type == 'five_prime_UTR':
+                        five_prime_utr_to_json(cols)
+                    elif feature_type == 'three_prime_UTR':
+                        three_prime_utr_to_json(cols)
+                    elif feature_type == 'CDS':
+                        cds_to_json(cols)
+                    else:
+                        print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
+                except Exception as e:
+                    raise Exception("Line %i in file '%s': %s" % (i, filename, e))
     join_dicts()
 
     for json_arg in options.json:
