@@ -109,5 +109,6 @@ def __main__():
         newicktree_to_db(conn, i, tree)
         cigar_to_db(conn, i, cigar)
 
+
 if __name__ == '__main__':
     __main__()

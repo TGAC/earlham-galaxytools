@@ -7,7 +7,7 @@ before_install:
   - export GALAXY_RELEASE=release_16.07
 
 install:
-  - pip install flake8 planemo
+  - pip install flake8 flake8-import-order planemo
   - planemo conda_init
   - planemo --version
   - echo $TRAVIS_COMMIT_RANGE

@@ -1,6 +1,6 @@
-from ete3 import NCBITaxa
 import optparse
 
+from ete3 import NCBITaxa
 
 ncbi = NCBITaxa()
 
