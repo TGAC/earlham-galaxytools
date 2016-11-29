@@ -4,7 +4,7 @@ from __future__ import print_function
 import sys
 import logging
 
-#===================================== Iterator ===============================
+# ===================================== Iterator ===============================
 class Sequence:
     ''' Holds protein sequence information '''
     def __init__(self):
@@ -12,7 +12,8 @@ class Sequence:
         self.sequence_parts = []
 
     def get_sequence(self):
-        return "".join([line.rstrip().replace('\n','').replace('\r','') for line in self.sequence_parts])
+        return "".join([line.rstrip().replace('\n', '').replace('\r', '') for line in self.sequence_parts])
+
 
 class FASTAReader:
     """
@@ -27,7 +28,7 @@ class FASTAReader:
 
     def __next__(self):
         ''' Iteration '''
-        #while True:
+        # while True:
         #    line = self.fasta_file.readline()
         #    if not line:
         #        raise StopIteration
@@ -38,17 +39,17 @@ class FASTAReader:
             raise StopIteration
 
         seq = Sequence()
-        seq.header = next_line.rstrip().replace('\n','').replace('\r','')
+        seq.header = next_line.rstrip().replace('\n', '').replace('\r', '')
 
         next_line = self.fasta_file.readline()
         while next_line and next_line[0] != '>':
-            #tail = self.fasta_file.tell()
-            #line = self.fasta_file.readline()
-            #if not line:
-            #    break
-            #if line[0] == '>':
-            #    self.fasta_file.seek(tail)
-            #    break
+            # tail = self.fasta_file.tell()
+            # line = self.fasta_file.readline()
+            # if not line:
+            #   break
+            # if line[0] == '>':
+            #   self.fasta_file.seek(tail)
+            #   break
             seq.sequence_parts.append(next_line)
             next_line = self.fasta_file.readline()
         self.next_line = next_line
@@ -56,14 +57,15 @@ class FASTAReader:
 
     # Python 2/3 compat
     next = __next__
-#==============================================================================
+# ==============================================================================
+
 
 def target_match(target, search_entry):
     ''' Matches '''
     search_entry = search_entry.upper()
     for atarget in target:
         if search_entry.find(atarget) > -1:
-	    return atarget
+        return atarget
     return None
 
 
@@ -74,7 +76,7 @@ def main():
         format='%(asctime)s :: %(levelname)s :: %(message)s',)
 
     used_sequences = set()
-    work_summary = {'wanted': 0, 'found':0, 'duplicates':0}
+    work_summary = {'wanted': 0, 'found': 0, 'duplicates': 0}
     targets = []
 
     f_target = open(sys.argv[1])
@@ -85,7 +87,6 @@ def main():
     work_summary['wanted'] = len(targets)
     homd_db = FASTAReader(sys.argv[2])
 
-    i = 0
     # output = open(sys.argv[3], "w")
     for entry in homd_db:
         target_matched_results = target_match(targets, entry.header)
@@ -98,6 +99,7 @@ def main():
             print(sequence)
     for parm, count in work_summary.items():
         logging.info('%s ==> %d', parm, count)
+
 
 if __name__ == "__main__":
     main()
