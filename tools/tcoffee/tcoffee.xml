@@ -1,0 +1,221 @@
+<tool id="T_coffee" name="T-COFFEE" version="10.00.r1613">
+  <description>multiple aligment</description>
+  <command>
+    <![CDATA[
+    #if str($input_type.filter_fasta) == 'yes'
+        #set $input = '-infile=stdin'
+        python $__tool_directory__/filter_by_fasta_ids.py $input_type.identifiers $input_type.fasta_input | 
+    #end if
+    perl $__tool_directory__/tcoffee.pl $input $method01 $method02 $method03 $dnd $msf_aln $clustalw_aln $pir_aln $fasta_aln $phylip $pir_seq $fasta_seq $score_ascii $score_html
+    #if str($format_output_cigar) == 'yes'
+        && perl $__tool_directory__/t_coffee_to_cigar.pl $fasta_aln > $cigar_aln
+    #end if
+    ]]>
+  </command>
+
+  <inputs>
+      <conditional name="input_type">
+          <param name="filter_fasta" type="select" label="Filter input fasta">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </param>
+          <when value="yes">
+              <param format="fasta" name="fasta_input" type="data" label="FASTA sequences"/>
+              <param format="txt" name="identifiers" type="data" label="List of IDs to extract sequences for"/>
+          </when>
+          <when value="no">
+              <param format="fasta" name="input" type="data" label="Source file"/>
+          </when>
+      </conditional>
+      <param name="method01" type="select" display="checkboxes" multiple="true" label="Pairwise Structual Method">
+          <option value="sap_pair">sap_pair</option>
+          <option value="TMalign_pair">TMalign_pair</option>
+          <option value="mustang_pair">mustang_pair</option>
+      </param>
+      <param name="method02" type="select" display="checkboxes" multiple="true" label="Multiple Sequence Alignment Methods">
+          <option value="pcma_msa">pcma_msa</option>
+          <option value="clustalw_msa">clustalw_msa</option>
+          <option value="dialigntx_msa">dialigntx_msa</option>
+          <option value="poa_msa">poa_msa</option>
+          <option value="muscle_msa">muscle_msa</option>
+          <option value="probcons_msa">probcons_msa</option>
+          <option value="t_coffee_msa">t_coffee_msa</option>
+          <option value="amap_msa">amap_msa</option>
+          <option value="kalign_msa">kalign_msa</option>
+      </param>
+      <param name="method03" type="select" display="checkboxes" multiple="true" label="Pairwise Sequence Alignment Methods">
+          <option value="fast_pair">fast_pair</option>
+          <option value="clustalw_pair">clustalw_pair</option>
+          <option value="lalign_id_pair">lalign_id_pair</option>
+          <option value="slow_pair">slow_pair</option>
+          <option value="proba_pair">proba_pair</option>
+      </param>
+      <param name="format_output_dnd" type="select" display="radio" label="Output newick">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_msf_aln" type="select" display="radio" label="Output msf_aln">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_clustalw_aln" type="select" display="radio" label="Output clustalw_aln">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_pir_aln" type="select" display="radio" label="Output pir_aln">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_fasta_aln" type="select" display="radio" label="Output fasta_aln">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+
+      <param name="format_output_phylip" type="select" display="radio" label="Output phylip">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_pir_seq" type="select" display="radio" label="Output pir_seq">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_fasta_seq" type="select" display="radio" label="Output fasta_seq">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_score_ascii" type="select" display="radio" label="Output score_ascii">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_score_html" type="select" display="radio" label="Output score_html">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+      <param name="format_output_cigar" type="select" display="radio" label="Output CIGAR" help="CIGAR can only be used in combination with fasta_aln output option.">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+      </param>
+  </inputs>
+
+  <outputs>
+      <data format="nhx" name="dnd" label="${tool.name} on ${on_string}: newick.dnd" >
+        <filter>format_output_dnd == "yes"</filter>
+      </data>
+      <data format="msf" name="msf_aln" label="${tool.name} on ${on_string}: msf_aln" >
+        <filter>format_output_msf_aln == "yes"</filter>
+      </data>
+      <data format="clustalw" name="clustalw_aln" label="${tool.name} on ${on_string}: clustalw_aln" >
+        <filter>format_output_clustalw_aln == "yes"</filter>
+      </data>
+      <data format="pir" name="pir_aln" label="${tool.name} on ${on_string}: pir_aln" >
+        <filter>format_output_pir_aln == "yes"</filter>
+      </data>
+      <data format="fasta" name="fasta_aln" label="${tool.name} on ${on_string}: fasta_aln" >
+        <filter>format_output_fasta_aln == "yes"</filter>
+      </data>
+      <data format="phyloxml" name="phylip" label="${tool.name} on ${on_string}: phylip" >
+        <filter>format_output_phylip == "yes"</filter>
+      </data>
+      <data format="pir" name="pir_seq" label="${tool.name} on ${on_string}: pir_seq" >
+        <filter>format_output_pir_seq == "yes"</filter>
+      </data>
+      <data format="fasta" name="fasta_seq" label="${tool.name} on ${on_string}: fasta_seq" >
+        <filter>format_output_fasta_seq == "yes"</filter>
+      </data>
+      <data format="ascii" name="score_ascii" label="${tool.name} on ${on_string}: score_ascii" >
+        <filter>format_output_score_ascii == "yes"</filter>
+      </data>
+      <data format="html" name="score_html" label="${tool.name} on ${on_string}: score_html" >
+        <filter>format_output_score_html == "yes"</filter>
+      </data>
+      <data format="tabular" name="cigar_aln" label="${tool.name} on ${on_string}: cigar_aln" >
+        <filter>format_output_cigar == "yes"</filter>
+      </data>
+  </outputs>
+  <help>
+    
+    **Requeriments**
+   
+    You must install T_coffee version "10.00.r1613" in your computer.
+   
+-----
+   
+    **What it does**
+
+    This tool is a wrapper for the T-Coffee multiple alignment suite. The input is a set of sequences in FASTA format that must be uploaded to Galaxy if not obtained using Galaxy tools. Apart from running on whole FASTA input, it can also run on part of input FASTA by providing list of FASTA IDs.
+   
+    This wrapper offers selected advanced T-Coffee options like the selection of the alignment methods to use: ''Pairwise Structual Method'', ''Multiple Sequence Alignment
+    Methods'' or ''Pairwise Sequence Alignment Methods''.
+   
+    The T-Coffee documentation can be found at http://www.tcoffee.org/Projects/tcoffee/documentation
+   
+-----
+
+    **Example**
+
+    Suppose you have five sequences in FASTA format:
+
+      >1aboA
+      NLFVALYDFVASGDNTLSITKGEKLRVLGYNHNGEWCEAQTKNGQGWVPS
+      NYITPVN
+     
+      >1ycsB
+      KGVIYALWDYEPQNDDELPMKEGDCMTIIHREDEDEIEWWWARLNDKEGY
+      VPRNLLGLYP
+     
+      >1pht
+      GYQYRALYDYKKEREEDIDLHLGDILTVNKGSLVALGFSDGQEARPEEIG
+      WLNGYNETTGERGDFPGTYVEYIGRKKISP
+     
+      >1vie
+      DRVRKKSGAAWQGQIVGWYCTNLTPEGYAVESEAHPGSVQIYPVAALERI
+      N
+     
+      >1ihvA
+      NFRVYYRDSRDPVWKGPAKLLWKGEGAVVIQDNSDIKVVPRRKAKIIRD
+   
+    By selecting "yes" in output fasta_aln in the wrapper, the user will obtain the multiple alignment in FASTA format:
+
+      >1aboA
+      NL-FVA---LYDFVASGDNTLSITKGEKLR-------VLGYN-------H
+      NGEWCEA--QTKN-GQGWVPSNYIT------PVN
+      >1ycsB
+      KGVIYA---LWDYEPQNDDELPMKEGDCMT-------IIHREDE-----D
+      EIEWWWA--RLND-KEGYVPRNLLG------LYP
+      >1pht
+      GYQYRA---LYDYKKEREEDIDLHLGDILTVNKGSLVALGFSDGQEARPE
+      EIGWLNGYNETTG-ERGDFPGTYVEYIGRKKISP
+      >1vie
+      DR-----------VRK--KSGAAWQGQIVGWYCTNLTPEGYAVE------
+      ------S--EAHPGSVQIYPVAALE------RIN
+      >1ihvA
+      NF-RVYYRDSRDPVWKGPA-KLLWKGEGAV-------VIQDN-------S
+      DI--------------KVVPRRKAK-----IIRD
+      
+  </help>
+  <tests>
+    <test>
+      <param name="filter_fasta" value="no"/>
+      <param name="input" value="input.fasta" ftype= "fasta"/>
+      <param name="format_output_fasta_aln" value="yes"/>
+      <output name="fasta_aln" file="output1.fasta" ftype= "fasta"/>
+    </test>
+    <test>
+      <param name="filter_fasta" value="yes"/>
+      <param name="fasta_input" value="input.fasta" ftype= "fasta"/>
+      <param name="identifiers" value="ids.txt" ftype= "txt"/>
+      <param name="format_output_fasta_aln" value="yes"/>
+      <param name="format_output_cigar" value="yes"/>
+      <output name="fasta_aln" file="output2.fasta" ftype= "fasta"/>
+      <output name="cigar_aln" file="cigar.tabular" ftype= "tabular"/>
+    </test>
+  </tests>
+  <requirements>
+    <requirement type="package" version="10.00.r1613">T-COFFEE</requirement>
+  </requirements>
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Error" />
+  </stdio>
+  
+
+</tool>
