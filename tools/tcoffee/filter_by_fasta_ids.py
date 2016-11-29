@@ -4,6 +4,7 @@ from __future__ import print_function
 import sys
 import logging
 
+
 # ===================================== Iterator ===============================
 class Sequence:
     ''' Holds protein sequence information '''
@@ -65,15 +66,15 @@ def target_match(target, search_entry):
     search_entry = search_entry.upper()
     for atarget in target:
         if search_entry.find(atarget) > -1:
-        return atarget
+            return atarget
     return None
 
 
 def main():
     ''' the main function'''
     logging.basicConfig(filename='filter_fasta_log',
-        level=logging.INFO,
-        format='%(asctime)s :: %(levelname)s :: %(message)s',)
+                        level=logging.INFO,
+                        format='%(asctime)s :: %(levelname)s :: %(message)s',)
 
     used_sequences = set()
     work_summary = {'wanted': 0, 'found': 0, 'duplicates': 0}
