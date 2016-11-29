@@ -166,8 +166,11 @@ def join_dicts():
             pass
 
     for transcript in transcript_dict.values():
-        if 'Parent' in transcript and transcript['Parent'] in gene_dict:
-            gene_dict[transcript['Parent']]['Transcript'].append(transcript)
+        if 'Parent' in transcript:
+            # A polycistronic transcript can have multiple parents
+            for parent in transcript['Parent'].split(','):
+                if parent in gene_dict:
+                    gene_dict[parent]['Transcript'].append(transcript)
 
 
 def merge_dicts(json_arg):
