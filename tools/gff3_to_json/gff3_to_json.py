@@ -81,14 +81,22 @@ def five_prime_utr_to_json(cols):
     five_prime_utr = feature_to_json(cols)
     if 'Parent' in five_prime_utr:
         for parent in five_prime_utr['Parent'].split(','):
-            five_prime_utr_parent_dict[parent] = five_prime_utr
+            # the 5' UTR can be split among multiple exons
+            if parent not in five_prime_utr_parent_dict:
+                five_prime_utr_parent_dict[parent] = [five_prime_utr]
+            else:
+                five_prime_utr_parent_dict[parent].append(five_prime_utr)
 
 
 def three_prime_utr_to_json(cols):
     three_prime_utr = feature_to_json(cols)
     if 'Parent' in three_prime_utr:
         for parent in three_prime_utr['Parent'].split(','):
-            three_prime_utr_parent_dict[parent] = three_prime_utr
+            # the 3' UTR can be split among multiple exons
+            if parent not in three_prime_utr_parent_dict:
+                three_prime_utr_parent_dict[parent] = [three_prime_utr]
+            else:
+                three_prime_utr_parent_dict[parent].append(three_prime_utr)
 
 
 def cds_to_json(cols):
@@ -109,7 +117,7 @@ def cds_to_json(cols):
 
 def join_dicts():
     for parent, exon_list in exon_parent_dict.items():
-        exon_list.sort(key=lambda exon: exon['start'])
+        exon_list.sort(key=lambda _: _['start'])
         if parent in transcript_dict:
             transcript_dict[parent]['Exon'] = exon_list
 
@@ -122,48 +130,48 @@ def join_dicts():
             'species': transcript['species'],
             'start': transcript['start'],
         }
-        found_translation = False
+        found_cds = False
+        derived_translation_start = None
+        derived_translation_end = None
         if transcript_id in cds_parent_dict:
             cds_list = cds_parent_dict[transcript_id]
             cds_ids = set(_['id'] for _ in cds_list)
             if len(cds_ids) > 1:
                 raise Exception("Transcript %s has multiple CDSs: this is not supported by Ensembl JSON format" % parent)
             translation['id'] = cds_ids.pop()
-            cds_list.sort(key=lambda cds: cds['start'])
+            cds_list.sort(key=lambda _: _['start'])
             translation['CDS'] = cds_list
             translation['start'] = cds_list[0]['start']
             translation['end'] = cds_list[-1]['end']
-            found_translation = True
-        else:
-            if transcript_id in five_prime_utr_parent_dict:
-                if transcript['strand'] == 1:
-                    translation['start'] = five_prime_utr_parent_dict[transcript_id]['end'] + 1
-                else:
-                    translation['end'] = five_prime_utr_parent_dict[transcript_id]['start'] + 1
-
-                found_translation = True
-            if transcript_id in three_prime_utr_parent_dict:
-                if transcript['strand'] == 1:
-                    translation['end'] = three_prime_utr_parent_dict[transcript_id]['start'] - 1
-                else:
-                    translation['start'] = three_prime_utr_parent_dict[transcript_id]['end'] - 1
-                found_translation = True
-        if found_translation:
+            found_cds = True
+        if transcript_id in five_prime_utr_parent_dict:
+            five_prime_utr_list = five_prime_utr_parent_dict[transcript_id]
+            five_prime_utr_list.sort(key=lambda _: _['start'])
+            if transcript['strand'] == 1:
+                derived_translation_start = five_prime_utr_list[-1]['end'] + 1
+            else:
+                derived_translation_end = five_prime_utr_list[0]['start'] - 1
+        if transcript_id in three_prime_utr_parent_dict:
+            three_prime_utr_list = three_prime_utr_parent_dict[transcript_id]
+            three_prime_utr_list.sort(key=lambda _: _['start'])
+            if transcript['strand'] == 1:
+                derived_translation_end = three_prime_utr_list[0]['start'] - 1
+            else:
+                derived_translation_start = three_prime_utr_list[-1]['end'] + 1
+        if derived_translation_start is not None:
+            if found_cds:
+                if derived_translation_start > translation['start']:
+                    raise Exception("UTR overlaps with CDS")
+            else:
+                translation['start'] = derived_translation_start
+        if derived_translation_end is not None:
+            if found_cds:
+                if derived_translation_end < translation['end']:
+                    raise Exception("UTR overlaps with CDS")
+            else:
+                translation['end'] = derived_translation_end
+        if found_cds or derived_translation_start is not None or derived_translation_end is not None:
             transcript['Translation'] = translation
-
-    for parent, five_prime_utr in five_prime_utr_parent_dict.items():
-        if parent in transcript_dict:
-            if 'Translation' not in transcript_dict[parent]:
-                transcript_dict[parent]['Translation'] = {'start': five_prime_utr['end'] + 1}
-
-    for parent, three_prime_utr in three_prime_utr_parent_dict.items():
-        if parent in transcript_dict:
-            if 'Translation' not in transcript_dict[parent]:
-                transcript_dict[parent]['Translation'] = {'end': three_prime_utr['start'] - 1}
-
-    for parent, cds_list in cds_parent_dict.items():
-        if parent in transcript_dict:
-            pass
 
     for transcript in transcript_dict.values():
         if 'Parent' in transcript:
