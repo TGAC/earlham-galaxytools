@@ -1,5 +1,8 @@
 <tool id="gff3_to_json" name="GFF3 to JSON" version="0.1.1">
     <description>converter</description>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
     <command>
 <![CDATA[
 python $__tool_directory__/gff3_to_json.py
@@ -50,6 +53,12 @@ $sort
 
             <param name="sort" value="-s" />
             <output name="output" file="test.json" ftype="json" />
+        </test>
+        <test>
+            <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.33.chromosome.I_shortened.gff3" />
+            <param name="genome" value="caenorhabditiselegans" />
+            <param name="sort" value="-s" />
+            <output name="output" file="Caenorhabditis_elegans.WBcel235.33.chromosome.I_shortened.json" ftype="json" />
         </test>
     </tests>
     <help>
