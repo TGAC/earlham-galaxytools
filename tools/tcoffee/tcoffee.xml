@@ -6,6 +6,9 @@
         #set $input = '-infile=stdin'
         python $__tool_directory__/filter_by_fasta_ids.py $input_type.identifiers $input_type.fasta_input | 
     #end if
+    #if str($format_output_cigar) == 'yes' and str($format_output_fasta_aln) == 'no'
+        #set $fasta_aln = 'tmp_fasta_aln.fa'
+    #end if
     perl $__tool_directory__/tcoffee.pl $input $method01 $method02 $method03 $dnd $msf_aln $clustalw_aln $pir_aln $fasta_aln $phylip $pir_seq $fasta_seq $score_ascii $score_html
     #if str($format_output_cigar) == 'yes'
         && perl $__tool_directory__/t_coffee_to_cigar.pl $fasta_aln > $cigar_aln
@@ -15,13 +18,13 @@
 
   <inputs>
       <conditional name="input_type">
-          <param name="filter_fasta" type="select" label="Filter input fasta">
+          <param name="filter_fasta" type="select" label="Filter input FASTA">
               <option value="yes">Yes</option>
               <option value="no">No</option>
           </param>
           <when value="yes">
               <param format="fasta" name="fasta_input" type="data" label="FASTA sequences"/>
-              <param format="txt" name="identifiers" type="data" label="List of IDs to extract sequences for"/>
+              <param format="txt" name="identifiers" type="data" label="List of FASTA sequence IDs"/>
           </when>
           <when value="no">
               <param format="fasta" name="input" type="data" label="Source file"/>
