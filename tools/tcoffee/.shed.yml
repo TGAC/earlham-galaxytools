@@ -1,0 +1,9 @@
+---
+categories:
+- Data Source
+description: T-Coffee
+homepage_url: http://www.tcoffee.org
+owner: earlhaminst
+long_description: A suite of Galaxy tools designed to run T-Coffee from input FASTA and an optional list of sequence IDs
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/tcoffee
+type: unrestricted
