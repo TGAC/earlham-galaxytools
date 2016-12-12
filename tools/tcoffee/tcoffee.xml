@@ -1,4 +1,4 @@
-<tool id="T_coffee" name="T-COFFEE" version="10.00.r1613">
+<tool id="t_coffee" name="T-COFFEE" version="11.0.8">
   <description>multiple aligment</description>
   <command>
     <![CDATA[
