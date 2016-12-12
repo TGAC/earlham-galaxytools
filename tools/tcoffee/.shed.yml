@@ -1,9 +1,9 @@
 ---
 categories:
-- Data Source
+- Sequence Analysis 
 description: T-Coffee
 homepage_url: http://www.tcoffee.org
 owner: earlhaminst
-long_description: A suite of Galaxy tools designed to run T-Coffee from input FASTA and an optional list of sequence IDs
+long_description: A suite of Galaxy tools designed to run T-Coffee from input FASTA and an optional list of sequence IDs, it can also generate CIGAR alignment.
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/tcoffee
 type: unrestricted
