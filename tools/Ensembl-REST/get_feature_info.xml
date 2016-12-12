@@ -1,4 +1,4 @@
-<tool id="get_feature_info" name="Get Ensembl features by ID" version="0.1.1">
+<tool id="get_feature_info" name="Get features by Ensembl ID" version="0.1.1">
     <description>using REST API</description>
     <requirements>
         <requirement type="package" version="2.7">requests</requirement>
@@ -16,7 +16,7 @@ python $__tool_directory__/get_feature_info.py
 
     <inputs>
     <param name="input" type="data" format="txt" label="List of Ensembl IDs" help="Max 1000 IDs" />
-    <param name="species_selector" type="select" label="Select Species">
+    <param name="species_selector" type="select" label="Select species">
         <option value="ensembl" selected="true">Vertebrates</option>
         <option value="ensemblgenomes">Other species</option>
     </param>
