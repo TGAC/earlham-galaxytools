@@ -1,5 +1,14 @@
 <tool id="t_coffee" name="T-COFFEE" version="11.0.8">
   <description>multiple aligment</description>
+
+  <requirements>
+    <requirement type="package" version="11.0.8">t_coffee</requirement>
+  </requirements>
+  
+  <stdio>
+    <exit_code range="1:" level="fatal" description="Error" />
+  </stdio>
+  
   <command>
     <![CDATA[
     #if str($input_type.filter_fasta) == 'yes'
@@ -135,11 +144,30 @@
         <filter>format_output_cigar == "yes"</filter>
       </data>
   </outputs>
+  
+  <tests>
+    <test>
+      <param name="filter_fasta" value="no"/>
+      <param name="input" value="input.fasta" ftype= "fasta"/>
+      <param name="format_output_fasta_aln" value="yes"/>
+      <output name="fasta_aln" file="output1.fasta" ftype= "fasta"/>
+    </test>
+    <test>
+      <param name="filter_fasta" value="yes"/>
+      <param name="fasta_input" value="input.fasta" ftype= "fasta"/>
+      <param name="identifiers" value="ids.txt" ftype= "txt"/>
+      <param name="format_output_fasta_aln" value="yes"/>
+      <param name="format_output_cigar" value="yes"/>
+      <output name="fasta_aln" file="output2.fasta" ftype= "fasta"/>
+      <output name="cigar_aln" file="cigar.tabular" ftype= "tabular"/>
+    </test>
+  </tests>
+
   <help>
     
     **Requeriments**
    
-    You must install T_coffee version "10.00.r1613" in your computer.
+    You must install T_coffee version "11.0.8" in your computer.
    
 -----
    
@@ -196,29 +224,8 @@
       DI--------------KVVPRRKAK-----IIRD
       
   </help>
-  <tests>
-    <test>
-      <param name="filter_fasta" value="no"/>
-      <param name="input" value="input.fasta" ftype= "fasta"/>
-      <param name="format_output_fasta_aln" value="yes"/>
-      <output name="fasta_aln" file="output1.fasta" ftype= "fasta"/>
-    </test>
-    <test>
-      <param name="filter_fasta" value="yes"/>
-      <param name="fasta_input" value="input.fasta" ftype= "fasta"/>
-      <param name="identifiers" value="ids.txt" ftype= "txt"/>
-      <param name="format_output_fasta_aln" value="yes"/>
-      <param name="format_output_cigar" value="yes"/>
-      <output name="fasta_aln" file="output2.fasta" ftype= "fasta"/>
-      <output name="cigar_aln" file="cigar.tabular" ftype= "tabular"/>
-    </test>
-  </tests>
-  <requirements>
-    <requirement type="package" version="10.00.r1613">T-COFFEE</requirement>
-  </requirements>
-  <stdio>
-    <exit_code range="1:" level="fatal" description="Error" />
-  </stdio>
-  
+  <citations>
+    <citation type="doi">0.1006/jmbi.2000.4042</citation>
+  </citations>
 
 </tool>
