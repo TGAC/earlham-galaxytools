@@ -7,7 +7,7 @@
         <exit_code range="1:" level="fatal" />
     </stdio>
     <version_command>
-        t_coffee -version
+        t_coffee -version | grep Version
     </version_command>
     <command>
 <![CDATA[
@@ -15,13 +15,43 @@
             #set $input = '-infile=stdin'
             python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' |
         #end if
-        #if $format_output_cigar and not $format_output_fasta_aln
-            #set $fasta_aln = 'tmp_fasta_aln.fa'
+
+        #set $method_opt = ''
+        #if $method01
+            #set $method_opt += str($method01) + ','
         #end if
-        perl '$__tool_directory__/tcoffee.pl' '$input' $method01 $method02 $method03 '$dnd' '$msf_aln' '$clustalw_aln' '$pir_aln' '$fasta_aln' '$phylip' '$pir_seq' '$fasta_seq' '$score_ascii' '$score_html'
-        ## -n_core \${GALAXY_SLOTS:-1}
-        #if $format_output_cigar
-            && perl '$__tool_directory__/t_coffee_to_cigar.pl' '$fasta_aln' > '$cigar_aln'
+        #if $method02
+            #set $method_opt += str($method02) + ','
+        #end if
+        #if $method03
+            #set $method_opt += str($method03) + ','
+        #end if
+        #if $method_opt
+            #set $method_opt = '-method ' + $method_opt[:-1]
+        #end if
+
+        #set $output_opt = ''
+        #if $outputs
+            #set $outputs_arr = str($outputs).split(',')
+            #for $o in $outputs_arr
+                #if $o not in ['cigar', 'dnd']
+                    #set $output_opt += $o + ','
+                #end if
+            #end for
+            #if 'cigar' in $outputs_arr and 'fasta_aln' not in $outputs_arr
+                #set $output_opt += 'fasta_aln,'
+            #end if
+        #else
+            #set $outputs_arr = []
+        #end if
+        #if $output_opt
+            #set $output_opt = '-output ' + $output_opt[:-1]
+        #end if
+
+        t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
+
+        #if 'cigar' in $outputs_arr
+            && perl '$__tool_directory__/t_coffee_to_cigar.pl' t_coffee_out.fasta_aln > '$cigar'
         #end if
 ]]>
     </command>
@@ -62,70 +92,70 @@
             <option value="slow_pair">slow_pair</option>
             <option value="proba_pair">proba_pair</option>
         </param>
-        <param name="format_output_dnd" type="boolean" label="Output newick" />
-        <param name="format_output_msf_aln" type="boolean" label="Output msf_aln" />
-        <param name="format_output_clustalw_aln" type="boolean" label="Output clustalw_aln" />
-        <param name="format_output_pir_aln" type="boolean" label="Output pir_aln" />
-        <param name="format_output_fasta_aln" type="boolean" label="Output fasta_aln" />
-        <param name="format_output_phylip" type="boolean" label="Output phylip" />
-        <param name="format_output_pir_seq" type="boolean" label="Output pir_seq" />
-        <param name="format_output_fasta_seq" type="boolean" label="Output fasta_seq" />
-        <param name="format_output_score_ascii" type="boolean" label="Output score_ascii" />
-        <param name="format_output_score_html" type="boolean" label="Output score_html" />
-        <param name="format_output_cigar" type="boolean" label="Output CIGAR" />
+        <param name="outputs" type="select" multiple="true" display="checkboxes" label="Additional outputs">
+            <option value="cigar">CIGAR</option>
+            <option value="clustalw_aln">clustalw_aln</option>
+            <option value="dnd" selected="true">dnd</option>
+            <option value="fasta_aln">fasta_aln</option>
+            <option value="fasta_seq">fasta_seq</option>
+            <option value="msf_aln">msf_aln</option>
+            <option value="phylip">phylip</option>
+            <option value="pir_aln">pir_aln</option>
+            <option value="pir_seq">pir_seq</option>
+            <option value="score_ascii">score_ascii</option>
+            <option value="score_html">score_html</option>
+        </param>
     </inputs>
     <outputs>
-        <data format="nhx" name="dnd" label="${tool.name} on ${on_string}: newick.dnd" >
-            <filter>format_output_dnd is True</filter>
+        <data name="cigar" format="tabular" label="${tool.name} on ${on_string}: cigar" >
+            <filter>'cigar' in outputs</filter>
         </data>
-        <data format="msf" name="msf_aln" label="${tool.name} on ${on_string}: msf_aln" >
-            <filter>format_output_msf_aln is True</filter>
+        <data name="clustalw_aln" format="clustalw" label="${tool.name} on ${on_string}: clustalw_aln" from_work_dir="t_coffee_out.clustalw_aln">
+            <filter>'clustalw_aln' in outputs</filter>
         </data>
-        <data format="clustalw" name="clustalw_aln" label="${tool.name} on ${on_string}: clustalw_aln" >
-            <filter>format_output_clustalw_aln is True</filter>
+        <data name="dnd" format="nhx" label="${tool.name} on ${on_string}: newick.dnd" from_work_dir="t_coffee_out.dnd">
+            <filter>'dnd' in outputs</filter>
         </data>
-        <data format="pir" name="pir_aln" label="${tool.name} on ${on_string}: pir_aln" >
-            <filter>format_output_pir_aln is True</filter>
+        <data name="fasta_aln" format="fasta" label="${tool.name} on ${on_string}: fasta_aln" from_work_dir="t_coffee_out.fasta_aln">
+            <filter>'fasta_aln' in outputs</filter>
         </data>
-        <data format="fasta" name="fasta_aln" label="${tool.name} on ${on_string}: fasta_aln" >
-            <filter>format_output_fasta_aln is True</filter>
+        <data name="fasta_seq" format="fasta" label="${tool.name} on ${on_string}: fasta_seq" from_work_dir="t_coffee_out.fasta_seq">
+            <filter>'fasta_seq' in outputs</filter>
         </data>
-        <data format="phyloxml" name="phylip" label="${tool.name} on ${on_string}: phylip" >
-            <filter>format_output_phylip is True</filter>
+        <data name="msf_aln" format="msf" label="${tool.name} on ${on_string}: msf_aln" from_work_dir="t_coffee_out.msf_aln">
+            <filter>'msf_aln' in outputs</filter>
         </data>
-        <data format="pir" name="pir_seq" label="${tool.name} on ${on_string}: pir_seq" >
-            <filter>format_output_pir_seq is True</filter>
+        <data name="phylip" format="phyloxml" label="${tool.name} on ${on_string}: phylip" from_work_dir="t_coffee_out.phylip">
+            <filter>'phylip' in outputs</filter>
         </data>
-        <data format="fasta" name="fasta_seq" label="${tool.name} on ${on_string}: fasta_seq" >
-            <filter>format_output_fasta_seq is True</filter>
+        <data name="pir_aln" format="pir" label="${tool.name} on ${on_string}: pir_aln" from_work_dir="t_coffee_out.pir_aln">
+            <filter>'pir_aln' in outputs</filter>
         </data>
-        <data format="ascii" name="score_ascii" label="${tool.name} on ${on_string}: score_ascii" >
-            <filter>format_output_score_ascii is True</filter>
+        <data name="pir_seq" format="pir" label="${tool.name} on ${on_string}: pir_seq" from_work_dir="t_coffee_out.pir_seq">
+            <filter>'pir_seq' in outputs</filter>
         </data>
-        <data format="html" name="score_html" label="${tool.name} on ${on_string}: score_html" >
-            <filter>format_output_score_html is True</filter>
+        <data name="score_ascii" format="ascii" label="${tool.name} on ${on_string}: score_ascii" from_work_dir="t_coffee_out.score_ascii">
+            <filter>'score_ascii' in outputs</filter>
         </data>
-        <data format="tabular" name="cigar_aln" label="${tool.name} on ${on_string}: cigar_aln" >
-            <filter>format_output_cigar is True</filter>
+        <data name="score_html" format="html" label="${tool.name} on ${on_string}: score_html" from_work_dir="t_coffee_out.score_html">
+            <filter>'score_html' in outputs</filter>
         </data>
     </outputs>
     <tests>
         <test>
-            <param name="filter_fasta" value="no"/>
-            <param name="input" value="input.fasta" ftype= "fasta"/>
+            <param name="filter_fasta" value="no" />
+            <param name="input" value="input.fasta" ftype="fasta" />
             <param name="method02" value="clustalw_msa" />
-            <param name="format_output_fasta_aln" value="True"/>
-            <output name="fasta_aln" file="output1.fasta" ftype= "fasta"/>
+            <param name="outputs" value="fasta_aln" />
+            <output name="fasta_aln" file="output1.fasta" />
         </test>
         <test>
-            <param name="filter_fasta" value="yes"/>
-            <param name="fasta_input" value="input.fasta" ftype= "fasta"/>
-            <param name="identifiers" value="ids.txt" ftype= "txt"/>
+            <param name="filter_fasta" value="yes" />
+            <param name="fasta_input" value="input.fasta" ftype="fasta" />
+            <param name="identifiers" value="ids.txt" ftype="txt" />
             <param name="method02" value="clustalw_msa" />
-            <param name="format_output_fasta_aln" value="True"/>
-            <param name="format_output_cigar" value="True"/>
-            <output name="fasta_aln" file="output2.fasta" ftype= "fasta"/>
-            <output name="cigar_aln" file="cigar.tabular" ftype= "tabular"/>
+            <param name="outputs" value="cigar" />
+            <output name="cigar" file="cigar.tabular" />
         </test>
     </tests>
     <help>
