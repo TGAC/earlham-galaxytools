@@ -1,7 +1,7 @@
-<tool id="species_tree_generator" name="Species tree generator" version="0.1.1">
+<tool id="species_tree_generator" name="Species tree generator" version="3.0.0b35">
     <description>from a list of species using the ETE Toolkit</description>
      <requirements>
-        <requirement type="package">ete3</requirement>
+        <requirement type="package" version="3.0.0b35">ete3</requirement>
     </requirements>
     <stdio>
         <!-- Anything other than zero is an error -->
