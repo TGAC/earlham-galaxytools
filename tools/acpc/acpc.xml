@@ -1,0 +1,282 @@
+<tool id="acpc" name="ACPC" version="1.0">
+    <description>Chemoinformatics tool for ligand-based virtual screening</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+        #if $program_chose.program=="acpc" #
+            if cat $program_chose.q | grep "@<TRIPOS>" > /dev/null; then 
+                cat $program_chose.q > query.mol2;
+                cat $program_chose.db > database.mol2 ;
+            else
+                if cat $program_chose.q | grep "BEGIN" > /dev/null; then 
+                    cat $program_chose.q > query.pl;
+                    cat $program_chose.db > database.pl ;
+                else
+                    cat $program_chose.q > query.pqr;
+                    cat $program_chose.db > database.pqr ;
+                fi;
+            fi;
+            acpc 
+                -q query.*
+                -db database.*
+                #if $program_chose.top_mol.top_scoring_mol=="true"
+                -top $program_chose.top_mol.top
+                -o mol_output
+                #end if
+                #if $program_chose.a
+                -a $program_chose.a
+                #end if
+                #if $program_chose.nopp=="true"
+                -nopp
+                #end if
+                #if $program_chose.er
+                -er $program_chose.er
+                #end if
+                #if $program_chose.scan=="true"
+                -scan scan_out
+                #end if
+                -v
+                ;
+            cat *.scores > $score_output_acpc;
+            #if $program_chose.top_mol.top_scoring_mol=="true" #
+                cat mol_output > $mol_output_acpc;
+            #end if #
+            #if $program_chose.scan=="true" #
+                cat scan_out > $scan_output_acpc;
+                cat query.mol2.bld > $bld_output_acpc;
+            #end if #
+        #end if #
+        #if $program_chose.program=="acpc_mol2tool" #
+            cat $program_chose.i > query.mol2;
+            acpc_mol2tool -i query.mol2;
+            mkdir results;
+            mv query_*/* results/. ;
+        #end if #
+        #if $program_chose.program=="acpc_par" #
+            if cat $program_chose.q | grep "@<TRIPOS>" > /dev/null; then 
+                cat $program_chose.q > query.mol2;
+                cat $program_chose.db > database.mol2 ;
+            else
+                if cat $program_chose.q | grep "BEGIN" > /dev/null; then 
+                    cat $program_chose.q > query.pl;
+                    cat $program_chose.db > database.pl ;
+                else
+                    cat $program_chose.q > query.pqr;
+                    cat $program_chose.db > database.pqr ;
+                fi;
+            fi;
+            acpc_par 
+                -q query.*
+                -db database.*
+                -o score
+                #if $program_chose.a
+                -a $a
+                #end if
+                #if $program_chose.np
+                -np $np
+                #end if
+                ;
+            cat score > $output_acpc_par;
+        #end if #
+        #if $program_chose.program=="acpc_pqrtool" #
+            cat $program_chose.pqrfile > pqrfile.pqr;
+            acpc_pqrtool pqrfile.pqr > $output_acpc_pqrtool;
+        #end if #  
+        #if $program_chose.program=="acpc_mol2reader" #
+            cat $program_chose.mol2file > mol2file.mol2;
+            acpc_mol2reader mol2file.mol2 > $output_acpc_mol2reader;
+        #end if #        
+        #if $program_chose.program=="acpc_auctool" #
+            cat $program_chose.i > score.scores;
+            acpc_auctool -i score.scores -p $program_chose.p > $output_acpc_auctool;
+        #end if #
+        #if $program_chose.program=="acpc_pltool" #
+            cat $program_chose.plfile > plfile.pl;
+            acpc_pltool plfile.pl > $output_acpc_pltool;
+        #end if #
+
+        ]]>
+    </command>
+    <inputs>
+        <conditional name="program_chose">
+            <param name="program" type="select" label="Chose a program ">
+                <option value="acpc" selected="true">acpc </option>
+                <!-- <option value="acpc_consrank">acpc_consrank </option> -->
+                <option value="acpc_mol2tool">acpc_mol2tool </option>
+                <option value="acpc_pqrtool">acpc_pqrtool </option>
+                <option value="acpc_auctool">acpc_auctool </option>
+                <!-- <option value="acpc_ertool">acpc_ertool </option> -->
+                <option value="acpc_par">acpc_par </option>
+                <!-- <option value="acpc_scorer">acpc_scorer </option> -->
+                <!-- <option value="acpc_codec">acpc_codec </option> -->
+                <option value="acpc_mol2reader">acpc_mol2reader </option>
+                <option value="acpc_pltool">acpc_pltool </option>
+            </param>
+            <when value="acpc">
+                <param name="q" type="data" format="mol2,pqr,pl" label="Query" help="acpc (-q)" />
+                <param name="db" type="data" format="mol2,pqr,pl" label="Database" help="acpc (-db)" />
+                <param name="a" type="float" label="Kernel parameter (default depends on considered feature space and was optimized on DUD-E)" help="acpc (-a)" optional="true" />
+                <param name="er" type="float" label="Enrichment rate parameter; e.g. 0.01 --> ER_1%" help="acpc (-er)" optional="true">
+                    <validator type="in_range" min="0" max="1" />
+                </param>
+                <param name="nopp" type="select" label="Don't rm duplicate molecules (based on names)" help="acpc (-nopp)">
+                    <option value="false" selected="true">Don't use this option</option>
+                    <option value="true">Use this option</option>
+                </param>
+                <param name="scan" type="select" label="Scan delta AUC per atom in the query and create a new query molecule" help="acpc (-scan)">
+                    <option value="false" selected="true">Don't use this option</option>
+                    <option value="true">Use this option</option>
+                </param> 
+                <conditional name="top_mol" >
+                    <param name="top_scoring_mol" type="select" label="Return file with top scoring molecules (only works for MOL2 files)" >
+                        <option value="false" selected="true">Don't use this option</option>
+                        <option value="true">Use this option</option>
+                    </param>
+                    <when value="false" >
+                    </when>
+                    <when value="true" >
+                        <param name="top" type="integer" value="1" label="Number of top scoring molecules to output" help="acpc (-top)" />
+                    </when>
+                </conditional>               
+            </when>
+            <!-- <when value="acpc_consrank"> -->
+            <!-- </when> -->
+            <when value="acpc_mol2tool">
+                <param name="i" type="data" format="mol2" label="Input mol2 file" help="acpc_mol2tool (-i)" />
+            </when>
+            <when value="acpc_pqrtool">
+                <param name="pqrfile" type="data" format="pqr" label="Input pqr file" /> 
+            </when>
+            <when value="acpc_auctool">
+                <param name="i" type="data" format="data" label="Input score file" />
+                <param name="p" type="text" value="0.05" label="A float such that x in (0.0; 1.0] " />
+            </when>
+            <!-- <when value="acpc_ertool"> -->
+            <!-- </when> -->
+            <when value="acpc_par">
+                <param name="q" type="data" format="mol2" label="Query" help="acpc_par (-q)" />
+                <param name="db" type="data" format="mol2" label="Database" help="acpc_par (-db)" />
+                <param name="a" type="float" label="Kernel parameter (default depends on considered feature space and was optimized on DUD-E)" help="acpc_par (-a)" optional="true" />
+                <param name="np" type="integer" label="Max number of cores to use" help="acpc_par (-np)" optional="true" />
+            </when>
+            <!-- <when value="acpc_scorer"> -->
+            <!-- </when> -->
+            <!-- <when value="acpc_codec"> -->
+            <!-- </when> -->
+            <when value="acpc_mol2reader">
+                <param name="mol2file" type="data" format="mol2" label="Input mol2 file" /> 
+            </when>
+            <when value="acpc_pltool">
+                <param name="plfile" type="data" format="pl" label="Input pl file" /> 
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="mol_output_acpc" format="txt" label="ACPC: output molecules" >
+            <filter>program_chose["program"]=="acpc" and program_chose["top_mol"]["top_scoring_mol"]=="true"</filter>
+        </data>        
+        <data name="score_output_acpc" format="txt" label="ACPC: score" >
+            <filter>program_chose["program"]=="acpc"</filter>
+        </data>
+        <data name="scan_output_acpc" format="txt" label="ACPC: scan file">
+            <filter>program_chose["program"]=="acpc" and program_chose["scan"]=="true"</filter>
+        </data>        
+        <data name="bld_output_acpc" format="txt" label="ACPC: mol2.bld file">
+            <filter>program_chose["program"]=="acpc"</filter>
+            <filter>program_chose["scan"]=="true"</filter>
+        </data>
+        <data format="txt" name="report">
+            <filter>program_chose["program"]=="acpc_mol2tool"</filter>
+            <discover_datasets pattern="([0123456789]*)\.mol2" directory="results" visible="true" />
+        </data>
+        <data name="output_acpc_par" format="txt" label="ACPC: score file">
+            <filter>program_chose["program"]=="acpc_par" </filter>
+        </data>         
+        <data name="output_acpc_mol2reader" format="txt" label="ACPC mol2reader output">
+            <filter>program_chose["program"]=="acpc_mol2reader" </filter>
+        </data>         
+        <data name="output_acpc_pltool" format="txt" label="ACPC pltool output">
+            <filter>program_chose["program"]=="acpc_pltool" </filter>
+        </data>         
+        <data name="output_acpc_auctool" format="txt" label="ACPC auctool output">
+            <filter>program_chose["program"]=="acpc_auctool" </filter>
+        </data>         
+        <data name="output_acpc_pqrtool" format="txt" label="ACPC pqrtool output">
+            <filter>program_chose["program"]=="acpc_pqrtool" </filter>
+        </data> 
+    </outputs>
+    <tests>
+        <test>
+            <param name="program" value="acpc" />
+            <param name="top_scoring_mol" value="true" />
+            <param name="q" value="acpc/query.mol2" />
+            <param name="db" value="acpc/database.mol2" />
+            <output name="mol_output_acpc" file="acpc/output"/>
+        </test>        
+        <test>
+            <param name="program" value="acpc_mol2reader" />
+            <param name="mol2file" value="acpc/query.mol2" />
+            <output name="output_acpc_mol2reader" file="acpc/output_mol2reader"/>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+************
+Description
+************
+ACPC is a ligand-based virtual screening tool using AutoCorrelation of Partial Charges. 
+
+*******
+Help
+*******
+    
+    acpc 
+    
+      --a float                   kernel parameter (default depends on considered feature space and was optimized on DUD-E)
+      --db db                     database in .mol2, .pl or .pqr format
+      --er x                      enrichment rate parameter; e.g. 0.01 --> ER_1%
+      --nopp                      don't rm duplicate molecules (based on names)
+      --q query                   query in .mol2, .pl or .pqr format
+      --scan out_file             scan delta AUC per atom in the query and create a new query molecule
+      --top int                   number of top scoring molecules to output (only works for MOL2 files)
+    
+    
+    acpc_mol2tool
+    
+      --i in   input mol2 file
+    
+    acpc_auctool
+    
+      -i in        input scores file
+      -p x         a float such that 0.0 < x <= 1.0 
+    
+    
+    
+    acpc_par
+    
+      --a float                   kernel parameter (default was optimized on DUD-E and depends on considered feature space)
+      --db db                     molecules database in .mol2, .pl or .pqr format
+      --q                         query molecule in .mol2, .pl or .pqr format
+      --np int                    max number of cores to use
+    
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @article{Berenger2014,
+              doi = {10.1186/1758-2946-6-23},
+              url = {http://dx.doi.org/10.1186/1758-2946-6-23},
+              year  = {2014},
+              publisher = {Springer Nature},
+              volume = {6},
+              number = {1},
+              pages = {23},
+              author = {Francois Berenger and Arnout Voet and Xiao Lee and Kam YJ Zhang},
+              title = {A rotation-translation invariant molecular descriptor of partial charges and its use in ligand-based virtual screening},
+              journal = {Journal of Cheminformatics}
+            }
+        </citation>
+    </citations>
+</tool>
