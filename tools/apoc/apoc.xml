@@ -1,0 +1,277 @@
+<tool id="apoc" name="APoc" version="1.0">
+    <description>Large-scale identification of similar protein pockets</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+        #if $templates_source.template_source_select=="list"#
+            #for $i, $s in enumerate( $templates_source.template )# 
+                echo ${s.input.file_name} >> templates_path ;
+            #end for#
+            paste -d "\t" templates_path $templates_source.lt | awk '{print $1"\t"$3}' > templates_list;
+        #end if#
+
+        #if $query_source.query_source_select=="list"#
+            #for $i, $s in enumerate( $query_source.query )# 
+                echo ${s.input.file_name} >> queries_path ;
+            #end for#
+            paste -d "\t" queries_path $query_source.lq | awk '{print $1"\t"$3}' > queries_list;
+        #end if#
+
+        $__tool_directory__/tools/apoc/apoc
+                                            -fa $fa
+                                            -pvol $pvol
+                                            -plen $plen
+                                            #if $alignment_option.sod=="true"
+                                            -sod
+                                            #end if
+                                            -v $alignment_option.v
+
+                                            -m $scoring_option.m
+                                            #if $scoring_option.L
+                                            -L $scoring_option.L
+                                            #end if
+                                            #if $scoring_option.a=="true"
+                                            -a
+                                            #end if
+                                            #if $scoring_option.b=="true"
+                                            -b
+                                            #end if
+                                            #if $scoring_option.c=="true"
+                                            -c
+                                            #end if
+
+                                            #if $templates_source.template_source_select=="list"
+                                                -lt templates_list
+                                            #else
+                                                #if $templates_source.pt
+                                                    -pt $templates_source.pt
+                                                #end if 
+                                                $templates_source.pdbfile1
+                                            #end if
+
+                                            #if $query_source.query_source_select=="list"
+                                                -lq queries_list
+                                            #else
+                                                #if $query_source.pq
+                                                    -pq $query_source.pq
+                                                #end if 
+                                            $query_source.pdbfile2
+                                            #end if
+                                            > $output_apoc
+        ]]>
+    </command>
+    <inputs>
+        <conditional name="templates_source">
+            <param name="template_source_select" type="select" label="Chose template source: pdb file or file with list of templates">
+                <option value="pdbfile">pdb file</option>
+                <option value="list">file with list of templates</option>
+            </param>
+            <when value="pdbfile">
+                <param name="pdbfile1" type="data" format="pdb" label="First (template) structure for comparison" help="(pdbfile1)" />
+                <param name="pt" type="text" label="Names of pockets in the first (template) structure for comparison" optional="true" help="(-pt)" />
+            </when>
+            <when value="list">
+                <param name="lt" type="data" format="data" label="List of templates to compare in a file" help="(-lt)" />
+                <repeat name="template" title="pdb file from list of templates">
+                    <param name="input" type="data" format="pdb" label="pdbfile" help="Load all pdb files in the same order as in the list of templates" />
+                </repeat>
+            </when>
+        </conditional>
+        <conditional name="query_source">
+            <param name="query_source_select" type="select" label="Chose query source: pdb file or file with list of queries">
+            <option value="pdbfile">pdb file </option>
+            <option value="list">file with list of queries</option>
+            </param>
+            <when value="pdbfile">
+                <param name="pdbfile2" type="data" format="pdb" label="Second (query) structure for comparison" help="(pdbfile2)" />
+                <param name="pq" type="text" label="Names of pockets in the second (query) structure for comparison" optional="true" help="(-pq)" />
+            </when>
+            <when value="list">
+                <param name="lq" type="data" format="data" label="List of queries (targets) to compare in a file." help="(-lq)" />
+                <repeat name="query" title="pdb file from list of queries">
+                    <param name="input" type="data" format="pdb" label="pdbfile" help="Load all pdb files in the same order as in the list of queries" />
+                </repeat>
+            </when>
+        </conditional>
+        <param name="fa" type="select" label="Global structure alignment" help="(-fa)">
+        <option value="1" selected="true">enable </option>
+        <option value="0">disable </option>
+        </param>
+        <param name="pvol" type="text" value="1000" label="Minimal pocket volume in grid points" help="(-pvol)" />
+        <param name="plen" type="text" value="10" label="Minimal number of pocket residues" help="(-plen)" />
+        <section name="alignment_option" title="Alignment option">
+            <param name="sod" type="select" label="Restrict to sequence-order-dependent alignment" help="(-sod)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="v" type="select" label="Restrict to sequence-order-dependent alignment" help="(-v)">
+                <option value="0">none</option>
+                <option value="1">concise</option>
+                <option value="2" selected="true">detailed</option>
+            </param>       
+        </section>
+        <section name="scoring_option" title="Scoring option">
+            <param name="m" type="select" label="Similarity scoring metric" help="(-m)">
+                <option value="tm">TM-score</option>
+                <option value="ps" selected="true">PS-score</option>
+            </param>
+            <param name="L" type="text" label="Normalize the score with a fixed length specified by num" optional="true" help="(-L)" />
+            <param name="a" type="select" label="Normalize the score by the average size of two structures" help="(-a)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="b" type="select" label="Normalize the score by the minimum size of two structures" help="(-b)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="c" type="select" label="Normalize the score by the maximum size of two structures" help="(-c)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output_apoc" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="template_source_select" value="pdbfile" />
+            <param name="pdbfile1" value="apoc/1ha3A.pdb" ftype="pdb" />
+            <param name="query_source_select" value="pdbfile" />
+            <param name="pdbfile2" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <output name="output_apoc">
+                <assert_contents>
+                    <has_text_matching expression="PDB\s*files\s*loaded" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="template_source_select" value="list" />
+            <param name="lt" value="apoc/templ.lst" />
+            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            <param name="query_source_select" value="pdbfile" />
+            <param name="pdbfile2" value="apoc/1yr8A.pdb" ftype="pdb" />
+            <output name="output_apoc">
+                <assert_contents>
+                    <has_text_matching expression="PDB\s*files\s*loaded" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="template_source_select" value="list" />
+            <param name="lt" value="apoc/templ.lst" />
+            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            <param name="query_source_select" value="pdbfile" />
+            <param name="pdbfile2" value="apoc/1ha3A.pdb" ftype="pdb" />
+            <param name="pq" value="1ha3_GDP_A_406" />
+            <output name="output_apoc">
+                <assert_contents>
+                    <has_text_matching expression="PDB\s*files\s*loaded" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="template_source_select" value="list" />
+            <param name="lt" value="apoc/templ.lst" />
+            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            <param name="query_source_select" value="list" />
+            <param name="lq" value="apoc/query.lst" />
+            <param name="query_0|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <output name="output_apoc">
+                <assert_contents>
+                    <has_text_matching expression="PDB\s*files\s*loaded" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[ 
+*************
+Description 
+*************
+
+APoc may be used to compare two pockets, a pocket against a set of pockets, or
+all-against-all between two sets of pockets. If you supply two structures to compare, 
+the first structure is the template and the second structure is the query (or target).
+
+For each pair of structures, the program first performs a global structural comparison in 
+sequential order using a standard TM-align algoritm. One may elect to bypass the global alignment
+to accelerate comparison. If no pocket found in the pdb structures, the program becomes a normal 
+TM-align or stop if one chooses to bypass the global alignment. If there are pockets detected 
+in the input files, it will compare pockets in sequential-order-independent manner by default.
+
+The ouput is arranged in pairs of structures compared. For each pair, the first alignment is the
+global alignment, followed by all-againat-all alignment of selected pockets. If you want a concise
+output without detailed alignment, add the "-v 0" option.
+
+******
+Help
+******
+
+ Usage: apoc <options> pdbfile1 pdbfile2
+
+ **Input options**
+
+ --fa <num>       
+           Global structure alignment: 1 - enable (default), 0 - disable.
+ --lt <file>            
+           Provide a list of templates to compare in a file.
+ --lq <file>             
+           Provide a list of queries (targets) to compare in a file.
+ --pt <str1,str2,...>    
+           Names of pockets in the first (template) structure for comparison.
+ --pq <str1,str2,...>    
+           Names of pockets in the second (query) structure for comparison.
+ --pvol <num>            
+           Minimal pocket volume in grid points. Default 100
+ --plen <num>
+           Minimal number of pocket residues. Default 10
+
+ **Alignment options**
+
+ --sod
+     Restrict to sequence-order-dependent alignment. Default no restriction.
+ --v  
+     Alignment printout: 0 - none, 1 - concise, 2 - detailed (default).
+
+ **Scoring options**
+
+ --m <str>
+     Similarity scoring metric:  tm (TM-score), ps (PS-score, default).
+ --L <num>
+     Normalize the score with a fixed length specified by num.
+ --a
+     Normalize the score by the average size of two structures.
+ --b
+     Normalize the score by the minimum size of two structures.
+ --c
+     Normalize the score by the maximum size of two structures.
+
+     ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @article{Gao2013,
+              doi = {10.1093/bioinformatics/btt024},
+              url = {http://dx.doi.org/10.1093/bioinformatics/btt024},
+              year  = {2013},
+              month = {jan},
+              publisher = {Oxford University Press ({OUP})},
+              volume = {29},
+              number = {5},
+              pages = {597--604},
+              author = {M. Gao and J. Skolnick},
+              title = {{APoc}: large-scale identification of similar protein pockets},
+              journal = {Bioinformatics}
+            }
+        </citation>
+    </citations>
+</tool>

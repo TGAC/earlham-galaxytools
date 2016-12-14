@@ -1,0 +1,234 @@
+<tool id="psovina" name="PSOVina" version="1.0">
+    <description>Fast Protein-Ligand Docking Tool based on PSO and AutoDock Vina</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+        $__tool_directory__/tools/psovina/psovina 
+                                                    --receptor $input.receptor
+                                                    --ligand $input.ligand 
+
+                                                    #if $input.flex
+                                                    --flex $input.flex
+                                                    #end if
+
+                                                    --center_x $search_space.center_x 
+                                                    --center_y $search_space.center_y
+                                                    --center_z $search_space.center_z 
+                                                    --size_x $search_space.size_x
+                                                    --size_y $search_space.size_y
+                                                    --size_z $search_space.size_z
+
+                                                    --num_particles $pso_parameters.num_particles
+                                                    --w $pso_parameters.w
+                                                    --c1 $pso_parameters.c1
+                                                    --c2 $pso_parameters.c2
+
+                                                    --out ligand_out.pdbqt
+                                                    #if $output_sect.log=="true"
+                                                    --log output.log
+                                                    #end if 
+
+                                                    #if $advanced_options.score_only=="true"
+                                                    --score_only
+                                                    #end if
+                                                    #if $advanced_options.local_only=="true"
+                                                    --local_only
+                                                    #end if
+                                                    #if $advanced_options.randomize_only=="true"
+                                                    --randomize_only
+                                                    #end if
+                                                    --weight_gauss1 $advanced_options.weight_gauss1
+                                                    --weight_gauss2 $advanced_options.weight_gauss2
+                                                    --weight_repulsion $advanced_options.weight_repulsion
+                                                    --weight_hydrophobic $advanced_options.weight_hydrophobic
+                                                    --weight_hydrogen $advanced_options.weight_hydrogen
+                                                    --weight_rot $advanced_options.weight_rot
+
+                                                    #if $misc.cpu
+                                                    --cpu $misc.cpu
+                                                    #end if
+                                                    #if $misc.seed
+                                                    --seed $misc.seed
+                                                    #end if
+                                                    --exhaustiveness $misc.exhaustiveness
+                                                    --num_modes $misc.num_modes
+                                                    --energy_range $misc.energy_range
+                                                    ;
+        #if $output_sect.log=="true" #
+            cat output.log > $output_log;
+        #end if #
+        cat ligand_out.pdbqt > $output
+
+        ]]>
+    </command>
+    <inputs>
+        <section name="input" title="Input" expanded="True">
+            <param name="receptor" type="data" format="pdbqt" label="Rigid part of the receptore" help="(--receptor)"/>
+            <param name="ligand" type="data" format="pdbqt" label="Ligand(s)" help="(--ligand)"/>
+            <param name="flex" type="data" format="pdbqt" label="Flexible side chains, if any" optional="true" help="(--flex)"/>
+        </section>
+        <section name="search_space" title="Search space" expanded="True">
+            <param name="center_x" type="float" value="0" label="X coordinate of the center" help="(--center_x)"/>
+            <param name="center_y" type="float" value="0" label="Y coordinate of the center" help="(--center_y)"/>
+            <param name="center_z" type="float" value="0" label="Z coordinate of the center" help="(--center_z)"/>
+            <param name="size_x" type="integer" value="1" label="Size in the X dimension" help="(--size_x)"/>
+            <param name="size_y" type="integer" value="1" label="Size in the Y dimension" help="(--size_y)"/>
+            <param name="size_z" type="integer" value="1" label="Size in the Z dimension" help="(--size_z)"/>
+        </section>
+        <section name="pso_parameters" title="PSO parameters" >
+            <param name="num_particles" type="integer" value="8" label="Number of particles of each thread" help="(--num_particles)"/>
+            <param name="w" type="float" value="0.36" label="Inertia weight" help="(--w)"/>
+            <param name="c1" type="float" value="0.99" label="Cognitive weight" help="(--c1)"/>
+            <param name="c2" type="float" value="0.99" label="Social weight" help="(--c2)"/>
+        </section>
+        <section name="output_sect" title="Output">
+            <param name="log" type="select" label="Write log file" help="(--log)">
+                <option value="false" selected="true" >No </option>
+                <option value="true" >Yes </option>
+            </param>
+        </section>
+        <section name="advanced_options" title="Advanced option">
+            <param name="score_only" type="select" label="Score only - search space can be omitted" help="(--score_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="local_only" type="select" label="Do local search only" help="(--local_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="randomize_only" type="select" label="Randomize input, attempting to avoid clashes" help="(--randomize_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="weight_gauss1" type="float" value="-0.035579" label="gauss_1 weight" help="(--weight_gauss1)"/>
+            <param name="weight_gauss2" type="float" value="-0.005156" label="gauss_2 weight" help="(--weight_gauss2)"/>
+            <param name="weight_repulsion" type="float" value="0.84024500000000002" label="Repulsion weight" help="(--weight_repulsion)"/>
+            <param name="weight_hydrophobic" type="float" value="-0.035069000000000003" label="Hydrophobic weight" help="(--weight_hydrophobic)"/>
+            <param name="weight_hydrogen" type="float" value="-0.58743900000000004" label="Hydrogen bond weight" help="(--weight_hydrogen)"/>
+            <param name="weight_rot" type="float" value="0.058459999999999998" label="N_rot weight" help="(--weight_rot)"/>
+        </section>
+        <section name="misc" title="Misc">
+            <param name="cpu" type="integer" label="The number of CPUs to use " optional="true" help="(--cpu)"/>
+            <param name="seed" type="float" label="Explicit random seed" optional="true" help="(--seed)"/>
+            <param name="exhaustiveness" type="integer" value="8" label="Exhaustiveness of the global search" help="(--exhaustiveness)"/>
+            <param name="num_modes" type="integer" value="9" label="Maximum number of binding modes to generate" help="(--num_modes)">
+                <validator type="in_range" min="1"/>
+            </param>
+            <param name="energy_range" type="float" value="3" label="Maximum energy difference between the best binding mode and the worst one displayed (kcal/mol)" help="(--energy_range)"/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" label="PSOVina: output models"/>
+        <data name="output_log" format="txt" label="PSOVina: log file">
+            <filter>output_sect['log']=="true"</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <section name="input"> 
+                <param name="receptor" value="psovina/protein.pdbqt" />
+                <param name="ligand" value="psovina/ligand.pdbqt" />
+            </section>
+            <section name="search_space">
+                <param name="center_x" value="11" />
+                <param name="center_y" value="90.5" />
+                <param name="center_z" value="57.5" />
+                <param name="size_x" value="22" />
+                <param name="size_y" value="24" />
+                <param name="size_z" value="28" />
+            </section>
+            <section name="output_sect">
+                <param name="log" value="true" />
+            </section>
+            <output name="output" >
+                <assert_contents>
+                    <has_text_matching expression="REMARK VINA RESULT" />
+                </assert_contents>
+            </output>            
+            <output name="output_log" >
+                <assert_contents>
+                    <has_text_matching expression="Using random seed:" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+*************
+Description
+*************
+
+A fast docking tool based on the efficient optimization algorithm of Particle Swarm Intelligence and the framework of AutoDock Vina. In our rigorous docking tests using the PDBBind data set and the virtual screening experiments using the DUD data set, PSOVina achieves a 51-60% time reduction in execution without compromising the prediction accuracies of Vina. This improvement in time efficiency makes PSOVina a better choice of a docking tool in large-scale protein-ligand docking applications.
+
+***********
+Help
+***********
+
+    **Input:**
+      --receptor arg        rigid part of the receptor (PDBQT)
+      --flex arg            flexible side chains, if any (PDBQT)
+      --ligand arg          ligand (PDBQT)
+    
+    **Search space (required):**
+      --center_x arg        X coordinate of the center
+      --center_y arg        Y coordinate of the center
+      --center_z arg        Z coordinate of the center
+      --size_x arg          size in the X dimension (Angstroms)
+      --size_y arg          size in the Y dimension (Angstroms)
+      --size_z arg          size in the Z dimension (Angstroms)
+    
+    **PSO parameters (optional):**
+      --num_particles arg      number of particles of each thread
+      --w arg                  inertia weight
+      --c1 arg                 cognitive weight
+      --c2 arg                 social weight
+    
+    **Output (optional):**
+      --log           optionally, write log file
+    
+    **Advanced options (see the manual):**
+      --score_only                          score only - search space can be 
+                                            omitted
+      --local_only                          do local search only
+      --randomize_only                      randomize input, attempting to avoid 
+                                            clashes
+      --weight_gauss1 arg                   gauss_1 weight
+      --weight_gauss2 arg                   gauss_2 weight
+      --weight_repulsion arg                repulsion weight
+      --weight_hydrophobic arg              hydrophobic weight
+      --weight_hydrogen arg                 Hydrogen bond weight
+      --weight_rot arg                      N_rot weight
+    
+    **Misc (optional):**
+      --cpu arg                 the number of CPUs to use (the default is to try to
+                                detect the number of CPUs or, failing that, use 1)
+      --seed arg                explicit random seed
+      --exhaustiveness arg      exhaustiveness of the global search (roughly 
+                                proportional to time): 1+
+      --num_modes arg           maximum number of binding modes to generate
+      --energy_range arg        maximum energy difference between the best binding 
+                                mode and the worst one displayed (kcal/mol)
+
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+              @article{doi:10.1142/S0219720015410073,
+                author = {Ng, Marcus C. K. and Fong, Simon and Siu, Shirley W. I.},
+                title = {PSOVina: The hybrid particle swarm optimization algorithm for protein–ligand docking},
+                journal = {Journal of Bioinformatics and Computational Biology},
+                volume = {13},
+                number = {03},
+                pages = {1541007},
+                year = {2015},
+                doi = {10.1142/S0219720015410073},
+                    note ={PMID: 25800162},
+
+                URL = {http://www.worldscientific.com/doi/abs/10.1142/S0219720015410073},
+                eprint = {http://www.worldscientific.com/doi/pdf/10.1142/S0219720015410073}
+               }
+        </citation>
+    </citations>
+</tool>

@@ -1,0 +1,73 @@
+<tool id="rdock" name="rDock" version="1.0">
+    <description>Binding Mode Prediction in Proteins/RNA</description>
+    <command>
+        <![CDATA[ 
+    	cat $inputmol2 > inputmol2.mol2; cat $inputprm | sed "s|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g" | sed "s|REF_MOL.*|REF_MOL ligand.sd|g" > new.prm; 
+        cp -r $__tool_directory__/tools/rdock/data .;
+        mkdir data/ligands; 
+        cp $inputsd data/ligands/ligand.sd; 
+        LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/rbcavity -r new.prm -was > /tmp/rbcavity.log; 
+		LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/rbdock -r new.prm -p dock.prm -n 100 -i $inputsd -o output_docking_out > /tmp/docking_out.log;
+        PERL5LIB=$__tool_directory__/tools/rdock/lib/ LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd; 
+        PYTHONPATH=/usr/lib/python2.7/dist-packages/ $__tool_directory__/tools/rdock/bin/sdrmsd $inputsd sorted.sd > $output_rdock
+    	]]>
+    </command>
+    <inputs>
+        <param name="inputprm" format="prm" type="data" label="Receptor param file (contains active site params)" help="(-r)"/>
+        <param name="inputmol2" format="mol2" type="data" label="Input MOL2 file" />
+        <param name="inputsd" format="sd" type="data" label="Input ligand SD file" help="(-i)"/>
+    </inputs>
+    <outputs>
+        <data name="output_rdock" format="data" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputprm" value="rdock/1sj0_rdock.prm" />
+            <param name="inputmol2" value="rdock/1sj0_rdock.mol2" />
+            <param name="inputsd" value="rdock/1sj0_ligand.sd" />
+            <output name="output_rdock">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="inputprm" value="rdock/1nem_rdock.prm" />
+            <param name="inputmol2" value="rdock/1nem_rdock.mol2" />
+            <param name="inputsd" value="rdock/1nem_lig.sd" />
+            <output name="output_rdock">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+
+*************
+Description 
+*************
+
+rDock is a fast and versatile Open Source docking program that can be used to dock small molecules against proteins and nucleic acids. It is designed for High Throughput Virtual Screening (HTVS) campaigns and Binding Mode prediction studies.
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @article{RuizCarmona2014,
+              doi = {10.1371/journal.pcbi.1003571},
+              url = {http://dx.doi.org/10.1371/journal.pcbi.1003571},
+              year  = {2014},
+              month = {apr},
+              publisher = {Public Library of Science ({PLoS})},
+              volume = {10},
+              number = {4},
+              pages = {e1003571},
+              author = {Sergio Ruiz-Carmona and Daniel Alvarez-Garcia and Nicolas Foloppe and A. Beatriz Garmendia-Doval and Szilveszter Juhos and Peter Schmidtke and Xavier Barril and Roderick E. Hubbard and S. David Morley},
+              editor = {Andreas Prlic},
+              title = {{rDock}: A Fast,  Versatile and Open Source Program for Docking Ligands to Proteins and Nucleic Acids},
+              journal = {{PLoS} Comput Biol}
+            }
+        </citation>
+    </citations>
+</tool>
