@@ -92,7 +92,7 @@
             <option value="slow_pair">slow_pair</option>
             <option value="proba_pair">proba_pair</option>
         </param>
-        <param name="outputs" type="select" multiple="true" display="checkboxes" label="Additional outputs">
+        <param name="outputs" type="select" multiple="true" optional="false" display="checkboxes" label="Additional outputs">
             <option value="cigar">CIGAR</option>
             <option value="clustalw_aln">clustalw_aln</option>
             <option value="dnd" selected="true">dnd</option>
