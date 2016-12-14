@@ -18,6 +18,15 @@
     font-size: 20px;
 }
 
+#search_div{
+    display: none; 
+    background: none repeat scroll 0% 0% green; 
+    padding: 10px; 
+    height: 248px; 
+    text-align: center; 
+    font-size: 20px;
+}
+
 #settings_div{
     padding: 10px; 
     height: 248px; 
@@ -53,10 +62,22 @@
     background: none repeat scroll 0% 0% peru;
 }
 
+#filter_handle{
+    padding: 5px; 
+    text-align: center; 
+    background: none repeat scroll 0% 0% orange;
+}
+
 #openclose_handle{
     padding: 5px; 
     text-align: center;  
     background: none repeat scroll 0% 0% gray;
+}
+
+#search_div_handle{
+    padding: 5px; 
+    text-align: center;  
+    background: none repeat scroll 0% 0% green;
 }
 
 #gene_tree{
