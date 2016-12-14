@@ -29,6 +29,7 @@
         ${h.javascript_link( app_root + "aequatus-vis/scripts/util.js" )}
         ${h.javascript_link( app_root + "aequatus-vis/scripts/d3_tree.js" )}
         ${h.javascript_link( app_root + "aequatus-vis/scripts/newick.js" )}
+        ${h.javascript_link( app_root + "aequatus-vis/scripts/cigarUtils.js" )}
 
 
 ## aequatus plugin script
@@ -48,6 +49,11 @@
 
 ## aequatus css
         ${h.stylesheet_link( app_root + "aequatus.css" )}
+
+## sql-js
+        ${h.javascript_link( app_root + "sql.js" )}
+        ${h.javascript_link( app_root + "readSQLite.js" )}
+        ${h.javascript_link( app_root + "worker.sql.js" )}
        
 </head>
 
@@ -56,21 +62,16 @@
 
 <script type="text/javascript">
 
+
         kickOff();
 
         var hda_id = '${ trans.security.encode_id( hda.id ) }'
 
         var ajax_url = "${h.url_for( controller='/datasets', action='index')}/" + hda_id + "/display"
         
-        var json_result;
+        console.log(ajax_url)
 
-        var datasetFetch = jQuery.ajax( {
-            url: ajax_url,
-            success: function(result){
-                var temp  = result;
-                json_result = temp;
-                start(json_result)
-        }});
+        var json_result = setDB(ajax_url, get_Genes_for_family)
 
 
     function start(json){
@@ -90,6 +91,12 @@
         <tbody>
         <tr valign=top>
             <td width="300px" id=control_divs>
+
+                 
+                <div id="search_div">
+                    <div id="families">
+                    </div>
+                </div>
 
                 <div id="settings_div">
                 </div>
@@ -135,17 +142,31 @@
                         </tbody>
                     </table>
                 </div>
+                 <div style="display: none; background: none repeat scroll 0% 0% orange; padding: 10px; height: 296px; text-align: center; font-size: 20px;"
+                     id="filter_div">
+                    <b>Species list:</b>
+                    <div id="filter"></div>
+                    <div id="sliderfilter" style="text-align: left; margin-top: 10px">
+                </div>
             </td>
             <td width="50px">
                 <div id="control_panel_handle">
                     <b> ... </b>
                 </div>
                 
+                <div id="search_div_handle" onclick="openPanel('#search_div')">
+                    <i style="color: white;" class="fa fa-search fa-3x"></i>
+                </div>
+
                 <div id="settings_div_handle" onclick="openPanel('#settings_div')" >
                     <i style="color: white;" class="fa fa-cogs fa-3x"></i>
                 </div>
 
                 <div id="info_panel_handle" onclick="openPanel('#info_div')">
+                    <i style="color: white;" class="fa fa-info fa-3x"></i>
+                </div>
+
+                <div id="filter_handle" onclick="openPanel('#filter_div')">
                     <i style="color: white;" class="fa fa-info fa-3x"></i>
                 </div>
 
