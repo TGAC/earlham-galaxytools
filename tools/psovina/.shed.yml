@@ -1,4 +1,7 @@
+name: psovina
+owner: earlhaminst
+description: structure-based virtual screening
+homepage_url: http://cbbio.cis.umac.mo/software/psovina/index.html
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/psovina/
+long_description: A fast docking tool based on the efficient optimization algorithm of Particle Swarm Intelligence and the framework of AutoDock Vina
 categories: [Computational chemistry]
-description: Docking tools
-name: norwich_tools_dock
-owner: marpiech
