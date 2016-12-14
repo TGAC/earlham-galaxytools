@@ -1,0 +1,210 @@
+<tool id="t_coffee" name="T-Coffee" version="11.0.8">
+    <description>multiple sequence alignment</description>
+    <requirements>
+        <requirement type="package" version="11.0.8">t_coffee</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <version_command>
+        t_coffee -version | grep Version
+    </version_command>
+    <command>
+<![CDATA[
+        #if str($input_type.filter_fasta) == 'yes'
+            #set $input = '-infile=stdin'
+            python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' |
+        #end if
+
+        #set $method_opt = ''
+        #if $method01
+            #set $method_opt += str($method01) + ','
+        #end if
+        #if $method02
+            #set $method_opt += str($method02) + ','
+        #end if
+        #if $method03
+            #set $method_opt += str($method03) + ','
+        #end if
+        #if $method_opt
+            #set $method_opt = '-method ' + $method_opt[:-1]
+        #end if
+
+        #set $output_opt = ''
+        #if $outputs
+            #set $outputs_arr = str($outputs).split(',')
+            #for $o in $outputs_arr
+                #if $o not in ['cigar', 'dnd']
+                    #set $output_opt += $o + ','
+                #end if
+            #end for
+            #if 'cigar' in $outputs_arr and 'fasta_aln' not in $outputs_arr
+                #set $output_opt += 'fasta_aln,'
+            #end if
+        #else
+            #set $outputs_arr = []
+        #end if
+        #if $output_opt
+            #set $output_opt = '-output ' + $output_opt[:-1]
+        #end if
+
+        t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
+
+        #if 'cigar' in $outputs_arr
+            && perl '$__tool_directory__/t_coffee_to_cigar.pl' t_coffee_out.fasta_aln > '$cigar'
+        #end if
+]]>
+    </command>
+    <inputs>
+        <conditional name="input_type">
+            <param name="filter_fasta" type="select" label="Filter FASTA input?">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="yes">
+                <param name="fasta_input" type="data" format="fasta" label="FASTA sequences" />
+                <param name="identifiers" type="data" format="txt" label="List of FASTA sequence IDs" />
+            </when>
+            <when value="no">
+                <param name="input" type="data" format="fasta" label="FASTA sequences" />
+            </when>
+        </conditional>
+        <param name="method01" type="select" display="checkboxes" multiple="true" label="Pairwise Structual Method">
+            <option value="sap_pair">sap_pair</option>
+            <option value="TMalign_pair">TMalign_pair</option>
+            <option value="mustang_pair">mustang_pair</option>
+        </param>
+        <param name="method02" type="select" display="checkboxes" multiple="true" label="Multiple Sequence Alignment Methods">
+            <option value="pcma_msa">pcma_msa</option>
+            <option value="clustalw_msa">clustalw_msa</option>
+            <option value="dialigntx_msa">dialigntx_msa</option>
+            <option value="poa_msa">poa_msa</option>
+            <option value="muscle_msa">muscle_msa</option>
+            <option value="probcons_msa">probcons_msa</option>
+            <option value="t_coffee_msa">t_coffee_msa</option>
+            <option value="amap_msa">amap_msa</option>
+            <option value="kalign_msa">kalign_msa</option>
+        </param>
+        <param name="method03" type="select" display="checkboxes" multiple="true" label="Pairwise Sequence Alignment Methods">
+            <option value="fast_pair">fast_pair</option>
+            <option value="clustalw_pair">clustalw_pair</option>
+            <option value="lalign_id_pair">lalign_id_pair</option>
+            <option value="slow_pair">slow_pair</option>
+            <option value="proba_pair">proba_pair</option>
+        </param>
+        <param name="outputs" type="select" multiple="true" optional="false" display="checkboxes" label="Additional outputs">
+            <option value="cigar">CIGAR</option>
+            <option value="clustalw_aln">clustalw_aln</option>
+            <option value="dnd" selected="true">dnd</option>
+            <option value="fasta_aln">fasta_aln</option>
+            <option value="fasta_seq">fasta_seq</option>
+            <option value="msf_aln">msf_aln</option>
+            <option value="phylip">phylip</option>
+            <option value="pir_aln">pir_aln</option>
+            <option value="pir_seq">pir_seq</option>
+            <option value="score_ascii">score_ascii</option>
+            <option value="score_html">score_html</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="cigar" format="tabular" label="${tool.name} on ${on_string}: cigar" >
+            <filter>'cigar' in outputs</filter>
+        </data>
+        <data name="clustalw_aln" format="clustalw" label="${tool.name} on ${on_string}: clustalw_aln" from_work_dir="t_coffee_out.clustalw_aln">
+            <filter>'clustalw_aln' in outputs</filter>
+        </data>
+        <data name="dnd" format="nhx" label="${tool.name} on ${on_string}: newick.dnd" from_work_dir="t_coffee_out.dnd">
+            <filter>'dnd' in outputs</filter>
+        </data>
+        <data name="fasta_aln" format="fasta" label="${tool.name} on ${on_string}: fasta_aln" from_work_dir="t_coffee_out.fasta_aln">
+            <filter>'fasta_aln' in outputs</filter>
+        </data>
+        <data name="fasta_seq" format="fasta" label="${tool.name} on ${on_string}: fasta_seq" from_work_dir="t_coffee_out.fasta_seq">
+            <filter>'fasta_seq' in outputs</filter>
+        </data>
+        <data name="msf_aln" format="msf" label="${tool.name} on ${on_string}: msf_aln" from_work_dir="t_coffee_out.msf_aln">
+            <filter>'msf_aln' in outputs</filter>
+        </data>
+        <data name="phylip" format="phyloxml" label="${tool.name} on ${on_string}: phylip" from_work_dir="t_coffee_out.phylip">
+            <filter>'phylip' in outputs</filter>
+        </data>
+        <data name="pir_aln" format="pir" label="${tool.name} on ${on_string}: pir_aln" from_work_dir="t_coffee_out.pir_aln">
+            <filter>'pir_aln' in outputs</filter>
+        </data>
+        <data name="pir_seq" format="pir" label="${tool.name} on ${on_string}: pir_seq" from_work_dir="t_coffee_out.pir_seq">
+            <filter>'pir_seq' in outputs</filter>
+        </data>
+        <data name="score_ascii" format="ascii" label="${tool.name} on ${on_string}: score_ascii" from_work_dir="t_coffee_out.score_ascii">
+            <filter>'score_ascii' in outputs</filter>
+        </data>
+        <data name="score_html" format="html" label="${tool.name} on ${on_string}: score_html" from_work_dir="t_coffee_out.score_html">
+            <filter>'score_html' in outputs</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="filter_fasta" value="no" />
+            <param name="input" value="input.fasta" ftype="fasta" />
+            <param name="method02" value="clustalw_msa" />
+            <param name="outputs" value="fasta_aln" />
+            <output name="fasta_aln" file="output1.fasta" />
+        </test>
+        <test>
+            <param name="filter_fasta" value="yes" />
+            <param name="fasta_input" value="input.fasta" ftype="fasta" />
+            <param name="identifiers" value="ids.txt" ftype="txt" />
+            <param name="method02" value="clustalw_msa" />
+            <param name="outputs" value="cigar" />
+            <output name="cigar" file="cigar.tabular" />
+        </test>
+    </tests>
+    <help>
+**What it does**
+
+This tool is a wrapper for the T-Coffee multiple sequence alignment suite. The input is a set of sequences in FASTA format. Apart from running on the complete FASTA input, it can also run on a subset of sequences by providing a list of the FASTA IDs.
+
+This wrapper offers selected advanced T-Coffee options like the selection of the alignment methods to use: ''Pairwise Structual Method'', ''Multiple Sequence Alignment Methods'' or ''Pairwise Sequence Alignment Methods''.
+
+The T-Coffee documentation can be found at http://www.tcoffee.org/Projects/tcoffee/ .
+
+**Example**
+
+Suppose you have 5 sequences in FASTA format::
+
+    >1aboA
+    NLFVALYDFVASGDNTLSITKGEKLRVLGYNHNGEWCEAQTKNGQGWVPS
+    NYITPVN
+    >1ycsB
+    KGVIYALWDYEPQNDDELPMKEGDCMTIIHREDEDEIEWWWARLNDKEGY
+    VPRNLLGLYP
+    >1pht
+    GYQYRALYDYKKEREEDIDLHLGDILTVNKGSLVALGFSDGQEARPEEIG
+    WLNGYNETTGERGDFPGTYVEYIGRKKISP
+    >1vie
+    DRVRKKSGAAWQGQIVGWYCTNLTPEGYAVESEAHPGSVQIYPVAALERI
+    N
+    >1ihvA
+    NFRVYYRDSRDPVWKGPAKLLWKGEGAVVIQDNSDIKVVPRRKAKIIRD
+
+By selecting "Yes" in output fasta_aln in the wrapper, the user will obtain the multiple alignment in FASTA format::
+
+    >1aboA
+    NL-FVA---LYDFVASGDNTLSITKGEKLR-------VLGYN-------H
+    NGEWCEA--QTKN-GQGWVPSNYIT------PVN
+    >1ycsB
+    KGVIYA---LWDYEPQNDDELPMKEGDCMT-------IIHREDE-----D
+    EIEWWWA--RLND-KEGYVPRNLLG------LYP
+    >1pht
+    GYQYRA---LYDYKKEREEDIDLHLGDILTVNKGSLVALGFSDGQEARPE
+    EIGWLNGYNETTG-ERGDFPGTYVEYIGRKKISP
+    >1vie
+    DR-----------VRK--KSGAAWQGQIVGWYCTNLTPEGYAVE------
+    ------S--EAHPGSVQIYPVAALE------RIN
+    >1ihvA
+    NF-RVYYRDSRDPVWKGPA-KLLWKGEGAV-------VIQDN-------S
+    DI--------------KVVPRRKAK-----IIRD
+    </help>
+    <citations>
+        <citation type="doi">10.1006/jmbi.2000.4042</citation>
+    </citations>
+</tool>
