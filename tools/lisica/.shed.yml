@@ -1,8 +1,0 @@
-name: lisica
-owner: earlhaminst
-description: ligand based virtual screening
-homepage_url: http://insilab.org/lisica/
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/lisica/
-long_description: LiSiCA (Ligand Similarity using Clique Algorithm) is a ligand-based virtual screening software that searches for 2D and 3D similarities between a reference compound and a database of target compounds which should be represented in a Mol2 format. The similarities are expressed using the Tanimoto coefficients and the target compounds are ranked accordingly
-categories: [Computational chemistry]
-
