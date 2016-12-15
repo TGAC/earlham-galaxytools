@@ -1,4 +1,4 @@
-<tool id="ete_species_tree_generator" name="ETE Species tree generator" version="3.0.0b35">
+<tool id="ete_species_tree_generator" name="ETE species tree generator" version="3.0.0b35">
     <description>from a list of species using the ETE Toolkit</description>
      <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
