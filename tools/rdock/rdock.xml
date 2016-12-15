@@ -1,15 +1,18 @@
 <tool id="rdock" name="rDock" version="1.0">
     <description>Binding Mode Prediction in Proteins/RNA</description>
+    <requirements>
+        <requirement type="package" version="2013.1">rDock</requirement>
+    </requirements>
     <command>
         <![CDATA[ 
-    	cat $inputmol2 > inputmol2.mol2; cat $inputprm | sed "s|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g" | sed "s|REF_MOL.*|REF_MOL ligand.sd|g" > new.prm; 
+    	ln -s $inputmol2 inputmol2.mol2 && cat $inputprm | sed "s|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g" | sed "s|REF_MOL.*|REF_MOL ligand.sd|g" > new.prm; 
         cp -r $__tool_directory__/tools/rdock/data .;
         mkdir data/ligands; 
         cp $inputsd data/ligands/ligand.sd; 
-        LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/rbcavity -r new.prm -was > /tmp/rbcavity.log; 
-		LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/rbdock -r new.prm -p dock.prm -n 100 -i $inputsd -o output_docking_out > /tmp/docking_out.log;
-        PERL5LIB=$__tool_directory__/tools/rdock/lib/ LD_LIBRARY_PATH=$__tool_directory__/tools/rdock/lib $__tool_directory__/tools/rdock/bin/sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd; 
-        PYTHONPATH=/usr/lib/python2.7/dist-packages/ $__tool_directory__/tools/rdock/bin/sdrmsd $inputsd sorted.sd > $output_rdock
+        rbcavity -r new.prm -was > /tmp/rbcavity.log; 
+	rbdock -r new.prm -p dock.prm -n 100 -i $inputsd -o output_docking_out > /tmp/docking_out.log;
+        sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd; 
+        sdrmsd $inputsd sorted.sd > $output_rdock
     	]]>
     </command>
     <inputs>
