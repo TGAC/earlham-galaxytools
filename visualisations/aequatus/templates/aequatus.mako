@@ -65,16 +65,13 @@
 <script type="text/javascript">
 
 
-        kickOff();
+    kickOff();
 
-        var hda_id = '${ trans.security.encode_id( hda.id ) }'
+    var hda_id = '${ trans.security.encode_id( hda.id ) }'
 
-        var ajax_url = "${h.url_for( controller='/datasets', action='index')}/" + hda_id + "/display"
+    var ajax_url = "${h.url_for( controller='/datasets', action='index')}/" + hda_id + "/display"
         
-        console.log(ajax_url)
-
-        var json_result = setDB(ajax_url, get_Genes_for_family)
-
+    var json_result = setDB(ajax_url, get_Genes_for_family)
 
     function start(json){
         var syntenic_data = json
@@ -217,7 +214,7 @@
 <div id="popup" class="bubbleleft" >
     <div id="popup_header">
         <div id="stable_id_header">
-            <span id="name_label"></span>
+            <span id="name_label">&nbsp;</span>
             <i onclick="removePopup();" class="fa fa-close "  style="color: white; position: absolute; right: 5px; cursor: pointer; "></i>
         </div>
     </div>
@@ -234,11 +231,7 @@
                     <div id="position"></div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <div id="id_label"></div>
-                </td>
-            </tr>
+          
             <tr>
                 <td>
                     <div id="gene_desc"></div>

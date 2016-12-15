@@ -43,15 +43,23 @@ var gene;
 
     jQuery("#popup").fadeIn();
 
+   
+
 
     gene = syntenic_data.member[member_id];
     stable_id = syntenic_data.member[member_id].id
 
+    if(gene.display_name){
+        jQuery('#name_label').html(gene.display_label)
+    }else if(gene.description){
+        jQuery('#name_label').html(gene.description)
+    }else {
+        jQuery('#name_label').html(stable_id)
+    }
+
     var desc = gene.desc
 
     jQuery('#makemetop_button').html("<button onclick='changeReference(\"" + member_id + "\",\""+protein_id+"\")' class='btn btn-default' type='button'> <i class='fa fa-random fa-1x'></i></button>");
-
-    jQuery('#stable_label').html(gene.assembly_name)
 
     jQuery('#ref_name').html("Chr " + gene.seq_region_name)
 
