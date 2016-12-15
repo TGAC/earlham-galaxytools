@@ -1,4 +1,4 @@
-<tool id="gafa" name="Gene Align and Fmily Aggregator" version="0.1.0">
+<tool id="gafa" name="Gene Align and Family Aggregator" version="0.1.0">
     <description>generates SQLite database that can be visualised with Aequatus</description>
     <command>
 <![CDATA[
