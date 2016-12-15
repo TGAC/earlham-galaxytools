@@ -1,4 +1,4 @@
-<tool id="species_tree_generator" name="Species tree generator" version="3.0.0b35">
+<tool id="ete_species_tree_generator" name="ETE Species tree generator" version="3.0.0b35">
     <description>from a list of species using the ETE Toolkit</description>
      <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
@@ -9,7 +9,7 @@
     </stdio>
     <command>
     <![CDATA[
-python $__tool_directory__/ete_tree_generator.py 
+python $__tool_directory__/ete_species_tree_generator.py
 -s '$speciesFile'
 #if $output_format.treebest == 'yes'
     -f 8
