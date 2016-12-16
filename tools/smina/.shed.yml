@@ -1,0 +1,7 @@
+name: smina
+owner: earlhaminst
+description: small molecule - protein docking based on vina
+homepage_url: https://sourceforge.net/projects/smina/
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/smina/
+categories: [Computational chemistry]
+
