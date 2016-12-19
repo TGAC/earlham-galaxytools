@@ -13,8 +13,8 @@ def create_tables(conn):
     cur.execute('''CREATE TABLE meta (
         version VARCHAR)''')
 
-    cur.execute('INSERT INTO meta (version) VALUES (?)', 
-                (version,))
+    cur.execute('INSERT INTO meta (version) VALUES (?)',
+                (version, ))
 
     cur.execute('''CREATE TABLE gene_family (
         gene_family_id INTEGER PRIMARY KEY,
