@@ -51,7 +51,7 @@
         t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
 
         #if 'cigar' in $outputs_arr
-            && perl '$__tool_directory__/t_coffee_to_cigar.pl' t_coffee_out.fasta_aln > '$cigar'
+            && python '$__tool_directory__/t_coffee_to_cigar.py' t_coffee_out.fasta_aln > '$cigar'
         #end if
 ]]>
     </command>
