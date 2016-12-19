@@ -4,12 +4,18 @@ import json
 import optparse
 import sqlite3
 
-version = "0.2.0"
+version = "0.1.0"
 
 
 def create_tables(conn):
     cur = conn.cursor()
     cur.execute('PRAGMA foreign_keys = ON')
+    cur.execute('''CREATE TABLE meta (
+        version VARCHAR)''')
+
+    cur.execute('INSERT INTO meta (version) VALUES (?)',
+                (version, ))
+
     cur.execute('''CREATE TABLE gene_family (
         gene_family_id INTEGER PRIMARY KEY,
         gene_tree VARCHAR NOT NULL)''')
