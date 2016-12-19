@@ -82,10 +82,9 @@ def main():
     work_summary = {'wanted': 0, 'found': 0, 'duplicates': 0}
     targets = []
 
-    f_target = open(sys.argv[1])
-    for line in f_target.readlines():
-        targets.append(">%s" % line.strip().upper())
-    f_target.close()
+    with open(sys.argv[1]) as f_target:
+        for line in f_target.readlines():
+            targets.append(">%s" % line.strip().upper())
 
     work_summary['wanted'] = len(targets)
     homd_db = FASTAReader(sys.argv[2])
