@@ -1,16 +1,16 @@
 <tool id="fasta_header_converter" name="FASTA header converter" version="0.1.1">
-    <description>Adds species information at the end of the FASTA header</description>
+    <description>to append species information</description>
     <command>
 <![CDATA[
-python $__tool_directory__/fasta_header_converter.py 
--f $fastaFile 
--j $genesFile
-> $outputFile
+python '$__tool_directory__/fasta_header_converter.py'
+-f '$fastaFile'
+-j '$genesFile'
+> '$outputFile'
 ]]>
     </command>
     <inputs>
-        <param name="fastaFile" type="data" format="fasta" label="FASTA file" help="FASTA file with transcript ID as FASTA ID" />        
-        <param name="genesFile" type="data" format="json" label="Gene file" help="Gene file in JSON format" />
+        <param name="fastaFile" type="data" format="fasta" label="FASTA file" help="FASTA file with transcript ID as FASTA ID" />
+        <param name="genesFile" type="data" format="json" label="Gene feature information" help="In JSON format" />
     </inputs>
     <outputs>
         <data format="fasta" name="outputFile" label="${tool.name} on ${on_string}" />
@@ -24,7 +24,7 @@ python $__tool_directory__/fasta_header_converter.py
     </tests>
     <help>
     <![CDATA[
-Simple converter for FASTA, which appends species name in the FASTA header for usage in TreeBeST. It uses gene feature information in JSON format (similar to the result of Ensembl REST API - lookup/id). 
+Simple converter for FASTA files, which appends the species name to the FASTA header for usage in TreeBeST. It uses gene feature information in JSON format (similar to the result of Ensembl REST API - lookup/id).
     ]]>
     </help>
     <citations>
