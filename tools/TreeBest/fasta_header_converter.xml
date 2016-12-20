@@ -19,7 +19,7 @@ python $__tool_directory__/fasta_header_converter.py
         <test>
             <param name="fastaFile" ftype="nhx" value="test.fasta" />
             <param name="genesFile" ftype="json" value="test.json" />
-            <param name="outputFile" ftype="fasta" value="out.fasta" />
+            <output name="outputFile" file="out.fasta" />
         </test>
     </tests>
     <help>

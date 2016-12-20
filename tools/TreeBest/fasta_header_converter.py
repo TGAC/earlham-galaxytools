@@ -13,22 +13,13 @@ def readgene(gene):
 
 
 def read_fasta(fp):
-    name, seq = None, []
     for line in fp:
         line = line.rstrip()
         if line.startswith(">"):
-            if name:
-                sequence_dict[name] = ''.join(seq)
-            name, seq = line.replace(">", ""), []
+            name = line.replace(">", "")
+            print ">" + name + "_" + transcript_species_dict[name]
         else:
-            seq.append(line)
-    if name:
-        sequence_dict[name] = ''.join(seq)
-
-
-def add_species():
-    for id in sequence_dict:
-        print ">" + id + "_" + transcript_species_dict[id] + "\n" + sequence_dict[id] + "\n"
+            print line
 
 
 parser = optparse.OptionParser()
@@ -49,10 +40,8 @@ if options.input_fasta_filename is None:
 with open(options.input_gene_filename) as data_file:
     data = json.load(data_file)
 
-for gene_dict in data.itervalues():
+for gene_dict in data.values():
     readgene(gene_dict)
 
 with open(options.input_fasta_filename) as fp:
     read_fasta(fp)
-
-add_species()
