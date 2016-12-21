@@ -1,11 +1,13 @@
 # A simple tool to connect to the Ensembl server and retrieve sequences using
 # the Ensembl REST API.
+from __future__ import print_function
+
 import json
 import optparse
 from itertools import islice
-from urlparse import urljoin
 
 import requests
+from six.moves.urllib.parse import urljoin
 
 parser = optparse.OptionParser()
 parser.add_option('-i', '--input', help='List of Ensembl IDs')
@@ -43,4 +45,4 @@ with open(options.input) as f:
         if not r.ok:
             r.raise_for_status()
 
-        print r.text
+        print(r.text)

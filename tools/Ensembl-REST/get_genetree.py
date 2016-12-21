@@ -1,9 +1,11 @@
 # A simple tool to connect to the Ensembl server and retrieve genetree using
 # the Ensembl REST API.
+from __future__ import print_function
+
 import optparse
-from urlparse import urljoin
 
 import requests
+from six.moves.urllib.parse import urljoin
 
 parser = optparse.OptionParser()
 parser.add_option('--id_type', type='choice', default='gene_id',
@@ -55,4 +57,4 @@ r = requests.get(urljoin(server, '/'.join([ext, options.input])), params=params,
 if not r.ok:
     r.raise_for_status()
 
-print r.text
+print(r.text)

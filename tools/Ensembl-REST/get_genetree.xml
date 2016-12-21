@@ -1,4 +1,4 @@
-<tool id="get_genetree" name="Get gene tree by Ensembl ID" version="0.1.1">
+<tool id="get_genetree" name="Get gene tree by Ensembl ID" version="0.1.2">
     <description>using REST API</description>
     <macros>
         <xml name="sequence_conditional">
@@ -21,7 +21,8 @@
         </xml>
     </macros>
     <requirements>
-        <requirement type="package" version="2.7">requests</requirement>
+        <requirement type="package" version="2.12.4">requests</requirement>
+        <requirement type="package" version="1.10.0">six</requirement>
     </requirements>
     <command>
 <![CDATA[
@@ -108,7 +109,7 @@ python $__tool_directory__/get_genetree.py
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" />
+            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />
@@ -117,7 +118,7 @@ python $__tool_directory__/get_genetree.py
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" />
+            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />

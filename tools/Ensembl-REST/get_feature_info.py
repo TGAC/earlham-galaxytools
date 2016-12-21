@@ -1,10 +1,12 @@
 # A simple tool to connect to the Ensembl server and retrieve feature
 # information using the Ensembl REST API.
+from __future__ import print_function
+
 import json
 import optparse
-from urlparse import urljoin
 
 import requests
+from six.moves.urllib.parse import urljoin
 
 parser = optparse.OptionParser()
 parser.add_option('-i', '--input', help='List of Ensembl IDs')
@@ -38,4 +40,4 @@ r = requests.post(urljoin(server, ext), params=params, headers=headers,
 if not r.ok:
     r.raise_for_status()
 
-print r.text
+print(r.text)
