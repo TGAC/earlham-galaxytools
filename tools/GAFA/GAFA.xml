@@ -1,5 +1,5 @@
 <tool id="gafa" name="Gene Align and Family Aggregator" version="0.1.0">
-    <description>generates SQLite database that can be visualised with Aequatus</description>
+    <description>generates an SQLite database that can be visualised with Aequatus</description>
     <command>
 <![CDATA[
 python '$__tool_directory__/GAFA.py'

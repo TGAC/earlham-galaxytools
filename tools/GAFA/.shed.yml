@@ -1,9 +1,9 @@
-name: aequatus
-owner: earlhaminst
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/aequatus/
-description: Generate datasets that can be visualised with Aequatus
+description: Gene Align and Family Aggregator
 homepage_url: http://aequatus.tgac.ac.uk
-long_description: Aequatus is an open-source homology browser developed with novel rendering approaches to visualise homologous, orthologous and paralogous gene structures.
+name: gafa
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/GAFA/
+long_description: Gene Align and Family Aggregator (GAFA) generates an SQLite database that can be visualised with Aequatus, an open-source homology browser developed with novel rendering approaches to visualise homologous, orthologous and paralogous gene structures.
 categories:
 - Visualization
 type: unrestricted
