@@ -19,8 +19,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 872.0625, 
-                "top": 388.96875
+                "left": 236.066162109375, 
+                "top": 388.9521789550781
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -51,8 +51,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 842.9375, 
-                "top": 1227.0625
+                "left": 206.89337158203125, 
+                "top": 1227.0404052734375
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -83,8 +83,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 836, 
-                "top": 1539.1875
+                "left": 199.98162841796875, 
+                "top": 1539.080810546875
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -125,8 +125,8 @@
                 }
             ], 
             "position": {
-                "left": 1099.15625, 
-                "top": 388.96875
+                "left": 463.1249694824219, 
+                "top": 388.9521789550781
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -178,8 +178,8 @@
                 }
             ], 
             "position": {
-                "left": 1338.25, 
-                "top": 190.9375
+                "left": 702.2609939575195, 
+                "top": 190.88234329223633
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -235,8 +235,8 @@
                 }
             ], 
             "position": {
-                "left": 1613.53125, 
-                "top": 365
+                "left": 977.5367126464844, 
+                "top": 364.99998474121094
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput1": {
@@ -261,7 +261,7 @@
         }, 
         "6": {
             "annotation": "", 
-            "content_id": "blast_parser", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/blast_parser/blast_parser/0.1.1", 
             "id": 6, 
             "input_connections": {
                 "input": {
@@ -284,8 +284,8 @@
                 }
             ], 
             "position": {
-                "left": 1905.5, 
-                "top": 489.9375
+                "left": 1269.4852294921875, 
+                "top": 472.8860168457031
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -295,7 +295,13 @@
                 }
             }, 
             "tool_errors": null, 
-            "tool_id": "blast_parser", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/blast_parser/blast_parser/0.1.1", 
+            "tool_shed_repository": {
+                "changeset_revision": "fd11653657f9", 
+                "name": "blast_parser", 
+                "owner": "earlhaminst", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
             "tool_state": "{\"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
             "tool_version": "0.1.1", 
             "type": "tool", 
@@ -331,8 +337,8 @@
                 }
             ], 
             "position": {
-                "left": 2128.03125, 
-                "top": 339
+                "left": 1492.02197265625, 
+                "top": 338.97056579589844
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutputFile": {
@@ -357,7 +363,7 @@
         }, 
         "8": {
             "annotation": "", 
-            "content_id": "hcluster_sg_parser", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/hcluster_sg_parser/hcluster_sg_parser/0.1.1", 
             "id": 8, 
             "input_connections": {
                 "inputFile": {
@@ -380,12 +386,18 @@
                 }
             ], 
             "position": {
-                "left": 2390.71875, 
-                "top": 463.90625
+                "left": 1754.7425537109375, 
+                "top": 463.878662109375
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
-            "tool_id": "hcluster_sg_parser", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/hcluster_sg_parser/hcluster_sg_parser/0.1.1", 
+            "tool_shed_repository": {
+                "changeset_revision": "dbc49bd1a3e9", 
+                "name": "hcluster_sg_parser", 
+                "owner": "earlhaminst", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
             "tool_state": "{\"__page__\": 0, \"__rerun_remap_job_id__\": null, \"inputFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
             "tool_version": "0.1.1", 
             "type": "tool", 
@@ -431,8 +443,8 @@
                 }
             ], 
             "position": {
-                "left": 1454.8125, 
-                "top": 649.96875
+                "left": 818.7867240905762, 
+                "top": 649.94482421875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -528,8 +540,8 @@
                 }
             ], 
             "position": {
-                "left": 2203.03125, 
-                "top": 723.5
+                "left": 1567.02197265625, 
+                "top": 723.4926147460938
             }, 
             "post_job_actions": {
                 "HideDatasetActioncigar": {
@@ -627,8 +639,8 @@
                 }
             ], 
             "position": {
-                "left": 2800.8125, 
-                "top": 494.0625
+                "left": 2164.8161010742188, 
+                "top": 494.0624694824219
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -678,8 +690,8 @@
                 }
             ], 
             "position": {
-                "left": 1588.9375, 
-                "top": 1029.03125
+                "left": 952.9411315917969, 
+                "top": 1028.9521484375
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -735,8 +747,8 @@
                 }
             ], 
             "position": {
-                "left": 1897.9375, 
-                "top": 1322.03125
+                "left": 1261.9300842285156, 
+                "top": 1321.9852294921875
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -796,8 +808,8 @@
                 }
             ], 
             "position": {
-                "left": 2155, 
-                "top": 1528.5
+                "left": 1518.9888916015625, 
+                "top": 1528.455810546875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -822,7 +834,7 @@
         }, 
         "15": {
             "annotation": "", 
-            "content_id": "gafa", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.1.0", 
             "id": 15, 
             "input_connections": {
                 "alignmentFile": {
@@ -861,12 +873,18 @@
                 }
             ], 
             "position": {
-                "left": 2767, 
-                "top": 1121.5
+                "left": 2124.0072631835938, 
+                "top": 1050.4227294921875
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
-            "tool_id": "gafa", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.1.0", 
+            "tool_shed_repository": {
+                "changeset_revision": "af9f72ddf7f9", 
+                "name": "gafa", 
+                "owner": "earlhaminst", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
             "tool_state": "{\"__page__\": 0, \"treeFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"alignmentFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"genesFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
             "tool_version": "0.1.0", 
             "type": "tool", 
@@ -880,5 +898,5 @@
             ]
         }
     }, 
-    "uuid": "236fc416-6ced-4d9d-9c2d-7c8746aa2e6d"
+    "uuid": "55c7f17d-a64f-4253-8130-54cc2ab650a2"
 }
