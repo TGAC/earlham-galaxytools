@@ -23,7 +23,7 @@ The pipeline is made up of 7 main steps:
 3. Cluster protein sequences using [hcluster_sg](https://github.com/douglasgscofield/hcluster) and BLASTP scores
 4. Multiple sequence alignment (MSA) for each cluster using [T-Coffee](http://www.tcoffee.org/Projects/tcoffee/)
 5. Generate gene trees from MSAs using [TreeBeST](http://treesoft.sourceforge.net/treebest.shtml)
-6. Create an Aequatus dataset from the MSAs, gene trees and gene feature information using Aequatus generator
+6. Create a SQLite database from the MSAs, gene trees and gene feature information using Gene Alignment and Family Aggregator (GAFA)
 7. Visualise the Aequatus dataset
 
 
@@ -42,7 +42,7 @@ The Aequatus.js plugin provides an interactive visual representation of the phyl
 GeneSeqToFamily requires the following tools to run the workflow successfully:
 
 * TranSeq
-* filter fasta by ID
+* Filter by FASTA ID
 * BLAST
 * BLAST parser
 * hcluster_sg
@@ -50,18 +50,17 @@ GeneSeqToFamily requires the following tools to run the workflow successfully:
 * T-Coffee
 * TranAlign
 * TreeBeST
-* Aequatus generator
+* Gene Alignment and Family Aggregator (GAFA)
 
 Some tools for data conversion during workflow:
 
 * cut
-* Fasta width
-* Fasta to tabular
+* FASTA width
+* FASTA to tabular
 
 Helper tools for data preparation:
 
 * Ensembl REST API - tools for retrieving sequences, features and gene trees from Ensembl using its [REST API](http://rest.ensembl.org/)
-* Ensembl Parser - to parse Ensembl results into the required format for workflow
 * gff3-to-json - to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format
 
 
