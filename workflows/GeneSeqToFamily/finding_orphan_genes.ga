@@ -1,0 +1,408 @@
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "", 
+    "format-version": "0.1", 
+    "name": "Orphan genes", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "content_id": null, 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "blast_parser"
+                }
+            ], 
+            "label": null, 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 200, 
+                "top": 276.5
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"blast_parser\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "f8f73cb1-7472-44e6-9bd6-40dd0f2103d0", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "197d2b5b-2790-4eb8-be7d-f2ee15165b2a"
+                }
+            ]
+        }, 
+        "1": {
+            "annotation": "", 
+            "content_id": null, 
+            "id": 1, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "CDS"
+                }
+            ], 
+            "label": null, 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 187, 
+                "top": 553.5
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"CDS\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "2856205c-2a2b-4f2a-a177-2bfc78352840", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "5e46019a-f8fb-4507-8206-2402d8088ca5"
+                }
+            ]
+        }, 
+        "2": {
+            "annotation": "", 
+            "content_id": "Cut1", 
+            "id": 2, 
+            "input_connections": {
+                "input": {
+                    "id": 0, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Cut", 
+                    "name": "input"
+                }
+            ], 
+            "label": null, 
+            "name": "Cut", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 430, 
+                "top": 276.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionout_file1": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "Cut1", 
+            "tool_state": "{\"__page__\": 0, \"__rerun_remap_job_id__\": null, \"delimiter\": \"\\\"T\\\"\", \"columnList\": \"\\\"c1\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"chromInfo\": \"\\\"/tgac/services/galaxy/test/galaxy/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.2", 
+            "type": "tool", 
+            "uuid": "3d809485-291c-4858-ade6-2f465bf667f0", 
+            "workflow_outputs": []
+        }, 
+        "3": {
+            "annotation": "", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/fasta_to_tabular/fasta2tab/1.1.0", 
+            "id": 3, 
+            "input_connections": {
+                "input": {
+                    "id": 1, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool FASTA-to-Tabular", 
+                    "name": "input"
+                }
+            ], 
+            "label": null, 
+            "name": "FASTA-to-Tabular", 
+            "outputs": [
+                {
+                    "name": "output", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 430, 
+                "top": 389.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/fasta_to_tabular/fasta2tab/1.1.0", 
+            "tool_shed_repository": {
+                "changeset_revision": "7e801ab2b70e", 
+                "name": "fasta_to_tabular", 
+                "owner": "devteam", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
+            "tool_state": "{\"__page__\": 0, \"keep_first\": \"\\\"0\\\"\", \"descr_columns\": \"\\\"1\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"chromInfo\": \"\\\"/tgac/services/galaxy/test/galaxy/tool-data/shared/ucsc/chrom/?.len\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "1.1.0", 
+            "type": "tool", 
+            "uuid": "614def54-f941-49a4-950c-69f651e6b35f", 
+            "workflow_outputs": []
+        }, 
+        "4": {
+            "annotation": "", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sorted_uniq/1.1.0", 
+            "id": 4, 
+            "input_connections": {
+                "infile": {
+                    "id": 2, 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Unique", 
+                    "name": "infile"
+                }
+            ], 
+            "label": null, 
+            "name": "Unique", 
+            "outputs": [
+                {
+                    "name": "outfile", 
+                    "type": "input"
+                }
+            ], 
+            "position": {
+                "left": 660, 
+                "top": 200
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutfile": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "outfile"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_sorted_uniq/1.1.0", 
+            "tool_shed_repository": {
+                "changeset_revision": "20344ce0c811", 
+                "name": "text_processing", 
+                "owner": "bgruening", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
+            "tool_state": "{\"__page__\": 0, \"ignore_case\": \"\\\"false\\\"\", \"adv_opts\": \"{\\\"adv_opts_selector\\\": \\\"basic\\\", \\\"__current_case__\\\": 0}\", \"__rerun_remap_job_id__\": null, \"is_numeric\": \"\\\"false\\\"\", \"infile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "1.1.0", 
+            "type": "tool", 
+            "uuid": "55da94d2-b1d9-46ed-9668-db9b7f19a5bb", 
+            "workflow_outputs": []
+        }, 
+        "5": {
+            "annotation": "", 
+            "content_id": "Cut1", 
+            "id": 5, 
+            "input_connections": {
+                "input": {
+                    "id": 3, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Cut", 
+                    "name": "input"
+                }
+            ], 
+            "label": null, 
+            "name": "Cut", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 676, 
+                "top": 389.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionout_file1": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "Cut1", 
+            "tool_state": "{\"__page__\": 0, \"__rerun_remap_job_id__\": null, \"delimiter\": \"\\\"T\\\"\", \"columnList\": \"\\\"c1\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"chromInfo\": \"\\\"/tgac/services/galaxy/test/galaxy/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.2", 
+            "type": "tool", 
+            "uuid": "5bae54ed-b8c8-432c-9980-422d0f678be3", 
+            "workflow_outputs": []
+        }, 
+        "6": {
+            "annotation": "", 
+            "content_id": "Cut1", 
+            "id": 6, 
+            "input_connections": {
+                "input": {
+                    "id": 4, 
+                    "output_name": "outfile"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Cut", 
+                    "name": "input"
+                }
+            ], 
+            "label": null, 
+            "name": "Cut", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 918, 
+                "top": 198.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionout_file1": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "Cut1", 
+            "tool_state": "{\"columnList\": \"\\\"c1\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"delimiter\": \"\\\"U\\\"\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
+            "tool_version": "1.0.2", 
+            "type": "tool", 
+            "uuid": "d6dc6ba2-efc0-4e90-8562-4739c4f41fab", 
+            "workflow_outputs": []
+        }, 
+        "7": {
+            "annotation": "", 
+            "content_id": "comp1", 
+            "id": 7, 
+            "input_connections": {
+                "input1": {
+                    "id": 5, 
+                    "output_name": "out_file1"
+                }, 
+                "input2": {
+                    "id": 6, 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Compare two Datasets", 
+                    "name": "input2"
+                }, 
+                {
+                    "description": "runtime parameter for tool Compare two Datasets", 
+                    "name": "input1"
+                }
+            ], 
+            "label": null, 
+            "name": "Compare two Datasets", 
+            "outputs": [
+                {
+                    "name": "out_file1", 
+                    "type": "input"
+                }
+            ], 
+            "position": {
+                "left": 1124, 
+                "top": 363.5
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionout_file1": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "out_file1"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "comp1", 
+            "tool_state": "{\"input2\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__page__\": 0, \"input1\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"field2\": \"\\\"1\\\"\", \"__rerun_remap_job_id__\": null, \"field1\": \"\\\"1\\\"\", \"mode\": \"\\\"V\\\"\", \"chromInfo\": \"\\\"/tgac/services/galaxy/test/galaxy/tool-data/shared/ucsc/chrom/?.len\\\"\"}", 
+            "tool_version": "1.0.2", 
+            "type": "tool", 
+            "uuid": "7c71fbae-828d-4c99-8f7b-fe1a90b27626", 
+            "workflow_outputs": []
+        }, 
+        "8": {
+            "annotation": "", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/galaxyp/filter_by_fasta_ids/filter_by_fasta_ids/1.0", 
+            "id": 8, 
+            "input_connections": {
+                "identifiers": {
+                    "id": 7, 
+                    "output_name": "out_file1"
+                }, 
+                "input": {
+                    "id": 1, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Filter by FASTA IDs", 
+                    "name": "input"
+                }, 
+                {
+                    "description": "runtime parameter for tool Filter by FASTA IDs", 
+                    "name": "identifiers"
+                }
+            ], 
+            "label": null, 
+            "name": "Filter by FASTA IDs", 
+            "outputs": [
+                {
+                    "name": "output", 
+                    "type": "fasta"
+                }
+            ], 
+            "position": {
+                "left": 1130, 
+                "top": 544.5
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/galaxyp/filter_by_fasta_ids/filter_by_fasta_ids/1.0", 
+            "tool_shed_repository": {
+                "changeset_revision": "8d15aebf55fd", 
+                "name": "filter_by_fasta_ids", 
+                "owner": "galaxyp", 
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            }, 
+            "tool_state": "{\"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"identifiers\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"dedup\": \"\\\"true\\\"\", \"__page__\": 0}", 
+            "tool_version": "1.0", 
+            "type": "tool", 
+            "uuid": "5f5fb6ac-f026-41bc-a89c-2d1d882ece85", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "56824bb4-df6b-4ebc-8c89-c6731b5d76f1"
+                }
+            ]
+        }
+    }, 
+    "uuid": "aa422317-c910-44ad-ba5b-9c995f86be88"
+}
