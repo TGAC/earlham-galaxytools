@@ -3,14 +3,14 @@
 
 ## Introduction
 
-GeneSeqToFamily is an open-source Galaxy workflow based on the [Ensembl GeneTrees](http://www.ensembl.org/info/genome/compara/homology_method.html) pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises clustering, multiple alignment, and tree generation (using [TreeBeST](http://treesoft.sourceforge.net/treebest.shtml)), to discover familial relationship.
+GeneSeqToFamily is an open-source Galaxy workflow based on the [Ensembl GeneTrees](http://www.ensembl.org/info/genome/compara/homology_method.html) pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises clustering, multiple sequence alignment, and tree generation (using [TreeBeST](http://treesoft.sourceforge.net/treebest.shtml)), to discover familial relationship.
 
 ## Workflow inputs and steps
 
 ### Inputs
 GeneSeqToFamily requires the following inputs:
 
-* CDS sequences
+* The Coding Sequence (CDS)
 * a species tree
 * gene feature information in JSON format
 
@@ -24,12 +24,12 @@ The pipeline is made up of 7 main steps:
 4. Multiple sequence alignment (MSA) for each cluster using [T-Coffee](http://www.tcoffee.org/Projects/tcoffee/)
 5. Generate gene trees from MSAs using [TreeBeST](http://treesoft.sourceforge.net/treebest.shtml)
 6. Create an SQLite database from the MSAs, gene trees and gene feature information using Gene Alignment and Family Aggregator (GAFA)
-7. Visualise the GAFA dataset with Aequatus
+7. Visualise the GAFA dataset using Aequatus
 
 
 ### Helper tools:
 
-We have developed various tools to help with data preparation for the workflow. This includes tools for retrieving sequences, features and gene trees from Ensembl using its REST API, and tools to parse Ensembl results into the required formats for the workflow. We also developed a tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format, which is then used to generate the Aequatus dataset.
+We have developed various tools to help with data preparation for the workflow. This includes tools for retrieving sequences, and features from Ensembl using its REST API, and tools to parse Ensembl results into the required formats for the workflow. We also developed a tool to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format, which is then used to generate the Aequatus dataset.
 
 
 ## Results
@@ -41,14 +41,14 @@ The Aequatus.js plugin provides an interactive visual representation of the phyl
 ## List of tools
 GeneSeqToFamily requires the following tools to run the workflow successfully:
 
-* TranSeq
-* Filter by FASTA ID
+* Transeq
+* Filter by FASTA IDs
 * BLAST
 * BLAST parser
 * hcluster_sg
 * hcluster_sg parser
 * T-Coffee
-* TranAlign
+* Tranalign
 * TreeBeST
 * Gene Alignment and Family Aggregator (GAFA)
 
@@ -58,7 +58,7 @@ Some tools for data conversion during workflow:
 
 Helper tools for data preparation:
 
-* Ensembl REST API - tools for retrieving sequences, features and gene trees from Ensembl using its [REST API](http://rest.ensembl.org/)
+* Ensembl REST API - tools for retrieving sequences, and features from Ensembl using its [REST API](http://rest.ensembl.org/)
 * gff3-to-json - to merge gene feature files and convert them from GFF3 (Gene Feature File) to JSON format
 
 
