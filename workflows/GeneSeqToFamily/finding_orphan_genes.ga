@@ -5,26 +5,26 @@
     "name": "Orphan genes", 
     "steps": {
         "0": {
-            "annotation": "", 
+            "annotation": "Output file from blast_parser of GeneSeqToFamily", 
             "content_id": null, 
             "id": 0, 
             "input_connections": {}, 
             "inputs": [
                 {
-                    "description": "", 
-                    "name": "blast_parser"
+                    "description": "Output file from blast_parser of GeneSeqToFamily", 
+                    "name": "blast_parser data"
                 }
             ], 
             "label": null, 
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 200, 
-                "top": 276.5
+                "left": 199.94483947753906, 
+                "top": 276.4521942138672
             }, 
             "tool_errors": null, 
             "tool_id": null, 
-            "tool_state": "{\"name\": \"blast_parser\"}", 
+            "tool_state": "{\"name\": \"blast_parser data\"}", 
             "tool_version": null, 
             "type": "data_input", 
             "uuid": "f8f73cb1-7472-44e6-9bd6-40dd0f2103d0", 
@@ -37,13 +37,13 @@
             ]
         }, 
         "1": {
-            "annotation": "", 
+            "annotation": "Same CDS, used to run BLASTP in GeneSeqToFamily", 
             "content_id": null, 
             "id": 1, 
             "input_connections": {}, 
             "inputs": [
                 {
-                    "description": "", 
+                    "description": "Same CDS, used to run BLASTP in GeneSeqToFamily", 
                     "name": "CDS"
                 }
             ], 
@@ -51,8 +51,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 187, 
-                "top": 553.5
+                "left": 195.93748474121094, 
+                "top": 553.3639373779297
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -93,8 +93,8 @@
                 }
             ], 
             "position": {
-                "left": 430, 
-                "top": 276.5
+                "left": 429.9632110595703, 
+                "top": 276.4521942138672
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -136,8 +136,8 @@
                 }
             ], 
             "position": {
-                "left": 430, 
-                "top": 389.5
+                "left": 429.9632110595703, 
+                "top": 389.44850158691406
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -185,8 +185,8 @@
                 }
             ], 
             "position": {
-                "left": 660, 
-                "top": 200
+                "left": 659.9999542236328, 
+                "top": 199.94483947753906
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -234,8 +234,8 @@
                 }
             ], 
             "position": {
-                "left": 676, 
-                "top": 389.5
+                "left": 675.9558258056641, 
+                "top": 389.44850158691406
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -277,8 +277,8 @@
                 }
             ], 
             "position": {
-                "left": 918, 
-                "top": 198.5
+                "left": 917.9411773681641, 
+                "top": 198.47425842285156
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -328,8 +328,8 @@
                 }
             ], 
             "position": {
-                "left": 1124, 
-                "top": 363.5
+                "left": 1123.952163696289, 
+                "top": 363.4558563232422
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -379,8 +379,8 @@
                 }
             ], 
             "position": {
-                "left": 1130, 
-                "top": 544.5
+                "left": 1129.9264068603516, 
+                "top": 544.4669036865234
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
@@ -404,5 +404,5 @@
             ]
         }
     }, 
-    "uuid": "aa422317-c910-44ad-ba5b-9c995f86be88"
+    "uuid": "23e0aa20-d91a-429e-817c-654a67b0a171"
 }
