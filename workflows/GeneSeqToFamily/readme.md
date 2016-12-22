@@ -23,7 +23,7 @@ The pipeline is made up of 7 main steps:
 3. Cluster protein sequences using [hcluster_sg](https://github.com/douglasgscofield/hcluster) and BLASTP scores
 4. Multiple sequence alignment (MSA) for each cluster using [T-Coffee](http://www.tcoffee.org/Projects/tcoffee/)
 5. Generate gene trees from MSAs using [TreeBeST](http://treesoft.sourceforge.net/treebest.shtml)
-6. Create a SQLite database from the MSAs, gene trees and gene feature information using Gene Alignment and Family Aggregator (GAFA)
+6. Create an SQLite database from the MSAs, gene trees and gene feature information using Gene Alignment and Family Aggregator (GAFA)
 7. Visualise the Aequatus dataset
 
 
@@ -55,8 +55,6 @@ GeneSeqToFamily requires the following tools to run the workflow successfully:
 Some tools for data conversion during workflow:
 
 * cut
-* FASTA width
-* FASTA to tabular
 
 Helper tools for data preparation:
 
