@@ -1,12 +1,12 @@
-name: GeneSeqToFamily
+name: geneseqtofamily
 owner: earlhaminst
 homepage_url: https://github.com/TGAC/earlham-galaxytools/tree/master/workflows/GeneSeqToFamily
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/workflows/GeneSeqToFamily
-description: Workflow based on the Ensembl GeneTrees pipeline, to identify homologous genes and generate genetrees.
+description: Workflow based on the Ensembl GeneTrees pipeline to identify homologous genes and generate gene trees
 long_description: |
-  This is a non-trivial example workflow using the NCBI BLAST+, hcluster_sg, T-Coffee, TreeBeST, filter FASTA by ID etc for identifying homologous genes.
+  This is a complex workflow, based on the Ensembl GeneTrees pipeline, which uses NCBI BLAST+, hcluster_sg, T-Coffee and TreeBeST to identify homologous genes and generate gene trees.
 
-  This would ideally include a visualisation of the finally gene trees based on Aequatus.
+  The output gene trees can be visualised using the Aequatus.js visualisation plugin.
 categories:
 - Phylogenetics
 type: unrestricted
