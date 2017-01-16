@@ -1,17 +1,27 @@
-<tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1">
+<tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.2.0">
     <description>converts hcluster_sg 3-column output into lists of IDs</description>
     <command>
 <![CDATA[
 python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
+#if str($min_elems)
+    -m $min_elems
+#end if
+#if str($max_elems)
+    -M $max_elems
+#end if
+'$discarded'
 ]]>
     </command>
     <inputs>
         <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size cluster-members" />
+        <param name="min_elems" type="integer" value="" min="0" optional="true" label="Minimum number of cluster elements" />
+        <param name="max_elems" type="integer" value="" min="2" optional="true" label="Maximum number of cluster elements" />
     </inputs>
     <outputs>
         <collection name="ids_lists" type="list" label="${tool.name} on ${on_string}">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)_output\.txt" ext="txt" />
         </collection>
+        <data name="discarded" format="txt" label="${tool.name} on ${on_string}: discarded IDs" />
     </outputs>
     <tests>
         <test>
@@ -22,11 +32,23 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
                 <element name="2" file="2_output.txt" ftype="txt" />
                 <element name="3" file="3_output.txt" ftype="txt" />
             </output_collection>
+            <output name="discarded" file="empty.txt" />
+        </test>
+        <test>
+            <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
+            <param name="min_elems" value="6" />
+            <output_collection name="ids_lists" type="list">
+                <element name="0" file="0_output.txt" ftype="txt" />
+                <element name="1" file="1_output.txt" ftype="txt" />
+            </output_collection>
+            <output name="discarded" file="discarded.txt" />
         </test>
     </tests>
     <help>
 <![CDATA[
 A simple parser to convert the hcluster_sg 3-column output into lists of IDs, one list for each cluster.
+
+When a minimum and/or maximum number of cluster elements are specified, the IDs contained in the filtered-out clusters are collected in the "discarded IDS" output dataset.
 ]]>
     </help>
     <citations>
