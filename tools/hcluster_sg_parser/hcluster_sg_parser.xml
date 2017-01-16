@@ -1,9 +1,8 @@
 <tool id="hcluster_sg_parser" name="hcluster_sg_parser" version="0.1.1">
-    <description>Converts hcluster_sg 3-column output into lists of ids</description>
+    <description>converts hcluster_sg 3-column output into lists of IDs</description>
     <command>
 <![CDATA[
-perl $__tool_directory__/hcluster_sg_parser.pl
-$inputFile
+python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
 ]]>
     </command>
     <inputs>
@@ -27,7 +26,7 @@ $inputFile
     </tests>
     <help>
 <![CDATA[
-Simple wrapper for hcluster_sg output parser.
+A simple parser to convert the hcluster_sg 3-column output into lists of IDs, one list for each cluster.
 ]]>
     </help>
     <citations>
