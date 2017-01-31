@@ -1,4 +1,4 @@
-<tool id="t_coffee" name="T-Coffee" version="11.0.8">
+<tool id="t_coffee" name="T-Coffee" version="11.0.8_1">
     <description>multiple sequence alignment</description>
     <requirements>
         <requirement type="package" version="11.0.8">t_coffee</requirement>
@@ -34,13 +34,10 @@
         #if $outputs
             #set $outputs_arr = str($outputs).split(',')
             #for $o in $outputs_arr
-                #if $o not in ['cigar', 'dnd']
+                #if $o != 'dnd'
                     #set $output_opt += $o + ','
                 #end if
             #end for
-            #if 'cigar' in $outputs_arr and 'fasta_aln' not in $outputs_arr
-                #set $output_opt += 'fasta_aln,'
-            #end if
         #else
             #set $outputs_arr = []
         #end if
@@ -49,10 +46,6 @@
         #end if
 
         t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
-
-        #if 'cigar' in $outputs_arr
-            && python '$__tool_directory__/t_coffee_to_cigar.py' t_coffee_out.fasta_aln > '$cigar'
-        #end if
 ]]>
     </command>
     <inputs>
@@ -93,7 +86,6 @@
             <option value="proba_pair">proba_pair</option>
         </param>
         <param name="outputs" type="select" multiple="true" optional="false" display="checkboxes" label="Output formats">
-            <option value="cigar">CIGAR</option>
             <option value="clustalw_aln">clustalw_aln</option>
             <option value="dnd" selected="true">dnd</option>
             <option value="fasta_aln">fasta_aln</option>
@@ -107,9 +99,6 @@
         </param>
     </inputs>
     <outputs>
-        <data name="cigar" format="tabular" label="${tool.name} on ${on_string}: cigar" >
-            <filter>'cigar' in outputs</filter>
-        </data>
         <data name="clustalw_aln" format="clustalw" label="${tool.name} on ${on_string}: clustalw_aln" from_work_dir="t_coffee_out.clustalw_aln">
             <filter>'clustalw_aln' in outputs</filter>
         </data>
@@ -147,15 +136,15 @@
             <param name="input" value="input.fasta" ftype="fasta" />
             <param name="method02" value="clustalw_msa" />
             <param name="outputs" value="fasta_aln" />
-            <output name="fasta_aln" file="output1.fasta" />
+            <output name="fasta_aln" file="output1.fasta" ftype="fasta" />
         </test>
         <test>
             <param name="filter_fasta" value="yes" />
             <param name="fasta_input" value="input.fasta" ftype="fasta" />
             <param name="identifiers" value="ids.txt" ftype="txt" />
             <param name="method02" value="clustalw_msa" />
-            <param name="outputs" value="cigar" />
-            <output name="cigar" file="cigar.tabular" />
+            <param name="outputs" value="fasta_aln" />
+            <output name="fasta_aln" file="output2.fasta" ftype="fasta" />
         </test>
     </tests>
     <help>
