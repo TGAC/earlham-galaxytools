@@ -1,0 +1,64 @@
+<tool id="countmatrixforedger" name="countMatrixForEdger" version="1.0">
+    <description>Make a count matrix for edgeR</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+            #for $i, $s in enumerate( $sample )#
+                echo -e ${s.sample_data}"\t"${s.sample_name}"\t"${s.sample_group} >> script.data;
+            #end for#
+
+            $__tool_directory__/tools/scrsh.sh script.data;
+
+            cat count.matrix > $count_matrix;
+            cat annotation > $annotation;
+            cat script.log > $log;
+            cat error.log > $error_log
+
+        ]]>
+    </command>
+    <inputs>
+        <repeat name="sample" title="">
+            <param name="sample_data" type="data" format="data" label="Output matrix from EDGE-pro (out_rpkm)" />
+            <param name="sample_name" type="text" label="" help="Sample name" />
+            <param name="sample_group" type="text" label="" help="Sample group name- it has to be the same string for each sample of this group" />
+        </repeat>
+    </inputs>
+    <outputs>
+        <data name="count_matrix" format="tabular" label="countMatrixForEdger: count matrix"/>
+        <data name="annotation" format="tabular" label="countMatrixForEdger: annotation"/>
+        <data name="log" format="txt" label="countMatrixForEdger: log"/>
+        <data name="error_log" format="txt" label="countMatrixForEdger: error log"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="sample_0|sample_data" value="data1" />
+            <param name="sample_1|sample_data" value="data2" />
+            <param name="sample_2|sample_data" value="data3" />
+            <param name="sample_3|sample_data" value="data4" />
+            <param name="sample_0|sample_name" value="sample1" />
+            <param name="sample_1|sample_name" value="sample2" />
+            <param name="sample_2|sample_name" value="sample3" />
+            <param name="sample_3|sample_name" value="sample4" />            
+            <param name="sample_0|sample_group" value="gr1" />
+            <param name="sample_1|sample_group" value="gr1" />
+            <param name="sample_2|sample_group" value="gr2" />
+            <param name="sample_3|sample_group" value="gr2" />
+            <output name="count_matrix" file="count.matrix"/>
+            <output name="annotation" file="annotation"/>
+            <output name="log" file="script.log"/>
+            <output name="error_log" file="error.log"/>
+        </test>
+
+    </tests>
+    <help>
+        <![CDATA[ 
+
+     ]]>
+    </help>
+        <citations>
+        <citation>
+        </citation>
+    </citations>
+</tool>
