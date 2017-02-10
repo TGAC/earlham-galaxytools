@@ -10,15 +10,15 @@
         <![CDATA[ 
         #if $program_chose.program=="acpc" #
             if cat $program_chose.q | grep "@<TRIPOS>" > /dev/null; then 
-                ln -s $program_chose.q query.mol2;
-                ln -s $program_chose.db database.mol2 ;
+                ln -s $program_chose.q query.mol2 &&
+                ln -s $program_chose.db database.mol2 &&
             else
                 if cat $program_chose.q | grep "BEGIN" > /dev/null; then 
-                    ln -s $program_chose.q query.pl;
-                    ln -s $program_chose.db database.pl ;
+                    ln -s $program_chose.q query.pl &&
+                    ln -s $program_chose.db database.pl &&
                 else
-                    ln -s $program_chose.q query.pqr;
-                    ln -s $program_chose.db database.pqr ;
+                    ln -s $program_chose.q query.pqr &&
+                    ln -s $program_chose.db database.pqr &&
                 fi;
             fi;
             acpc 
@@ -47,26 +47,26 @@
                 ln -s mol_output $mol_output_acpc;
             #end if #
             #if $program_chose.scan=="true" #
-                ln -s scan_out $scan_output_acpc;
-                ln -s query.mol2.bld $bld_output_acpc;
+                ln -s scan_out $scan_output_acpc &&
+                ln -s query.mol2.bld $bld_output_acpc 
             #end if #
         #end if #
         #if $program_chose.program=="acpc_mol2tool" #
-            ln -s $program_chose.i query.mol2;
-            acpc_mol2tool -i query.mol2;
-            mkdir results;
-            mv query_*/* results/. ;
+            ln -s $program_chose.i query.mol2 &&
+            acpc_mol2tool -i query.mol2 &&
+            mkdir results &&
+            mv query_*/* results/. 
         #end if #
         #if $program_chose.program=="acpc_par" #
             if cat $program_chose.q | grep "@<TRIPOS>" > /dev/null; then 
-                ln -s $program_chose.q query.mol2;
+                ln -s $program_chose.q query.mol2 &&
                 ln -s $program_chose.db database.mol2 ;
             else
                 if cat $program_chose.q | grep "BEGIN" > /dev/null; then 
-                    ln -s $program_chose.q query.pl;
+                    ln -s $program_chose.q query.pl &&
                     ln -s $program_chose.db database.pl ;
                 else
-                    ln -s $program_chose.q query.pqr;
+                    ln -s $program_chose.q query.pqr &&
                     ln -s $program_chose.db database.pqr ;
                 fi;
             fi;
@@ -84,19 +84,19 @@
             ln -s score $output_acpc_par;
         #end if #
         #if $program_chose.program=="acpc_pqrtool" #
-            ln -s $program_chose.pqrfile pqrfile.pqr;
+            ln -s $program_chose.pqrfile pqrfile.pqr &&
             acpc_pqrtool pqrfile.pqr > $output_acpc_pqrtool;
         #end if #  
         #if $program_chose.program=="acpc_mol2reader" #
-            ln -s $program_chose.mol2file mol2file.mol2;
+            ln -s $program_chose.mol2file mol2file.mol2 &&
             acpc_mol2reader mol2file.mol2 > $output_acpc_mol2reader;
         #end if #        
         #if $program_chose.program=="acpc_auctool" #
-            ln -s $program_chose.i score.scores;
+            ln -s $program_chose.i score.scores &&
             acpc_auctool -i score.scores -p $program_chose.p > $output_acpc_auctool;
         #end if #
         #if $program_chose.program=="acpc_pltool" #
-            ln -s $program_chose.plfile plfile.pl;
+            ln -s $program_chose.plfile plfile.pl &&
             acpc_pltool plfile.pl > $output_acpc_pltool;
         #end if #
 
