@@ -5,14 +5,13 @@
     </requirements>
     <command>
         <![CDATA[ 
-    	ln -s $inputmol2 inputmol2.mol2 && cat $inputprm | sed "s|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g" | sed "s|REF_MOL.*|REF_MOL ligand.sd|g" > new.prm; 
-        cp -r $__tool_directory__/tools/rdock/data .;
-        mkdir data/ligands; 
-        cp $inputsd data/ligands/ligand.sd; 
-        rbcavity -r new.prm -was > /tmp/rbcavity.log; 
-	rbdock -r new.prm -p dock.prm -n 100 -i $inputsd -o output_docking_out > /tmp/docking_out.log;
-        sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd; 
-        sdrmsd $inputsd sorted.sd > $output_rdock
+    	ln -s '$inputmol2' inputmol2.mol2 && cat '$inputprm' | sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' | sed 's|REF_MOL.*|REF_MOL ligand.sd|g' > new.prm; 
+        mkdir data/ligands &&
+        cp '$inputsd' data/ligands/ligand.sd && 
+        rbcavity -r new.prm -was > rbcavity.log && 
+	rbdock -r new.prm -p dock.prm -n 100 -i '$inputsd' -o output_docking_out > docking_out.log &&
+        sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd &&
+        sdrmsd '$inputsd' sorted.sd > $output_rdock 
     	]]>
     </command>
     <inputs>
