@@ -5,7 +5,7 @@
     </requirements>
     <command>
         <![CDATA[ 
-    	ln -s '$inputmol2' inputmol2.mol2 && cat '$inputprm' | sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' | sed 's|REF_MOL.*|REF_MOL ligand.sd|g' > new.prm; 
+    	ln -s '$inputmol2' inputmol2.mol2 && cat '$inputprm' | sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' | sed 's|REF_MOL.*|REF_MOL ligand.sd|g' > new.prm && 
         mkdir data/ligands &&
         cp '$inputsd' data/ligands/ligand.sd && 
         rbcavity -r new.prm -was > rbcavity.log && 
@@ -17,7 +17,7 @@
     <inputs>
         <param name="inputprm" format="prm" type="data" label="Receptor param file (contains active site params)" help="(-r)"/>
         <param name="inputmol2" format="mol2" type="data" label="Input MOL2 file" />
-        <param name="inputsd" format="sd" type="data" label="Input ligand SD file" help="(-i)"/>
+        <param name="inputsd" format="sdf" type="data" label="Input ligand SD file" help="(-i)"/>
     </inputs>
     <outputs>
         <data name="output_rdock" format="data" />
