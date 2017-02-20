@@ -1,0 +1,17 @@
+(((ENSPTRT00000040521_pantroglodytes:0.003576[&&NHX:S=pantroglodytes],
+ENST00000378069_homosapiens:0.00314[&&NHX:S=homosapiens]
+):0.033582[&&NHX:D=N:E=$-rod:S=prim:T=31:B=100],
+ENSCAFT00000022963_canisfamiliaris:0.05575[&&NHX:E=$-susscrofa:S=canisfamiliaris]
+):0.036438[&&NHX:D=N:S=mamm:T=31:B=81],
+((ENSRNOT00000044009_rattusnorvegicus:0.033002[&&NHX:S=rattusnorvegicus],
+((ENSMUST00000040820_musmusculus:0[&&NHX:S=musmusculus],
+ENSMUST00000168613_musmusculus:0.012852[&&NHX:S=musmusculus]
+):0[&&NHX:D=Y:SIS=100:DCS=1.0000:S=musmusculus:T=18:B=100],
+ENSMUST00000163344_musmusculus:0.139009[&&NHX:S=musmusculus]
+):0.023529[&&NHX:D=Y:SIS=100:DCS=1.0000:S=musmusculus:T=2:B=96]
+):0.059746[&&NHX:D=N:E=$-prim:S=rod:T=7:B=96],
+(ENSSSCT00000023183_susscrofa:0.002007[&&NHX:S=susscrofa],
+ENSSSCT00000033745_susscrofa:0[&&NHX:S=susscrofa]
+):556.372[&&NHX:D=Y:SIS=100:DCS=1.0000:E=$-canisfamiliaris:S=susscrofa:T=31:B=100]
+):0[&&NHX:D=N:S=mamm:T=7:B=81]
+)[&&NHX:D=Y:SIS=0:DCS=0.0000:DD=Y:S=mamm:B=0];
