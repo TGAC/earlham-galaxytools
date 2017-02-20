@@ -12,19 +12,19 @@
             "inputs": [
                 {
                     "description": "", 
-                    "name": "CDS sequences"
+                    "name": "CDS"
                 }
             ], 
-            "label": null, 
+            "label": "CDS", 
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 372, 
+                "left": 350.0625, 
                 "top": 418.0625
             }, 
             "tool_errors": null, 
             "tool_id": null, 
-            "tool_state": "{\"name\": \"CDS sequences\"}", 
+            "tool_state": "{\"name\": \"CDS\"}", 
             "tool_version": null, 
             "type": "data_input", 
             "uuid": "d2777a78-6429-47f6-9567-cb15140ace8d", 
@@ -44,19 +44,19 @@
             "inputs": [
                 {
                     "description": "", 
-                    "name": "Genes"
+                    "name": "Gene feature information"
                 }
             ], 
-            "label": null, 
+            "label": "Gene feature information", 
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 364.8125, 
+                "left": 342.875, 
                 "top": 1140.125
             }, 
             "tool_errors": null, 
             "tool_id": null, 
-            "tool_state": "{\"name\": \"Genes\"}", 
+            "tool_state": "{\"name\": \"Gene feature information\"}", 
             "tool_version": null, 
             "type": "data_input", 
             "uuid": "3fbf4a09-9207-4a18-a133-0d865f9614f6", 
@@ -76,19 +76,19 @@
             "inputs": [
                 {
                     "description": "", 
-                    "name": "species tree"
+                    "name": "Species tree"
                 }
             ], 
-            "label": null, 
+            "label": "Species tree", 
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 357.9375, 
-                "top": 1438.1875
+                "left": 336, 
+                "top": 1438.171875
             }, 
             "tool_errors": null, 
             "tool_id": null, 
-            "tool_state": "{\"name\": \"species tree\"}", 
+            "tool_state": "{\"name\": \"Species tree\"}", 
             "tool_version": null, 
             "type": "data_input", 
             "uuid": "1f2ca308-faad-44fa-ba48-fff5aeecbbd3", 
@@ -125,7 +125,7 @@
                 }
             ], 
             "position": {
-                "left": 599.0625, 
+                "left": 577.125, 
                 "top": 418.0625
             }, 
             "post_job_actions": {
@@ -178,8 +178,8 @@
                 }
             ], 
             "position": {
-                "left": 846.1875, 
-                "top": 200
+                "left": 824.25, 
+                "top": 199.984375
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -235,7 +235,7 @@
                 }
             ], 
             "position": {
-                "left": 1103.4375, 
+                "left": 1081.5, 
                 "top": 428.125
             }, 
             "post_job_actions": {
@@ -284,16 +284,10 @@
                 }
             ], 
             "position": {
-                "left": 1423.4375, 
+                "left": 1401.5, 
                 "top": 502
             }, 
-            "post_job_actions": {
-                "HideDatasetActionoutput": {
-                    "action_arguments": {}, 
-                    "action_type": "HideDatasetAction", 
-                    "output_name": "output"
-                }
-            }, 
+            "post_job_actions": {}, 
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/blast_parser/blast_parser/0.1.1", 
             "tool_shed_repository": {
@@ -306,7 +300,13 @@
             "tool_version": "0.1.1", 
             "type": "tool", 
             "uuid": "3eb98d54-a52d-4605-b068-28a700290d92", 
-            "workflow_outputs": []
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "6473f6a6-9036-43f2-ba10-961cecfb351f"
+                }
+            ]
         }, 
         "7": {
             "annotation": "", 
@@ -337,7 +337,7 @@
                 }
             ], 
             "position": {
-                "left": 1659.9375, 
+                "left": 1638, 
                 "top": 432.0625
             }, 
             "post_job_actions": {
@@ -390,15 +390,10 @@
                 }
             ], 
             "position": {
-                "left": 1972, 
-                "top": 477.1875
+                "left": 1950.0625, 
+                "top": 477.171875
             }, 
             "post_job_actions": {
-                "HideDatasetActiondiscarded": {
-                    "action_arguments": {}, 
-                    "action_type": "HideDatasetAction", 
-                    "output_name": "discarded"
-                }, 
                 "HideDatasetActionids_lists": {
                     "action_arguments": {}, 
                     "action_type": "HideDatasetAction", 
@@ -417,7 +412,13 @@
             "tool_version": "0.2.0", 
             "type": "tool", 
             "uuid": "df3ae47f-f5a3-4f44-9b25-9bc36b049d60", 
-            "workflow_outputs": []
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "discarded", 
+                    "uuid": "465afc7e-afad-4228-bb28-2f7b1304a771"
+                }
+            ]
         }, 
         "9": {
             "annotation": "", 
@@ -444,8 +445,8 @@
                 }
             ], 
             "position": {
-                "left": 848.6875, 
-                "top": 1053.1875
+                "left": 826.75, 
+                "top": 1053.171875
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -464,7 +465,7 @@
         }, 
         "10": {
             "annotation": "", 
-            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/t_coffee/t_coffee/11.0.8", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/t_coffee/t_coffee/11.0.8_1", 
             "id": 10, 
             "input_connections": {
                 "input_type|fasta_input": {
@@ -489,10 +490,6 @@
             "label": null, 
             "name": "T-Coffee", 
             "outputs": [
-                {
-                    "name": "cigar", 
-                    "type": "tabular"
-                }, 
                 {
                     "name": "clustalw_aln", 
                     "type": "clustalw"
@@ -535,15 +532,10 @@
                 }
             ], 
             "position": {
-                "left": 1662.9375, 
+                "left": 1641, 
                 "top": 702.625
             }, 
             "post_job_actions": {
-                "HideDatasetActioncigar": {
-                    "action_arguments": {}, 
-                    "action_type": "HideDatasetAction", 
-                    "output_name": "cigar"
-                }, 
                 "HideDatasetActionclustalw_aln": {
                     "action_arguments": {}, 
                     "action_type": "HideDatasetAction", 
@@ -596,15 +588,15 @@
                 }
             }, 
             "tool_errors": null, 
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/t_coffee/t_coffee/11.0.8", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/t_coffee/t_coffee/11.0.8_1", 
             "tool_shed_repository": {
-                "changeset_revision": "df6527887a18", 
+                "changeset_revision": "78dd29aa7fc1", 
                 "name": "t_coffee", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"__page__\": 0, \"input_type\": \"{\\\"identifiers\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"filter_fasta\\\": \\\"yes\\\", \\\"fasta_input\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"__current_case__\\\": 0}\", \"__rerun_remap_job_id__\": null, \"outputs\": \"[\\\"cigar\\\", \\\"fasta_aln\\\"]\", \"method03\": \"null\", \"method02\": \"[\\\"clustalw_msa\\\"]\", \"method01\": \"null\"}", 
-            "tool_version": "11.0.8", 
+            "tool_state": "{\"__page__\": 0, \"input_type\": \"{\\\"identifiers\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"filter_fasta\\\": \\\"yes\\\", \\\"fasta_input\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"__current_case__\\\": 0}\", \"__rerun_remap_job_id__\": null, \"outputs\": \"[\\\"fasta_aln\\\"]\", \"method03\": \"null\", \"method02\": \"[\\\"clustalw_msa\\\"]\", \"method01\": \"null\"}", 
+            "tool_version": "11.0.8_1", 
             "type": "tool", 
             "uuid": "827ba178-5028-4ae4-b5e1-f234bcfce9f8", 
             "workflow_outputs": []
@@ -642,7 +634,7 @@
                 }
             ], 
             "position": {
-                "left": 1176.8125, 
+                "left": 1154.875, 
                 "top": 980.0625
             }, 
             "post_job_actions": {
@@ -699,7 +691,7 @@
                 }
             ], 
             "position": {
-                "left": 1395.875, 
+                "left": 1373.9375, 
                 "top": 1245.0625
             }, 
             "post_job_actions": {
@@ -760,7 +752,7 @@
                 }
             ], 
             "position": {
-                "left": 1652.9375, 
+                "left": 1631, 
                 "top": 1443.5625
             }, 
             "post_job_actions": {
@@ -786,12 +778,12 @@
         }, 
         "14": {
             "annotation": "", 
-            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.1.0", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.2.0", 
             "id": 14, 
             "input_connections": {
                 "alignmentFile": {
                     "id": 10, 
-                    "output_name": "cigar"
+                    "output_name": "fasta_aln"
                 }, 
                 "genesFile": {
                     "id": 1, 
@@ -825,20 +817,20 @@
                 }
             ], 
             "position": {
-                "left": 2259.9375, 
+                "left": 2238, 
                 "top": 1079.5625
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.1.0", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.2.0", 
             "tool_shed_repository": {
-                "changeset_revision": "af9f72ddf7f9", 
+                "changeset_revision": "fc8ca4ade638", 
                 "name": "gafa", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
             "tool_state": "{\"__page__\": 0, \"treeFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"alignmentFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"genesFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
-            "tool_version": "0.1.0", 
+            "tool_version": "0.2.0", 
             "type": "tool", 
             "uuid": "049fb5e1-4f3b-4cf5-80a6-2fa609674fc5", 
             "workflow_outputs": [
@@ -850,5 +842,5 @@
             ]
         }
     }, 
-    "uuid": "7d5e32fc-cd39-4b54-849f-5c1d598cda55"
+    "uuid": "8a774cd5-046c-4272-badd-8e84aaed9c0f"
 }
