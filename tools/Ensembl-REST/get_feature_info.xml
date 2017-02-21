@@ -36,7 +36,7 @@ python $__tool_directory__/get_feature_info.py
         <test>
             <param name="input" ftype="txt" value="input.txt" />
             <param name="expand" value="false" />
-            <output name="outputFile" file="out.json" />
+            <output name="output" file="out.json" />
         </test>
     </tests>
 
