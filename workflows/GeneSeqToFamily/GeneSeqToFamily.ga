@@ -19,7 +19,7 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 350.0625, 
+                "left": 396.0625, 
                 "top": 418.0625
             }, 
             "tool_errors": null, 
@@ -51,7 +51,7 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 342.875, 
+                "left": 388.875, 
                 "top": 1140.125
             }, 
             "tool_errors": null, 
@@ -83,7 +83,7 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 336, 
+                "left": 386, 
                 "top": 1438.171875
             }, 
             "tool_errors": null, 
@@ -125,7 +125,7 @@
                 }
             ], 
             "position": {
-                "left": 577.125, 
+                "left": 623.125, 
                 "top": 418.0625
             }, 
             "post_job_actions": {
@@ -138,7 +138,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: transeq101/5.0.0", 
             "tool_shed_repository": {
-                "changeset_revision": "511429456d3c", 
+                "changeset_revision": "d49956b87f7e", 
                 "name": "emboss_5", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -178,7 +178,7 @@
                 }
             ], 
             "position": {
-                "left": 824.25, 
+                "left": 870.25, 
                 "top": 199.984375
             }, 
             "post_job_actions": {
@@ -235,7 +235,7 @@
                 }
             ], 
             "position": {
-                "left": 1081.5, 
+                "left": 1127.5, 
                 "top": 428.125
             }, 
             "post_job_actions": {
@@ -284,7 +284,7 @@
                 }
             ], 
             "position": {
-                "left": 1401.5, 
+                "left": 1447.5, 
                 "top": 502
             }, 
             "post_job_actions": {}, 
@@ -337,7 +337,7 @@
                 }
             ], 
             "position": {
-                "left": 1638, 
+                "left": 1684, 
                 "top": 432.0625
             }, 
             "post_job_actions": {
@@ -350,7 +350,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/hcluster_sg/hcluster_sg/0.5.1", 
             "tool_shed_repository": {
-                "changeset_revision": "4a233271d05a", 
+                "changeset_revision": "09955cea320f", 
                 "name": "hcluster_sg", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -390,7 +390,7 @@
                 }
             ], 
             "position": {
-                "left": 1950.0625, 
+                "left": 1996.0625, 
                 "top": 477.171875
             }, 
             "post_job_actions": {
@@ -445,7 +445,7 @@
                 }
             ], 
             "position": {
-                "left": 826.75, 
+                "left": 872.75, 
                 "top": 1053.171875
             }, 
             "post_job_actions": {
@@ -532,7 +532,7 @@
                 }
             ], 
             "position": {
-                "left": 1641, 
+                "left": 1687, 
                 "top": 702.625
             }, 
             "post_job_actions": {
@@ -634,7 +634,7 @@
                 }
             ], 
             "position": {
-                "left": 1154.875, 
+                "left": 1200.875, 
                 "top": 980.0625
             }, 
             "post_job_actions": {
@@ -691,7 +691,7 @@
                 }
             ], 
             "position": {
-                "left": 1373.9375, 
+                "left": 1419.9375, 
                 "top": 1245.0625
             }, 
             "post_job_actions": {
@@ -704,7 +704,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: tranalign100/5.0.0", 
             "tool_shed_repository": {
-                "changeset_revision": "511429456d3c", 
+                "changeset_revision": "d49956b87f7e", 
                 "name": "emboss_5", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -752,7 +752,7 @@
                 }
             ], 
             "position": {
-                "left": 1631, 
+                "left": 1677, 
                 "top": 1443.5625
             }, 
             "post_job_actions": {
@@ -765,7 +765,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/treebest_best/treebest_best/1.9.2", 
             "tool_shed_repository": {
-                "changeset_revision": "fd85bf67c4bb", 
+                "changeset_revision": "7ea4df039a53", 
                 "name": "treebest_best", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -817,14 +817,14 @@
                 }
             ], 
             "position": {
-                "left": 2238, 
+                "left": 2284, 
                 "top": 1079.5625
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.2.0", 
             "tool_shed_repository": {
-                "changeset_revision": "fc8ca4ade638", 
+                "changeset_revision": "0c2f9172334a", 
                 "name": "gafa", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -842,5 +842,5 @@
             ]
         }
     }, 
-    "uuid": "8a774cd5-046c-4272-badd-8e84aaed9c0f"
+    "uuid": "b15b99f2-380c-4f70-b6d9-ab67c1834a94"
 }
