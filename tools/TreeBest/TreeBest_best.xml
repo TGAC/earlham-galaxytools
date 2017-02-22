@@ -112,6 +112,13 @@ Note that TreeBeST first determines the topology of resultant tree with a comple
 ]]>
     </help>
     <citations>
+        <citation type="bibtex">@phdthesis{li2016constructing,
+            author = {Li, Heng},
+            month = {May},
+            school = {The Institute of Theoretical Physics, Chinese Academic of Science},
+            title = {Constructing the TreeFam database},
+            year = {2006},
+        }</citation>
         <citation type="doi">10.1080/10635150390235520</citation>
     </citations>
 </tool>
