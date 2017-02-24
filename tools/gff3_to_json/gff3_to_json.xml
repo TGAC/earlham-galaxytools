@@ -5,17 +5,17 @@
     </stdio>
     <command>
 <![CDATA[
-python $__tool_directory__/gff3_to_json.py
+python '$__tool_directory__/gff3_to_json.py'
 #for $q in $queries
-    --gff3 "${q.genome}:${q.gff3_input}"
+    --gff3 '${q.genome}:${q.gff3_input}'
 #end for
 #if str($json) != 'None'
     #for $v in $json
-        --json "$v"
+        --json '$v'
     #end for
 #end if
 $sort
-> "$output"
+-o '$output'
 ]]>
     </command>
 
