@@ -4,16 +4,10 @@ import json
 import optparse
 import sys
 
-cds_parent_dict = dict()
-exon_parent_dict = dict()
-five_prime_utr_parent_dict = dict()
 gene_count = 0
-gene_dict = dict()
-transcript_dict = dict()
-three_prime_utr_parent_dict = dict()
 
 
-def feature_to_json(cols):
+def feature_to_dict(cols):
     d = {
         'end': int(cols[4]),
         'start': int(cols[3]),
@@ -34,9 +28,9 @@ def feature_to_json(cols):
     return d
 
 
-def gene_to_json(cols, species):
+def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
-    gene = feature_to_json(cols)
+    gene = feature_to_dict(cols)
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
@@ -48,8 +42,8 @@ def gene_to_json(cols, species):
     gene_count = gene_count + 1
 
 
-def transcript_to_json(cols, species):
-    transcript = feature_to_json(cols)
+def add_transcript_to_dict(cols, species, transcript_dict):
+    transcript = feature_to_dict(cols)
     transcript.update({
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
@@ -58,8 +52,8 @@ def transcript_to_json(cols, species):
     transcript_dict[transcript['id']] = transcript
 
 
-def exon_to_json(cols, species):
-    exon = feature_to_json(cols)
+def add_exon_to_dict(cols, species, exon_parent_dict):
+    exon = feature_to_dict(cols)
     exon.update({
         'length': int(cols[4]) - int(cols[3]) + 1,
         'object_type': 'Exon',
@@ -77,8 +71,8 @@ def exon_to_json(cols, species):
                 exon_parent_dict[parent].append(exon)
 
 
-def five_prime_utr_to_json(cols):
-    five_prime_utr = feature_to_json(cols)
+def add_five_prime_utr_to_dict(cols, five_prime_utr_parent_dict):
+    five_prime_utr = feature_to_dict(cols)
     if 'Parent' in five_prime_utr:
         for parent in five_prime_utr['Parent'].split(','):
             # the 5' UTR can be split among multiple exons
@@ -88,8 +82,8 @@ def five_prime_utr_to_json(cols):
                 five_prime_utr_parent_dict[parent].append(five_prime_utr)
 
 
-def three_prime_utr_to_json(cols):
-    three_prime_utr = feature_to_json(cols)
+def add_three_prime_utr_to_dict(cols, three_prime_utr_parent_dict):
+    three_prime_utr = feature_to_dict(cols)
     if 'Parent' in three_prime_utr:
         for parent in three_prime_utr['Parent'].split(','):
             # the 3' UTR can be split among multiple exons
@@ -99,8 +93,8 @@ def three_prime_utr_to_json(cols):
                 three_prime_utr_parent_dict[parent].append(three_prime_utr)
 
 
-def cds_to_json(cols):
-    cds = feature_to_json(cols)
+def add_cds_to_dict(cols, cds_parent_dict):
+    cds = feature_to_dict(cols)
     if 'id' not in cds:
         if 'Name' in cds:
             cds['id'] = cds['Name']
@@ -115,10 +109,10 @@ def cds_to_json(cols):
                 cds_parent_dict[parent].append(cds)
 
 
-def join_dicts():
+def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict):
     for parent, exon_list in exon_parent_dict.items():
-        exon_list.sort(key=lambda _: _['start'])
         if parent in transcript_dict:
+            exon_list.sort(key=lambda _: _['start'])
             transcript_dict[parent]['Exon'] = exon_list
 
     for transcript_id, transcript in transcript_dict.items():
@@ -181,21 +175,19 @@ def join_dicts():
                     gene_dict[parent]['Transcript'].append(transcript)
 
 
-def merge_dicts(json_arg):
-    with open(json_arg) as f:
-        dict_from_json = json.load(f)
-    gene_intersection = set(gene_dict.keys()) & set(dict_from_json.keys())
+def update_full_gene_dict_no_overwrite(full_gene_dict, gene_dict):
+    gene_intersection = set(full_gene_dict.keys()) & set(gene_dict.keys())
     if gene_intersection:
-        raise Exception("JSON file '%s' contains information for genes '%s', which are also present in other files" % (json_arg, ', '.join(gene_intersection)))
-    gene_dict.update(dict_from_json)
+        raise Exception("Information for genes '%s' are present in multiple files" % ', '.join(gene_intersection))
+    full_gene_dict.update(gene_dict)
 
 
-def write_json(outfile=None, sort_keys=False):
+def write_json(full_gene_dict, outfile=None, sort_keys=False):
     if outfile:
         with open(outfile, 'w') as f:
-            json.dump(gene_dict, f, sort_keys=sort_keys)
+            json.dump(full_gene_dict, f, sort_keys=sort_keys)
     else:
-        print(json.dumps(gene_dict, indent=3, sort_keys=sort_keys))
+        json.dump(full_gene_dict, sys.stdout, sort_keys=sort_keys)
 
 
 def __main__():
@@ -205,16 +197,23 @@ def __main__():
     parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
     parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
     options, args = parser.parse_args()
-
     if args:
         raise Exception('Use options to provide inputs')
+
+    full_gene_dict = dict()
     for gff3_arg in options.gff3:
         try:
             (species, filename) = gff3_arg.split(':')
         except ValueError:
             raise Exception("Argument for --gff3 '%s' is not in the SPECIES:FILENAME format" % gff3_arg)
+        gene_dict = dict()
+        transcript_dict = dict()
+        exon_parent_dict = dict()
+        cds_parent_dict = dict()
+        five_prime_utr_parent_dict = dict()
+        three_prime_utr_parent_dict = dict()
         with open(filename) as f:
-            for i, line in enumerate(f):
+            for i, line in enumerate(f, start=1):
                 line = line.strip()
                 if not line:
                     # skip empty lines
@@ -228,27 +227,29 @@ def __main__():
                 feature_type = cols[2]
                 try:
                     if feature_type == 'gene':
-                        gene_to_json(cols, species)
+                        add_gene_to_dict(cols, species, gene_dict)
                     elif feature_type in ('mRNA', 'transcript'):
-                        transcript_to_json(cols, species)
+                        add_transcript_to_dict(cols, species, transcript_dict)
                     elif feature_type == 'exon':
-                        exon_to_json(cols, species)
+                        add_exon_to_dict(cols, species, exon_parent_dict)
                     elif feature_type == 'five_prime_UTR':
-                        five_prime_utr_to_json(cols)
+                        add_five_prime_utr_to_dict(cols, five_prime_utr_parent_dict)
                     elif feature_type == 'three_prime_UTR':
-                        three_prime_utr_to_json(cols)
+                        add_three_prime_utr_to_dict(cols, three_prime_utr_parent_dict)
                     elif feature_type == 'CDS':
-                        cds_to_json(cols)
+                        add_cds_to_dict(cols, cds_parent_dict)
                     else:
                         print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
                 except Exception as e:
                     raise Exception("Line %i in file '%s': %s" % (i, filename, e))
-    join_dicts()
+        join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict)
+        update_full_gene_dict_no_overwrite(full_gene_dict, gene_dict)
 
     for json_arg in options.json:
-        merge_dicts(json_arg)
+        with open(json_arg) as f:
+            update_full_gene_dict_no_overwrite(full_gene_dict, json.load(f))
 
-    write_json(options.output, options.sort)
+    write_json(full_gene_dict, options.output, options.sort)
 
 
 if __name__ == '__main__':
