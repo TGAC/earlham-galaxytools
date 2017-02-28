@@ -7,7 +7,19 @@ import sys
 gene_count = 0
 
 
-def feature_to_dict(cols):
+def remove_type_from_list_of_ids(l):
+    return ','.join(remove_type_from_id(_) for _ in l.split(','))
+
+
+def remove_type_from_id(id_):
+    colon_index = id_.find(':')
+    if colon_index >= 0:
+        return id_[colon_index + 1:]
+    else:
+        return id_
+
+
+def feature_to_dict(cols, parent_dict=None):
     d = {
         'end': int(cols[4]),
         'start': int(cols[3]),
@@ -16,15 +28,26 @@ def feature_to_dict(cols):
         if '=' in attr:
             (tag, value) = attr.split('=')
             if tag == 'ID':
-                d['id'] = value
-            else:
-                d[tag] = value
+                tag = 'id'
+                value = remove_type_from_id(value)
+            elif tag == 'Parent':
+                value = remove_type_from_list_of_ids(value)
+            d[tag] = value
     if cols[6] == '+':
         d['strand'] = 1
     elif cols[6] == '-':
         d['strand'] = -1
     else:
         raise Exception("Unrecognized strand '%s'" % cols[6])
+    if parent_dict is not None and 'Parent' in d:
+        # a 3' UTR can be split among multiple exons
+        # a 5' UTR can be split among multiple exons
+        # a CDS can be part of multiple transcripts
+        for parent in d['Parent'].split(','):
+            if parent not in parent_dict:
+                parent_dict[parent] = [d]
+            else:
+                parent_dict[parent].append(d)
     return d
 
 
@@ -53,7 +76,7 @@ def add_transcript_to_dict(cols, species, transcript_dict):
 
 
 def add_exon_to_dict(cols, species, exon_parent_dict):
-    exon = feature_to_dict(cols)
+    exon = feature_to_dict(cols, exon_parent_dict)
     exon.update({
         'length': int(cols[4]) - int(cols[3]) + 1,
         'object_type': 'Exon',
@@ -63,50 +86,14 @@ def add_exon_to_dict(cols, species, exon_parent_dict):
     if 'id' not in exon and 'Name' in exon:
         exon['id'] = exon['Name']
 
-    if 'Parent' in exon:
-        for parent in exon['Parent'].split(','):
-            if parent not in exon_parent_dict:
-                exon_parent_dict[parent] = [exon]
-            else:
-                exon_parent_dict[parent].append(exon)
-
-
-def add_five_prime_utr_to_dict(cols, five_prime_utr_parent_dict):
-    five_prime_utr = feature_to_dict(cols)
-    if 'Parent' in five_prime_utr:
-        for parent in five_prime_utr['Parent'].split(','):
-            # the 5' UTR can be split among multiple exons
-            if parent not in five_prime_utr_parent_dict:
-                five_prime_utr_parent_dict[parent] = [five_prime_utr]
-            else:
-                five_prime_utr_parent_dict[parent].append(five_prime_utr)
-
-
-def add_three_prime_utr_to_dict(cols, three_prime_utr_parent_dict):
-    three_prime_utr = feature_to_dict(cols)
-    if 'Parent' in three_prime_utr:
-        for parent in three_prime_utr['Parent'].split(','):
-            # the 3' UTR can be split among multiple exons
-            if parent not in three_prime_utr_parent_dict:
-                three_prime_utr_parent_dict[parent] = [three_prime_utr]
-            else:
-                three_prime_utr_parent_dict[parent].append(three_prime_utr)
-
 
 def add_cds_to_dict(cols, cds_parent_dict):
-    cds = feature_to_dict(cols)
+    cds = feature_to_dict(cols, cds_parent_dict)
     if 'id' not in cds:
         if 'Name' in cds:
             cds['id'] = cds['Name']
-        elif 'Parent' in cds:
+        elif 'Parent' in cds and ',' not in cds['Parent']:
             cds['id'] = cds['Parent']
-    if 'Parent' in cds:
-        # At this point we are sure than 'id' is in cds
-        for parent in cds['Parent'].split(','):
-            if parent not in cds_parent_dict:
-                cds_parent_dict[parent] = [cds]
-            else:
-                cds_parent_dict[parent].append(cds)
 
 
 def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict):
@@ -233,9 +220,9 @@ def __main__():
                     elif feature_type == 'exon':
                         add_exon_to_dict(cols, species, exon_parent_dict)
                     elif feature_type == 'five_prime_UTR':
-                        add_five_prime_utr_to_dict(cols, five_prime_utr_parent_dict)
+                        feature_to_dict(cols, five_prime_utr_parent_dict)
                     elif feature_type == 'three_prime_UTR':
-                        add_three_prime_utr_to_dict(cols, three_prime_utr_parent_dict)
+                        feature_to_dict(cols, three_prime_utr_parent_dict)
                     elif feature_type == 'CDS':
                         add_cds_to_dict(cols, cds_parent_dict)
                     else:
