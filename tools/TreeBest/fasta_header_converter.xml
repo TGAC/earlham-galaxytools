@@ -1,11 +1,11 @@
 <tool id="fasta_header_converter" name="FASTA header converter" version="0.1.1">
     <description>to append species information</description>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
 python '$__tool_directory__/fasta_header_converter.py'
 -f '$fastaFile'
 -j '$genesFile'
-> '$outputFile'
+-o '$outputFile'
 ]]>
     </command>
     <inputs>
