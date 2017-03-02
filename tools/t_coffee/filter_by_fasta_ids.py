@@ -9,20 +9,20 @@ Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 
 
 def FASTAReader_gen(fasta_filename):
-    fasta_file = open(fasta_filename)
-    line = fasta_file.readline()
-    while True:
-        if not line:
-            return
-        assert line.startswith('>'), "FASTA headers must start with >"
-        header = line.rstrip()
-        sequence_parts = []
+    with open(fasta_filename) as fasta_file:
         line = fasta_file.readline()
-        while line and line[0] != '>':
-            sequence_parts.append(line.rstrip())
+        while True:
+            if not line:
+                return
+            assert line.startswith('>'), "FASTA headers must start with >"
+            header = line.rstrip()
+            sequence_parts = []
             line = fasta_file.readline()
-        sequence = "".join(sequence_parts)
-        yield Sequence(header, sequence)
+            while line and line[0] != '>':
+                sequence_parts.append(line.rstrip())
+                line = fasta_file.readline()
+            sequence = "".join(sequence_parts)
+            yield Sequence(header, sequence)
 
 
 def target_match(target, search_entry):
@@ -47,7 +47,6 @@ def main():
 
     work_summary['wanted'] = len(targets)
 
-    # output = open(sys.argv[3], "w")
     for entry in FASTAReader_gen(sys.argv[2]):
         target_matched_results = target_match(targets, entry.header)
         if target_matched_results:
