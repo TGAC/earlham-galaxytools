@@ -1,0 +1,10 @@
+homepage_url: https://github.com/TGAC/earlham-galaxytools/
+name: ensembl_longest_cds_per_gene
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/ensembl_longest_cds_per_gene
+description: |
+  Select longest CDS per gene from Ensembl CDS FASTA
+categories:
+- Fasta Manipulation
+- Phylogenetics
+type: unrestricted
