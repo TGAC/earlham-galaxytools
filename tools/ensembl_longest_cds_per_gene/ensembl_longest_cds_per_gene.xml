@@ -1,0 +1,27 @@
+<tool id="ensembl_longest_cds_per_gene" name="Select longest CDS per gene" version="0.0.1">
+    <description>from Ensembl CDS FASTA</description>
+    <command detect_errors="exit_code"><![CDATA[
+python '$__tool_directory__/ensembl_longest_cds_per_gene.py' -f '$input' -o '$output'
+    ]]></command>
+    <inputs>
+        <param name="input" type="data" format="fasta" label="CDS FASTA from Ensembl" />
+    </inputs>
+    <outputs>
+        <data name="output" format="fasta" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" ftype="fasta" value="Mus_musculus.GRCm38.cds.first100.fa" />
+            <output name="output" file="Mus_musculus.GRCm38.cds.longest.fa" />
+        </test>
+    </tests>
+    <help><![CDATA[
+This tool filters a CDS FASTA file from Ensembl only the longest CDS sequence for each gene.
+
+The headers of the input CDS FASTA file are expected to be of the following format::
+
+    >ENSMUST00000177965.1 cds chromosome:GRCm38:12:113456720:113456736:-1 gene:ENSMUSG00000094057.1 gene_biotype:IG_D_gene transcript_biotype:IG_D_gene gene_symbol:Ighd2-7 description:immunoglobulin heavy diversity 2-7 [Source:MGI Symbol;Acc:MGI:4439866]
+
+Among the CDS sequences having the same gene identifier (ENSMUSG00000094057 in the example above), the tool will select the one with the longest sequence. The header of the sequences in the output dataset will contain only the transcript id without version (ENSMUST00000177965 in the example above).
+    ]]></help>
+</tool>
