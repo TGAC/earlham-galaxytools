@@ -16,7 +16,7 @@ python '$__tool_directory__/ensembl_longest_cds_per_gene.py' -f '$input' -o '$ou
         </test>
     </tests>
     <help><![CDATA[
-This tool filters a CDS FASTA file from Ensembl only the longest CDS sequence for each gene.
+This tool filters a CDS FASTA file from Ensembl retaining only the longest CDS sequence for each gene.
 
 The headers of the input CDS FASTA file are expected to be of the following format::
 
