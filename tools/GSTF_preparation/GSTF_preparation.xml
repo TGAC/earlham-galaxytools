@@ -5,7 +5,7 @@
     </stdio>
     <command>
 <![CDATA[
-python '$__tool_directory__/GSTF_preparation.py'
+python '$__tool_directory__/gstf_preparation.py'
 #for $q in $queries
     --gff3 '${q.genome}:${q.gff3_input}'
 #end for
