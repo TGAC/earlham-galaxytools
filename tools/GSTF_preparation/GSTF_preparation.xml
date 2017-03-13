@@ -1,4 +1,4 @@
-<tool id="gstf_preparation" name="GSTF preparation" version="0.3.01">
+<tool id="gstf_preparation" name="GSTF preparation" version="0.3.0">
     <description>converter</description>
     <stdio>
         <exit_code range="1:" level="fatal" />
