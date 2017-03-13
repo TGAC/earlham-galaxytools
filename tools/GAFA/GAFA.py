@@ -1,12 +1,12 @@
 from __future__ import print_function
+from shutil import copyfile
 
 import collections
-import json
 import optparse
 import re
 import sqlite3
 
-version = "0.2.0"
+version = "0.3.0"
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 
@@ -61,18 +61,6 @@ def create_tables(conn):
         gene_family_id INTEGER PRIMARY KEY,
         gene_tree VARCHAR NOT NULL)''')
 
-    cur.execute('''CREATE TABLE gene (
-        gene_id VARCHAR PRIMARY KEY NOT NULL,
-        gene_symbol VARCHAR,
-        gene_json VARCHAR NOT NULL)''')
-    cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
-
-    cur.execute('''CREATE TABLE transcript (
-        transcript_id VARCHAR PRIMARY KEY NOT NULL,
-        protein_id VARCHAR UNIQUE,
-        protein_sequence VARCHAR,
-        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
-
     cur.execute('''CREATE TABLE gene_family_member (
         gene_family_id INTEGER NOT NULL REFERENCES gene_family(gene_family_id),
         protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
@@ -117,43 +105,20 @@ def newicktree_to_db(conn, i, fname):
     conn.commit()
 
 
-def gene_json_to_db(conn, fname):
-    with open(fname) as f:
-        all_genes_dict = json.load(f)
-
-    cur = conn.cursor()
-    for gene_dict in all_genes_dict.values():
-        gene_id = gene_dict['id']
-        gene_symbol = gene_dict.get('display_name', None)
-        cur.execute("INSERT INTO gene (gene_id, gene_symbol, gene_json) VALUES (?, ?, ?)",
-                    (gene_id, gene_symbol, json.dumps(gene_dict)))
-
-        if "Transcript" in gene_dict:
-            for transcript in gene_dict["Transcript"]:
-                transcript_id = transcript['id']
-                if 'Translation' in transcript and 'id' in transcript['Translation']:
-                    protein_id = transcript["Translation"]["id"]
-                else:
-                    protein_id = None
-                cur.execute("INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)",
-                            (transcript_id, protein_id, gene_id))
-    conn.commit()
-
-
 def __main__():
     parser = optparse.OptionParser()
     parser.add_option('-t', '--tree', action='append', help='Gene tree files')
     parser.add_option('-a', '--align', action='append', help='Protein alignments in fasta_aln format')
-    parser.add_option('-g', '--gene', help='Gene features file in JSON format')
+    parser.add_option('-g', '--gene', help='Gene features file in SQLite format')
     parser.add_option('-o', '--output', help='Path of the output file')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
 
+    copyfile(options.gene, options.output)
+
     conn = sqlite3.connect(options.output)
     create_tables(conn)
-
-    gene_json_to_db(conn, options.gene)
 
     for i, (tree, align) in enumerate(zip(options.tree, options.align), start=1):
         newicktree_to_db(conn, i, tree)
