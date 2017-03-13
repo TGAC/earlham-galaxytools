@@ -15,30 +15,30 @@ gene_count = 0
 
 def create_tables(conn):
     cur = conn.cursor()
-    cur.execute('PRAGMA foreign_keys = ON')
 
     cur.execute('''CREATE TABLE meta (
-        version VARCHAR)''')
+        version VARCHAR PRIMARY KEY NOT NULL)''')
 
     cur.execute('INSERT INTO meta (version) VALUES (?)',
                 (version, ))
 
     cur.execute('''CREATE TABLE gene (
-        gene_id VARCHAR PRIMARY KEY,
-        symbol VARCHAR,
+        gene_id VARCHAR PRIMARY KEY NOT NULL,
+        gene_symbol VARCHAR,
         species VARCHAR NOT NULL,
         gene_json VARCHAR NOT NULL)''')
+    cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
 
     cur.execute('''CREATE TABLE transcript (
-        transcript_id VARCHAR PRIMARY KEY,
+        transcript_id VARCHAR PRIMARY KEY NOT NULL,
         protein_id VARCHAR,
         protein_sequence VARCHAR,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
-    cur.execute('''CREATE VIEW transcript_species as
+    cur.execute('''CREATE VIEW transcript_species AS
         SELECT transcript_id, species
         FROM transcript JOIN gene
-        ON gene.gene_id = transcript.gene_id''')
+        ON transcript.gene_id = gene.gene_id''')
 
     conn.commit()
 
@@ -224,17 +224,8 @@ def fetch_species(conn, name):
 
     cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
                 (name, ))
-    results = cur.fetchall()
-    conn.commit()
-
-    if len(results) == 0:
-        return ""
-    elif len(results) > 1:
-        raise Exception("Searching Transcript id '%s' among the transcript returned multiple results" % name)
-
-    species = results[0][0]
-
-    return species
+    results = cur.fetchone()
+    return results[0]
 
 
 def write_gene_dict_to_db(conn, full_gene_dict):
@@ -264,6 +255,7 @@ def __main__():
         raise Exception('Use options to provide inputs')
 
     conn = sqlite3.connect(options.output)
+    conn.execute('PRAGMA foreign_keys = ON')
     create_tables(conn)
 
     for gff3_arg in options.gff3:

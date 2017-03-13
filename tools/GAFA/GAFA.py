@@ -50,7 +50,6 @@ def fasta_aln2cigar(sequence):
 
 def create_tables(conn):
     cur = conn.cursor()
-    cur.execute('PRAGMA foreign_keys = ON')
     # Check that the version of the input database is compatible
     cur.execute('SELECT version FROM meta')
     result = cur.fetchone()
@@ -122,6 +121,7 @@ def __main__():
         shutil.copyfile(options.gene, options.output)
 
     conn = sqlite3.connect(options.output)
+    conn.execute('PRAGMA foreign_keys = ON')
     create_tables(conn)
 
     for i, (tree, align) in enumerate(zip(options.tree, options.align), start=1):
