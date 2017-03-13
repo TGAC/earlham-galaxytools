@@ -51,10 +51,13 @@ def fasta_aln2cigar(sequence):
 def create_tables(conn):
     cur = conn.cursor()
     cur.execute('PRAGMA foreign_keys = ON')
-    cur.execute('''CREATE TABLE meta (
-        version VARCHAR)''')
-
-    cur.execute('INSERT INTO meta (version) VALUES (?)',
+    # Check that the version of the input database is compatible
+    cur.execute('SELECT version FROM meta')
+    result = cur.fetchone()
+    input_meta_version = result[0]
+    if input_meta_version != '0.3.0':
+        raise Exception("Incompatible input meta version '%s'" % input_meta_version)
+    cur.execute('UPDATE meta SET version=?',
                 (version, ))
 
     cur.execute('''CREATE TABLE gene_family (
