@@ -1,0 +1,105 @@
+<tool id="gstf_preparation" name="GSTF preparation" version="0.3.01">
+    <description>converter</description>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <command>
+<![CDATA[
+python '$__tool_directory__/GSTF_preparation.py'
+#for $q in $queries
+    --gff3 '${q.genome}:${q.gff3_input}'
+#end for
+#if str($json) != 'None'
+    #for $v in $json
+        --json '$v'
+    #end for
+#end if
+#for $q in $fastas
+    --fasta '${q.fasta_input}'
+#end for
+-o '$output_db'
+--of '$output_fasta'
+]]>
+    </command>
+
+    <inputs>
+        <repeat name="queries" title="GFF3 dataset">
+            <param name="gff3_input" type="data" format="gff3" label="GFF3 dataset" />
+            <param name="genome" type="text" label="Genome name" help="Genome name without whitespaces or special characters">
+                <validator type="empty_field" />
+            </param>
+        </repeat>
+        <param name="json" type="data" format="json" multiple="true" optional="true" label="JSON datasets to merge" />
+        <repeat name="fastas" title="FASTA dataset">
+            <param name="fasta_input" type="data" format="fasta" label="FASTA dataset" />
+        </repeat>
+    </inputs>
+
+    <outputs>
+         <data name="output_db" format="sqlite" label="${tool.name} on ${on_string}" />
+         <data name="output_fasta" format="fasta" label="${tool.name} on ${on_string}" />
+
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="fasta_input" ftype="fasta" value="CDS.fasta" />
+            
+            <param name="gff3_input" ftype="gff3" value="canisfamiliaris.gff" />
+            <param name="genome" ftype="text" value="canisfamiliaris" />
+ 
+            <param name="gff3_input" ftype="gff3" value="musmusculus.gff" />
+            <param name="genome" ftype="text" value="musmusculus" />
+
+            <param name="gff3_input" ftype="gff3" value="suscrofa.gff" />
+            <param name="genome" ftype="text" value="suscrofa" />
+
+            <param name="gff3_input" ftype="gff3" value="pantroglodytes.gff" />
+            <param name="genome" ftype="text" value="pantroglodytes" />
+
+            <param name="gff3_input" ftype="gff3" value="rattusnorvegicus.gff" />
+            <param name="genome" value="rattusnorvegicus" />
+
+            <param name="gff3_input" ftype="gff3" value="homosapiens.gff" />
+            <param name="genome" value="homosapiens" />
+
+            <output name="output_db" file="test1.sqlite" ftype="sqlite" />
+            <output name="output_fasta" file="test1.fasta" ftype="fasta" />
+        </test>
+        <test>
+            <param name="fasta_input" ftype="fasta" value="CDS.fasta" />
+            <param name="json" ftype="fasta" value="gene.json" />
+            
+            <output name="output_db" file="test2.sqlite" ftype="sqlite" />
+            <output name="output_fasta" file="test2.fasta" ftype="fasta" />
+        </test>
+    </tests>
+    <help>
+<![CDATA[
+**What it does**
+
+Simple tool to convert a set of GFF3/JSON formated gene featured datasets into SQLite format and format FASTA header tobe used with GeneSeqToFamily (GSTF) workflow.
+
+Example GFF3 file::
+
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  gene            44968   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030;Name=MYZPE13164_G006_v1.0_000000030;biotype=protein_coding
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  mRNA            44968   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1;Parent=MYZPE13164_G006_v1.0_000000030;Name=MYZPE13164_G006_v1.0_000000030.1;biotype=protein_coding;_AED=0.31
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  three_prime_utr 44968   46637   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.3utr1;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            44968   47432   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon1;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  CDS             46638   47432   .   -   0   ID=MYZPE13164_G006_v1.0_000000030.1.cds1;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            53325   53539   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon2;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  CDS             53325   53539   .   -   2   ID=MYZPE13164_G006_v1.0_000000030.1.cds2;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            54614   54719   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon3;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  CDS             54614   54719   .   -   0   ID=MYZPE13164_G006_v1.0_000000030.1.cds3;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  CDS             54852   55106   .   -   0   ID=MYZPE13164_G006_v1.0_000000030.1.cds4;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            54852   55117   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon4;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  five_prime_utr  55107   55117   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.5utr1;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  five_prime_utr  68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.5utr2;Parent=MYZPE13164_G006_v1.0_000000030.1
+    scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon5;Parent=MYZPE13164_G006_v1.0_000000030.1
+
+Warning: **Gene**, **mRNA** and **exon** features are mandatory, UTR and CDS are optional. Also, **ID** and **Parent** tags are needed to create relations.
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
