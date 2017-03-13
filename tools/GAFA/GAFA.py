@@ -1,9 +1,9 @@
 from __future__ import print_function
-from shutil import copyfile
 
 import collections
 import optparse
 import re
+import shutil
 import sqlite3
 
 version = "0.3.0"
@@ -115,7 +115,8 @@ def __main__():
     if args:
         raise Exception('Use options to provide inputs')
 
-    copyfile(options.gene, options.output)
+    if options.gene != options.output:
+        shutil.copyfile(options.gene, options.output)
 
     conn = sqlite3.connect(options.output)
     create_tables(conn)

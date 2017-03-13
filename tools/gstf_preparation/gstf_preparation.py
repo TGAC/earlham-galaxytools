@@ -1,23 +1,22 @@
 from __future__ import print_function
 
+import collections
 import json
 import optparse
-import sys
-import re
 import sqlite3
-import collections
+import sys
 
 version = "0.3.0"
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 
-
 gene_count = 0
+
 
 def create_tables(conn):
     cur = conn.cursor()
     cur.execute('PRAGMA foreign_keys = ON')
-    
+
     cur.execute('''CREATE TABLE meta (
         version VARCHAR)''')
 
@@ -37,7 +36,7 @@ def create_tables(conn):
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
     cur.execute('''CREATE VIEW transcript_species as
-        SELECT transcript_id, species 
+        SELECT transcript_id, species
         FROM transcript JOIN gene
         ON gene.gene_id = transcript.gene_id''')
 
@@ -119,7 +118,6 @@ def add_gene_to_dict(cols, species, gene_dict):
 
     if len(gene['id']) > 0:
         gene_dict[gene['id']] = gene
-        display_name = gene.get('display_name', None)
         gene_count = gene_count + 1
 
 
@@ -214,7 +212,6 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
             transcript['Translation'] = translation
 
     for transcript in transcript_dict.values():
-        translation_id = transcript.get('Translation', {}).get('id', None)
         if 'Parent' in transcript:
             # A polycistronic transcript can have multiple parents
             for parent in transcript['Parent'].split(','):
@@ -226,7 +223,7 @@ def fetch_species(conn, name):
     cur = conn.cursor()
 
     cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
-                    (name,))
+                (name, ))
     results = cur.fetchall()
     conn.commit()
 
@@ -234,39 +231,31 @@ def fetch_species(conn, name):
         return ""
     elif len(results) > 1:
         raise Exception("Searching Transcript id '%s' among the transcript returned multiple results" % name)
-    
+
     species = results[0][0]
 
     return species
 
 
-def update_full_gene_dict_no_overwrite(full_gene_dict, gene_dict):
-    gene_intersection = set(full_gene_dict.keys()) & set(gene_dict.keys())
-    if gene_intersection:
-        raise Exception("Information for genes '%s' are present in multiple files" % ', '.join(gene_intersection))
-    full_gene_dict.update(gene_dict)
-
-
 def write_gene_dict_to_db(conn, full_gene_dict):
     cur = conn.cursor()
 
-    for id in full_gene_dict:
+    for gene_id in full_gene_dict:
         cur.execute('INSERT INTO gene (gene_id, species, symbol, gene_json) VALUES (?, ?, ?, ?)',
-            (id, full_gene_dict[id]["species"], full_gene_dict[id].get("display_name", None), json.dumps(full_gene_dict[id])))
+                    (gene_id, full_gene_dict[gene_id]["species"], full_gene_dict[gene_id].get("display_name", None), json.dumps(full_gene_dict[gene_id])))
 
-        if "Transcript" in full_gene_dict[id]:
-            for transcript in full_gene_dict[id]["Transcript"]:
+        if "Transcript" in full_gene_dict[gene_id]:
+            for transcript in full_gene_dict[gene_id]["Transcript"]:
                 cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
-                            (transcript["id"],  transcript.get('Translation', {}).get('id', None), id))
+                            (transcript["id"], transcript.get('Translation', {}).get('id', None), gene_id))
 
     conn.commit()
-   
+
 
 def __main__():
     parser = optparse.OptionParser()
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
-    # parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
     parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
     parser.add_option('--of', help='Path of the output FASTA file. If not specified, will print on the standard output')
     parser.add_option('--fasta', action='append', default=[], help='Path of the output FASTA file. If not specified, will print on the standard output')
@@ -277,7 +266,6 @@ def __main__():
     conn = sqlite3.connect(options.output)
     create_tables(conn)
 
-    full_gene_dict = dict()
     for gff3_arg in options.gff3:
         try:
             (species, filename) = gff3_arg.split(':')
@@ -319,13 +307,10 @@ def __main__():
                         print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
                 except Exception as e:
                     print("Line %i in file '%s': %s" % (i, filename, e), file=sys.stderr)
-        
-
 
         join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict)
-
         write_gene_dict_to_db(conn, gene_dict)
-    
+
     for json_arg in options.json:
         with open(json_arg) as f:
             write_gene_dict_to_db(conn, json.load(f))
