@@ -7,10 +7,26 @@ import sqlite3
 import sys
 
 version = "0.3.0"
+gene_count = 0
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 
-gene_count = 0
+
+def FASTAReader_gen(fasta_filename):
+    with open(fasta_filename) as fasta_file:
+        line = fasta_file.readline()
+        while True:
+            if not line:
+                return
+            assert line.startswith('>'), "FASTA headers must start with >"
+            header = line.rstrip()
+            sequence_parts = []
+            line = fasta_file.readline()
+            while line and line[0] != '>':
+                sequence_parts.append(line.rstrip())
+                line = fasta_file.readline()
+            sequence = "\n".join(sequence_parts)
+            yield Sequence(header, sequence)
 
 
 def create_tables(conn):
@@ -31,7 +47,7 @@ def create_tables(conn):
 
     cur.execute('''CREATE TABLE transcript (
         transcript_id VARCHAR PRIMARY KEY NOT NULL,
-        protein_id VARCHAR,
+        protein_id VARCHAR UNIQUE,
         protein_sequence VARCHAR,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
@@ -41,23 +57,6 @@ def create_tables(conn):
         ON transcript.gene_id = gene.gene_id''')
 
     conn.commit()
-
-
-def FASTAReader_gen(fasta_filename):
-    with open(fasta_filename) as fasta_file:
-        line = fasta_file.readline()
-        while True:
-            if not line:
-                return
-            assert line.startswith('>'), "FASTA headers must start with >"
-            header = line.rstrip()
-            sequence_parts = []
-            line = fasta_file.readline()
-            while line and line[0] != '>':
-                sequence_parts.append(line.rstrip())
-                line = fasta_file.readline()
-            sequence = "\n".join(sequence_parts)
-            yield Sequence(header, sequence)
 
 
 def remove_type_from_list_of_ids(l):
@@ -115,8 +114,7 @@ def add_gene_to_dict(cols, species, gene_dict):
         'Transcript': [],
         'display_name': gene['Name']
     })
-
-    if len(gene['id']) > 0:
+    if gene['id']:
         gene_dict[gene['id']] = gene
         gene_count = gene_count + 1
 
@@ -153,7 +151,6 @@ def add_cds_to_dict(cols, cds_parent_dict):
 
 
 def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict):
-
     for parent, exon_list in exon_parent_dict.items():
         if parent in transcript_dict:
             exon_list.sort(key=lambda _: _['start'])
@@ -219,26 +216,34 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
                     gene_dict[parent]['Transcript'].append(transcript)
 
 
-def fetch_species(conn, name):
+def fetch_species_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
     cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
-                (name, ))
+                (transcript_id, ))
     results = cur.fetchone()
+    if not results:
+        return None
     return results[0]
 
 
-def write_gene_dict_to_db(conn, full_gene_dict):
+def write_gene_dict_to_db(conn, gene_dict):
     cur = conn.cursor()
 
-    for gene_id in full_gene_dict:
-        cur.execute('INSERT INTO gene (gene_id, species, symbol, gene_json) VALUES (?, ?, ?, ?)',
-                    (gene_id, full_gene_dict[gene_id]["species"], full_gene_dict[gene_id].get("display_name", None), json.dumps(full_gene_dict[gene_id])))
+    for gene in gene_dict.values():
+        gene_id = gene['id']
+        cur.execute('INSERT INTO gene (gene_id, gene_symbol, species, gene_json) VALUES (?, ?, ?, ?)',
+                    (gene_id, gene.get('display_name', None), gene['species'], json.dumps(gene)))
 
-        if "Transcript" in full_gene_dict[gene_id]:
-            for transcript in full_gene_dict[gene_id]["Transcript"]:
-                cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
-                            (transcript["id"], transcript.get('Translation', {}).get('id', None), gene_id))
+        if "Transcript" in gene:
+            for transcript in gene["Transcript"]:
+                transcript_id = transcript['id']
+                protein_id = transcript.get('Translation', {}).get('id', None)
+                try:
+                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
+                                (transcript_id, protein_id, gene_id))
+                except Exception as e:
+                    raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
 
     conn.commit()
 
@@ -247,9 +252,9 @@ def __main__():
     parser = optparse.OptionParser()
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
-    parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
-    parser.add_option('--of', help='Path of the output FASTA file. If not specified, will print on the standard output')
-    parser.add_option('--fasta', action='append', default=[], help='Path of the output FASTA file. If not specified, will print on the standard output')
+    parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
+    parser.add_option('-o', '--output', help='Path of the output SQLite file')
+    parser.add_option('--of', help='Path of the output FASTA file')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
@@ -310,12 +315,13 @@ def __main__():
     with open(options.of, 'w') as output_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
-                name = entry.header[1:].lstrip()
-                species_for_CDS = fetch_species(conn, name)
-                if species_for_CDS == "":
-                    print("Transcript '%s' not found in the gene feature information" % name, file=sys.stderr)
+                transcript_id = entry.header[1:].lstrip()
+                species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
+                if not species_for_transcript:
+                    print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
                     continue
-                output_fasta_file.write(">%s_%s\n%s\n" % (name, species_for_CDS, entry.sequence))
+                species_for_transcript = species_for_transcript.replace('_', '')
+                output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
 
     conn.close()
 
