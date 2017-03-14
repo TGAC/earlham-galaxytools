@@ -1,8 +1,8 @@
 categories:
 - Convert Formats
-description: GFF3 and JSON to SQLite and FASTA header converter
+description: GSTF preparation, converter for the GeneSeqToFamily workflow
 homepage_url: https://github.com/TGAC/earlham-galaxytools/
-long_description: Converts a set of GFF3 and JSON datasets into SQLite format, also adds species information to FASTA headers
+long_description: Converts a set of GFF3 and/or JSON gene feature information datasets into SQLite format and modify the header lines of a corresponding CDS FASTA to be used with the GeneSeqToFamily (GSTF) workflow.
 name: gstf_preparation
 owner: earlhaminst
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/gstf_preparation

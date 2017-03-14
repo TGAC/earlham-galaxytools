@@ -216,17 +216,6 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
                     gene_dict[parent]['Transcript'].append(transcript)
 
 
-def fetch_species_for_transcript(conn, transcript_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
-                (transcript_id, ))
-    results = cur.fetchone()
-    if not results:
-        return None
-    return results[0]
-
-
 def write_gene_dict_to_db(conn, gene_dict):
     cur = conn.cursor()
 
@@ -246,6 +235,27 @@ def write_gene_dict_to_db(conn, gene_dict):
                     raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
 
     conn.commit()
+
+
+def fetch_species_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
+                (transcript_id, ))
+    results = cur.fetchone()
+    if not results:
+        return None
+    return results[0]
+
+
+def remove_id_version(s):
+    """
+    Remove the optional '.VERSION' from an Ensembl id.
+    """
+    if s.startswith('ENS'):
+        return s.split('.')[0]
+    else:
+        return s
 
 
 def __main__():
@@ -315,12 +325,15 @@ def __main__():
     with open(options.of, 'w') as output_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
-                transcript_id = entry.header[1:].lstrip()
+                # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
+                transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
                 species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
                     continue
+                # Remove any underscore in the species
                 species_for_transcript = species_for_transcript.replace('_', '')
+                # Write the FASTA sequence using '>TranscriptId_species' as the header, as required by TreeBest
                 output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
 
     conn.close()
