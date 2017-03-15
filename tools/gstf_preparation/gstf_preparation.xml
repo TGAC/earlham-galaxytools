@@ -1,5 +1,5 @@
-<tool id="gstf_preparation" name="GSTF preparation" version="0.3.0">
-    <description>converter for the GeneSeqToFamily workflow</description>
+<tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.3.0">
+    <description>converts data for the workflow</description>
     <command detect_errors="exit_code">
 <![CDATA[
 python '$__tool_directory__/gstf_preparation.py'
@@ -55,7 +55,7 @@ python '$__tool_directory__/gstf_preparation.py'
 <![CDATA[
 **What it does**
 
-This tool converts a set of GFF3 and/or JSON gene feature information datasets into SQLite format and modify the header lines of a corresponding CDS FASTA to be used with the GeneSeqToFamily (GSTF) workflow.
+This tool converts a set of GFF3 and/or JSON gene feature information datasets into SQLite format and modify the header lines of a corresponding CDS FASTA to be used with the GeneSeqToFamily workflow.
 
 Example GFF3 file::
 
