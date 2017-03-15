@@ -1,10 +1,62 @@
 from __future__ import print_function
 
+import collections
 import json
 import optparse
+import sqlite3
 import sys
 
+version = "0.3.0"
 gene_count = 0
+
+Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
+
+
+def FASTAReader_gen(fasta_filename):
+    with open(fasta_filename) as fasta_file:
+        line = fasta_file.readline()
+        while True:
+            if not line:
+                return
+            assert line.startswith('>'), "FASTA headers must start with >"
+            header = line.rstrip()
+            sequence_parts = []
+            line = fasta_file.readline()
+            while line and line[0] != '>':
+                sequence_parts.append(line.rstrip())
+                line = fasta_file.readline()
+            sequence = "\n".join(sequence_parts)
+            yield Sequence(header, sequence)
+
+
+def create_tables(conn):
+    cur = conn.cursor()
+
+    cur.execute('''CREATE TABLE meta (
+        version VARCHAR PRIMARY KEY NOT NULL)''')
+
+    cur.execute('INSERT INTO meta (version) VALUES (?)',
+                (version, ))
+
+    cur.execute('''CREATE TABLE gene (
+        gene_id VARCHAR PRIMARY KEY NOT NULL,
+        gene_symbol VARCHAR,
+        species VARCHAR NOT NULL,
+        gene_json VARCHAR NOT NULL)''')
+    cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
+
+    cur.execute('''CREATE TABLE transcript (
+        transcript_id VARCHAR PRIMARY KEY NOT NULL,
+        protein_id VARCHAR UNIQUE,
+        protein_sequence VARCHAR,
+        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
+
+    cur.execute('''CREATE VIEW transcript_species AS
+        SELECT transcript_id, species
+        FROM transcript JOIN gene
+        ON transcript.gene_id = gene.gene_id''')
+
+    conn.commit()
 
 
 def remove_type_from_list_of_ids(l):
@@ -60,9 +112,11 @@ def add_gene_to_dict(cols, species, gene_dict):
         'seq_region_name': cols[0],
         'species': species,
         'Transcript': [],
+        'display_name': gene['Name']
     })
-    gene_dict[gene['id']] = gene
-    gene_count = gene_count + 1
+    if gene['id']:
+        gene_dict[gene['id']] = gene
+        gene_count = gene_count + 1
 
 
 def add_transcript_to_dict(cols, species, transcript_dict):
@@ -162,32 +216,63 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
                     gene_dict[parent]['Transcript'].append(transcript)
 
 
-def update_full_gene_dict_no_overwrite(full_gene_dict, gene_dict):
-    gene_intersection = set(full_gene_dict.keys()) & set(gene_dict.keys())
-    if gene_intersection:
-        raise Exception("Information for genes '%s' are present in multiple files" % ', '.join(gene_intersection))
-    full_gene_dict.update(gene_dict)
+def write_gene_dict_to_db(conn, gene_dict):
+    cur = conn.cursor()
+
+    for gene in gene_dict.values():
+        gene_id = gene['id']
+        cur.execute('INSERT INTO gene (gene_id, gene_symbol, species, gene_json) VALUES (?, ?, ?, ?)',
+                    (gene_id, gene.get('display_name', None), gene['species'], json.dumps(gene)))
+
+        if "Transcript" in gene:
+            for transcript in gene["Transcript"]:
+                transcript_id = transcript['id']
+                protein_id = transcript.get('Translation', {}).get('id', None)
+                try:
+                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
+                                (transcript_id, protein_id, gene_id))
+                except Exception as e:
+                    raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
+
+    conn.commit()
 
 
-def write_json(full_gene_dict, outfile=None, sort_keys=False):
-    if outfile:
-        with open(outfile, 'w') as f:
-            json.dump(full_gene_dict, f, sort_keys=sort_keys)
+def fetch_species_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
+                (transcript_id, ))
+    results = cur.fetchone()
+    if not results:
+        return None
+    return results[0]
+
+
+def remove_id_version(s):
+    """
+    Remove the optional '.VERSION' from an Ensembl id.
+    """
+    if s.startswith('ENS'):
+        return s.split('.')[0]
     else:
-        json.dump(full_gene_dict, sys.stdout, sort_keys=sort_keys)
+        return s
 
 
 def __main__():
     parser = optparse.OptionParser()
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
-    parser.add_option('-s', '--sort', action='store_true', help='Sort the keys in the JSON output')
-    parser.add_option('-o', '--output', help='Path of the output file. If not specified, will print on the standard output')
+    parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
+    parser.add_option('-o', '--output', help='Path of the output SQLite file')
+    parser.add_option('--of', help='Path of the output FASTA file')
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
 
-    full_gene_dict = dict()
+    conn = sqlite3.connect(options.output)
+    conn.execute('PRAGMA foreign_keys = ON')
+    create_tables(conn)
+
     for gff3_arg in options.gff3:
         try:
             (species, filename) = gff3_arg.split(':')
@@ -228,15 +313,30 @@ def __main__():
                     else:
                         print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
                 except Exception as e:
-                    raise Exception("Line %i in file '%s': %s" % (i, filename, e))
+                    print("Line %i in file '%s': %s" % (i, filename, e), file=sys.stderr)
+
         join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict)
-        update_full_gene_dict_no_overwrite(full_gene_dict, gene_dict)
+        write_gene_dict_to_db(conn, gene_dict)
 
     for json_arg in options.json:
         with open(json_arg) as f:
-            update_full_gene_dict_no_overwrite(full_gene_dict, json.load(f))
+            write_gene_dict_to_db(conn, json.load(f))
 
-    write_json(full_gene_dict, options.output, options.sort)
+    with open(options.of, 'w') as output_fasta_file:
+        for fasta_arg in options.fasta:
+            for entry in FASTAReader_gen(fasta_arg):
+                # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
+                transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
+                species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
+                if not species_for_transcript:
+                    print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
+                    continue
+                # Remove any underscore in the species
+                species_for_transcript = species_for_transcript.replace('_', '')
+                # Write the FASTA sequence using '>TranscriptId_species' as the header, as required by TreeBest
+                output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
+
+    conn.close()
 
 
 if __name__ == '__main__':

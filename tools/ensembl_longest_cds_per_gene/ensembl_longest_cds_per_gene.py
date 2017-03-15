@@ -1,7 +1,6 @@
 """
 This script reads a CDS FASTA file from Ensembl and outputs a FASTA file with
-only the longest CDS sequence for each gene. The header of the sequences in the
-output file will be the transcript id without version.
+only the longest CDS sequence for each gene.
 """
 from __future__ import print_function
 
@@ -33,7 +32,10 @@ def remove_id_version(s):
     """
     Remove the optional '.VERSION' from an Ensembl id.
     """
-    return s.split('.')[0]
+    if s.startswith('ENS'):
+        return s.split('.')[0]
+    else:
+        return s
 
 
 parser = optparse.OptionParser()
@@ -52,7 +54,6 @@ gene_transcripts_dict = dict()
 
 for entry in FASTAReader_gen(options.input_fasta_filename):
     transcript_id, rest = entry.header[1:].split(' ', 1)
-    transcript_id = remove_id_version(transcript_id)
     gene_id = None
     for s in rest.split(' '):
         if s.startswith('gene:'):
@@ -73,6 +74,6 @@ selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for
 
 with open(options.output_fasta_filename, 'w') as output_fasta_file:
     for entry in FASTAReader_gen(options.input_fasta_filename):
-        transcript_id = remove_id_version(entry.header[1:].split(' ')[0])
+        transcript_id = entry.header[1:].split(' ')[0]
         if transcript_id in selected_transcript_ids:
-            output_fasta_file.write(">%s\n%s\n" % (transcript_id, entry.sequence))
+            output_fasta_file.write("%s\n%s\n" % (entry.header, entry.sequence))
