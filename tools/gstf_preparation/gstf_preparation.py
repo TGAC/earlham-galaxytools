@@ -112,7 +112,7 @@ def add_gene_to_dict(cols, species, gene_dict):
         'seq_region_name': cols[0],
         'species': species,
         'Transcript': [],
-        'display_name': gene['Name']
+        'display_name': gene.get('Name', None)
     })
     if gene['id']:
         gene_dict[gene['id']] = gene
