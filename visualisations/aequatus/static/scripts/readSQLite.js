@@ -46,7 +46,7 @@ function get_Genes_for_family(){
     var e = document.getElementById("gene_family");
     var gene_family_id = e.options[e.selectedIndex].value;
 
-    var gene_tree = db.exec("SELECT gene_family_member.protein_id, alignment, transcript.gene_id, gene_json, transcript.protein_sequence FROM gene_family_member JOIN transcript ON gene_family_member.protein_id=transcript.protein_id JOIN gene ON transcript.gene_id=gene.gene_id WHERE gene_family_id= "+gene_family_id);
+    var gene_tree = db.exec("SELECT gene_family_member.protein_id, protein_alignment, transcript.gene_id, gene_json, transcript.protein_sequence FROM gene_family_member JOIN transcript ON gene_family_member.protein_id=transcript.protein_id JOIN gene ON transcript.gene_id=gene.gene_id WHERE gene_family_id= "+gene_family_id);
     var genes= {}
     var cigars= {}
     var sequence= {}
@@ -93,7 +93,7 @@ function get_CIGAR_for_gene(gene_id){
     var e = document.getElementById("gene_family");
     var gene_family_id = e.options[e.selectedIndex].value;
 
-    var gene_tree = db.exec("SELECT protein_id, alignment FROM gene_family where gene_family_id = "+gene_family_id+" and gene_id='"+gene_id+"'");
+    var gene_tree = db.exec("SELECT protein_id, protein_alignment FROM gene_family where gene_family_id = "+gene_family_id+" and gene_id='"+gene_id+"'");
 
     var gene_cigar = {}
    
