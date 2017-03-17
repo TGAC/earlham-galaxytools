@@ -19,8 +19,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 396.0625, 
-                "top": 418.0625
+                "left": 239.066650390625, 
+                "top": 418.06666564941406
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -51,8 +51,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 388.875, 
-                "top": 1140.125
+                "left": 231.88333129882812, 
+                "top": 1140.13330078125
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -83,8 +83,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 386, 
-                "top": 1438.171875
+                "left": 229, 
+                "top": 1438.1666870117188
             }, 
             "tool_errors": null, 
             "tool_id": null, 
@@ -125,8 +125,8 @@
                 }
             ], 
             "position": {
-                "left": 623.125, 
-                "top": 418.0625
+                "left": 607.1333312988281, 
+                "top": 432.06666564941406
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -138,7 +138,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: transeq101/5.0.0", 
             "tool_shed_repository": {
-                "changeset_revision": "d49956b87f7e", 
+                "changeset_revision": "1b6538ec8b56", 
                 "name": "emboss_5", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -178,8 +178,8 @@
                 }
             ], 
             "position": {
-                "left": 870.25, 
-                "top": 199.984375
+                "left": 727.25, 
+                "top": 196.98333740234375
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -235,8 +235,8 @@
                 }
             ], 
             "position": {
-                "left": 1127.5, 
-                "top": 428.125
+                "left": 970.5, 
+                "top": 428.1333312988281
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput1": {
@@ -284,7 +284,7 @@
                 }
             ], 
             "position": {
-                "left": 1447.5, 
+                "left": 1290.5, 
                 "top": 502
             }, 
             "post_job_actions": {}, 
@@ -337,8 +337,8 @@
                 }
             ], 
             "position": {
-                "left": 1684, 
-                "top": 432.0625
+                "left": 1527, 
+                "top": 432.06666564941406
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutputFile": {
@@ -390,8 +390,8 @@
                 }
             ], 
             "position": {
-                "left": 1996.0625, 
-                "top": 477.171875
+                "left": 1839.066650390625, 
+                "top": 477.1666717529297
             }, 
             "post_job_actions": {
                 "HideDatasetActionids_lists": {
@@ -445,8 +445,8 @@
                 }
             ], 
             "position": {
-                "left": 872.75, 
-                "top": 1053.171875
+                "left": 715.75, 
+                "top": 1053.1666870117188
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -532,8 +532,8 @@
                 }
             ], 
             "position": {
-                "left": 1687, 
-                "top": 702.625
+                "left": 1530, 
+                "top": 702.6333312988281
             }, 
             "post_job_actions": {
                 "HideDatasetActionclustalw_aln": {
@@ -590,7 +590,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/t_coffee/t_coffee/11.0.8_1", 
             "tool_shed_repository": {
-                "changeset_revision": "78dd29aa7fc1", 
+                "changeset_revision": "fa59d6fea7f5", 
                 "name": "t_coffee", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -634,8 +634,8 @@
                 }
             ], 
             "position": {
-                "left": 1200.875, 
-                "top": 980.0625
+                "left": 1043.8833312988281, 
+                "top": 980.066650390625
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -691,8 +691,8 @@
                 }
             ], 
             "position": {
-                "left": 1419.9375, 
-                "top": 1245.0625
+                "left": 1239.933349609375, 
+                "top": 1227.066650390625
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -704,7 +704,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: tranalign100/5.0.0", 
             "tool_shed_repository": {
-                "changeset_revision": "d49956b87f7e", 
+                "changeset_revision": "1b6538ec8b56", 
                 "name": "emboss_5", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -752,8 +752,8 @@
                 }
             ], 
             "position": {
-                "left": 1677, 
-                "top": 1443.5625
+                "left": 1520, 
+                "top": 1443.566650390625
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -765,7 +765,7 @@
             "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/treebest_best/treebest_best/1.9.2", 
             "tool_shed_repository": {
-                "changeset_revision": "7ea4df039a53", 
+                "changeset_revision": "66170848da6c", 
                 "name": "treebest_best", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -778,7 +778,7 @@
         }, 
         "14": {
             "annotation": "", 
-            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.2.0", 
+            "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.3.0", 
             "id": 14, 
             "input_connections": {
                 "alignmentFile": {
@@ -817,20 +817,20 @@
                 }
             ], 
             "position": {
-                "left": 2284, 
-                "top": 1079.5625
+                "left": 2106, 
+                "top": 1062.566650390625
             }, 
             "post_job_actions": {}, 
             "tool_errors": null, 
-            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.2.0", 
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.3.0", 
             "tool_shed_repository": {
-                "changeset_revision": "0c2f9172334a", 
+                "changeset_revision": "117fc7414307", 
                 "name": "gafa", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
             "tool_state": "{\"__page__\": 0, \"treeFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"__rerun_remap_job_id__\": null, \"alignmentFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"genesFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
-            "tool_version": "0.2.0", 
+            "tool_version": "0.3.0", 
             "type": "tool", 
             "uuid": "049fb5e1-4f3b-4cf5-80a6-2fa609674fc5", 
             "workflow_outputs": [
@@ -842,5 +842,5 @@
             ]
         }
     }, 
-    "uuid": "b15b99f2-380c-4f70-b6d9-ab67c1834a94"
+    "uuid": "c4ee74fc-2f82-4be2-83f0-b687365d7524"
 }
