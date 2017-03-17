@@ -74,7 +74,11 @@ Example GFF3 file::
     scaffold_0  MYZPE13164_Clone_G006_v1.0  five_prime_utr  68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.5utr2;Parent=MYZPE13164_G006_v1.0_000000030.1
     scaffold_0  MYZPE13164_Clone_G006_v1.0  exon            68851   69413   .   -   .   ID=MYZPE13164_G006_v1.0_000000030.1.exon5;Parent=MYZPE13164_G006_v1.0_000000030.1
 
-The following features are parsed: **gene**, **mRNA**, **transcript**, **exon**, **five_prime_utr**, **three_prime_utr** and **CDS**, all other are ignored. Also, **ID** and **Parent** tags are needed to create relations.
+The following features are parsed: **gene**, **mRNA**, **transcript**, **exon**, **five_prime_utr**, **three_prime_utr** and **CDS**, all other are ignored. Also, **ID** and **Parent** attributes in the 9th column are needed to create relations among features.
+
+.. class:: warningmark
+
+If a value in the **ID** and **Parent** attribute contains a colon, everything up to the first colon will be discarded.
 ]]>
     </help>
     <citations>
