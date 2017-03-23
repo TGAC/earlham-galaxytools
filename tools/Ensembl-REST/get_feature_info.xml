@@ -4,14 +4,14 @@
         <requirement type="package" version="2.12.4">requests</requirement>
         <requirement type="package" version="1.10.0">six</requirement>
     </requirements>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
-python $__tool_directory__/get_feature_info.py
+python '$__tool_directory__/get_feature_info.py'
 -e $expand
 -f $format_selector
--i "$input"
+-i '$input'
 -s $species_selector
-> "$output"
+> '$output'
 ]]>
     </command>
 

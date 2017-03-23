@@ -2,13 +2,13 @@
     <requirements>
         <requirement type="set_environment">EXPORT_DIR_PREFIX</requirement>
     </requirements>
-    <command>
+    <command detect_errors="aggressive">
 <![CDATA[
-python $__tool_directory__/export_to_cluster.py -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
+python '$__tool_directory__/export_to_cluster.py' -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
 #for $d in $datasets
     '${d}' '${d.hid}: ${d.name}' '${d.ext}'
 #end for
-> $log
+> '$log'
 ]]>
     </command>
     <inputs>

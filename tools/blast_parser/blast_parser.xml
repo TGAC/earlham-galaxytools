@@ -3,11 +3,11 @@
         Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
     </description>
 
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
-perl $__tool_directory__/blast_parser.pl
-$input
-> $output
+perl '$__tool_directory__/blast_parser.pl'
+'$input'
+> '$output'
 ]]>
     </command>
 

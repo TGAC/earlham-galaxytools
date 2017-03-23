@@ -24,15 +24,16 @@ if len(args) % 3 != 0:
 real_export_dir = os.path.realpath(options.export_dir)
 dir_prefix = options.dir_prefix.rstrip(os.sep)
 if not real_export_dir.startswith(dir_prefix):
-    sys.exit("%s must be a subdirectory of %s" % (options.export_dir, dir_prefix))
+    raise Exception("%s must be a subdirectory of %s" % (options.export_dir, dir_prefix))
 if not os.path.exists(real_export_dir):
-    sys.exit("%s does not exist or it is not accessible by the Galaxy user" % options.export_dir)
+    raise Exception("%s does not exist or it is not accessible by the Galaxy user" % options.export_dir)
 if not os.path.isdir(real_export_dir):
-    sys.exit("%s is not a directory" % options.export_dir)
+    raise Exception("%s is not a directory" % options.export_dir)
 
 dataset_paths = args[::3]
 dataset_names = args[1::3]
 dataset_exts = args[2::3]
+exit_code = 0
 for dp, dn, de in zip(dataset_paths, dataset_names, dataset_exts):
     """
     Copied from get_valid_filename from django
@@ -46,5 +47,6 @@ for dp, dn, de in zip(dataset_paths, dataset_names, dataset_exts):
         print("Dataset '%s' copied to '%s'" % (dn, dest))
     except Exception as e:
         msg = "Error copying dataset '%s' to '%s', %s" % (dn, dest, e)
-        print(msg)
-        sys.stderr.write(msg)
+        print(msg, file=sys.stderr)
+        exit_code = 1
+sys.exit(exit_code)
