@@ -24,11 +24,11 @@
         <requirement type="package" version="2.12.4">requests</requirement>
         <requirement type="package" version="1.10.0">six</requirement>
     </requirements>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
-python $__tool_directory__/get_genetree.py
+python '$__tool_directory__/get_genetree.py'
 --id_type $input_type
--i "$input"
+-i '$input'
 -g $species_selector
 --format ${output_format.output_format_selector}
 #if $output_format.output_format_selector == 'json'
@@ -45,7 +45,7 @@ python $__tool_directory__/get_genetree.py
 #else
     --nh_format $output_format.nh_format
 #end if
-> "$output"
+> '$output'
 ]]>
     </command>
 

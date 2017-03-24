@@ -3,7 +3,7 @@
     <requirements>
         <requirement type="package" version="0.5.1">hcluster_sg</requirement>
     </requirements>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
 hcluster_sg
 -w $w
@@ -16,11 +16,11 @@ $O.O_selector
     -r $O.r
 #end if
 #if $C
-    -C $C
+    -C '$C'
 #end if
 -L $L
-$inputFile
-> $outputFile
+'$inputFile'
+> '$outputFile'
 ]]>
     </command>
     <inputs>

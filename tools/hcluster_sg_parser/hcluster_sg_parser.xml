@@ -1,6 +1,6 @@
 <tool id="hcluster_sg_parser" name="hcluster_sg parser" version="0.2.0">
     <description>converts hcluster_sg 3-column output into lists of IDs</description>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
 python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
 #if str($min_elems)

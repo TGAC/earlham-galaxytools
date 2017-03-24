@@ -4,15 +4,15 @@
         <requirement type="package" version="2.12.4">requests</requirement>
         <requirement type="package" version="1.10.0">six</requirement>
     </requirements>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
-python $__tool_directory__/get_sequences.py
+python '$__tool_directory__/get_sequences.py'
 -s $species_selector
 --expand_3prime $expand_3prime
 --expand_5prime $expand_5prime
 -t $type_selector
--i "$input"
-> "$output"
+-i '$input'
+> '$output'
 ]]>
     </command>
 

@@ -4,7 +4,7 @@
         <requirement type="package" version="3.3a">miranda</requirement>
     </requirements>
     <version_command>miranda --version|grep 'miranda v'</version_command>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
 miranda '$microrna' '$query'
 #if str($sc)

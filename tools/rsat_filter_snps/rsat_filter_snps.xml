@@ -1,10 +1,10 @@
 <tool id="rsat_filter_snps" name="Filter SNPs" version="0.1">
     <description>in RSAT Matrix Scan output</description>
-    <command>
+    <command detect_errors="exit_code">
 <![CDATA[
-python "$__tool_directory__/rsat_filter_snps.py"
+python '$__tool_directory__/rsat_filter_snps.py'
 --strand $strand
-"$rsat_out" "$snps" > "$output"
+'$rsat_out' '$snps' > '$output'
 ]]>
     </command>
     <inputs>
