@@ -12,8 +12,8 @@
     <command>
 <![CDATA[
         #if str($input_type.filter_fasta) == 'yes'
-            #set $input = '-infile=stdin'
-            python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' |
+            #set $input = 'temp.fasta'
+            python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' > temp.fasta &&
         #end if
 
         #set $method_opt = ''
