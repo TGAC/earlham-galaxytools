@@ -1,0 +1,38 @@
+<tool id="MultiPEN-enrichment-KEGG" name="Enrichment with KEGG" version="0.0.3">
+    <description> (enrichment with KEGG)</description>
+    <requirements>
+        <requirement type="package" version="0.0.3">MultiPEN</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    <command>
+<![CDATA[
+    run_MultiPEN_slurm.sh EnrichmentKEGG ./ "$rankings"
+]]>
+    </command>
+    <inputs>
+        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of features (genes and/or metabolites). The rankings must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol names for genes or chEBI IDs for metabolites), 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)." />
+    </inputs>
+    <outputs>
+        <data format="txt" name="enrichment-KEGG" label="${tool.name}: over-representation analysis with KEGG" from_work_dir="enrichment-KEGG.txt" />
+        <data format="pdf" name="enrichment-KEGG" label="${tool.name}: over-representation analysis with KEGG" from_work_dir="enrichment-KEGG_BP.pdf" />
+        <data format="txt" name="gse-KEGG" label="Gene set enrichment analysis with KEGG" from_work_dir="gse-KEGG.txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="rankings" ftype="tabular" value="MultiPEN-Rankings_lambda0.0001.txt" />
+            <output name="enrichment-KEGG" file="enrichment-KEGG" ftype="txt" />
+            <output name="enrichment-KEGG" file="enrichment-KEGG_BP" ftype="pdf" />
+            <output name="gse-KEGG" file="gse-KEGG" ftype="pdf" />
+        </test>
+    </tests>
+    <help>
+        MultiPEN includes a Wrapper to use the R package ClusterProfiler [Yu et al., 2012] to perform over-representation analysis with KEGG.
+<![CDATA[
+]]>
+    </help>
+    <citations>
+        Yu G, Wang L, Han Y and He Q (2012). “clusterProfiler: an R package for comparing biological themes among gene clusters.” OMICS: A Journal of Integrative Biology, 16(5), pp. 284-287. doi: 10.1089/omi.2011.0118.
+    </citations>
+</tool>
