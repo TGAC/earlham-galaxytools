@@ -6,12 +6,12 @@
     <stdio>
         <exit_code range="1:" level="fatal" />
     </stdio>
-    <command>
-<![CDATA[
-    run_MultiPEN_slurm.sh CrossValidation ./ "$ExpressionData" "$Interactions" "$SampleClass" $lambdas $folds $MaxIter
-    
-]]>
-    </command>
+    <command><![CDATA[
+run_MultiPEN_slurm.sh CrossValidation ./ '$ExpressionData' '$Interactions' '$SampleClass' '$lambdas' $folds
+#if str($MaxIter)
+    $MaxIter
+#end if
+    ]]></command>
     <inputs>
         <param name="ExpressionData" type="data" format="tabular" label="Expression Data" help="Experimental Data which includes: gene expression and/or metabolite levels" />
         <param name="Interactions" type="data" format="tabular" label="Interaction Matrix" help="Molecular interaction network, where every interaction is defined by three elements: the source  node (name of gene and/or metabolite), the target node (name of gene and/or metabolite) and the weight for the interaction (a real number in the range [0,1]), i.e., the confidence level. The interaction matrix is provided as a tabular file with three columns: source, target and weight, and where each row corresponds to an interaction." />
@@ -21,8 +21,8 @@
         <param name="MaxIter" type="integer" value="100" optional="true" label="Maximum number of iterations for optimisation" help="This is an optional parameter, by default this is set to 100" />
     </inputs>
     <outputs>
-        <data format="txt" name="statistics" label="${tool.name} on ${on_string} (lambda $lambdas): cross-validation_stats" from_work_dir="cross-validation_stats.txt" />
-        <data format="txt" name="edges-for-cross-validation" label="${tool.name} on ${on_string} (lambda $lambdas): edges for cross validation" from_work_dir="edges-for-cross-validation.txt" />
+        <data name="statistics" format="txt" label="${tool.name} on ${on_string} (lambda $lambdas): cross-validation_stats" from_work_dir="cross-validation_stats.txt" />
+        <data name="edges-for-cross-validation" format="txt" label="${tool.name} on ${on_string} (lambda $lambdas): edges for cross validation" from_work_dir="edges-for-cross-validation.txt" />
     </outputs>
     <tests>
         <test>
@@ -31,18 +31,15 @@
             <param name="SampleClass" ftype="txt" value="sampleClass.txt" />
             <param name="lambdas" value="-1" />
             <param name="folds" value="3" />
-    
             <output name="statistics" file="cross-validation_stats.txt" ftype="txt" />
             <output name="edges-for-cross-validation" file="edges-for-cross-validation.txt" ftype="txt" />
         </test>
     </tests>
-    <help>
-        The performance of MultiPEN depends on the lambda parameter. Cross validation is used to select the best lambda, by providing statistics such as the largest connected component, the number of selected features and the area under the curve.
-        To see the documentation for MultiPEN visit https://github.com/TGAC/MultiPEN.
-<![CDATA[
-]]>
-    </help>
+    <help><![CDATA[
+The performance of MultiPEN depends on the lambda parameter. Cross validation is used to select the best lambda, by providing statistics such as the largest connected component, the number of selected features and the area under the curve.
+To see the documentation for MultiPEN visit https://github.com/TGAC/MultiPEN .
+    ]]></help>
     <citations>
-        GenePEN: analysis of network activity alterations in complex diseases via the pairwise elastic net., Vlassis N, Glaab E., Stat Appl Genet Mol Biol. 2015 Apr;14(2):221-4. doi: 10.1515/sagmb-2014-0045.
+        <citation type="doi">10.1515/sagmb-2014-0045</citation>
     </citations>
 </tool>

@@ -6,34 +6,28 @@
     <stdio>
         <exit_code range="1:" level="fatal" />
     </stdio>
-    <command>
-<![CDATA[
-    run_MultiPEN_slurm.sh StringDBNetwork ./ "$geneList" "$SpeciesCode" $threshold $networkFileName
-]]>
-    </command>
+    <command><![CDATA[
+run_MultiPEN_slurm.sh StringDBNetwork ./ '$geneList' $SpeciesCode $threshold '$networkFileName'
+    ]]></command>
     <inputs>
-        <param name="geneList" type="data" format="tabular" label="list of genes" help="List of genes (use symbol names for genes) to compile a network." />
-        <param name="SpeciesCode" type="integer" value="" label="Code for your species (i.e., 9606 for humans)" help="Use symbol names for genes to compile a network." />
+        <param name="geneList" type="data" format="tabular" label="list of genes" help="List of genes (use symbol names for genes) to compile a network" />
+        <param name="SpeciesCode" type="integer" value="" label="Code for your species (i.e., 9606 for humans)" help="Use symbol names for genes to compile a network" />
         <param name="threshold" type="float" value="0.60" label="threshold for the combined score for the interactions" help="Default value set to 0.60" />
         <param name="networkFileName" type="text" value="network.txt" label="Name your network" help="" />
-
-
     </inputs>
     <outputs>
-        <data format="txt" name="$neworkFileName" label="${tool.name}: use list of genes to compile PPI network using StringDB" from_work_dir="$networkFileName.txt" />
+        <data name="networkFileName" format="txt" label="${tool.name}: use list of genes to compile PPI network using StringDB" from_work_dir="$networkFileName.txt" />
     </outputs>
     <tests>
         <test>
             <param name="geneList" ftype="tabular" value="geneList.txt" />
-            <output name="$networkFileName" file="networkFromGeneList.txt" ftype="txt" />
+            <output name="networkFileName" file="networkFromGeneList.txt" ftype="txt" />
         </test>
     </tests>
-    <help>
-        MultiPEN includes a Wrapper to use the R package STRINGdb (bioconductor): Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
-<![CDATA[
-]]>
-    </help>
+    <help><![CDATA[
+MultiPEN includes a Wrapper to use the R package STRINGdb (bioconductor): Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
+    ]]></help>
     <citations>
-        al. FAe (2013). “STRING v9.1: protein-protein interaction networks, with increased coverage and integration.” Nucleic Acids Research (Database issue), 41.
+        <citation type="doi">10.1093/nar/gks1094</citation>
     </citations>
 </tool>
