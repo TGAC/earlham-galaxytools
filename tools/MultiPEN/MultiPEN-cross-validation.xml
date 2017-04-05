@@ -1,44 +1,45 @@
-<tool id="multipen-cross-validation" name="crossValidation" version="0.0.2">
-    <description>feature selection from expression levels</description>
+<tool id="MultiPEN-cross-validation" name="Cross Validation" version="0.0.3">
+    <description> to select the best lambda for MultiPEN (regularisation parameter) </description>
     <requirements>
-        <requirement type="package" version="0.0.2">MultiPEN</requirement>
+        <requirement type="package" version="0.0.3">MultiPEN</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
     </stdio>
-    <command>
-<![CDATA[
-    run_MultiPEN.sh cross_validation ./ "$expr_levels" "$interaction_network" "$classes" $lambda $n_folds $max_iter
-    
-]]>
-    </command>
+    <command><![CDATA[
+run_MultiPEN_slurm.sh CrossValidation ./ '$ExpressionData' '$Interactions' '$SampleClass' '$lambdas' $folds
+#if str($MaxIter)
+    $MaxIter
+#end if
+    ]]></command>
     <inputs>
-        <param name="expr_levels" type="data" format="tabular" label="Expression levels for features" help="Gene expression and/or metabolite levels" />
-        <param name="interaction_network" type="data" format="tabular" label="Interaction Network" help="Matrix with the interactions, each interaction is of the form: [node, node, interaction_weight]" />
-        <param name="classes" type="data" format="txt" label="Classes for the samples" help="1 for case or 0 for control" />
-        <param name="lambda" type="float" value="" label="Lambda for the optimisation function" help="" />
-        <param name="n_folds" type="integer" value="" label="N-folds for cross validation" help="" />
-        <param name="max_iter" type="integer" value="" optional="true" label="Maximum number of iterations for optimisation" help="Optional parameter, by default this is set to 100" />
+        <param name="ExpressionData" type="data" format="tabular" label="Expression Data" help="Experimental Data which includes: gene expression and/or metabolite levels" />
+        <param name="Interactions" type="data" format="tabular" label="Interaction Matrix" help="Molecular interaction network, where every interaction is defined by three elements: the source  node (name of gene and/or metabolite), the target node (name of gene and/or metabolite) and the weight for the interaction (a real number in the range [0,1]), i.e., the confidence level. The interaction matrix is provided as a tabular file with three columns: source, target and weight, and where each row corresponds to an interaction." />
+        <param name="SampleClass" type="data" format="txt" label="Sample Class" help="Tabular file with two columns: sample and class. The sample column contains the names of all samples, which corresponds to the columns in 'ExpressionData'. The class for each sample is 1 for cases and 0 for control" />
+        <param name="lambdas" type="text" value="-1" label="Lambda(s) to perform cross validation" help="Provide a list of lambdas in the format: [lambda_1 lambda_2 ... lambda_3] or use -1 for default set of lambdas" />
+        <param name="folds" type="integer" value="3" label="number of folds used for cross validation" help="" />
+        <param name="MaxIter" type="integer" value="100" optional="true" label="Maximum number of iterations for optimisation" help="This is an optional parameter, by default this is set to 100" />
     </inputs>
     <outputs>
-        <data format="txt" name="statistics" label="${tool.name} on ${on_string} (lambda $lambda): cross-validation_statistics" from_work_dir="cross-validation_stats.txt" />
+        <data name="statistics" format="txt" label="${tool.name} on ${on_string} (lambda $lambdas): cross-validation_stats" from_work_dir="cross-validation_stats.txt" />
+        <data name="edges-for-cross-validation" format="txt" label="${tool.name} on ${on_string} (lambda $lambdas): edges for cross validation" from_work_dir="edges-for-cross-validation.txt" />
     </outputs>
     <tests>
         <test>
-            <param name="expr_levels" ftype="tabular" value="X.txt" />
-            <param name="interaction_network" ftype="tabular" value="E.txt" />
-            <param name="classes" ftype="txt" value="Y.txt" />
-            <param name="lambda" value="0.1" />
-            <param name="n_folds" value="1" />
-    
+            <param name="ExpressionData" ftype="tabular" value="expressionData.txt" />
+            <param name="Interactions" ftype="tabular" value="interactionMatrix.txt" />
+            <param name="SampleClass" ftype="txt" value="sampleClass.txt" />
+            <param name="lambdas" value="-1" />
+            <param name="folds" value="3" />
             <output name="statistics" file="cross-validation_stats.txt" ftype="txt" />
-            
+            <output name="edges-for-cross-validation" file="edges-for-cross-validation.txt" ftype="txt" />
         </test>
     </tests>
-    <help>
-<![CDATA[
-]]>
-    </help>
+    <help><![CDATA[
+The performance of MultiPEN depends on the lambda parameter. Cross validation is used to select the best lambda, by providing statistics such as the largest connected component, the number of selected features and the area under the curve.
+To see the documentation for MultiPEN visit https://github.com/TGAC/MultiPEN .
+    ]]></help>
     <citations>
+        <citation type="doi">10.1515/sagmb-2014-0045</citation>
     </citations>
 </tool>
