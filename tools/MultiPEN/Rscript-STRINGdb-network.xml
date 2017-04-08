@@ -25,7 +25,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        MultiPEN includes a Wrapper to use the R package STRINGdb (bioconductor): Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
+        This wrapper compiles a PP network from a list of genes, using the R package STRINGdb (bioconductor): Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
     ]]></help>
     <citations>
         <citation type="doi">10.1093/nar/gks1094</citation>
