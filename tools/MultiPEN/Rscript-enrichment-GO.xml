@@ -6,7 +6,6 @@
         <requirement type="package" version="1.10">r-BBmisc</requirement>
         <requirement type="package" version="3.3.0">bioconductor-GO.db</requirement>
         <requirement type="package" version="3.3.0">bioconductor-org.Hs.eg.db</requirement>
-        <requirement type="package" version="0.4.1">r-pacman</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
@@ -15,7 +14,7 @@
         Rscript '$__tool_directory__'/enrichmentGO.R '$rankings'
     ]]></command>
     <inputs>
-        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of features (genes and/or metabolites). The rankings must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol names for genes or chEBI IDs for metabolites), 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)." />
+        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of genes which must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol gene names, 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)." />
     </inputs>
     <outputs>
         <data name="enrichment-GO" format="txt" label="${tool.name}: over-representation analysis with Gene Ontology" from_work_dir="enrichment-GO.txt" />
