@@ -7,7 +7,7 @@
         <exit_code range="1:" level="fatal" />
     </stdio>
     <command><![CDATA[
-run_MultiPEN_slurm.sh EnrichmentKEGG ./ '$rankings'
+        Rscript '$__tool_directory__'/enrichmentKEGG.R '$rankings'
     ]]></command>
     <inputs>
         <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of features (genes and/or metabolites). The rankings must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol names for genes or chEBI IDs for metabolites), 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)" />
