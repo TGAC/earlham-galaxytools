@@ -1,7 +1,10 @@
 <tool id="MultiPEN-enrichment-KEGG" name="Enrichment with KEGG" version="0.0.3">
     <description> (enrichment with KEGG)</description>
     <requirements>
-        <requirement type="package" version="0.0.3">MultiPEN</requirement>
+        <requirement type="package" version="3.3.1">r</requirement>
+        <requirement type="package" version="3.0.5">bioconductor-clusterProfiler</requirement>
+        <requirement type="package" version="1.10">r-BBmisc</requirement>
+        <requirement type="package" version="3.3.0">bioconductor-org.Hs.eg.db</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
