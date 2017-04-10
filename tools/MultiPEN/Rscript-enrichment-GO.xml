@@ -1,5 +1,5 @@
 <tool id="enrichGO" name="enrichGO" version="0.0.3">
-    <description> (enrichment with Gene Ontology)</description>
+    <description> over-representation and GSE analysis with Gene Ontology</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>
         <requirement type="package" version="3.0.5">bioconductor-clusterProfiler</requirement>
@@ -14,7 +14,7 @@
         Rscript '$__tool_directory__'/enrichmentGO.R '$rankings'
     ]]></command>
     <inputs>
-        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of genes which must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol gene names, 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)." />
+        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of genes which must be specified in a tab delimited text file with (at least) three columns: 'name' (this is the gene names), 'value' (used to rank the genes) and 'ranking' (where ranking 1 represent the most important feature)." />
     </inputs>
     <outputs>
         <data name="enrichment-GO" format="txt" label="${tool.name}: over-representation analysis with Gene Ontology" from_work_dir="enrichment-GO.txt" />
@@ -34,9 +34,12 @@
         </test>
     </tests>
     <help><![CDATA[
-MultiPEN includes a Wrapper to use the R package clusterProfiler to perform over-representation analysis with Gene Ontology.
+        This wrapper performs over-representation and gene set enrichment analysis from a list of genes using the bioconductor R package clusterProfiler and Gene Ontology.
     ]]></help>
     <citations>
         <citation type="doi">10.1089/omi.2011.0118</citation>
+        <citation type="doi">10.1038/75556</citation>
+        <citation type="doi">https://doi.org/10.1093/nar/gku1179</citation>
+        
     </citations>
 </tool>
