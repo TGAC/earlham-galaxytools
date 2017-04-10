@@ -1,5 +1,5 @@
-<tool id="MultiPEN-enrichment-KEGG" name="Enrichment with KEGG" version="0.0.3">
-    <description> (enrichment with KEGG)</description>
+<tool id="enrichKEGG" name="enrichKEGG" version="0.0.3">
+    <description> over-representation and GSE analysis with KEGG</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>
         <requirement type="package" version="3.0.5">bioconductor-clusterProfiler</requirement>
@@ -13,7 +13,7 @@
         Rscript '$__tool_directory__'/enrichmentKEGG.R '$rankings'
     ]]></command>
     <inputs>
-        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of features (genes and/or metabolites). The rankings must be specified in a tab delimited text file with (at least) three columns: 'name' (use symbol names for genes or chEBI IDs for metabolites), 'value' (used to rank the features) and 'ranking' (ranking 1 represent the most important feature)" />
+        <param name="rankings" type="data" format="tabular" label="Rankings for all features" help="Ranking of genes which should be specified in a tabular delimited text file with (at least) three columns: 'name' (this are gene names), 'value' (used to rank the genes) and 'ranking' (where ranking 1 represent the most important feature)" />
     </inputs>
     <outputs>
         <data name="enrichment-KEGG" format="txt" label="${tool.name}: over-representation analysis with KEGG" from_work_dir="enrichment-KEGG.txt" />
@@ -29,9 +29,24 @@
         </test>
     </tests>
     <help><![CDATA[
-MultiPEN includes a Wrapper to use the R package ClusterProfiler [Yu et al., 2012] to perform over-representation analysis with KEGG.
+        This wrapper performs over-representation and gene set enrichment analysis from a list of genes using the bioconductor R package clusterProfiler and KEGG.
     ]]></help>
     <citations>
         <citation type="doi">10.1089/omi.2011.0118</citation>
+        <citation type="doi">10.1093/nar/gkw1092</citation>
+        <citation type="doi">10.1093/nar/gkv1070</citation>
+        <citation type="bibtex">@article{Kanehisa2000,
+            Author = {Kanehisa, M and Goto, S},
+            Crdt = {1999/12/11 09:00},
+            Date = {2000 Jan 01},
+            Journal = {Nucleic Acids Res},
+            Month = {Jan},
+            Number = {1},
+            Oid = {NLM: PMC102409},
+            Pages = {27--30},
+            Title = {KEGG: kyoto encyclopedia of genes and genomes.},
+            Volume = {28},
+            Year = {2000}}
+            </citation>
     </citations>
 </tool>
