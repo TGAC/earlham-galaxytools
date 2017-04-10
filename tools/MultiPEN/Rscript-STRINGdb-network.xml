@@ -1,5 +1,5 @@
 <tool id="STRINGdb-network" name="STRINGdb-network" version="0.0.3">
-    <description> Compiles network from list of genes</description>
+    <description> Compile network from list of genes</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>
         <requirement type="package" version="3.0.5">bioconductor-STRINGdb</requirement>
@@ -8,11 +8,11 @@
         <exit_code range="1:" level="fatal" />
     </stdio>
     <command><![CDATA[
-        Rscript '$__tool_directory__'/StringDBNetwork ./ '$geneList' $SpeciesCode $threshold '$networkFileName'
+        Rscript '$__tool_directory__'/compileNetworkStringDB.R ./ '$geneList' $SpeciesCode $threshold '$networkFileName'
     ]]></command>
     <inputs>
         <param name="geneList" type="data" format="tabular" label="list of genes" help="List of genes (use symbol gene names) to compile a network" />
-        <param name="SpeciesCode" type="integer" value="" label="Code for your species (i.e., 9606 for humans)" help="Use symbol names for genes to compile a network" />
+        <param name="SpeciesCode" type="integer" value="" label="NCBI taxonomy identifiers for your organism (i.e., 9606 for Human, 10090 for mouse)" help="If you don’t know your organism's identifier, you can search the NCBI Taxonomy from http://www.nlm.nih.gov/taxonomy"/>
         <param name="threshold" type="float" value="0.60" label="threshold for the combined score for the interactions" help="Default value set to 0.60" />
     </inputs>
     <outputs>
@@ -25,7 +25,7 @@
         </test>
     </tests>
     <help><![CDATA[
-        This wrapper compiles a PP network from a list of genes, using the R package STRINGdb (bioconductor): Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
+        This wrapper compiles a PPI network from a list of genes, using the bioconductor R package STRINGdb: Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
     ]]></help>
     <citations>
         <citation type="doi">10.1093/nar/gks1094</citation>
