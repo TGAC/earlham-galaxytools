@@ -1,4 +1,4 @@
-<tool id="STRINGdb-network" name="STRINGdb-network" version="0.0.3">
+<tool id="stringdb network" name="stringdb-network" version="0.0.3">
     <description> Compile network from list of genes</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>

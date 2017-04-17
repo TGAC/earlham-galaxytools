@@ -1,4 +1,4 @@
-<tool id="enrichKEGG" name="enrichKEGG" version="0.0.3">
+<tool id="enrich kegg" name="enrich kegg" version="0.0.3">
     <description> over-representation and GSE analysis with KEGG</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>

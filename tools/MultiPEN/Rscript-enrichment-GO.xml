@@ -1,4 +1,4 @@
-<tool id="enrichGO" name="enrichGO" version="0.0.3">
+<tool id="enrich go" name="enrich go" version="0.0.3">
     <description> over-representation and GSE analysis with Gene Ontology</description>
     <requirements>
         <requirement type="package" version="3.3.1">r</requirement>
