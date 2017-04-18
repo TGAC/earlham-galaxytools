@@ -1,0 +1,35 @@
+<tool id="genetree_parser" name="Parses gene tree" version="0.1.1">
+    <description>Parses JSON formatted gene tree from Ensembl REST API</description>
+    <command>
+        <![CDATA[
+            python $__tool_directory__/genetree_parser.py
+            -i $input
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="input" type="data" format="json" label="Gene Tree" />
+    </inputs>
+
+    <outputs>
+        <data name="output_genelist" format="txt" label="Gene list for $tool.name on ${on_string}" from_work_dir="gene.txt" />
+        <data name="output_cigarlist" format="tabular" label="CIGARs for $tool.name on ${on_string}" from_work_dir="protein.tabular" />
+        <data name="output_specieslist" format="txt" label="Species list for $tool.name on ${on_string}" from_work_dir="species.txt" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="input" value="data.json" />
+            <output name="output_genelist" file="gene.txt" />
+            <output name="output_genelist" file="protein.tabular" />
+            <output name="output_genelist" file="species.txt" />
+        </test>
+    </tests>
+
+    <help> <![CDATA[
+        Simple parser for json formatted genetree returns from Ensembl REST API to get Gene IDs and Protein IDs with CIGAR information and species list.
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>

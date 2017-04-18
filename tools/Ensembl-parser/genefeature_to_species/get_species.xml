@@ -1,0 +1,32 @@
+<tool id="species_list_generator" name="species list generator" version="0.1.1">
+    <description>Fetches species list from gene feature files</description>
+    <requirements>
+        <requirement type="package" version="2.90">perl_json</requirement>
+    </requirements>
+    <command>
+    <![CDATA[
+        python $__tool_directory__/get_species.py 
+        -j $genesFile
+        > $outputFile
+    ]]>
+    </command>
+    <inputs>
+    <param name="genesFile" type="data" format="json" label="Gene file" help="Gene file in JSON format" />
+    </inputs>
+    <outputs>
+        <data type="data" format="txt" name="outputFile" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="genesFile" ftype="json" value="gene_feature.json" />
+            <param name="outputFile" ftype="txt" value="species.txt" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+        Fetches species information from Gene feature information file in JSON format.
+    ]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
