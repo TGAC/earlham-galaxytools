@@ -1,0 +1,47 @@
+<tool id="get_uniprot_info" name="Get UniProt features by ID" version="0.1.1">
+    <description>using REST API</description>
+    <command>
+<![CDATA[
+perl $__tool_directory__/uniprot_feature.pl
+$filelist
+$format_selector
+> "$output"
+]]>
+    </command>
+
+    <inputs>
+    <param name="filelist" type="data" format="txt" label="List of UniProt IDs" />
+    <param name="format_selector" type="select" label="Output format">
+        <option value="txt" selected="true">Text</option>
+        <option value="fasta">Fasta</option>
+        <option value="rdf">RDF</option>
+        <option value="xml">XML</option>
+        <option value="gff">GFF</option>
+    </param>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="txt" label="$(tool.name) on ${on_string}" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="filelist"  value="uniprot_id.txt" />
+            <param name="format_selector" value="txt" />
+            <output name="outputFile" file="uniprot.txt" />
+        </test>
+    </tests>
+
+    <help>
+<![CDATA[
+**What it does**
+
+Retrieve feature information in text format from UniProt using its REST API.
+
+http://www.uniprot.org/uniprot/P12345.txt
+
+]]>
+    </help>
+    <citations>
+    </citations>
+</tool>
