@@ -1,0 +1,376 @@
+<tool id="smina" name="smina" version="1.0">
+    <description>Scoring and Minimization with AutoDock Vina</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+        cat $input.receptor > receptor.pdbqt;
+        cat $input.ligand > ligand.pdbqt;
+        $__tool_directory__/tools/smina/smina.static 
+                                                    --receptor receptor.pdbqt 
+                                                    --ligand ligand.pdbqt 
+
+                                                    #if $input.flex
+                                                    --flex $input.flex
+                                                    #end if
+                                                    #if $input.flexres
+                                                    --flexres $input.flexres
+                                                    #end if
+                                                    #if $input.flexdist_ligand
+                                                    --flexdist_ligand $input.flexdist_ligand
+                                                    #end if
+                                                    #if $input.flexdist
+                                                    --flexdist $input.flexdist
+                                                    #end if
+
+                                                    --center_x $search_space.center_x 
+                                                    --center_y $search_space.center_y
+                                                    --center_z $search_space.center_z 
+                                                    --size_x $search_space.size_x
+                                                    --size_y $search_space.size_y
+                                                    --size_z $search_space.size_z
+
+                                                    #if $search_space.autobox_ligand
+                                                    --autobox_ligand $search_space.autobox_ligand 
+                                                    #end if 
+                                                    #if $search_space.autobox_add 
+                                                    --autobox_add $search_space.autobox_add
+                                                    #end if
+                                                    #if $search_space.no_lig=="true"
+                                                    --no_lig
+                                                    #end if 
+
+                                                    --out ligand_out.pdbqt
+                                                    #if $output_sect.out_flex=="true"
+                                                    --out_flex output_flex
+                                                    #end if                                                    
+                                                    #if $output_sect.log=="true"
+                                                    --log output_log
+                                                    #end if
+                                                    #if $output_sect.atom_terms=="true"
+                                                    --atom_terms output_atom_terms
+                                                    #end if
+                                                    #if $output_sect.atom_term_data=="true"
+                                                    --atom_term_data
+                                                    #end if
+
+                                                    --scoring $scoring_and_minimization.scoring 
+                                                    #if $scoring_and_minimization.custom_scoring
+                                                    --custom_scoring $scoring_and_minimization.custom_scoring
+                                                    #end if
+                                                    #if $scoring_and_minimization.custom_atoms
+                                                    --custom_atoms $scoring_and_minimization.custom_atoms 
+                                                    #end if
+                                                    #if $scoring_and_minimization.score_only=="true"
+                                                    --score_only 
+                                                    #end if
+                                                    #if $scoring_and_minimization.local_only=="true"
+                                                    --local_only 
+                                                    #end if
+                                                    #if $scoring_and_minimization.minimize=="true"
+                                                    --minimize 
+                                                    #end if 
+                                                    #if $scoring_and_minimization.randomize_only=="true"    
+                                                    --randomize_only  
+                                                    #end if 
+                                                    --minimize_iters $scoring_and_minimization.minimize_iters 
+                                                    #if $scoring_and_minimization.accurate_line=="true"
+                                                    --accurate_line
+                                                    #end if
+                                                    #if $scoring_and_minimization.minimize_early_term=="true"
+                                                    --minimize_early_term
+                                                    #end if
+                                                    #if $scoring_and_minimization.approximation
+                                                    --approximation $scoring_and_minimization.approximation
+                                                    #end if
+                                                    #if $scoring_and_minimization.factor
+                                                    --factor $scoring_and_minimization.factor
+                                                    #end if
+                                                    #if $scoring_and_minimization.force_cap
+                                                    --force_cap $scoring_and_minimization.force_cap
+                                                    #end if
+                                                    #if $scoring_and_minimization.user_grid
+                                                    --user_grid $scoring_and_minimization.user_grid
+                                                    #end if
+                                                    --user_grid_lambda $scoring_and_minimization.user_grid_lambda
+                                                    #if $scoring_and_minimization.print_terms=="true"
+                                                    --print_terms
+                                                    #end if
+                                                    #if $scoring_and_minimization.print_atom_types=="true"
+                                                    --print_atom_types
+                                                    #end if
+
+                                                    #if $misc.cpu
+                                                    --cpu $misc.cpu
+                                                    #end if
+                                                    #if $misc.seed
+                                                    --seed $misc.seed
+                                                    #end if
+                                                    --exhaustiveness $misc.exhaustiveness
+                                                    --num_modes $misc.num_modes
+                                                    --energy_range $misc.energy_range
+                                                    --min_rmsd_filter $misc.min_rmsd_filter
+                                                    #if $misc.addH=="false"
+                                                    --addH false
+                                                    #end if
+                                                    ;
+    #if $output_sect.out_flex=="true" # 
+        cat output_flex > $out_flex_output; 
+    #end if #    
+    #if $output_sect.log=="true" # 
+        cat output_log > $output_log; 
+    #end if #
+    #if $output_sect.atom_terms=="true" # 
+        cat output_atom_terms > $atom_terms_output; 
+    #end if #
+
+    cat ligand_out.pdbqt > $output
+    ]]>
+    </command>
+    <inputs>
+        <section name="input" title="Input" expanded="True">
+            <param name="receptor" type="data" format="pdbqt" label="Rigid part of the receptore" help="(--receptor)"/>
+            <param name="ligand" type="data" format="data" label="Ligand(s)" help="(--ligand)"/>
+            <param name="flex" type="data" format="pdbqt" label="Flexible side chains, if any" optional="true" help="(--flex)"/>
+            <param name="flexres" type="text" label="Flexible side chains specified by comma separated list of chain:resid" optional="true" help="(--flexres)"/>
+            <param name="flexdist_ligand" type="data" format="data" label="Ligand to use for flexdist" optional="true" help="(--flexdist_ligand)"/>
+            <param name="flexdist" type="float" label="Set all side chains within specified distance to flexdist_ligand to flexible" optional="true" help="(--flexdist)"/>
+        </section>
+        <section name="search_space" title="Search space" expanded="True">
+            <param name="center_x" type="float" value="0" label="X coordinate of the center" help="(--center_x)"/>
+            <param name="center_y" type="float" value="0" label="Y coordinate of the center" help="(--center_y)"/>
+            <param name="center_z" type="float" value="0" label="Z coordinate of the center" help="(--center_z)"/>
+            <param name="size_x" type="integer" value="1" label="Size in the X dimension" help="(--size_x)"/>
+            <param name="size_y" type="integer" value="1" label="Size in the Y dimension" help="(--size_y)"/>
+            <param name="size_z" type="integer" value="1" label="Size in the Z dimension" help="(--size_z)"/>
+
+            <param name="autobox_ligand" type="data" format="data" label="Ligand to use for autobox" optional="true" help="(--autobox_ligand)"/>
+            <param name="autobox_add" type="float" label="Amount of buffer space to add to auto-generated box text" optional="true" help="(--autobox_add)"/>
+            <param name="no_lig" type="select" label="No ligand; for sampling/minimizing flexible residues " help="(--no_lig)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+        </section>
+        <section name="output_sect" title="Output" >
+            <param name="out_flex" type="select" label="Write flexible receptor residues" help="(--out_flex)">
+                <option value="false" selected="true" >No </option>
+                <option value="true" >Yes </option>
+            </param>        
+            <param name="log" type="select" label="Write log file" help="(--log)">
+                <option value="false" selected="true" >No </option>
+                <option value="true" >Yes </option>
+            </param>        
+            <param name="atom_terms" type="select" label="Write per-atom interaction term values" help="(--atom_terms)">
+                <option value="false" selected="true" >No </option>
+                <option value="true" >Yes </option>
+            </param>
+            <param name="atom_term_data" type="select" label="Embedded per-atom interaction terms in output sd data" help="(--atom_term_data)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+        </section>
+        <section name="scoring_and_minimization" title="Scoring and minimization options" >
+            <param name="scoring" type="select" label="Specify alternative builtin scoring function" help="(--scoring)">
+                <option value="default" selected="true">default</option>
+                <option value="ad4_scoring">ad4_scoring</option>
+                <option value="dkoes_fast">dkoes_fast</option>
+                <option value="dkoes_scoring">dkoes_scoring</option>
+                <option value="dkoes_scoring_old">dkoes_scoring_old</option>
+                <option value="vina">vina</option>
+                <option value="vinardo">vinardo</option>
+            </param>
+            <param name="custom_scoring" type="data" format="data" label="Custom scoring function file" optional="true" help="(--custom_scoring)"/>
+            <param name="custom_atoms" type="data" format="data" label="Custom atom type parameters file" optional="true" help="(--custom_atoms)"/>
+            <param name="score_only" type="select" label="Score provided ligand pose" help="(--score_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+                </param>
+            <param name="local_only" type="select" label="Local search only using autobox" help="(--local_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="minimize" type="select" label="Energy minimization" help="(--minimize)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="randomize_only" type="select" label="Generate random poses, attempting to avoid clashes" help="(--randomize_only)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="minimize_iters" type="integer" value="0" label="Number iterations of steepest descent" help="(--minimize_iters)"/>    
+            <param name="accurate_line" type="select" label="Accurate line search" help="(--accurate_line)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>        
+            <param name="minimize_early_term" type="select" label="Stop minimization before convergence conditions are fully met" help="(--minimize_early_term)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="approximation" type="select" label="Approximation" optional="true" help="(--approximation)">
+                <option value="linear">linear</option>
+                <option value="spline">spline</option>
+                <option value="exact">exact</option>
+            </param>
+            <param name="factor" type="float" label="Approximation factor: higher results in a finer-grained approximation" optional="true" help="(--factor)">
+                <validator type="in_range" min="0"/>
+            </param>
+            <param name="force_cap" type="float" label="Max allowed force; lower values more gently minimize clashing structures" optional="true" help="(--force_cap)"/>
+            <param name="user_grid" type="float" label="Autodock map file for user grid data based calculations" optional="true" help="(--user_grid)"/>
+            <param name="user_grid_lambda" type="float" value="-1" label="Scales user_grid and functional scoring"  help="(--user_grid_lambda)"/>
+            <param name="print_terms" type="select" label="Print all available terms with default parameterizations" help="(--print_terms)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+            <param name="print_atom_types" type="select" label="Print all available atom types" help="(--print_atom_types)">
+                <option value="false" selected="true">Do not use this option</option>
+                <option value="true">Use this option</option>
+            </param>
+        </section>
+        <section name="misc" title="Misc" >
+            <param name="cpu" type="integer" label="The number of CPUs to use" optional="true" help="(--cpu)"/>
+            <param name="seed" type="float" label="Explicit random seed" optional="true" help="(--seed)"/>
+            <param name="exhaustiveness" type="integer" value="8" label="Exhaustiveness of the global search" help="(--exhaustiveness)"/>
+            <param name="num_modes" type="integer" value="9" label="Maximum number of binding modes to generate" help="(--num_modes)">
+                <validator type="in_range" min="1"/>
+            </param>
+            <param name="energy_range" type="float" value="3" label="Maximum energy difference between the best binding mode and the worst one displayed (kcal/mol)" help="(--energy_range)"/>
+            <param name="min_rmsd_filter" type="float" value="1" label="Rmsd value used to filter final poses to remove redundancy" help="(--min_rmsd_filter)"/>
+            <param name="addH" type="select" label="Automatically add hydrogens in ligands" help="(--addH)">
+                <option value="false" >Do not use this option</option>
+                <option value="true" selected="true">Use this option</option>
+            </param>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" />
+        <data name="out_flex_output" format="txt" label="smina: flexible receptor residues">
+            <filter>output_sect['out_flex']=="true"</filter>
+        </data>
+        <data name="output_log" format="txt" label="smina: log file">
+            <filter>output_sect['log']=="true"</filter>
+        </data>
+        <data name="atom_terms_output" format="txt" label="smima: per-atom interaction term values">
+            <filter>output_sect['atom_terms']=="true"</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="receptor" value="smina/protein.pdbqt" />
+            <param name="ligand" value="smina/ligand.pdbqt" />
+            <param name="center_x" value="11" />
+            <param name="center_y" value="90.5" />
+            <param name="center_z" value="57.5" />
+            <param name="size_x" value="22" />
+            <param name="size_y" value="24" />
+            <param name="size_z" value="28" />
+            <output name="stand_output" >
+                <assert_contents>
+                    <has_text_matching expression="END" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+************
+Description
+************
+
+A fork of AutoDock Vina that is customized to better support scoring function development and high-performance energy minimization. smina is maintained by David Koes at the University of Pittsburgh and is not directly affiliated with the AutoDock project.
+
+******
+Help
+******
+    **Input:**
+      --receptor arg         rigid part of the receptor (PDBQT)
+      --flex arg             flexible side chains, if any (PDBQT)
+      --ligand arg           ligand(s)
+      --flexres arg          flexible side chains specified by comma separated list 
+                             of chain:resid
+      --flexdist_ligand arg  ligand to use for flexdist
+      --flexdist arg         set all side chains within specified distance to 
+                             flexdist_ligand to flexible
+    
+    **Search space:**
+      --center_x arg        X coordinate of the center
+      --center_y arg        Y coordinate of the center
+      --center_z arg        Z coordinate of the center
+      --size_x arg          size in the X dimension (Angstroms)
+      --size_y arg          size in the Y dimension (Angstroms)
+      --size_z arg          size in the Z dimension (Angstroms)
+      --autobox_ligand arg  ligand to use for autobox
+      --autobox_add arg     amount of buffer space to add to auto-generated box 
+                            (default +4 on all six sides)
+      --no_lig              no ligand; for sampling/minimizing flexible residues
+    
+    **Output (optional):**
+      --out_flex                   write output file for flexible receptor residues
+      --log                        optionally, write log file
+      --atom_terms                 optionally write per-atom interaction term values
+      --atom_term_data             embedded per-atom interaction terms in output sd data
+    
+    **Scoring and minimization options:**
+      --scoring arg                specify alternative builtin scoring function
+      --custom_scoring arg         custom scoring function file
+      --custom_atoms arg           custom atom type parameters file
+      --score_only                 score provided ligand pose
+      --local_only                 local search only using autobox (you probably 
+                                   want to use --minimize)
+      --minimize                   energy minimization
+      --randomize_only             generate random poses, attempting to avoid 
+                                   clashes
+      --minimize_iters arg         number iterations of steepest descent; default 
+                                   scales with rotors and usually isn't sufficient 
+                                   for convergence
+      --accurate_line              use accurate line search
+      --minimize_early_term        stop minimization before convergence conditions 
+                                   are fully met
+      --approximation arg          approximation (linear, spline, or exact) to use
+      --factor arg                 approximation factor: higher results in a 
+                                   finer-grained approximation
+      --force_cap arg              max allowed force; lower values more gently 
+                                   minimize clashing structures
+      --user_grid arg              Autodock map file for user grid data based 
+                                   calculations
+      --user_grid_lambda arg       scales user_grid and functional scoring
+      --print_terms                print all available terms with default 
+                                   parameterizations
+      --print_atom_types           print all available atom types
+    
+    **Misc (optional):**
+      --cpu arg                  the number of CPUs to use (the default is to try 
+                                 to detect the number of CPUs or, failing that, use
+                                 1)
+      --seed arg                 explicit random seed
+      --exhaustiveness arg       exhaustiveness of the global search (roughly 
+                                 proportional to time)
+      --num_modes arg            maximum number of binding modes to generate
+      --energy_range arg         maximum energy difference between the best binding
+                                 mode and the worst one displayed (kcal/mol)
+      --min_rmsd_filter arg      rmsd value used to filter final poses to remove 
+                                 redundancy
+      --addH arg                 automatically add hydrogens in ligands (on by 
+                                 default)
+
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @article{Koes2013,
+              doi = {10.1021/ci300604z},
+              url = {http://dx.doi.org/10.1021/ci300604z},
+              year  = {2013},
+              month = {aug},
+              publisher = {American Chemical Society ({ACS})},
+              volume = {53},
+              number = {8},
+              pages = {1893--1904},
+              author = {David Ryan Koes and Matthew P. Baumgartner and Carlos J. Camacho},
+              title = {Lessons Learned in Empirical Scoring with smina from the {CSAR} 2011 Benchmarking Exercise},
+              journal = {Journal of Chemical Information and Modeling}
+            }
+            @misc{url = {https://sourceforge.net/projects/smina/}}
+        </citation>
+    </citations>
+</tool>

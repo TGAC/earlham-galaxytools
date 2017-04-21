@@ -1,0 +1,99 @@
+<tool id="lisica" name="LiSiCA" version="1.0">
+    <description>A Software for Ligand-Based Virtual Screening</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+        <![CDATA[ 
+        $__tool_directory__/tools/lisica/lisica 
+                                                -R $R
+                                                -T $T
+                                                #if $n
+                                                -n $n
+                                                #end if
+                                                -d $graph_dimension.d
+                                                #if $graph_dimension.d=="2"
+                                                -s $graph_dimension.s
+                                                #end if
+                                                #if $graph_dimension.d=="3"
+                                                -m $graph_dimension.m
+                                                #end if
+                                                #if $h=="true"
+                                                -h
+                                                #end if
+                                                > $output;
+
+        ]]>
+    </command>
+    <inputs>
+        <param name="R" type="data" format="mol2" label="Reference molecule" help="(-R)" />
+        <param name="T" type="data" format="mol2" label="Target molecules" help="(-T)" />
+        <param name="n" type="integer" label="The number of CPUs to use" help="(-n)" optional="true" />
+        <conditional name="graph_dimension">
+            <param name="d" type="select" label="Product graph dimension" help="(-d)" >
+                <option value="2" selected="true">2</option>
+                <option value="3">3</option>
+            </param>
+            <when value="2">
+                <param name="s" type="float" value="1" label="Maximum allowed shortest path size for 2D product graph" help="(-s)" />
+            </when>            
+            <when value="3">
+                <param name="m" type="float" value="1" label="Maximum allowed atom spatial distance for 3D product graph" help="(-m)" />
+            </when>
+        </conditional>
+        <!-- <param name="w" type="integer" label="number of highest ranked molecules to write to output" optional="true" help="(-w)" /> -->
+        <param name="h" type="select" label="Consider hydrogens" help="(-h)" >
+            <option value="true" >
+                Use this option
+            </option>
+            <option value="false" selected="true" >
+                Do not use this option
+            </option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="R" value="lisica/reference.mol2" />
+            <param name="T" value="lisica/database.mol2" />
+            <output name="output" file="lisica/output.txt" />
+        </test>
+    </tests>
+    <help>
+        <![CDATA[
+***********
+Description
+***********
+LiSiCA (Ligand Similarity using Clique Algorithm) is a ligand-based virtual screening software that searches for 2D and 3D similarities between a reference compound and a database of target compounds which should be represented in a Mol2 format. The similarities are expressed using the Tanimoto coefficients and the target compounds are ranked accordingly.
+
+******
+Help
+******
+    Use: ./lisica -R <reference molecule> -T <target molecules> [parameters]
+
+    **Parameters**
+    
+    -n  the number of CPUs to use  
+    -d  product graph dimension, possible input: 2, 3 
+    -m  maximum allowed atom spatial distance for 3D product graph
+    -s  maximum allowed shortest path size for 2D product graph
+    -h  consider hydrogens
+        ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">
+            @article{lešnik2015lisica,
+             title={LiSiCA: A Software for Ligand-Based Virtual Screening and Its Application for the Discovery of Butyrylcholinesterase Inhibitors},
+             author={Lešnik, Samo and Štular, Tanja and Brus, Boris and Knez, Damijan and Gobec, Stanislav and Janežič, Dušanka and Konc, Janez},
+             journal={Journal of chemical information and modeling},
+             volume={55},
+             number={8},
+             pages={1521--1528},
+             year={2015},
+             publisher={ACS Publications}
+            }
+        </citation>
+    </citations>
+</tool>
