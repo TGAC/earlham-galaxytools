@@ -1,5 +1,5 @@
 """
-A simple parser to convert the hcluster_sg 3-column output into lists of IDs, one list for each cluster.
+A simple parser to convert the hcluster_sg output into lists of IDs, one list for each cluster.
 
 When a minimum and/or maximum number of cluster elements are specified, the IDs contained in the filtered-out clusters are collected in the "discarded IDS" output dataset.
 
@@ -21,9 +21,10 @@ def main():
         with open(args[0]) as fh:
             for line in fh:
                 line = line.rstrip()
-                (cluster_id, n_ids, id_list) = line.split('\t')
-                n_ids = int(n_ids)
-                id_list = id_list.replace(',', '\n')
+                line_cols = line.split('\t')
+                cluster_id = line_cols[0]
+                n_ids = int(line_cols[-2])
+                id_list = line_cols[-1].replace(',', '\n')
                 if n_ids >= options.min and n_ids <= options.max:
                     outfile = cluster_id + '_output.txt'
                     with open(outfile, 'w') as f:

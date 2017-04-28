@@ -13,7 +13,7 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
 ]]>
     </command>
     <inputs>
-        <param name="inputFile" type="data" format="tabular" label="hcluster output file in 3-column format" help="3-columns format: cluster_id cluster-size cluster-members" />
+        <param name="inputFile" type="data" format="tabular" label="hcluster output file" help="Tab-separated format: cluster_id [other optional columns] cluster-size cluster-members" />
         <param name="min_elems" type="integer" value="" min="0" optional="true" label="Minimum number of cluster elements" />
         <param name="max_elems" type="integer" value="" min="2" optional="true" label="Maximum number of cluster elements" />
     </inputs>
@@ -43,10 +43,25 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
             </output_collection>
             <output name="discarded" file="discarded.txt" />
         </test>
+        <test>
+            <param name="inputFile" ftype="tabular" value="hcluster_sg1.txt" />
+            <output_collection name="ids_lists" type="list">
+                <element name="0" file="hcluster_sg1_0_output.txt" ftype="txt" />
+                <element name="1" file="hcluster_sg1_1_output.txt" ftype="txt" />
+                <element name="2" file="hcluster_sg1_2_output.txt" ftype="txt" />
+                <element name="3" file="hcluster_sg1_3_output.txt" ftype="txt" />
+                <element name="4" file="hcluster_sg1_4_output.txt" ftype="txt" />
+                <element name="5" file="hcluster_sg1_5_output.txt" ftype="txt" />
+                <element name="6" file="hcluster_sg1_6_output.txt" ftype="txt" />
+                <element name="7" file="hcluster_sg1_7_output.txt" ftype="txt" />
+                <element name="8" file="hcluster_sg1_8_output.txt" ftype="txt" />
+            </output_collection>
+            <output name="discarded" file="empty.txt" />
+        </test>
     </tests>
     <help>
 <![CDATA[
-A simple parser to convert the hcluster_sg 3-column output into lists of IDs, one list for each cluster.
+A simple parser to convert the hcluster_sg output into lists of IDs, one list for each cluster.
 
 When a minimum and/or maximum number of cluster elements are specified, the IDs contained in the filtered-out clusters are collected in the "discarded IDS" output dataset.
 ]]>
