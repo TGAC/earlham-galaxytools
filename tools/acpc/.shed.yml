@@ -1,0 +1,8 @@
+name: acpc
+owner: earlhaminst
+description: tool for ligand-based virtual screening
+homepage_url: https://github.com/UnixJunkie/ACPC
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/acpc/
+long_description: tool for ligand-based virtual screening
+categories: [Computational chemistry]
+
