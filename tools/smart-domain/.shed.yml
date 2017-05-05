@@ -1,0 +1,10 @@
+---
+categories:
+- Sequence Analysis
+description: SMART 
+homepage_url: http://smart.embl-heidelberg.de/ 
+name: smart_domain
+owner: earlhaminst
+long_description: A Galaxy tool designed to run SMART analysis from input FASTA 
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/smart-domain
+type: unrestricted
