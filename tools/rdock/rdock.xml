@@ -3,17 +3,15 @@
     <requirements>
         <requirement type="package" version="2013.1">rDock</requirement>
     </requirements>
-    <command>
-        <![CDATA[ 
-    	ln -s '$inputmol2' inputmol2.mol2 && cat '$inputprm' | sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' | sed 's|REF_MOL.*|REF_MOL ligand.sd|g' > new.prm && 
-        mkdir -p data/ligands &&
-        cp '$inputsd' data/ligands/ligand.sd && 
-        rbcavity -r new.prm -was > rbcavity.log && 
-	rbdock -r new.prm -p dock.prm -n 100 -i '$inputsd' -o output_docking_out > docking_out.log &&
-        sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd &&
-        sdrmsd '$inputsd' sorted.sd > $output_rdock 
-    	]]>
-    </command>
+    <command><![CDATA[
+ln -s '$inputmol2' inputmol2.mol2 && cat '$inputprm' | sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' | sed 's|REF_MOL.*|REF_MOL ligand.sd|g' > new.prm &&
+mkdir -p data/ligands &&
+cp '$inputsd' data/ligands/ligand.sd &&
+rbcavity -r new.prm -was > rbcavity.log &&
+rbdock -r new.prm -p dock.prm -n 100 -i '$inputsd' -o output_docking_out > docking_out.log &&
+sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd &&
+sdrmsd '$inputsd' sorted.sd > $output_rdock
+    ]]></command>
     <inputs>
         <param name="inputprm" format="prm" type="data" label="Receptor param file (contains active site params)" help="(-r)"/>
         <param name="inputmol2" format="mol2" type="data" label="Input MOL2 file" />
@@ -34,16 +32,13 @@
             </output>
         </test>
     </tests>
-    <help>
-        <![CDATA[
-
+    <help><![CDATA[
 *************
-Description 
+Description
 *************
 
 rDock is a fast and versatile Open Source docking program that can be used to dock small molecules against proteins and nucleic acids. It is designed for High Throughput Virtual Screening (HTVS) campaigns and Binding Mode prediction studies.
-        ]]>
-    </help>
+    ]]></help>
     <citations>
         <citation type="doi">10.1371/journal.pcbi.1003571</citation>
     </citations>
