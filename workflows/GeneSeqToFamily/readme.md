@@ -7,7 +7,7 @@ GeneSeqToFamily is an open-source Galaxy workflow based on the [Ensembl GeneTree
 
 ## Installation 
 
-To use this workflow, please [install](https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/) the required tools (list below) into Galaxy from the Galaxy ToolShed. Also [install and export workflow](https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories) from Galaxy ToolShed. 
+To use this workflow, please [install](https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/) the required tools (list below) into Galaxy from the Galaxy ToolShed. Also [install and inport workflow](https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories) from Galaxy ToolShed. 
 
 ### List of tools
 GeneSeqToFamily requires the following tools to run the workflow successfully:
@@ -77,10 +77,11 @@ The Aequatus.js plugin provides an interactive visual representation of the phyl
 ## Pre-print
 
 Pre-print for this work can be found at [bioRxiv server](http://biorxiv.org/content/early/2017/04/19/096529)
+
 ## Project contacts:
 
 * Anil Thanki <Anil.Thanki@earlham.ac.uk>
 * Nicola Soranzo <Nicola.Soranzo@earlham.ac.uk>
 * Robert Davey <Robert.Davey@earlham.ac.uk>
 
-Copyright &copy; 2017 Earlham Institute, Norwich, UK
+Copyright &copy; 2016-2017 Earlham Institute, Norwich, UK
