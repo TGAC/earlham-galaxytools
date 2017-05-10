@@ -23,7 +23,7 @@ $outputFormat
         <param name="SignalP" type="boolean" truevalue="--includeSignalP" falsevalue="" label="Include signal peptide predictions" argument="--includeSignalP" />
         <param name="Repeats" type="boolean" truevalue="--includeRepeats" falsevalue="" label="Include internal repeat predictions" argument="--includeRepeats" />
         <param name="DISEMBL" type="boolean" truevalue="--includeDISEMBL" falsevalue="" label="Include predictions of internal protein disorder" argument="--includeDISEMBL" />
-        <param name="Schnipsel" type="boolean" truevalue="--includeSchnipsel" falsevalue="" label="Include predictions of outlier homologues and homologues of known structures" argument=="--includeSchnipsel" />
+        <param name="Schnipsel" type="boolean" truevalue="--includeSchnipsel" falsevalue="" label="Include predictions of outlier homologues and homologues of known structures" argument="--includeSchnipsel" />
 
         <param name="outputFormat" type="select" label="Output format">
             <option value="--outputFormat=txt" selected="true">Text</option>
