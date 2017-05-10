@@ -162,55 +162,7 @@ while (my $seq = $io->next_seq) {
     #check if we got the results directly (precomputed results)
     shift @res if ($res[1] =~ /^--\ SMART\ RESULT/);
     if ($res[0] =~ /^--\ SMART\ RESULT/) {
-      open (OUT, ">$output_file") or die "Cannot write to $output_file";
-      $result = $response->content;
-      if ($output_format eq "txt")
-      {
-        print OUT $result;
-      } elsif ($output_format eq "tabular")
-      {
-        my @result = toJSON($result);
-
-        my $first_row = decode_json $result[0];
-        my @keys;
-        my $counter;
-       
-        foreach my $key(sort keys %$first_row) {
-            print OUT "$key";
-            print OUT "\t"    if ++$counter < scalar keys %$first_row;
-            push @keys, $key;
-        }
-        print OUT "\n";
-
-        my $counter;
-
-        foreach my $line (@result)
-        {
-          my $first_row = decode_json $line;
-          my $counter;
-          foreach my $key (@keys)
-          {
-            print OUT $first_row->{$key};
-            print OUT "\t"    if ++$counter < scalar(@keys);
-          }
-          print OUT "\n";
-        }
-
-      } elsif ($output_format eq "json"){
-        my @result = toJSON($result);
-
-        print OUT "[";
-        my $counter;
-        foreach my $line (@result)
-        {
-          print OUT $line;
-          print OUT ","    if ++$counter < scalar(@result);
-        }
-        print OUT "]";
-
-      }
-      close OUT;
-      print "Results saved to '$output_file'\n";
+      response_parser($output_file, $response, $output_format);
     } else {
       #we're in the queue, or there was an error
       my $job_id;
@@ -240,10 +192,7 @@ while (my $seq = $io->next_seq) {
             my @job_status_res = split(/\n/, $job_status_response->content);
        shift @job_status_res if ($job_status_res[1] =~ /^--\ SMART\ RESULT/);
             if ($job_status_res[0] =~ /^--\ SMART\ RESULT/) {
-              open (OUT, ">$output_file") or die "Cannot write to $output_file";
-              print OUT $job_status_response->content;
-              close OUT;
-              print "Results saved to '$output_file'\n";
+              response_parser($output_file, $job_status_response, $output_format);
               last;
             } else {
               #still in queue
@@ -293,4 +242,61 @@ sub toJSON{
   }
 
   return @hashes;
+}
+
+sub response_parser{
+  my $output_file = $_[0];
+  my $job_status_response = $_[1];
+  my $output_format = $_[2];
+
+
+    open (OUT, ">$output_file") or die "Cannot write to $output_file";
+      $result = $job_status_response->content;
+      if ($output_format eq "txt")
+        {
+          print OUT $result;
+        } elsif ($output_format eq "tabular")
+        {
+          my @result = toJSON($result);
+
+          my $first_row = decode_json $result[0];
+          my @keys;
+          my $counter;
+         
+          foreach my $key(sort keys %$first_row) {
+              print OUT "$key";
+              print OUT "\t"    if ++$counter < scalar keys %$first_row;
+              push @keys, $key;
+          }
+          print OUT "\n";
+
+          my $counter;
+
+          foreach my $line (@result)
+          {
+            my $first_row = decode_json $line;
+            my $counter;
+            foreach my $key (@keys)
+            {
+              print OUT $first_row->{$key};
+              print OUT "\t"    if ++$counter < scalar(@keys);
+            }
+            print OUT "\n";
+          }
+
+        } elsif ($output_format eq "json"){
+          my @result = toJSON($result);
+
+          print OUT "[";
+          my $counter;
+          foreach my $line (@result)
+          {
+            print OUT $line;
+            print OUT ","    if ++$counter < scalar(@result);
+          }
+          print OUT "]";
+
+        }
+      close OUT;
+      print "Results saved to '$output_file'\n";
 }
