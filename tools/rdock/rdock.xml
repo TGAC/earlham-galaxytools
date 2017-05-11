@@ -22,9 +22,9 @@ sdrmsd '$inputsd' sorted.sd > $output_rdock
     </outputs>
     <tests>
         <test>
-            <param name="inputprm" value="rdock/1sj0_rdock.prm" />
-            <param name="inputmol2" value="rdock/1sj0_rdock.mol2" />
-            <param name="inputsd" value="rdock/1sj0_ligand.sd" />
+            <param name="inputprm" value="1sj0_rdock.prm" />
+            <param name="inputmol2" value="1sj0_rdock.mol2" />
+            <param name="inputsd" value="1sj0_ligand.sd" />
             <output name="output_rdock">
                 <assert_contents>
                     <has_n_columns n="2" />
