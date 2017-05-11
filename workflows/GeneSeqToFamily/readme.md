@@ -7,30 +7,35 @@ GeneSeqToFamily is an open-source Galaxy workflow based on the [Ensembl GeneTree
 
 ## Installation 
 
-To use this workflow, please [install](https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/) the required tools (list below) into Galaxy from the Galaxy ToolShed. Also [install and inport workflow](https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories) from Galaxy ToolShed. 
+To use this workflow, please [install](https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/) the required tools (list below) into Galaxy from the Galaxy ToolShed. Also [install and import workflow](https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories) from Galaxy ToolShed. 
 
 ### List of tools
 GeneSeqToFamily requires the following tools to run the workflow successfully:
 
-* Transeq
-* Filter by FASTA IDs
-* BLAST
-* BLAST parser
-* hcluster_sg
-* hcluster_sg parser
-* T-Coffee
-* Tranalign
-* TreeBeST
-* Gene Alignment and Family Aggregator (GAFA)
+* [Transeq](https://toolshed.g2.bx.psu.edu/view/devteam/emboss_5/)
+* [Filter by FASTA IDs](https://toolshed.g2.bx.psu.edu/repos/galaxyp/filter_by_fasta_ids)
+* [BLAST](https://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus/) 
+* [BLAST parser](https://toolshed.g2.bx.psu.edu/view/earlhaminst/blast_parser/)
+* [hcluster_sg](https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg/)
+* [hcluster_sg parser](https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg_parser/)
+* [T-Coffee](https://toolshed.g2.bx.psu.edu/view/earlhaminst/t_coffee/) 
+* [Tranalign](https://toolshed.g2.bx.psu.edu/view/devteam/emboss_5/)
+* [TreeBeST](https://toolshed.g2.bx.psu.edu/view/earlhaminst/treebest_best)
+* [Gene Alignment and Family Aggregator (GAFA)](https://toolshed.g2.bx.psu.edu/view/earlhaminst/gafa/)
 
 Some tools for data conversion during workflow:
 
-* cut
+* [Unique](https://toolshed.g2.bx.psu.edu/view/bgruening/text_processing/)
+* [Trim](https://toolshed.g2.bx.psu.edu/view/devteam/trimmer/) 
+* [FASTA-to-tabular](https://toolshed.g2.bx.psu.edu/view/devteam/fasta_to_tabular/)
+* comp1 (built-in)
+* cat1 (built-in)
+* cut (built-in)
 
 Helper tools for data preparation:
 
-* Ensembl REST API - tools for retrieving sequences, and features from Ensembl using its [REST API](http://rest.ensembl.org/)
-* GeneSeqToFamily preparation - to convert gene feature files from GFF3 and/or JSON format to SQLite and format CDS sequence headers
+* [Ensembl REST API - tools](https://toolshed.g2.bx.psu.edu/view/earlhaminst/suite_ensembl_rest/) for retrieving sequences, and features from Ensembl using its [REST API](http://rest.ensembl.org/)
+* [GeneSeqToFamily preparation](https://toolshed.g2.bx.psu.edu/view/earlhaminst/gafa/gstf_preparation/) - to convert gene feature files from GFF3 and/or JSON format to SQLite and format CDS sequence headers
 
 
 ## Workflow inputs and steps
