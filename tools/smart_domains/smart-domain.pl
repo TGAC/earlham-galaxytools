@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use HTTP::Request::Common;
 use LWP::UserAgent;
@@ -43,7 +43,7 @@ Directory which will be used to store the results. Will be created if it doesn't
 
 =item B<--outputFormat>
 
-Choose prefered output format from txt, json or tabular. 
+Choose prefered output format from txt, json or tabular.
 Default is txt.
 
 =back
@@ -262,7 +262,7 @@ sub response_parser{
           my $first_row = decode_json $result[0];
           my @keys;
           my $counter;
-         
+
           foreach my $key(sort keys %$first_row) {
               print OUT "$key";
               print OUT "\t"    if ++$counter < scalar keys %$first_row;
