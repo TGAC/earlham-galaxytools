@@ -1,0 +1,46 @@
+<tool id="rdock" name="rDock" version="1.0">
+    <description>Binding Mode Prediction in Proteins/RNA</description>
+    <requirements>
+        <requirement type="package" version="2013.1">rDock</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+ln -s '$inputmol2' inputmol2.mol2 &&
+ln -s '$inputsd' ligand.sd &&
+sed 's|RECEPTOR_FILE.*|RECEPTOR_FILE inputmol2.mol2|g' < '$inputprm' | sed 's|REF_MOL.*|REF_MOL ./ligand.sd|g' > new.prm &&
+rbcavity -r new.prm -was &&
+rbdock -r new.prm -p dock.prm -n 100 -i '$inputsd' -o output_docking_out &&
+sdsort -n -f'SCORE' output_docking_out.sd > sorted.sd &&
+sdrmsd '$inputsd' sorted.sd > '$output_rdock'
+    ]]></command>
+    <inputs>
+        <param name="inputprm" argument="-r" type="data" format="prm" label="Receptor param file (contains active site params)" />
+        <param name="inputmol2" type="data" format="mol2" label="MOL2 file" />
+        <param name="inputsd" argument="-i" type="data" format="sdf" label="Ligand SD file" />
+    </inputs>
+    <outputs>
+        <data name="output_rdock" format="tabular" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputprm" value="1sj0_rdock.prm" />
+            <param name="inputmol2" value="1sj0_rdock.mol2" />
+            <param name="inputsd" value="1sj0_ligand.sd" />
+            <output name="output_rdock">
+                <assert_contents>
+                    <has_n_columns n="2" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+`rDock`_ is a fast and versatile open source docking program that can be used to dock small molecules against proteins and nucleic acids.
+It is designed for High Throughput Virtual Screening (HTVS) campaigns and Binding Mode prediction studies.
+
+.. _rDock: http://rdock.sourceforge.net/
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1371/journal.pcbi.1003571</citation>
+    </citations>
+</tool>
