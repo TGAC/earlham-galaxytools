@@ -1,0 +1,42 @@
+<tool id="replace_chromosome_names" name="Replace chromosome names" version="0.1">
+    <description>in a tabular dataset using a mapping table</description>
+    <requirements>
+        <requirement type="package" version="3.6.1">python</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+python '$__tool_directory__/replace_chromosome_names.py' --cols $cols -m '$mapping' --comment-char '$comment_char' -o '$output' '$input'
+    ]]></command>
+    <inputs>
+        <param name="input" type="data" format="tabular" label="Tabular input dataset" />
+        <param name="cols" type="data_column" data_ref="input" multiple="true" label="Columns on which to perform the replacement" />
+        <param name="mapping" type="data" format="tabular" label="Mapping table" help="Must contain 2 tab-separated columns" />
+        <param name="comment_char" type="text" value="" label="Comment character" help="Lines starting with this character will be directly printed to the output file">
+            <validator type="length" min="0" max="1" />
+            <validator type="expression" message="Must be a punctuation character"><![CDATA[value in '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~']]></validator>
+            <sanitizer>
+                <valid initial="string.punctuation"/>
+            </sanitizer>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="output" format_source="input" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" ftype="vcf" value="gemini_load_input.vcf" />
+            <param name="cols" value="1" />
+            <param name="mapping" ftype="tabular" value="GRCh37_ensembl2UCSC.txt" />
+            <param name="comment_char" value="#" />
+            <output name="output" ftype="vcf" file="replace_chromosome_names_output.vcf" />
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+Replace chromosome names in a tabular (e.g. VCF) dataset using a mapping table.
+
+Chromosome mapping tables can be downloaded from: https://github.com/dpryan79/ChromosomeMappings/
+    ]]></help>
+    <citations>
+    </citations>
+</tool>
