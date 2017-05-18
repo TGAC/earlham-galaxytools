@@ -83,6 +83,10 @@ $outputFormat
     <help><![CDATA[
 A simple tool to search domains in multiple protein sequences contained in a FASTA file using the `SMART`_ web service.
 
+Written by Ivica Letunic <ivica@letunic.com>
+
+Modified by Anil Thanki <Anil.Thanki@earlham.ac.uk> to parse output in JSON and tabular format to adapt in Galaxy
+
 .. _SMART: http://smart.embl.de/
     ]]></help>
     <citations>
