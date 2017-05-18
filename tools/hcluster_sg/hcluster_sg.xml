@@ -3,8 +3,7 @@
     <requirements>
         <requirement type="package" version="0.5.1">hcluster_sg</requirement>
     </requirements>
-    <command detect_errors="exit_code">
-<![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 hcluster_sg
 -w $w
 -s $s
@@ -21,30 +20,29 @@ $O.O_selector
 -L $L
 '$inputFile'
 > '$outputFile'
-]]>
-    </command>
+    ]]></command>
     <inputs>
         <param name="inputFile" type="data" format="tabular" label="Weight file" help="3-columns format: id-1 id-2 integer-weight" />
-        <param name="w" type="integer" min="0" value="20" label="Minimum edge weight" help="(-w)" />
-        <param name="s" type="float" value="0.5" label="Minimum edge density between a join" help="(-s)" />
-        <param name="m" type="integer" value="500" label="Maximum size" help="(-m)" />
-        <param name="c" type="boolean" truevalue="-c" falsevalue="" label="Only find single-linkage clusters" help="Bypass h-cluster (-c)" />
-        <param name="b" type="float" value="0.1" label="Breaking edge density" help="(-b)" />
+        <param argument="-w" type="integer" min="0" value="20" label="Minimum edge weight" />
+        <param argument="-s" type="float" value="0.5" label="Minimum edge density between a join" />
+        <param argument="-m" type="integer" value="500" label="Maximum size" />
+        <param argument="-c" type="boolean" truevalue="-c" falsevalue="" label="Only find single-linkage clusters" help="Bypass h-cluster" />
+        <param argument="-b" type="float" value="0.1" label="Breaking edge density" />
         <conditional name="O">
-            <param name="O_selector" type="select" label="Use once-fail-inactive-forever mode" help="(-O)">
+            <param name="O_selector" argument="-O" type="select" label="Use once-fail-inactive-forever mode">
                 <option value="-O">Yes</option>
                 <option value="" selected="true">No</option>
             </param>
             <when value="-O">
-                <param name="r" type="integer" value="5" label="Weight resolution" help="(-r)" />
+                <param argument="-r" type="integer" value="5" label="Weight resolution" />
             </when>
             <when value="" />            
         </conditional>
-        <param name="C" type="data" format="tabular" optional="true" label="Category file" help="(-C)" />
-        <param name="L" type="integer" value="2" label="Stringency level" help="(-L)" />
+        <param argument="-C" type="data" format="tabular" optional="true" label="Category file" />
+        <param argument="-L" type="integer" value="2" label="Stringency level" />
     </inputs>
     <outputs>
-        <data format="tabular" name="outputFile" label="${tool.name} on ${on_string}" />
+        <data name="outputFile" format="tabular" label="${tool.name} on ${on_string}" />
     </outputs>
     <tests>
         <test>
@@ -57,13 +55,11 @@ $O.O_selector
             <output name="outputFile" file="hcluster_sg2.txt" />
         </test>
     </tests>
-    <help>
-<![CDATA[
+    <help><![CDATA[
 Simple wrapper for `hcluster_sg`_.
 
 .. _hcluster_sg: https://github.com/douglasgscofield/hcluster
-]]>
-    </help>
+    ]]></help>
     <citations>
     </citations>
 </tool>
