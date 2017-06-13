@@ -1,7 +1,8 @@
 sudo: false
 language: python
-python:
-  - "2.7"
+cache: pip
+
+python: 2.7
 
 before_install:
   - export GALAXY_RELEASE=release_17.05
@@ -12,15 +13,15 @@ install:
   - planemo --version
   - echo $TRAVIS_COMMIT_RANGE
   - |
-      planemo ci_find_repos --exclude_from .tt_blacklist \
-                            --exclude packages --exclude data_managers \
-                            --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
-                            --output changed_repositories.list
+    planemo ci_find_repos --exclude data_managers \
+                          --exclude packages \
+                          --exclude_from .tt_blacklist \
+                          --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
+                          --output changed_repositories.list
   - cat changed_repositories.list
 
 script:
   - set -e
   - cd "$TRAVIS_BUILD_DIR" && flake8 --exclude=.git .
   - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive .
-  - while read -r DIR; do planemo conda_install "$DIR"; done < changed_repositories.list
-  - while read -r DIR; do planemo test --conda_dependency_resolution --galaxy_branch $GALAXY_RELEASE "$DIR"; done < changed_repositories.list
+  - while read -r DIR; do planemo test --conda_dependency_resolution --conda_auto_install --galaxy_branch "$GALAXY_RELEASE" "$DIR"; done < changed_repositories.list
