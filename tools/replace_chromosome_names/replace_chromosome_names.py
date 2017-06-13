@@ -32,9 +32,14 @@ def main():
             line_cols = line.split('\t')
             for col_to_map in cols_to_map:
                 old_value = line_cols[col_to_map]
-                line_cols[col_to_map] = map_dict.get(old_value, old_value)
-            mapped_line = '\t'.join(line_cols)
-            print(mapped_line, file=args.output)
+                new_value = map_dict.get(old_value, '')
+                if not new_value:
+                    print('%s has no valid mapping, skipping line: %s' % (old_value, line), file=sys.stderr)
+                    break
+                line_cols[col_to_map] = new_value
+            else:
+                mapped_line = '\t'.join(line_cols)
+                print(mapped_line, file=args.output)
 
 
 if __name__ == "__main__":

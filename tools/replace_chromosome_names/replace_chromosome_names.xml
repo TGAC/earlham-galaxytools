@@ -28,6 +28,9 @@ python '$__tool_directory__/replace_chromosome_names.py' --cols $cols -m '$mappi
             <param name="mapping" ftype="tabular" value="GRCh37_ensembl2UCSC.txt" />
             <param name="comment_char" value="#" />
             <output name="output" ftype="vcf" file="replace_chromosome_names_output.vcf" />
+            <assert_stderr>
+                <has_text text="HG1007_PATCH" />
+            </assert_stderr>
         </test>
     </tests>
     <help><![CDATA[
