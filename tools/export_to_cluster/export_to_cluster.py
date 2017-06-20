@@ -24,11 +24,11 @@ if len(args) % 3 != 0:
 real_export_dir = os.path.realpath(options.export_dir)
 dir_prefix = options.dir_prefix.rstrip(os.sep)
 if not real_export_dir.startswith(dir_prefix):
-    raise Exception("%s must be a subdirectory of %s" % (options.export_dir, dir_prefix))
+    raise Exception("'%s' must be a subdirectory of '%s'" % (options.export_dir, dir_prefix))
 if not os.path.exists(real_export_dir):
-    raise Exception("%s does not exist or it is not accessible by the Galaxy user" % options.export_dir)
+    raise Exception("'%s' directory does not exist or it is not accessible by the Galaxy user" % options.export_dir)
 if not os.path.isdir(real_export_dir):
-    raise Exception("%s is not a directory" % options.export_dir)
+    raise Exception("'%s' is not a directory" % options.export_dir)
 
 dataset_paths = args[::3]
 dataset_names = args[1::3]
