@@ -1,66 +1,65 @@
 <tool id="apoc" name="APoc" version="1.0">
     <description>Large-scale identification of similar protein pockets</description>
     <requirements>
-        <requirement type="package" version="1b16">acpc</requirement>
+        <requirement type="package" version="1b16">apoc</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" />
     </stdio>
     <command>
         <![CDATA[ 
-        #if $templates_source.template_source_select=="list"#
+        #if '$templates_source.template_source_select'=="list"#
             #for $i, $s in enumerate( $templates_source.template )# 
                 echo ${s.input.file_name} >> templates_path ;
             #end for#
-            paste -d "\t" templates_path $templates_source.lt | awk '{print $1"\t"$3}' > templates_list;
+            paste -d "\t" templates_path '$templates_source.lt' | awk '{print $1"\t"$3}' > templates_list;
         #end if#
 
-        #if $query_source.query_source_select=="list"#
+        #if '$query_source.query_source_select'=="list"#
             #for $i, $s in enumerate( $query_source.query )# 
                 echo ${s.input.file_name} >> queries_path ;
             #end for#
             paste -d "\t" queries_path $query_source.lq | awk '{print $1"\t"$3}' > queries_list;
         #end if#
 
-        $__tool_directory__/tools/apoc/apoc
+        $__tool_directory__/tools/apoc/
                                             -fa $fa
                                             -pvol $pvol
                                             -plen $plen
                                             #if $alignment_option.sod=="true"
-                                            -sod
+                                                -sod
                                             #end if
                                             -v $alignment_option.v
-
                                             -m $scoring_option.m
                                             #if $scoring_option.L
-                                            -L $scoring_option.L
+                                                -L $scoring_option.L
                                             #end if
                                             #if $scoring_option.a=="true"
-                                            -a
+                                                -a
                                             #end if
                                             #if $scoring_option.b=="true"
-                                            -b
+                                                -b
                                             #end if
                                             #if $scoring_option.c=="true"
-                                            -c
+                                                -c
                                             #end if
 
-                                            #if $templates_source.template_source_select=="list"
+                                            #if '$templates_source.template_source_select'=="list"
                                                 -lt templates_list
                                             #else
-                                                #if $templates_source.pt
-                                                    -pt $templates_source.pt
+                                                #if '$templates_source.pt'
+                                                    -pt '$templates_source.pt'
                                                 #end if 
-                                                $templates_source.pdbfile1
+                                                '$templates_source.pdbfile1'
                                             #end if
 
-                                            #if $query_source.query_source_select=="list"
+                                            #if '$query_source.query_source_select'=="list"
                                                 -lq queries_list
                                             #else
-                                                #if $query_source.pq
-                                                    -pq $query_source.pq
+                                                #if '$query_source.pq'
+                                                    -pq '$query_source.pq'
                                                 #end if 
-                                            $query_source.pdbfile2
+                                                '$query_source.pdbfile2'
                                             #end if
                                             > $output_apoc
         ]]>
@@ -72,11 +71,11 @@
                 <option value="list">file with list of templates</option>
             </param>
             <when value="pdbfile">
-                <param name="pdbfile1" type="data" format="pdb" label="First (template) structure for comparison" help="(pdbfile1)" />
-                <param name="pt" type="text" label="Names of pockets in the first (template) structure for comparison" optional="true" help="(-pt)" />
+                <param argument="pdbfile1" type="data" format="pdb" label="First (template) structure for comparison" />
+                <param argument="-pt" type="text" label="Names of pockets in the first (template) structure for comparison" optional="true" />
             </when>
             <when value="list">
-                <param name="lt" type="data" format="data" label="List of templates to compare in a file" help="(-lt)" />
+                <param argument="-lt" type="data" format="data" label="List of templates to compare in a file" />
                 <repeat name="template" title="pdb file from list of templates">
                     <param name="input" type="data" format="pdb" label="pdbfile" help="Load all pdb files in the same order as in the list of templates" />
                 </repeat>
@@ -84,52 +83,52 @@
         </conditional>
         <conditional name="query_source">
             <param name="query_source_select" type="select" label="Chose query source: pdb file or file with list of queries">
-            <option value="pdbfile">pdb file </option>
-            <option value="list">file with list of queries</option>
+                <option value="pdbfile">pdb file </option>
+                <option value="list">file with list of queries</option>
             </param>
             <when value="pdbfile">
                 <param name="pdbfile2" type="data" format="pdb" label="Second (query) structure for comparison" help="(pdbfile2)" />
                 <param name="pq" type="text" label="Names of pockets in the second (query) structure for comparison" optional="true" help="(-pq)" />
             </when>
             <when value="list">
-                <param name="lq" type="data" format="data" label="List of queries (targets) to compare in a file." help="(-lq)" />
+                <param argument="-lq" type="data" format="data" label="List of queries (targets) to compare in a file." />
                 <repeat name="query" title="pdb file from list of queries">
                     <param name="input" type="data" format="pdb" label="pdbfile" help="Load all pdb files in the same order as in the list of queries" />
                 </repeat>
             </when>
         </conditional>
-        <param name="fa" type="select" label="Global structure alignment" help="(-fa)">
-        <option value="1" selected="true">enable </option>
-        <option value="0">disable </option>
+        <param argument="-fa" type="select" label="Global structure alignment" >
+            <option value="1" selected="true">enable </option>
+            <option value="0">disable </option>
         </param>
-        <param name="pvol" type="text" value="1000" label="Minimal pocket volume in grid points" help="(-pvol)" />
-        <param name="plen" type="text" value="10" label="Minimal number of pocket residues" help="(-plen)" />
+        <param argument="-pvol" type="integer" value="1000" label="Minimal pocket volume in grid points" />
+        <param argument="-plen" type="integer" value="10" label="Minimal number of pocket residues" />
         <section name="alignment_option" title="Alignment option">
             <param name="sod" type="select" label="Restrict to sequence-order-dependent alignment" help="(-sod)">
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="v" type="select" label="Restrict to sequence-order-dependent alignment" help="(-v)">
+            <param argument="-v" type="select" label="Restrict to sequence-order-dependent alignment" >
                 <option value="0">none</option>
                 <option value="1">concise</option>
                 <option value="2" selected="true">detailed</option>
             </param>       
         </section>
         <section name="scoring_option" title="Scoring option">
-            <param name="m" type="select" label="Similarity scoring metric" help="(-m)">
+            <param argument="-m" type="select" label="Similarity scoring metric" >
                 <option value="tm">TM-score</option>
                 <option value="ps" selected="true">PS-score</option>
             </param>
-            <param name="L" type="text" label="Normalize the score with a fixed length specified by num" optional="true" help="(-L)" />
-            <param name="a" type="select" label="Normalize the score by the average size of two structures" help="(-a)">
+            <param argument="-L" type="text" label="Normalize the score with a fixed length specified by num" optional="true" />
+            <param argument="-a" type="select" label="Normalize the score by the average size of two structures" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="b" type="select" label="Normalize the score by the minimum size of two structures" help="(-b)">
+            <param argument="-b" type="select" label="Normalize the score by the minimum size of two structures" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="c" type="select" label="Normalize the score by the maximum size of two structures" help="(-c)">
+            <param argument="-c" type="select" label="Normalize the score by the maximum size of two structures" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
