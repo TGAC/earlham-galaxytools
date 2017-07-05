@@ -5,9 +5,9 @@
     </requirements>
     <command detect_errors="aggressive">
         <![CDATA[ 
-Rscript $__tool_directory__/script.R 
-$count_matrix 
-$stats_matrix 
+Rscript '$__tool_directory__/script.R' 
+'$count_matrix' 
+'$stats_matrix' 
 $filter.log_fc 
 $filter.log_cpm 
 $filter.pvalue 
@@ -52,9 +52,7 @@ $plotparm.pdf_height
         </section>
     </inputs>
     <outputs>
-       <data format="pdf" name="haetamappdf" from_work_dir="heatmap.pdf">
-            <filter>(outftype == 'pdf')</filter>
-        </data>
+       <data format="pdf" name="haetamappdf" from_work_dir="heatmap.pdf"/>
     </outputs>
     <tests>
         <test>

@@ -1,4 +1,4 @@
 categories: [Computational chemistry]
 description: This tool can be used to plot heatmap of gene expression data. The genes are chosen based on p-value, FDR, log FC and log CPM from edgeR output. 
-name: rnaseq_pro_workflow_tools/plotheatmap/
+name: plotheatmap
 owner: earlhaminst
