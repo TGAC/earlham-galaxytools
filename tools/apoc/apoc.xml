@@ -261,20 +261,6 @@ Help
      ]]>
     </help>
     <citations>
-        <citation type="bibtex">
-            @article{Gao2013,
-              doi = {10.1093/bioinformatics/btt024},
-              url = {http://dx.doi.org/10.1093/bioinformatics/btt024},
-              year  = {2013},
-              month = {jan},
-              publisher = {Oxford University Press ({OUP})},
-              volume = {29},
-              number = {5},
-              pages = {597--604},
-              author = {M. Gao and J. Skolnick},
-              title = {{APoc}: large-scale identification of similar protein pockets},
-              journal = {Bioinformatics}
-            }
-        </citation>
+        <citation type="doi">10.1093/bioinformatics/btt024</citation>
     </citations>
 </tool>
