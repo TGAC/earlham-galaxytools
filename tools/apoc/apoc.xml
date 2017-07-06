@@ -50,13 +50,13 @@
                                                 #if $templates_source.pt
                                                     -pt '$templates_source.pt'
                                                 #end if 
-                                                $templates_source.pdbfile1
+                                                '$templates_source.pdbfile1'
                                             #end if
 
                                             #if $query_source.query_source_select=="list"
                                                 -lq queries_list
                                             #else
-                                                #if '$query_source.pq'
+                                                #if $query_source.pq
                                                     -pq '$query_source.pq'
                                                 #end if 
                                                 '$query_source.pdbfile2'
