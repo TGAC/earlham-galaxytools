@@ -8,21 +8,21 @@
     </stdio>
     <command>
         <![CDATA[ 
-        #if '$templates_source.template_source_select'=="list"#
-            #for $i, $s in enumerate( $templates_source.template )# 
+        #if $templates_source.template_source_select=="list"
+            #for $i, $s in enumerate( $templates_source.template ) 
                 echo ${s.input.file_name} >> templates_path ;
             #end for#
             paste -d "\t" templates_path '$templates_source.lt' | awk '{print $1"\t"$3}' > templates_list;
         #end if#
 
-        #if '$query_source.query_source_select'=="list"#
-            #for $i, $s in enumerate( $query_source.query )# 
+        #if $query_source.query_source_select=="list"
+            #for $i, $s in enumerate( $query_source.query ) 
                 echo ${s.input.file_name} >> queries_path ;
             #end for#
             paste -d "\t" queries_path $query_source.lq | awk '{print $1"\t"$3}' > queries_list;
         #end if#
 
-        $__tool_directory__/tools/apoc/
+        apoc
                                             -fa $fa
                                             -pvol $pvol
                                             -plen $plen
@@ -44,16 +44,16 @@
                                                 -c
                                             #end if
 
-                                            #if '$templates_source.template_source_select'=="list"
+                                            #if $templates_source.template_source_select=="list"
                                                 -lt templates_list
                                             #else
-                                                #if '$templates_source.pt'
+                                                #if $templates_source.pt
                                                     -pt '$templates_source.pt'
                                                 #end if 
-                                                '$templates_source.pdbfile1'
+                                                $templates_source.pdbfile1
                                             #end if
 
-                                            #if '$query_source.query_source_select'=="list"
+                                            #if $query_source.query_source_select=="list"
                                                 -lq queries_list
                                             #else
                                                 #if '$query_source.pq'
