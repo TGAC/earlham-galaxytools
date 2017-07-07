@@ -160,21 +160,21 @@
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>        
-            <param argument="--log" type="select" label="Write log file" help="(--log)">
+            <param argument="--log" type="select" label="Write log file" >
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>        
-            <param argument="--atom_terms" type="select" label="Write per-atom interaction term values" help="(--atom_terms)">
+            <param argument="--atom_terms" type="select" label="Write per-atom interaction term values" >
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>
-            <param argument="--atom_term_data" type="select" label="Embedded per-atom interaction terms in output sd data" help="(--atom_term_data)">
+            <param argument="--atom_term_data" type="select" label="Embedded per-atom interaction terms in output sd data" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
         </section>
         <section name="scoring_and_minimization" title="Scoring and minimization options" >
-            <param name="scoring" type="select" label="Specify alternative builtin scoring function" help="(--scoring)">
+            <param argument="--scoring" type="select" label="Specify alternative builtin scoring function" >
                 <option value="default" selected="true">default</option>
                 <option value="ad4_scoring">ad4_scoring</option>
                 <option value="dkoes_fast">dkoes_fast</option>
@@ -183,63 +183,63 @@
                 <option value="vina">vina</option>
                 <option value="vinardo">vinardo</option>
             </param>
-            <param name="custom_scoring" type="data" format="data" label="Custom scoring function file" optional="true" help="(--custom_scoring)"/>
-            <param name="custom_atoms" type="data" format="data" label="Custom atom type parameters file" optional="true" help="(--custom_atoms)"/>
-            <param name="score_only" type="select" label="Score provided ligand pose" help="(--score_only)">
+            <param argument="--custom_scoring" type="data" format="data" label="Custom scoring function file" optional="true" />
+            <param argument="--custom_atoms" type="data" format="data" label="Custom atom type parameters file" optional="true" />
+            <param argument="--score_only" type="select" label="Score provided ligand pose" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
                 </param>
-            <param name="local_only" type="select" label="Local search only using autobox" help="(--local_only)">
+            <param argument="--local_only" type="select" label="Local search only using autobox" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="minimize" type="select" label="Energy minimization" help="(--minimize)">
+            <param argument="--minimize" type="select" label="Energy minimization" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="randomize_only" type="select" label="Generate random poses, attempting to avoid clashes" help="(--randomize_only)">
+            <param argument="--randomize_only" type="select" label="Generate random poses, attempting to avoid clashes" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="minimize_iters" type="integer" value="0" label="Number iterations of steepest descent" help="(--minimize_iters)"/>    
-            <param name="accurate_line" type="select" label="Accurate line search" help="(--accurate_line)">
+            <param argument="--minimize_iters" type="integer" value="0" label="Number iterations of steepest descent" />    
+            <param argument="--accurate_line" type="select" label="Accurate line search" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>        
-            <param name="minimize_early_term" type="select" label="Stop minimization before convergence conditions are fully met" help="(--minimize_early_term)">
+            <param argument="--minimize_early_term" type="select" label="Stop minimization before convergence conditions are fully met" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="approximation" type="select" label="Approximation" optional="true" help="(--approximation)">
+            <param argument="--approximation" type="select" label="Approximation" optional="true" >
                 <option value="linear">linear</option>
                 <option value="spline">spline</option>
                 <option value="exact">exact</option>
             </param>
-            <param name="factor" type="float" label="Approximation factor: higher results in a finer-grained approximation" optional="true" help="(--factor)">
+            <param argument="--factor" type="float" label="Approximation factor: higher results in a finer-grained approximation" optional="true" >
                 <validator type="in_range" min="0"/>
             </param>
-            <param name="force_cap" type="float" label="Max allowed force; lower values more gently minimize clashing structures" optional="true" help="(--force_cap)"/>
-            <param name="user_grid" type="float" label="Autodock map file for user grid data based calculations" optional="true" help="(--user_grid)"/>
-            <param name="user_grid_lambda" type="float" value="-1" label="Scales user_grid and functional scoring"  help="(--user_grid_lambda)"/>
-            <param name="print_terms" type="select" label="Print all available terms with default parameterizations" help="(--print_terms)">
+            <param argument="--force_cap" type="float" label="Max allowed force; lower values more gently minimize clashing structures" optional="true" />
+            <param argument="--user_grid" type="float" label="Autodock map file for user grid data based calculations" optional="true" />
+            <param argument="--user_grid_lambda" type="float" value="-1" label="Scales user_grid and functional scoring" />
+            <param argument="--print_terms" type="select" label="Print all available terms with default parameterizations" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param name="print_atom_types" type="select" label="Print all available atom types" help="(--print_atom_types)">
+            <param argument="--print_atom_types" type="select" label="Print all available atom types" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
         </section>
         <section name="misc" title="Misc" >
-            <param name="cpu" type="integer" label="The number of CPUs to use" optional="true" help="(--cpu)"/>
-            <param name="seed" type="float" label="Explicit random seed" optional="true" help="(--seed)"/>
-            <param name="exhaustiveness" type="integer" value="8" label="Exhaustiveness of the global search" help="(--exhaustiveness)"/>
-            <param name="num_modes" type="integer" value="9" label="Maximum number of binding modes to generate" help="(--num_modes)">
+            <param argument="--cpu" type="integer" label="The number of CPUs to use" optional="true" />
+            <param argument="--seed" type="float" label="Explicit random seed" optional="true" />
+            <param argument="--exhaustiveness" type="integer" value="8" label="Exhaustiveness of the global search" />
+            <param argument="--num_modes" type="integer" value="9" label="Maximum number of binding modes to generate" >
                 <validator type="in_range" min="1"/>
             </param>
-            <param name="energy_range" type="float" value="3" label="Maximum energy difference between the best binding mode and the worst one displayed (kcal/mol)" help="(--energy_range)"/>
-            <param name="min_rmsd_filter" type="float" value="1" label="Rmsd value used to filter final poses to remove redundancy" help="(--min_rmsd_filter)"/>
-            <param name="addH" type="select" label="Automatically add hydrogens in ligands" help="(--addH)">
+            <param argument="--energy_range" type="float" value="3" label="Maximum energy difference between the best binding mode and the worst one displayed (kcal/mol)" />
+            <param argument="--min_rmsd_filter" type="float" value="1" label="Rmsd value used to filter final poses to remove redundancy" />
+            <param argument="--addH" type="select" label="Automatically add hydrogens in ligands" >
                 <option value="false" >Do not use this option</option>
                 <option value="true" selected="true">Use this option</option>
             </param>
@@ -359,21 +359,6 @@ Help
         ]]>
     </help>
     <citations>
-        <citation type="bibtex">
-            @article{Koes2013,
-              doi = {10.1021/ci300604z},
-              url = {http://dx.doi.org/10.1021/ci300604z},
-              year  = {2013},
-              month = {aug},
-              publisher = {American Chemical Society ({ACS})},
-              volume = {53},
-              number = {8},
-              pages = {1893--1904},
-              author = {David Ryan Koes and Matthew P. Baumgartner and Carlos J. Camacho},
-              title = {Lessons Learned in Empirical Scoring with smina from the {CSAR} 2011 Benchmarking Exercise},
-              journal = {Journal of Chemical Information and Modeling}
-            }
-            @misc{url = {https://sourceforge.net/projects/smina/}}
-        </citation>
+        <citation type="doi">10.1021/ci300604z</citation>
     </citations>
 </tool>
