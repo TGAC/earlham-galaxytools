@@ -7,7 +7,7 @@
         <exit_code range="1:" level="fatal" />
     </stdio>
     <command><![CDATA[
-run_MultiPEN_slurm.sh FeatureSelection ./ '$ExpressionData' '$Interactions' '$SampleClass' $lambda $optionalParameters
+run_MultiPEN_slurm.sh FeatureSelection ./ '$ExpressionData' '$Interactions' '$SampleClass' $lambda '$optionalParameters'
 &&
 mv MultiPEN-performance_feature-selection_lambda${lambda}_${optionalParameters}.txt Performance.txt &&
 mv MultiPEN-Rankings_lambda${lambda}_${optionalParameters}.txt Rankings.txt &&
