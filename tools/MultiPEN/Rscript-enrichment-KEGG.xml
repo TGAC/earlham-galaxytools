@@ -35,18 +35,6 @@
         <citation type="doi">10.1089/omi.2011.0118</citation>
         <citation type="doi">10.1093/nar/gkw1092</citation>
         <citation type="doi">10.1093/nar/gkv1070</citation>
-        <citation type="bibtex">@article{Kanehisa2000,
-            Author = {Kanehisa, M and Goto, S},
-            Crdt = {1999/12/11 09:00},
-            Date = {2000 Jan 01},
-            Journal = {Nucleic Acids Res},
-            Month = {Jan},
-            Number = {1},
-            Oid = {NLM: PMC102409},
-            Pages = {27--30},
-            Title = {KEGG: kyoto encyclopedia of genes and genomes.},
-            Volume = {28},
-            Year = {2000}}
-            </citation>
+        <citation type="doi">10.1093/nar/28.1.27</citation>
     </citations>
 </tool>
