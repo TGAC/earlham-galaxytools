@@ -1,9 +1,8 @@
-<tool id="enrich go" name="enrich go" version="0.0.3">
+<tool id="enrich_go" name="enrich go" version="0.0.3">
     <description> over-representation and GSE analysis with Gene Ontology</description>
     <requirements>
-        <requirement type="package" version="3.3.1">r</requirement>
         <requirement type="package" version="3.0.5">bioconductor-clusterProfiler</requirement>
-        <requirement type="package" version="1.10">r-BBmisc</requirement>
+        <requirement type="package" version="1.9">r-BBmisc</requirement>
         <requirement type="package" version="3.3.0">bioconductor-GO.db</requirement>
         <requirement type="package" version="3.3.0">bioconductor-org.Hs.eg.db</requirement>
     </requirements>
@@ -34,12 +33,12 @@
         </test>
     </tests>
     <help><![CDATA[
-        This wrapper performs over-representation and gene set enrichment analysis from a list of genes using the bioconductor R package clusterProfiler and Gene Ontology.
+        This wrapper performs over-representation and gene set enrichment analysis from a list of genes using the Bioconductor package clusterProfiler and Gene Ontology.
     ]]></help>
     <citations>
         <citation type="doi">10.1089/omi.2011.0118</citation>
         <citation type="doi">10.1038/75556</citation>
-        <citation type="doi">https://doi.org/10.1093/nar/gku1179</citation>
+        <citation type="doi">10.1093/nar/gku1179</citation>
         
     </citations>
 </tool>
