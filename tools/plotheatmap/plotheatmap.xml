@@ -2,6 +2,7 @@
     <description>Plot heatmap</description>
     <requirements>
         <requirement type="package" version="3.0.1">r-gplots</requirement>
+	<requirement type="package" version="1.34.0">bioconductor-preprocesscore</requirement>
     </requirements>
     <command detect_errors="aggressive">
         <![CDATA[ 
