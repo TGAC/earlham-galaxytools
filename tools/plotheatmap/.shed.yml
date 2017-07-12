@@ -1,0 +1,5 @@
+categories: [Computational chemistry]
+description: This tool can be used to plot heatmap of gene expression data. The genes are chosen based on p-value, FDR, log FC and log CPM from edgeR output. 
+name: plotheatmap
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/plotheatmap

@@ -1,0 +1,87 @@
+<tool id="plotheatmap" name="plotHeatmap" version="1.0">
+    <description>Plot heatmap</description>
+    <requirements>
+        <requirement type="package" version="1.34.0">bioconductor-preprocesscore</requirement>
+        <requirement type="package" version="3.0.1">r-gplots</requirement>
+    </requirements>
+    <command detect_errors="aggressive"><![CDATA[
+Rscript '$__tool_directory__/script.R'
+'$count_matrix'
+'$stats_matrix'
+$filter.log_fc
+$filter.log_cpm
+$filter.pvalue
+$filter.fdr
+$heatmap.cluster_row
+$heatmap.cluster_col
+$heatmap.hclust_method
+$plotparm.col_marg
+$plotparm.row_marg
+$plotparm.pdf_width
+$plotparm.pdf_height
+    ]]></command>
+    <inputs>
+        <param name="count_matrix" type="data" format="tabular" label="Output dataset 'count_matrix' from tool countMatrixForEdger"/>
+        <param name="stats_matrix" type="data" format="tabular" label="Output dataset 'output' from tool edgeR"/>
+        <section name="filter" title="Filtering parameters" expanded="true">
+            <param name="log_fc" type="float" value="0.5" label="A log FC threshold"/>
+            <param name="log_cpm" type="float" value="0.5" label="A log CPM threshold"/>
+            <param name="pvalue" type="float" min="0" max="1" value="0.5" label="A p-value threshold"/>
+            <param name="fdr" type="float" min="0" max="1" value="0.5" label="An FDR threshold"/>
+        </section>
+        <section name="heatmap" title="Heatmap parameters">
+            <param name="cluster_row" type="boolean" truevalue="Yes" falsevalue="No" checked="true" label="Determines if the row dendrogram should be reordered"/>
+            <param name="cluster_col" type="boolean" truevalue="Yes" falsevalue="No" label="Determines if the column dendrogram should be reordered"/>
+            <param name="hclust_method" type="select" label="Hierarchical clustering method">
+                <option value="ward.D">ward.D</option>
+                <option value="ward.D2">ward.D2</option>
+                <option value="single">single</option>
+                <option value="complete">complete</option>
+                <option value="average" selected="true">average</option>
+                <option value="mcquitty">mcquitty</option>
+                <option value="median">median</option>
+                <option value="centroid">centroid</option>
+            </param>
+        </section>
+        <section name="plotparm" title="Plot parameters">
+            <param name="col_marg" type="float" value="7" label="Margins for column names"/>
+            <param name="row_marg" type="float" value="8" label="Margins for row names"/>
+            <param name="pdf_width" type="float" value="7" label="Width of the graphics region in inches (pdf width)"/>
+            <param name="pdf_height" type="float" value="7" label="Height of the graphics region in inches (pdf height)"/>
+        </section>
+    </inputs>
+    <outputs>
+        <data name="haetamappdf" format="pdf" from_work_dir="heatmap.pdf"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="count_matrix" value="count.matrix"/>
+            <param name="stats_matrix" value="stats.data"/>
+            <param name="log_fc" value="1"/>
+            <param name="log_cpm" value="2"/>
+            <param name="pvalue" value="0.05"/>
+            <param name="fdr" value="0.1"/>
+            <output name="haetamappdf" file="heatmap.pdf" ftype="pdf" compare="sim_size"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+It takes a list of genes based on set filtering criteria and draws them on heatmap.
+
+**Example**
+
+The following filtering options:
+A log FC threshold = 0.5
+A log CPM threshold = 0.5
+A p-value threshold = 0.05
+An FDR threshold = 0.1
+mean that you select genes whose values in output table from edgeR are:
+* absolute value of log FC is greater than or equal to 0.5
+* log CPM is greater than or equal to 0.5
+* p-value is less than or equal to 0.05
+* FDR is less than or equal to 0.1
+    ]]></help>
+    <citations>
+    </citations>
+</tool>
