@@ -1,5 +1,5 @@
 <tool id="smina" name="smina" version="1.0">
-    <description>Scoring and Minimization with AutoDock Vina</description>
+    <description>smina is a fork of Autodock Vina (http://vina.scripps.edu/) that focuses on improving scoring and minimization</description>
     <requirements>
         <requirement type="package" version="1.1.2">smina</requirement>
     </requirements>
@@ -8,23 +8,23 @@
     </stdio>
     <command>
         <![CDATA[ 
-        ln -s $input.receptor receptor.pdbqt;
-        ln -s $input.ligand ligand.pdbqt;
+        ln -s '$input.receptor' receptor.pdbqt &&
+        ln -s '$input.ligand' ligand.pdbqt &&
         smina.static 
           --receptor receptor.pdbqt 
           --ligand ligand.pdbqt 
 
-          #if '$input.flex'
-              --flex $input.flex
+          #if $input.flex
+              --flex '$input.flex'
           #end if
-          #if '$input.flexres'
-              --flexres $input.flexres
+          #if $input.flexres
+              --flexres '$input.flexres'
           #end if
-          #if '$input.flexdist_ligand'
-              --flexdist_ligand $input.flexdist_ligand
+          #if $input.flexdist_ligand
+              --flexdist_ligand '$input.flexdist_ligand'
           #end if
-          #if '$input.flexdist'
-              --flexdist $input.flexdist
+          #if str($input.flexdist)
+              --flexdist '$input.flexdist'
           #end if
 
           --center_x $search_space.center_x 
@@ -34,101 +34,64 @@
           --size_y $search_space.size_y
           --size_z $search_space.size_z
 
-          #if '$search_space.autobox_ligand'
-              --autobox_ligand $search_space.autobox_ligand 
+          #if $search_space.autobox_ligand
+              --autobox_ligand '$search_space.autobox_ligand'
           #end if 
-          #if '$search_space.autobox_add' 
-              --autobox_add $search_space.autobox_add
+          #if str($search_space.autobox_add)
+              --autobox_add '$search_space.autobox_add'
           #end if
-          #if '$search_space.no_lig'=="true"
-              --no_lig
-          #end if 
-
-          --out ligand_out.pdbqt
-          #if '$output_sect.out_flex'=="true"
-              --out_flex output_flex
-          #end if                                                    
-          #if '$output_sect.log'=="true"
-              --log output_log
+          $search_space.no_lig
+          --out $output
+          #if $output_sect.out_flex=="true"
+              --out_flex '$out_flex_output'
           #end if
-          #if $output_sect.atom_terms=="true"
-              --atom_terms output_atom_terms
+          #if $output_sect.log
+              --log '$output_log'
           #end if
-          #if $output_sect.atom_term_data=="true"
-              --atom_term_data
+          #if $output_sect.atom_terms
+              --atom_terms '$atom_terms_output'
           #end if
-
-          --scoring $scoring_and_minimization.scoring 
+          $output_sect.atom_term_data
+          --scoring $scoring_and_minimization.scoring
           #if $scoring_and_minimization.custom_scoring
-              --custom_scoring $scoring_and_minimization.custom_scoring
+              --custom_scoring '$scoring_and_minimization.custom_scoring'
           #end if
           #if $scoring_and_minimization.custom_atoms
-              --custom_atoms $scoring_and_minimization.custom_atoms 
+              --custom_atoms '$scoring_and_minimization.custom_atoms'
           #end if
-          #if $scoring_and_minimization.score_only=="true"
-              --score_only 
-          #end if
-          #if $scoring_and_minimization.local_only=="true"
-              --local_only 
-          #end if
-          #if $scoring_and_minimization.minimize=="true"
-              --minimize 
-          #end if 
-          #if $scoring_and_minimization.randomize_only=="true"    
-              --randomize_only  
-          #end if 
-              --minimize_iters $scoring_and_minimization.minimize_iters 
-          #if $scoring_and_minimization.accurate_line=="true"
-              --accurate_line
-          #end if
-          #if $scoring_and_minimization.minimize_early_term=="true"
-              --minimize_early_term
-          #end if
+          $scoring_and_minimization.score_only
+          $scoring_and_minimization.local_only
+          $scoring_and_minimization.minimize
+          $scoring_and_minimization.randomize_only
+          --minimize_iters $scoring_and_minimization.minimize_iters 
+          $scoring_and_minimization.accurate_line
+          $scoring_and_minimization.minimize_early_term
           #if $scoring_and_minimization.approximation
               --approximation $scoring_and_minimization.approximation
           #end if
           #if $scoring_and_minimization.factor
               --factor $scoring_and_minimization.factor
           #end if
-          #if $scoring_and_minimization.force_cap
+          #if str($scoring_and_minimization.force_cap)
               --force_cap $scoring_and_minimization.force_cap
           #end if
-          #if $scoring_and_minimization.user_grid
+          #if str($scoring_and_minimization.user_grid)
               --user_grid $scoring_and_minimization.user_grid
           #end if
-              --user_grid_lambda $scoring_and_minimization.user_grid_lambda
-          #if $scoring_and_minimization.print_terms=="true"
-              --print_terms
-          #end if
-          #if $scoring_and_minimization.print_atom_types=="true"
-              --print_atom_types
-          #end if
-
-          #if $misc.cpu
-              --cpu $misc.cpu
-          #end if
-          #if $misc.seed
+          --user_grid_lambda $scoring_and_minimization.user_grid_lambda
+          $scoring_and_minimization.print_terms
+          $scoring_and_minimization.print_atom_types
+          --cpu \${GALAXY_SLOTS:-4}
+          #if str($misc.seed)
               --seed $misc.seed
           #end if
           --exhaustiveness $misc.exhaustiveness
           --num_modes $misc.num_modes
           --energy_range $misc.energy_range
           --min_rmsd_filter $misc.min_rmsd_filter
-          #if $misc.addH=="false"
-              --addH false
-          #end if
+          $misc.addH
                          ;
-        #if $output_sect.out_flex=="true" # 
-            ln -s output_flex $out_flex_output; 
-        #end if #    
-        #if $output_sect.log=="true" # 
-            ln -s output_log $output_log; 
-        #end if #
-        #if $output_sect.atom_terms=="true" # 
-            ln -s output_atom_terms $atom_terms_output; 
-        #end if #
 
-        ln -s ligand_out.pdbqt $output
         ]]>
     </command>
     <inputs>
@@ -150,25 +113,25 @@
 
             <param argument="--autobox_ligand" type="data" format="data" label="Ligand to use for autobox" optional="true" />
             <param argument="--autobox_add" type="float" label="Amount of buffer space to add to auto-generated box text" optional="true" />
-            <param argument="--no_lig" type="select" label="No ligand; for sampling/minimizing flexible residues " >
+            <param argument="--no_lig" type="boolean" truevalue="--no_lig" falsevalue="" label="No ligand; for sampling/minimizing flexible residues " >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
         </section>
         <section name="output_sect" title="Output" >
-            <param argument="--out_flex" type="select" label="Write flexible receptor residues" >
+            <param argument="--out_flex" type="boolean" truevalue="--out_flex" falsevalue="" label="Write flexible receptor residues" >
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>        
-            <param argument="--log" type="select" label="Write log file" >
+            <param argument="--log" type="boolean" truevalue="--log" falsevalue="" label="Write log file" >
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>        
-            <param argument="--atom_terms" type="select" label="Write per-atom interaction term values" >
+            <param argument="--atom_terms" type="boolean" truevalue="--atom_terms" falsevalue="" label="Write per-atom interaction term values" >
                 <option value="false" selected="true" >No </option>
                 <option value="true" >Yes </option>
             </param>
-            <param argument="--atom_term_data" type="select" label="Embedded per-atom interaction terms in output sd data" >
+            <param argument="--atom_term_data" type="boolean" truevalue="--atom_term_data" falsevalue="" label="Embedded per-atom interaction terms in output sd data" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
@@ -185,28 +148,28 @@
             </param>
             <param argument="--custom_scoring" type="data" format="data" label="Custom scoring function file" optional="true" />
             <param argument="--custom_atoms" type="data" format="data" label="Custom atom type parameters file" optional="true" />
-            <param argument="--score_only" type="select" label="Score provided ligand pose" >
+            <param argument="--score_only" type="boolean" truevalue="--score_only" falsevalue="" label="Score provided ligand pose" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
                 </param>
-            <param argument="--local_only" type="select" label="Local search only using autobox" >
+            <param argument="--local_only" type="boolean" truevalue="--local_only" falsevalue="" label="Local search only using autobox" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param argument="--minimize" type="select" label="Energy minimization" >
+            <param argument="--minimize" type="boolean" truevalue="--minimize" falsevalue="" label="Energy minimization" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param argument="--randomize_only" type="select" label="Generate random poses, attempting to avoid clashes" >
+            <param argument="--randomize_only" type="boolean" truevalue="--randomize_only" falsevalue="" label="Generate random poses, attempting to avoid clashes" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
             <param argument="--minimize_iters" type="integer" value="0" label="Number iterations of steepest descent" />    
-            <param argument="--accurate_line" type="select" label="Accurate line search" >
+            <param argument="--accurate_line" type="boolean" truevalue="--accurate_line" falsevalue="" label="Accurate line search" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>        
-            <param argument="--minimize_early_term" type="select" label="Stop minimization before convergence conditions are fully met" >
+            <param argument="--minimize_early_term" type="boolean" truevalue="--minimize_early_term" falsevalue="" label="Stop minimization before convergence conditions are fully met" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
@@ -215,31 +178,26 @@
                 <option value="spline">spline</option>
                 <option value="exact">exact</option>
             </param>
-            <param argument="--factor" type="float" label="Approximation factor: higher results in a finer-grained approximation" optional="true" >
-                <validator type="in_range" min="0"/>
-            </param>
+            <param argument="--factor" type="float" min=0 label="Approximation factor: higher results in a finer-grained approximation" optional="true" />
             <param argument="--force_cap" type="float" label="Max allowed force; lower values more gently minimize clashing structures" optional="true" />
             <param argument="--user_grid" type="float" label="Autodock map file for user grid data based calculations" optional="true" />
             <param argument="--user_grid_lambda" type="float" value="-1" label="Scales user_grid and functional scoring" />
-            <param argument="--print_terms" type="select" label="Print all available terms with default parameterizations" >
+            <param argument="--print_terms" type="boolean" truevalue="--print_terms" falsevalue="" label="Print all available terms with default parameterizations" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
-            <param argument="--print_atom_types" type="select" label="Print all available atom types" >
+            <param argument="--print_atom_types" type="boolean" truevalue="--print_atom_names" falsevalue="" label="Print all available atom types" >
                 <option value="false" selected="true">Do not use this option</option>
                 <option value="true">Use this option</option>
             </param>
         </section>
         <section name="misc" title="Misc" >
-            <param argument="--cpu" type="integer" label="The number of CPUs to use" optional="true" />
             <param argument="--seed" type="float" label="Explicit random seed" optional="true" />
             <param argument="--exhaustiveness" type="integer" value="8" label="Exhaustiveness of the global search" />
-            <param argument="--num_modes" type="integer" value="9" label="Maximum number of binding modes to generate" >
-                <validator type="in_range" min="1"/>
-            </param>
+            <param argument="--num_modes" type="integer" min=1 value="9" label="Maximum number of binding modes to generate" />
             <param argument="--energy_range" type="float" value="3" label="Maximum energy difference between the best binding mode and the worst one displayed (kcal/mol)" />
             <param argument="--min_rmsd_filter" type="float" value="1" label="Rmsd value used to filter final poses to remove redundancy" />
-            <param argument="--addH" type="select" label="Automatically add hydrogens in ligands" >
+            <param argument="--addH" type="boolean" truevalue="--addH" falsevalue="" label="Automatically add hydrogens in ligands" >
                 <option value="false" >Do not use this option</option>
                 <option value="true" selected="true">Use this option</option>
             </param>
@@ -259,8 +217,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="receptor" value="smina/protein.pdbqt" />
-            <param name="ligand" value="smina/ligand.pdbqt" />
+            <param name="receptor" value="protein.pdbqt" />
+            <param name="ligand" value="ligand.pdbqt" />
             <param name="center_x" value="11" />
             <param name="center_y" value="90.5" />
             <param name="center_z" value="57.5" />
@@ -281,80 +239,6 @@ Description
 ************
 
 A fork of AutoDock Vina that is customized to better support scoring function development and high-performance energy minimization. smina is maintained by David Koes at the University of Pittsburgh and is not directly affiliated with the AutoDock project.
-
-******
-Help
-******
-    **Input:**
-      --receptor arg         rigid part of the receptor (PDBQT)
-      --flex arg             flexible side chains, if any (PDBQT)
-      --ligand arg           ligand(s)
-      --flexres arg          flexible side chains specified by comma separated list 
-                             of chain:resid
-      --flexdist_ligand arg  ligand to use for flexdist
-      --flexdist arg         set all side chains within specified distance to 
-                             flexdist_ligand to flexible
-    
-    **Search space:**
-      --center_x arg        X coordinate of the center
-      --center_y arg        Y coordinate of the center
-      --center_z arg        Z coordinate of the center
-      --size_x arg          size in the X dimension (Angstroms)
-      --size_y arg          size in the Y dimension (Angstroms)
-      --size_z arg          size in the Z dimension (Angstroms)
-      --autobox_ligand arg  ligand to use for autobox
-      --autobox_add arg     amount of buffer space to add to auto-generated box 
-                            (default +4 on all six sides)
-      --no_lig              no ligand; for sampling/minimizing flexible residues
-    
-    **Output (optional):**
-      --out_flex                   write output file for flexible receptor residues
-      --log                        optionally, write log file
-      --atom_terms                 optionally write per-atom interaction term values
-      --atom_term_data             embedded per-atom interaction terms in output sd data
-    
-    **Scoring and minimization options:**
-      --scoring arg                specify alternative builtin scoring function
-      --custom_scoring arg         custom scoring function file
-      --custom_atoms arg           custom atom type parameters file
-      --score_only                 score provided ligand pose
-      --local_only                 local search only using autobox (you probably 
-                                   want to use --minimize)
-      --minimize                   energy minimization
-      --randomize_only             generate random poses, attempting to avoid 
-                                   clashes
-      --minimize_iters arg         number iterations of steepest descent; default 
-                                   scales with rotors and usually isn't sufficient 
-                                   for convergence
-      --accurate_line              use accurate line search
-      --minimize_early_term        stop minimization before convergence conditions 
-                                   are fully met
-      --approximation arg          approximation (linear, spline, or exact) to use
-      --factor arg                 approximation factor: higher results in a 
-                                   finer-grained approximation
-      --force_cap arg              max allowed force; lower values more gently 
-                                   minimize clashing structures
-      --user_grid arg              Autodock map file for user grid data based 
-                                   calculations
-      --user_grid_lambda arg       scales user_grid and functional scoring
-      --print_terms                print all available terms with default 
-                                   parameterizations
-      --print_atom_types           print all available atom types
-    
-    **Misc (optional):**
-      --cpu arg                  the number of CPUs to use (the default is to try 
-                                 to detect the number of CPUs or, failing that, use
-                                 1)
-      --seed arg                 explicit random seed
-      --exhaustiveness arg       exhaustiveness of the global search (roughly 
-                                 proportional to time)
-      --num_modes arg            maximum number of binding modes to generate
-      --energy_range arg         maximum energy difference between the best binding
-                                 mode and the worst one displayed (kcal/mol)
-      --min_rmsd_filter arg      rmsd value used to filter final poses to remove 
-                                 redundancy
-      --addH arg                 automatically add hydrogens in ligands (on by 
-                                 default)
 
         ]]>
     </help>

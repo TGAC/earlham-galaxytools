@@ -1,7 +1,6 @@
 name: smina
 owner: earlhaminst
-description: small molecule - protein docking based on vina
+description: smina is a fork of Autodock Vina (http://vina.scripps.edu/) that focuses on improving scoring and minimization
 homepage_url: https://sourceforge.net/projects/smina/
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/smina/
 categories: [Computational chemistry]
-
