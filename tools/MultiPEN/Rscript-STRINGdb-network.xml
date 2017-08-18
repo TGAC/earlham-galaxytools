@@ -1,19 +1,18 @@
-<tool id="stringdb-network" name="stringdb-network" version="0.0.3">
-    <description> Compile network from list of genes</description>
+<tool id="stringdb-network" name="STRINGdb network" version="0.0.4">
+    <description>Protein interaction network from gene list</description>
     <requirements>
-        <requirement type="package" version="3.3.1">r</requirement>
-        <requirement type="package" version="3.0.5">bioconductor-STRINGdb</requirement>
+        <requirement type="package" version="1.16.0">bioconductor-stringdb</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
     </stdio>
     <command><![CDATA[
-        Rscript '$__tool_directory__'/compileNetworkStringDB.R ./ '$geneList' $SpeciesCode $threshold '$networkFileName'
+Rscript '$__tool_directory__'/compileNetworkStringDB.R '$geneList' $SpeciesCode $threshold '$networkFileName'
     ]]></command>
     <inputs>
-        <param name="geneList" type="data" format="tabular" label="list of genes" help="List of genes (use symbol gene names) to compile a network" />
-        <param name="SpeciesCode" type="integer" value="" label="NCBI taxonomy identifiers for your organism (i.e., 9606 for Human, 10090 for mouse)" help="If you don’t know your organism's identifier, you can search the NCBI Taxonomy from http://www.nlm.nih.gov/taxonomy"/>
-        <param name="threshold" type="float" value="0.60" label="threshold for the combined score for the interactions" help="Default value set to 0.60" />
+        <param name="geneList" type="data" format="tabular" label="Gene symbol list" help="List of gene symbols to compile a network" />
+        <param name="SpeciesCode" type="integer" value="" label="NCBI taxonomy identifier for your organism (e.g. 9606 for human, 10090 for mouse)" help="If you don't know your organism identifier, you can search the NCBI Taxonomy from https://www.ncbi.nlm.nih.gov/taxonomy" />
+        <param name="threshold" type="float" value="0.60" label="Threshold for the combined score for the interactions" />
     </inputs>
     <outputs>
         <data name="networkFileName" format="txt" label="${tool.name}: use list of genes to compile PPI network using StringDB" />
@@ -21,11 +20,12 @@
     <tests>
         <test>
             <param name="geneList" ftype="tabular" value="geneList.txt" />
+            <param name="SpeciesCode" value="9606" />
             <output name="networkFileName" file="networkFromGeneList.txt" ftype="txt" />
         </test>
     </tests>
     <help><![CDATA[
-        This wrapper compiles a PPI network from a list of genes, using the Bioconductor package STRINGdb: Search Tool for the Retrieval of Interacting Proteins database (see http://bioconductor.org/packages/release/bioc/html/STRINGdb.html).
+This wrapper compiles a protein-protein interaction (PPI) network from a list of genes, using the Bioconductor package `STRINGdb <https://bioconductor.org/packages/release/bioc/html/STRINGdb.html>`_ (Search Tool for the Retrieval of Interacting Proteins database).
     ]]></help>
     <citations>
         <citation type="doi">10.1093/nar/gks1094</citation>
