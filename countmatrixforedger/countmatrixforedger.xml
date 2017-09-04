@@ -9,7 +9,7 @@
                 echo -e ${s.sample_data}"\t"${s.sample_name}"\t"${s.sample_group} >> script.data;
             #end for#
 
-            '$__tool_directory__/tools/scrsh.sh' script.data;
+            '$__tool_directory__/scrsh.sh' script.data;
 
         ]]>
     </command>
