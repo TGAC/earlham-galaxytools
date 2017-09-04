@@ -17,7 +17,7 @@
         <repeat name="sample" title="">
             <param name="sample_data" type="data" format="data" label="Output matrix from EDGE-pro (out_rpkm)"/>
             <param name="sample_name" type="text" label="" help="Sample name"/>
-            <param name="sample_group" type="text" label="" help="Sample group name- it has to be the same string for each sample of this group"/>
+            <param name="sample_group" type="text" label="" help="Sample group name - it has to be the same string for each sample of this group"/>
         </repeat>
     </inputs>
     <outputs>
