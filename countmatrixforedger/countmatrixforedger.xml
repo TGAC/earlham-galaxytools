@@ -1,64 +1,166 @@
 <tool id="countmatrixforedger" name="countMatrixForEdger" version="1.0">
     <description>Make a count matrix for edgeR</description>
-    <stdio>
-        <exit_code range="1:" />
-    </stdio>
-    <command>
+    <requirements>
+        <requirement type="package" version="4.1.3">gawk</requirement>
+    </requirements>
+    <command detect_errors="aggressive">
         <![CDATA[ 
             #for $i, $s in enumerate( $sample )#
                 echo -e ${s.sample_data}"\t"${s.sample_name}"\t"${s.sample_group} >> script.data;
             #end for#
 
-            $__tool_directory__/tools/scrsh.sh script.data;
-
-            cat count.matrix > $count_matrix;
-            cat annotation > $annotation;
-            cat script.log > $log;
-            cat error.log > $error_log
+            '$__tool_directory__/tools/scrsh.sh' script.data;
 
         ]]>
     </command>
     <inputs>
         <repeat name="sample" title="">
-            <param name="sample_data" type="data" format="data" label="Output matrix from EDGE-pro (out_rpkm)" />
-            <param name="sample_name" type="text" label="" help="Sample name" />
-            <param name="sample_group" type="text" label="" help="Sample group name- it has to be the same string for each sample of this group" />
+            <param name="sample_data" type="data" format="data" label="Output matrix from EDGE-pro (out_rpkm)"/>
+            <param name="sample_name" type="text" label="" help="Sample name"/>
+            <param name="sample_group" type="text" label="" help="Sample group name- it has to be the same string for each sample of this group"/>
         </repeat>
     </inputs>
     <outputs>
-        <data name="count_matrix" format="tabular" label="countMatrixForEdger: count matrix"/>
-        <data name="annotation" format="tabular" label="countMatrixForEdger: annotation"/>
-        <data name="log" format="txt" label="countMatrixForEdger: log"/>
-        <data name="error_log" format="txt" label="countMatrixForEdger: error log"/>
+        <data name="count_matrix" format="tabular" from_work_dir="count.matrix" label="countMatrixForEdger: count matrix"/>
+        <data name="annotation" format="tabular" from_work_dir="annotation" label="countMatrixForEdger: annotation"/>
     </outputs>
     <tests>
         <test>
-            <param name="sample_0|sample_data" value="data1" />
-            <param name="sample_1|sample_data" value="data2" />
-            <param name="sample_2|sample_data" value="data3" />
-            <param name="sample_3|sample_data" value="data4" />
-            <param name="sample_0|sample_name" value="sample1" />
-            <param name="sample_1|sample_name" value="sample2" />
-            <param name="sample_2|sample_name" value="sample3" />
-            <param name="sample_3|sample_name" value="sample4" />            
-            <param name="sample_0|sample_group" value="gr1" />
-            <param name="sample_1|sample_group" value="gr1" />
-            <param name="sample_2|sample_group" value="gr2" />
-            <param name="sample_3|sample_group" value="gr2" />
+            <param name="sample_0|sample_data" value="data1"/>
+            <param name="sample_1|sample_data" value="data2"/>
+            <param name="sample_2|sample_data" value="data3"/>
+            <param name="sample_3|sample_data" value="data4"/>
+            <param name="sample_0|sample_name" value="sample1"/>
+            <param name="sample_1|sample_name" value="sample2"/>
+            <param name="sample_2|sample_name" value="sample3"/>
+            <param name="sample_3|sample_name" value="sample4"/>            
+            <param name="sample_0|sample_group" value="gr1"/>
+            <param name="sample_1|sample_group" value="gr1"/>
+            <param name="sample_2|sample_group" value="gr2"/>
+            <param name="sample_3|sample_group" value="gr2"/>
             <output name="count_matrix" file="count.matrix"/>
             <output name="annotation" file="annotation"/>
-            <output name="log" file="script.log"/>
-            <output name="error_log" file="error.log"/>
         </test>
-
     </tests>
     <help>
         <![CDATA[ 
+	
+            **What it does**
 
-     ]]>
+            It takes output tables from edge-PRO, samples names, groups names and creates a data 
+            containg numer of reads per each gene for each sample. It also returns table with gene's coordination.
+            The table with number of reads can be used in edgeR tool.
+
+            **Example**
+
+            Input data:
+
+            1.
+             
+            * sample_data:
+
+            +---------+-------------+-----------+-------------+--------+------+
+            | gene_ID | start_coord | end_coord | average_cov | #reads | RPKM |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0001  | 1           | 1323      | 11.6        | 416    | 157  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0003  | 1483        | 2550      | 63.0        | 1818   | 851  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0001  | 2579        | 4888      | 49.1        | 3067   | 663  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0004c | 4916        | 5257      | 4.5         | 42     | 61   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0005c | 5260        | 6498      | 6.4         | 215    | 87   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0006  | 6703        | 8010      | 5.9         | 208    | 79   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0007  | 8144        | 12634     | 26.3        | 3190   | 355  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0008  | 12644       | 14395     | 43.5        | 2059   | 587  |
+            +---------+-------------+-----------+-------------+--------+------+
+             
+            * sample_name: **sample1**
+
+            * sample_group: **gr1**
+
+            2. 
+
+            * sample_data:
+
+            +---------+-------------+-----------+-------------+--------+------+
+            | gene_ID | start_coord | end_coord | average_cov | #reads | RPKM |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0001  | 1           | 1323      | 11.4        | 407    | 154  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0002  | 1483        | 2550      | 61.6        | 1778   | 835  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0003  | 2579        | 4888      | 48.7        | 3039   | 660  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0004c | 4916        | 5257      | 3.9         | 36     | 53   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0005c | 5260        | 6498      | 6.8         | 229    | 93   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0006  | 6703        | 8010      | 5.7         | 201    | 77   |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0007  | 8144        | 12634     | 24.8        | 3015   | 337  |
+            +---------+-------------+-----------+-------------+--------+------+
+            | Cj0008  | 12644       | 14395     | 43.5        | 2058   | 589  |
+            +---------+-------------+-----------+-------------+--------+------+
+
+            * sample_name: **sample2**
+
+            * sample_group: **gr2**
+
+            Output data:
+
+            * count_matrix:
+
+            +----------+---------+---------+
+            | #        | gr1:gr1 | gr2:gr2 |
+            +----------+---------+---------+
+            | #Feature | sample1 | sample2 |
+            +----------+---------+---------+
+            | Cj0001   | 416     | 407     |
+            +----------+---------+---------+
+            | Cj0002   | 1818    | 1778    |
+            +----------+---------+---------+
+            | Cj0003   | 3067    | 3039    |
+            +----------+---------+---------+
+            | Cj0004c  | 42      | 36      |
+            +----------+---------+---------+
+            | Cj0005c  | 215     | 229     |
+            +----------+---------+---------+
+            | Cj0006   | 208     | 201     |
+            +----------+---------+---------+
+            | Cj0007   | 3190    | 3015    |
+            +----------+---------+---------+
+            | Cj0008   | 2059    | 2058    |
+            +----------+---------+---------+
+
+            * annotation:
+
+            +---------+--------------+-----------+
+            | gene_ID | start_coord  | end_coord |
+            +---------+--------------+-----------+
+            | Cj0001  | 1            | 1323      |
+            +---------+--------------+-----------+
+            | Cj0002  | 1483         | 2550      |
+            +---------+--------------+-----------+
+            | Cj0003  | 2579         | 4888      |
+            +---------+--------------+-----------+
+            | Cj0004c | 4916         | 5257      |
+            +---------+--------------+-----------+
+            | Cj0005c | 5260         | 6498      |
+            +---------+--------------+-----------+
+            | Cj0006  | 6703         | 8010      |
+            +---------+--------------+-----------+
+            | Cj0007  | 8144         | 12634     |
+            +---------+--------------+-----------+
+            | Cj0008  | 12644        | 14395     |
+            +---------+--------------+-----------+
+            | Cj0009  | 14398        | 15843     |
+            +---------+--------------+-----------+
+        
+	]]>
     </help>
-        <citations>
-        <citation>
-        </citation>
-    </citations>
 </tool>
