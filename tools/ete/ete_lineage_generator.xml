@@ -1,0 +1,143 @@
+<tool id="ete_linage_generator" name="ETE lineage generator" version="3.0.0b35">
+		<description>from a list of species/taxids using the ETE Toolkit</description>
+     <requirements>
+        <requirement type="package" version="3.0.0b35">ete3</requirement>
+    </requirements>
+    <stdio>
+        <!-- Anything other than zero is an error -->
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+    <![CDATA[
+python $__tool_directory__/ete_lineage_generator.py
+-s '$speciesFile'
+-d '$database'
+-o '$outputFile'
+#if $ranks.levels == "full"
+-f 
+#elif $ranks.levels == "manual"
+#for $rank in $ranks.manualranks:
+-r "$rank"
+#end for
+#end if
+#if $compresscond.compress == "-c"
+$compresscond.compress
+$compresscond.lower
+#end if
+    ]]>
+    </command>
+<!--
+-->
+    <inputs>
+		<param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species/taxid per line" />
+		<param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
+        <conditional name="ranks">
+            <param name="levels" type="select" label="Taxonomic levels">
+                <option value="primary" selected="true">Primary</option>
+                <option value="full">Full</option>
+                <option value="manual">Manual</option>
+            </param>
+            <when value="manual">
+			    <param name="manualranks" type="select" multiple="True" label="Manual selection of ranks">
+				    <option value="superkingdom">superkingdom</option>
+					<option value="kingdom" selected="True">kingdom</option>
+					<option value="subkingdom">subkingdom</option>
+                    <option value="superphylum">superphylum</option>
+					<option value="phylum" selected="True">phylum</option>
+					<option value="subphylum">subphylum</option>
+                    <option value="superclass">superclass</option>
+					<option value="class" selected="True">class</option>
+					<option value="subclass">subclass</option>
+						<option value="infraclass">infraclass</option>
+					<option value="cohort">cohort</option>
+                    <option value="superorder">superorder</option>
+			        <option value="order" selected="True">order</option>
+					<option value="suborder">suborder</option>
+					<option value="infraorder">infraorder</option>
+					<option value="parvorder">parvorder</option>
+                    <option value="superfamily">superfamily</option>
+			        <option value="family" selected="True">family</option>
+					<option value="subfamily">subfamily</option>
+	                    <option value="tribe">tribe</option>
+			        <option value="subtribe">subtribe</option>
+                    <option value="genus" selected="True">genus</option>
+			        <option value="subgenus">subgenus</option>
+                    <option value="species group">species group</option>
+			        <option value="species subgroup">species subgroup</option>
+					<option value="species" selected="True">species</option>
+					<option value="subspecies">subspecies</option>
+                    <option value="varietas">varietas</option>
+			        <option value="forma">forma</option>
+	            </param>
+            </when>
+	</conditional>
+		<conditional name="compresscond">
+				<param name="compress" type="boolean" label="Fill unnamed ranks" truevalue="-c" falsevalue="" help="Fill unnamed ranks with super/sub ranks (see -l)" />
+				<when value="-c">
+					<param name="lower" type="boolean" label="Prefer lower ranks for filling" truevalue="-l" falsevalue="" help="Prefer lower levels for filling" />
+				</when>
+		</conditional>
+    </inputs>
+    <outputs>
+        <data format="tsv" name="outputFile" label="${tool.name} on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <output name="outputFile" file="lineage.txt" />
+        </test>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="compress" value="-c" />
+            <output name="outputFile" file="lineage-compress.txt" />
+        </test>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+			<param name="compress" value="-c" />
+			<param name="lower" value="-l" />
+            <output name="outputFile" file="lineage-compress-lower.txt" />
+	    </test>
+		<test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="levels" value="full" />
+            <output name="outputFile" file="lineage-full.txt" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+Generates a table with lineage information for a list of species (also taxids and arbitrary taxons are accepted) using the .. _ETE Toolkit: http://etetoolkit.org/
+
+
+**Input**
+
+- *Species file* a single column tabular file
+- *(ETE3) Taxonomy Database* a sqlite database that has been created by ETE from the NCBI taxonomy dump
+
+**Options**
+
+- *Taxonomic levels* the columns to be incuded in the output table. There are two presets (full and primary)
+
+	- *Full* contains all 29 ranks included in the NCBI taxonomy
+	- *Primary* contains the primary ranks (kingdom, phylum, class, order, family, genus, species)
+	- *Manual* the ranks of interest can be chosen by the user. The primary levels are chosen by default.
+
+- *Fill unnamed ranks* Get missing data from "nearby" levels: 
+
+	- Some nodes in the NCBI taxonomy tree have no name (no rank) these are shown by default as "NA" in the output. If the *compress* option is selected then the rank is accepted if the level name is included (e.g. superorder is accepted as order if the order is unnamed but the name of the superorder is given) 
+
+- *Prefer lower ranks for filling* for compressing lower levels are prefered over higher ones
+
+**Output**
+
+Table (tab separated). The first column contains the species names. The following columns contain the 
+rank names of the levels of interest.
+    ]]>
+    </help>
+    <citations>
+        <citation type="doi">10.1093/molbev/msw046</citation>
+    </citations>
+</tool>

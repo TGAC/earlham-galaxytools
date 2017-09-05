@@ -1,33 +1,25 @@
 import optparse
+import sys
 
 from ete3 import NCBITaxa
 
-ncbi = NCBITaxa()
 
 parser = optparse.OptionParser()
 parser.add_option('-s', '--species', dest="input_species_filename",
                   help='Species list in text format one species in each line')
-
+parser.add_option('-d', '--database', dest="database", default=None, 
+                  help='ETE sqlite data base to use (default: ~/.etetoolkit/taxa.sqlite)')
+parser.add_option('-o', '--output', dest="output", help='output file name (default: stdout)')
 parser.add_option('-f', '--format', type='choice', choices=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '100'], dest="format",
                   default='8', help='outpur format for tree')
-
 parser.add_option('-t', '--treebest', type='choice', choices=['yes', 'no'], dest="treebest",
                   default='no', help='To be used in TreeBest')
-
-parser.add_option('-d', '--database', type='choice', choices=['yes', 'no'], dest="database",
-                  default='no', help='Update database')
-
 options, args = parser.parse_args()
-
-if options.database == "yes":
-    try:
-        ncbi.update_taxonomy_database()
-    except Exception:
-        pass
-
 if options.input_species_filename is None:
-    raise Exception('-s option must be specified, Species list in text format one species in each line')
+    parser.error("-s option must be specified, Species list in text format one species in each line")
 
+
+ncbi = NCBITaxa(dbfile=options.database)
 with open(options.input_species_filename) as f:
     species_name = [_.strip().replace('_', ' ') for _ in f.readlines()]
 
@@ -51,6 +43,10 @@ newickTree = tree.write(format=int(options.format))
 if options.treebest == "yes":
     newickTree = newickTree.rstrip(';')
     newickTree = newickTree + "root;"
-
-with open('newickTree.nhx', 'w') as newickFile:
-    newickFile.write(newickTree)
+# setup output
+if not options.output:   # if filename is not given
+    of = sys.stdout
+else:
+    of = open(options.output, "w")
+of.write(newickTree)
+of.close()
