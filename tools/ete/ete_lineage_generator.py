@@ -28,12 +28,13 @@ SHORT_RANKS = [u"kingdom",
                u"genus",
                u"species"]
 
+
 def process_taxid(ncbi, taxid, ranks, RANK_IDX, lower=False):
     """
-    process one taxid: 
+    process one taxid:
         - get lineage (as list of taxids, ranks, and names)
         - reverse the lineage if lower ranks are to be used for filling
-        - 
+        - fill the ranks with the data from the lineage
     ncbi: ete NCBITaxa object
     taxid: a taxid (int)
     ranks: list of ranks (should be initialized with "NA" x number of levels of interest)
@@ -46,18 +47,18 @@ def process_taxid(ncbi, taxid, ranks, RANK_IDX, lower=False):
     if lower:
         lineage.reverse()
     for l in lineage:
-        #print l, lineage_ranks[l], lineage_names[l]
-        if not lineage_ranks[ l ] in RANK_IDX:
+        if not lineage_ranks[l] in RANK_IDX:
             continue
-        if ranks[ RANK_IDX[ lineage_ranks[l] ] ] != "NA":
+        if ranks[ RANK_IDX[lineage_ranks[l]]] != "NA":
             continue
-        ranks[ RANK_IDX[ lineage_ranks[l] ] ] = lineage_names[l]
+        ranks[RANK_IDX[lineage_ranks[l]]] = lineage_names[l]
+
 
 # get command line options
 parser = optparse.OptionParser()
 parser.add_option('-s', '--species', dest="input_species_filename",
                   help='Species/taxid list in text format one species in each line')
-parser.add_option('-d', '--database', dest="database", default=None, 
+parser.add_option('-d', '--database', dest="database", default=None,
                   help='ETE sqlite data base to use (default: ~/.etetoolkit/taxa.sqlite)')
 parser.add_option('-o', '--output', dest="output", help='output file name (default: stdout)')
 parser.add_option('-f', dest="full", action="store_true", default=False,
@@ -66,7 +67,7 @@ parser.add_option('-c', dest="compress", action="store_true", default=False,
                   help='Fill unnamed ranks with super/sub ranks (see -l)')
 parser.add_option('-l', dest="lower", action="store_true", default=False,
                   help='Prefer lower levels when compressed')
-parser.add_option('-r', '--rank', dest='ranks', action="append", 
+parser.add_option('-r', '--rank', dest='ranks', action="append",
                   help='include rank - multiple ones can be specified')
 parser.add_option("-t", "--tracks", action="append", type="int")
 
@@ -78,8 +79,8 @@ if options.full and options.ranks:
     parser.error("-f and -r can not be used at the same time")
 if options.ranks:
     for r in options.ranks:
-        if not r in LONG_RANKS:
-            parser.error("unknown rank %s" %r)
+        if r not in LONG_RANKS:
+            parser.error("unknown rank %s" % r)
 # setup output
 if not options.output:   # if filename is not given
     of = sys.stdout
@@ -111,8 +112,8 @@ with open(options.input_species_filename) as f:
         try:
             taxid = int(line)
         except ValueError:
-            # TODO: one could use fuzzy name lookup (i.e. accept typos in the species names), 
-            # but then a pysqlite version that supports this is needed (needs to be enabled 
+            # TODO: one could use fuzzy name lookup (i.e. accept typos in the species names),
+            # but then a pysqlite version that supports this is needed (needs to be enabled
             # during compilation)
             name2tax = ncbi.get_name_translator([line])
             if line in name2tax:

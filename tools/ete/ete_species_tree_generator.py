@@ -7,7 +7,7 @@ from ete3 import NCBITaxa
 parser = optparse.OptionParser()
 parser.add_option('-s', '--species', dest="input_species_filename",
                   help='Species list in text format one species in each line')
-parser.add_option('-d', '--database', dest="database", default=None, 
+parser.add_option('-d', '--database', dest="database", default=None,
                   help='ETE sqlite data base to use (default: ~/.etetoolkit/taxa.sqlite)')
 parser.add_option('-o', '--output', dest="output", help='output file name (default: stdout)')
 parser.add_option('-f', '--format', type='choice', choices=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '100'], dest="format",
