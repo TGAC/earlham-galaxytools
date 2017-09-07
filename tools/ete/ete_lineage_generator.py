@@ -49,7 +49,7 @@ def process_taxid(ncbi, taxid, ranks, RANK_IDX, lower=False):
     for l in lineage:
         if not lineage_ranks[l] in RANK_IDX:
             continue
-        if ranks[ RANK_IDX[lineage_ranks[l]]] != "NA":
+        if ranks[RANK_IDX[lineage_ranks[l]]] != "NA":
             continue
         ranks[RANK_IDX[lineage_ranks[l]]] = lineage_names[l]
 
