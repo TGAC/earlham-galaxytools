@@ -1,5 +1,6 @@
 import optparse
 import sys
+sys.path.append("./ete/")
 
 from ete3 import NCBITaxa
 
