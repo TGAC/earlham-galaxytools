@@ -1,4 +1,4 @@
-<tool id="ete_linage_generator" name="ETE lineage generator" version="3.0.0b35">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="3.0.0b35">
 		<description>from a list of species/taxids using the ETE Toolkit</description>
      <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
