@@ -53,7 +53,7 @@ python $__tool_directory__/ete_species_tree_generator.py
     <tests>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="treebest" value="yes" />
             <output name="outputFile">
                 <assert_contents>

@@ -18,7 +18,6 @@ options, args = parser.parse_args()
 if options.input_species_filename is None:
     parser.error("-s option must be specified, Species list in text format one species in each line")
 
-
 ncbi = NCBITaxa(dbfile=options.database)
 with open(options.input_species_filename) as f:
     species_name = [_.strip().replace('_', ' ') for _ in f.readlines()]

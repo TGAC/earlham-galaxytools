@@ -69,7 +69,6 @@ parser.add_option('-l', dest="lower", action="store_true", default=False,
                   help='Prefer lower levels when compressed')
 parser.add_option('-r', '--rank', dest='ranks', action="append",
                   help='include rank - multiple ones can be specified')
-parser.add_option("-t", "--tracks", action="append", type="int")
 
 options, args = parser.parse_args()
 # check command line options

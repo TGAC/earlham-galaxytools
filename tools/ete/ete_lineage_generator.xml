@@ -9,10 +9,10 @@ python $__tool_directory__/ete_lineage_generator.py
 -s '$speciesFile'
 -d '$database'
 -o '$outputFile'
-#if $ranks.levels == "full"
+#if $levels == "full"
     -f 
-#elif $ranks.levels == "manual"
-    #for $rank in $ranks.manualranks:
+#elif $levels == "manual"
+    #for $rank in $manualranks:
         -r "$rank"
     #end for
 #end if
@@ -83,25 +83,27 @@ python $__tool_directory__/ete_lineage_generator.py
     <tests>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
+            <param name="compress" value="" />
             <output name="outputFile" file="lineage.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="database" ftype="sqlite" value="taxsump.sqlite" />
             <param name="compress" value="-c" />
             <output name="outputFile" file="lineage-compress.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="-c" />
             <param name="lower" value="-l" />
             <output name="outputFile" file="lineage-compress-lower.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
-            <param name="database" ftype="sqlite" value="taxa.sqlite" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
+            <param name="compress" value="" />
             <param name="levels" value="full" />
             <output name="outputFile" file="lineage-full.txt" />
         </test>
