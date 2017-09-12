@@ -19,8 +19,9 @@ python $__tool_directory__/ete_init_taxdb.py
                 <option value="latest">Get latest taxdump online</option>
             </param>
             <when value="local">
-                <param name="taxdump" type="data" format="txt" label="NCBI taxdump" help="NCBI taxonomy database dump in tar.gz format" />
+                <param name="taxdump" type="data" format="tar" label="NCBI taxdump" help="NCBI taxonomy database dump in tar.gz format" />
             </when>
+            <when value="latest" />
         </conditional>
     </inputs>
     <outputs>
