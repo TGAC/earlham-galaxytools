@@ -29,8 +29,8 @@ python $__tool_directory__/ete_init_taxdb.py
     </outputs>
     <tests>
         <test>
-            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <output name="taxdump" file="taxdump.tar.gz" />
+            <param name="taxdump" ftype="tar" file="taxdump.tar.gz" />
+            <output name="database" value="taxdump.sqlite" />
         </test>
     </tests>
     <help>

@@ -13,7 +13,7 @@ options, args = parser.parse_args()
 if options.database is None:
     parser.error("-d option must be specified")
 if options.taxdump is not None:
-    taxdump = options.database
+    taxdump = options.taxdump
 else:
     from urllib import urlretrieve
     urlretrieve("http://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", "taxdump.tar.gz")
