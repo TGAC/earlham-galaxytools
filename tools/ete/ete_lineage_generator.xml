@@ -70,17 +70,17 @@ python $__tool_directory__/ete_lineage_generator.py
             <when value="full" />
         </conditional>
         <conditional name="compresscond">
-                <param name="compress" type="select" label="Fill unnamed ranks" help="Fill unnamed ranks with super/sub ranks (see -l)">
-                    <option value="-c">Yes</option>
+            <param name="compress" type="select" label="Fill unnamed ranks" help="Fill unnamed ranks with super/sub ranks (see -l)">
+                <option value="-c">Yes</option>
+                <option value="">No</option>
+            </param>
+            <when value="-c">
+                <param name="lower" type="select" label="Prefer lower ranks for filling" help="Prefer lower levels for filling">
+                    <option value="-l">Yes</option>
                     <option value="">No</option>
                 </param>
-                <when value="-c">
-                    <param name="lower" type="select" label="Prefer lower ranks for filling" help="Prefer lower levels for filling">
-                        <option value="-l">Yes</option>
-                        <option value="">No</option>
-                    </param>
-                </when>
-                <when value="" />
+            </when>
+            <when value="" />
         </conditional>
     </inputs>
     <outputs>
