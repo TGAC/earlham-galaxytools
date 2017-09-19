@@ -91,18 +91,21 @@ python $__tool_directory__/ete_lineage_generator.py
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
+            <param name="levels" value="primary" />
             <output name="outputFile" file="lineage.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxsump.sqlite" />
             <param name="compress" value="-c" />
+            <param name="levels" value="primary" />
             <output name="outputFile" file="lineage-compress.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="-c" />
+            <param name="levels" value="primary" />
             <param name="lower" value="-l" />
             <output name="outputFile" file="lineage-compress-lower.txt" />
         </test>
