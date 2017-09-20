@@ -1,8 +1,6 @@
-import optparse
-# import sys
-# sys.path.append("./ete/")
-
 import ete3.ncbi_taxonomy
+import optparse
+from six.moves.urllib.request import urlretrieve
 
 parser = optparse.OptionParser()
 parser.add_option('-t', '--taxdump', dest='taxdump', default=None,
@@ -15,7 +13,6 @@ if options.database is None:
 if options.taxdump is not None:
     taxdump = options.taxdump
 else:
-    from urllib import urlretrieve
     urlretrieve("http://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", "taxdump.tar.gz")
     taxdump = "taxdump.tar.gz"
 
