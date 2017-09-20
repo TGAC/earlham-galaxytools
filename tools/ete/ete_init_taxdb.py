@@ -1,5 +1,5 @@
 import optparse
-import sys
+# import sys
 # sys.path.append("./ete/")
 
 import ete3.ncbi_taxonomy
@@ -19,8 +19,8 @@ else:
     urlretrieve("http://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", "taxdump.tar.gz")
     taxdump = "taxdump.tar.gz"
 
-# will remove a taxdump.tar.gz file at the end 
+# will remove a taxdump.tar.gz file at the end
 # which will lead to an errmessage if not present
-# if the tool is run on a taxdump in the current dir it will be 
+# if the tool is run on a taxdump in the current dir it will be
 # deleted in the end
 ete3.ncbi_taxonomy.ncbiquery.update_db(dbfile=options.database, targz_file=taxdump)
