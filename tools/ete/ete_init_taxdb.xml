@@ -6,7 +6,7 @@
     <command detect_errors="exit_code">
     <![CDATA[
 python '$__tool_directory__/ete_init_taxdb.py'
-#if $latest == "local"
+#if $latestcond.latest == "local"
     -t '$latestcond.taxdump'
 #end if
 -d '$database'
