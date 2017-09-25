@@ -1,5 +1,6 @@
-import ete3.ncbi_taxonomy
 import optparse
+
+import ete3.ncbi_taxonomy
 from six.moves.urllib.request import urlretrieve
 
 parser = optparse.OptionParser()
