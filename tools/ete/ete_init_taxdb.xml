@@ -31,7 +31,7 @@ python '$__tool_directory__/ete_init_taxdb.py'
         <test>
             <param name="latest" value="local" />
             <param name="taxdump" ftype="tar" value="taxdump.tar.gz" />
-            <output name="database" file="taxdump.sqlite" />
+            <output name="database" file="taxdump.sqlite" compare="sim_size" />
         </test>
     </tests>
     <help>
