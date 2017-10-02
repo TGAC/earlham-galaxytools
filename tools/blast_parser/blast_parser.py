@@ -1,6 +1,5 @@
-import math
 import argparse
-
+import math
 
 def main():
     parser = argparse.ArgumentParser()
@@ -13,16 +12,15 @@ def main():
                         dest='reciprocal',
                         help='Annotate homolog pair')
 
-
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
     options = parser.parse_args()
-    
+
     result = {}
-    
+
     for line in options.i:
         line = line.rstrip()
-        
+
         line_cols = line.split('\t')
 
         if line_cols[0] != line_cols[1]:
@@ -33,11 +31,11 @@ def main():
 
             if line_cols[0] in result:
                 if line_cols[1] not in result[line_cols[0]]:
-                    result[line_cols[0]].update({line_cols[1] : weight})
+                    result[line_cols[0]].update({line_cols[1]:weight})
             else:
                 result[line_cols[0]] = {line_cols[1]:weight}
 
-            if(options.reciprocal == False):
+            if(options.reciprocal is False):
                 options.o.write("%s\t%s\t%d\n" % (line_cols[0], line_cols[1], weight))
 
     if(options.reciprocal):
