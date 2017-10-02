@@ -1,18 +1,22 @@
-<tool id="blast_parser" name="BLAST parser" version="0.1.1">
+<tool id="blast_parser" name="BLAST parser" version="0.1.2">
     <description>
         Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
     </description>
 
     <command detect_errors="exit_code">
 <![CDATA[
-perl '$__tool_directory__/blast_parser.pl'
-'$input'
-> '$output'
+python '$__tool_directory__/blast_parser.py'
+-i '$input'
+-o '$output'
+#if $reciprocal
+    -r
+#end if
 ]]>
     </command>
 
     <inputs>
         <param name="input" type="data" format="tabular" label="Tabular data" help="BLAST 12 column tabular format data"/>
+        <param name="reciprocal" type="boolean" checked="false" label="Reciprocal results" help="returns only reciprocal results"/>
     </inputs>
 
     <outputs>
@@ -22,12 +26,18 @@ perl '$__tool_directory__/blast_parser.pl'
     <tests>
         <test>
             <param name="input" ftype="tabular" value="input.tabular" />
+            <param name="reciprocal" value="false" />
             <output name="output" file="output.tabular" />
+        </test>
+        <test>
+            <param name="input" ftype="tabular" value="input.tabular" />
+            <param name="reciprocal" value="true" />
+            <output name="output" file="output2.tabular" />
         </test>
     </tests>
     <help>
 <![CDATA[
-Simple tool to convert a 12- or 24-column BLAST output into a 3-column format (qseqid, sseqid, round(-1 * log10(evalue))) usable as input for the hcluster_sg tool.
+Simple tool to convert a 12- or 24-column BLAST output into a 3-column format (qseqid, sseqid, round(-1 * log10(evalue)/2)) usable as input for the hcluster_sg tool.
 ]]>
     </help>
     <citations>
