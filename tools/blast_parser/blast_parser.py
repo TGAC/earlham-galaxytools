@@ -1,5 +1,10 @@
+"""
+Simple parser to convert a BLAST 12-column or 24-column tabular output into a
+3-column tabular input for hcluster_hg (id1, id2, weight):
+"""
 import argparse
 import math
+from collections import OrderedDict
 
 
 def main():
@@ -17,35 +22,32 @@ def main():
 
     options = parser.parse_args()
 
-    result = {}
+    results = OrderedDict()
 
     for line in options.i:
         line = line.rstrip()
-
         line_cols = line.split('\t')
+        sequence1_id = line_cols[0]
+        sequence2_id = line_cols[1]
+        evalue = float(line_cols[10])
 
-        if line_cols[0] != line_cols[1]:
+        # Ignore self-matching hits
+        if sequence1_id != sequence2_id:
+            # Convert evalue to an integer weight with max 100
             weight = 100
 
-            if line_cols[10] != "0" and line_cols[10] != "0.0":
-                weight = min(100, -1 * round(math.log10(float(line_cols[10])) / 2))
+            # If the evalue is 0, leave weight at 100
+            if evalue != 0.0:
+                weight = min(100, round(math.log10(evalue) / -2.0))
 
-            if line_cols[0] in result:
-                if line_cols[1] not in result[line_cols[0]]:
-                    result[line_cols[0]].update({line_cols[1]: weight})
+            if (sequence1_id, sequence2_id) not in results:
+                results[(sequence1_id, sequence2_id)] = weight
             else:
-                result[line_cols[0]] = {line_cols[1]: weight}
+                results[(sequence1_id, sequence2_id)] = max(results[(sequence1_id, sequence2_id)], weight)
 
-            if(options.reciprocal is False):
-                options.o.write("%s\t%s\t%d\n" % (line_cols[0], line_cols[1], weight))
-
-    if(options.reciprocal):
-        for i in result:
-            pairs = result[i]
-            for pair in pairs:
-                if pair in result:
-                    if i in result[pair]:
-                        options.o.write("%s\t%s\t%d\n" % (i, pair, pairs[pair]))
+    for (sequence1_id, sequence2_id), weight in results.items():
+        if not options.reciprocal or (sequence2_id, sequence1_id) in results:
+            options.o.write("%s\t%s\t%d\n" % (sequence1_id, sequence2_id, weight))
 
 
 if __name__ == "__main__":
