@@ -6,6 +6,8 @@ import argparse
 import math
 from collections import OrderedDict
 
+import six
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -45,7 +47,7 @@ def main():
             else:
                 results[(sequence1_id, sequence2_id)] = max(results[(sequence1_id, sequence2_id)], weight)
 
-    for (sequence1_id, sequence2_id), weight in results.items():
+    for (sequence1_id, sequence2_id), weight in six.iteritems(results):
         if not options.reciprocal or (sequence2_id, sequence1_id) in results:
             options.o.write("%s\t%s\t%d\n" % (sequence1_id, sequence2_id, weight))
 

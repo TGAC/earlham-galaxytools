@@ -2,7 +2,9 @@
     <description>
         Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
     </description>
-
+    <requirements>
+        <requirement type="package" version="1.11.0">six</requirement>
+    </requirements>
     <command detect_errors="exit_code">
 <![CDATA[
 python '$__tool_directory__/blast_parser.py'
