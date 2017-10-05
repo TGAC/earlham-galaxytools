@@ -2,13 +2,10 @@
 Simple parser to convert a BLAST 12-column or 24-column tabular output into a
 3-column tabular input for hcluster_hg (id1, id2, weight):
 """
-import sys
 import argparse
 import math
-from collections import OrderedDict
 import sqlite3
 
-import six
 
 def create_tables(conn):
     cur = conn.cursor()
@@ -18,8 +15,6 @@ def create_tables(conn):
         sequence2_id VARCHAR NOT NULL,
         weight INT NOT NULL)''')
     conn.commit()
-
-
 
 
 def main():
@@ -41,7 +36,7 @@ def main():
 
     conn = sqlite3.connect(db_name)
     conn.execute('PRAGMA foreign_keys = ON')
-    
+
     create_tables(conn)
 
     i = 0
@@ -57,7 +52,7 @@ def main():
 
         # Ignore self-matching hits
         if sequence1_id != sequence2_id:
-            i = i+1
+            i = i + 1
 
             # Convert evalue to an integer weight with max 100
             weight = 100
@@ -68,7 +63,7 @@ def main():
 
             # Insert pair into SQLite database
             cur.execute('INSERT INTO homology (homology_id, sequence1_id, sequence2_id, weight) VALUES (?, ?, ?, ?)',
-                    (i, sequence1_id, sequence2_id, weight))
+                (i, sequence1_id, sequence2_id, weight))
 
             # Execute query at every 100 pair to save memory
             if(i % 10 == 0):
@@ -85,11 +80,11 @@ def main():
 
     # General select query
     query = 'SELECT * FROM homology ORDER BY homology_id'
-    
+
     # Update select query if reciprocal selected
     if options.reciprocal:
         query = 'SELECT h1.* FROM homology h1, homology h2 WHERE h1.sequence1_id =  h2.sequence2_id AND h1.sequence2_id =  h2.sequence1_id ORDER BY h1.homology_id'
-    
+
     cur.execute(query)
     results = cur.fetchall()
     for result in results:
