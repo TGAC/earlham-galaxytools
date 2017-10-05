@@ -2,11 +2,24 @@
 Simple parser to convert a BLAST 12-column or 24-column tabular output into a
 3-column tabular input for hcluster_hg (id1, id2, weight):
 """
+import sys
 import argparse
 import math
 from collections import OrderedDict
+import sqlite3
 
 import six
+
+def create_tables(conn):
+    cur = conn.cursor()
+    cur.execute('''CREATE TABLE homology (
+        homology_id INTEGER NOT NULL,
+        sequence1_id VARCHAR NOT NULL,
+        sequence2_id VARCHAR NOT NULL,
+        weight INT NOT NULL)''')
+    conn.commit()
+
+
 
 
 def main():
@@ -24,7 +37,16 @@ def main():
 
     options = parser.parse_args()
 
-    results = OrderedDict()
+    db_name = options.o.name.split(".")[0] + ".sqlite"
+
+    conn = sqlite3.connect(db_name)
+    conn.execute('PRAGMA foreign_keys = ON')
+    
+    create_tables(conn)
+
+    i = 0
+
+    cur = conn.cursor()
 
     for line in options.i:
         line = line.rstrip()
@@ -35,6 +57,8 @@ def main():
 
         # Ignore self-matching hits
         if sequence1_id != sequence2_id:
+            i = i+1
+
             # Convert evalue to an integer weight with max 100
             weight = 100
 
@@ -42,14 +66,34 @@ def main():
             if evalue != 0.0:
                 weight = min(100, round(math.log10(evalue) / -2.0))
 
-            if (sequence1_id, sequence2_id) not in results:
-                results[(sequence1_id, sequence2_id)] = weight
-            else:
-                results[(sequence1_id, sequence2_id)] = max(results[(sequence1_id, sequence2_id)], weight)
+            # Insert pair into SQLite database
+            cur.execute('INSERT INTO homology (homology_id, sequence1_id, sequence2_id, weight) VALUES (?, ?, ?, ?)',
+                    (i, sequence1_id, sequence2_id, weight))
 
-    for (sequence1_id, sequence2_id), weight in six.iteritems(results):
-        if not options.reciprocal or (sequence2_id, sequence1_id) in results:
-            options.o.write("%s\t%s\t%d\n" % (sequence1_id, sequence2_id, weight))
+            # Execute query at every 100 pair to save memory
+            if(i % 10 == 0):
+                conn.commit()
+
+    # Execute query at last
+    conn.commit()
+
+    # Delete duplicate keeping one with max weight
+    cur.execute('delete FROM homology WHERE homology_id  IN (SELECT a1.homology_id FROM homology a1 INNER JOIN homology a2 ON a1.sequence1_id = a2.sequence1_id AND a1.sequence2_id = a2.sequence2_id AND a1.weight < a2.weight)')
+
+    # Execute delete query
+    conn.commit()
+
+    # General select query
+    query = 'SELECT * FROM homology ORDER BY homology_id'
+    
+    # Update select query if reciprocal selected
+    if options.reciprocal:
+        query = 'SELECT h1.* FROM homology h1, homology h2 WHERE h1.sequence1_id =  h2.sequence2_id AND h1.sequence2_id =  h2.sequence1_id ORDER BY h1.homology_id'
+    
+    cur.execute(query)
+    results = cur.fetchall()
+    for result in results:
+        options.o.write("%s\t%s\t%d\n" % (result[1], result[2], result[3]))
 
 
 if __name__ == "__main__":
