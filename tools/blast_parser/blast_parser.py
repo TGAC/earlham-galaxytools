@@ -63,10 +63,10 @@ def main():
 
             # Insert pair into SQLite database
             cur.execute('INSERT INTO homology (homology_id, sequence1_id, sequence2_id, weight) VALUES (?, ?, ?, ?)',
-                (i, sequence1_id, sequence2_id, weight))
+                        (i, sequence1_id, sequence2_id, weight))
 
             # Execute query at every 100 pair to save memory
-            if(i % 10 == 0):
+            if(i % 100 == 0):
                 conn.commit()
 
     # Execute query at last
