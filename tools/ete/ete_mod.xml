@@ -1,0 +1,170 @@
+<tool id="ete3_mod" name="ete3 manipulate tree topology by rooting, pruning or sorting branches" version="0.1.0">
+    <requirements>
+        <requirement type="package" version="3.0.0b35">ete3</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+ete3 mod
+'$src_tree_list' '$input_tree'
+-v '$verbosity'
+#if str($outgroup) != '':
+    --outgroup $outgroup
+#end if
+## #if float($ultrametric) > 0.0:
+##     --ultrametric $ultrametric
+## #end if
+#if str($prune) != '':
+    --prune $prune
+#end if
+$prune_preserve_lengths
+$unroot
+$sort_branches
+$ladderize
+$resolve_polytomies
+$standardize
+> $output_tree
+    ]]></command>
+    <inputs>
+        <param name="input_tree" type="data" format="nhx" label="Newick tree" argument="(-t)"/>
+        <param name="src_tree_list" type="boolean" label="File contains multiple trees"
+            truevalue="src_tree_list" falsevalue="-t"
+            help=" (--src_tree_list)" />
+        <param name="verbosity" type="integer" size="4" label="Verbosity level" value="0" min="0" max="4"
+            help="0=totally quite, 1=errors only, 2=warning+errors, 3=info+warnings+errors 4=debug (-v)" />
+        <param name="outgroup" size="30" type="text" value="" label="Reroot tree with outgroup (space separated list of leaf names)"
+            help="Root the tree using the provided outgroup. If several
+                        names are provided, the first common ancestor grouping
+                        all of them will be selected as outgroup" />
+        <!-- parameter does not work in the current version
+        <param name="ultrametric" type="float" value="0" min="0" label="Convert tree into ultrametric"
+            help="Convert tree into ultrametric (all leaves have the
+                same distance to root). If an argument (!=0) is provided, it
+                will be used as the expected tree length" />-->
+        <param name="prune" type="text" value="" label="Prune nodes from the tree (space separated list of leaf names)"
+            help="Remove all nodes in the tree except the ones provided (empty does not prune)" />
+        <param name="prune_preserve_lengths" type="boolean" label="Prune: preserve length"
+            truevalue="--prune_preserve_lengths" falsevalue=""
+            help="branch lengths of the removed nodes are added to the kept branches, thus preserving original tree length (--prune_preserve_lengths)" />
+        <param name="unroot" type="boolean" label="Unroots the tree"
+            truevalue="--unroot" falsevalue=""
+            help=" (--unroot)" />
+        <param name="sort_branches" type="boolean" label="Sort branches"
+            truevalue="--sort_branches" falsevalue=""
+            help="Sort branches according to node names (--sort_branches)" />
+        <param name="ladderize" type="boolean" label="Ladderize"
+            truevalue="--ladderize" falsevalue=""
+            help="Sort branches by partition size (--ladderize)" />
+        <param name="resolve_polytomies" type="boolean" label="Resolve polytomies"
+            truevalue="--resolve_polytomies" falsevalue=""
+            help="Converts polytomies into bifurcations (--resolve_polytomies)" />
+        <param name="standardize" type="boolean" label="Standardize tree"
+            truevalue="--standardize" falsevalue=""
+            help="Standardize tree topology by expanding polytomies and single child nodes (--standardize)" />
+    </inputs>
+    <outputs>
+        <data name="output_tree" format="nhx" label="${tool.name} on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1.nhx" />
+            <param name="outgroup" value="A" />
+            <output name="output_tree" file="tree1_ogA.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1.nhx" />
+            <param name="prune" value="A C" />
+            <output name="output_tree" file="tree1_pruneAC.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1.nhx" />
+            <param name="prune" value="A C" />
+            <param name="prune_preserve_lengths" value="--prune_preserve_lengths" />
+            <output name="output_tree" file="tree1_pruneACpreserve.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1.nhx" />
+            <param name="unroot" value="--unroot" />
+            <output name="output_tree" file="tree1_unroot.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree2.nhx" />
+            <param name="sort_branches" value="--sort_branches" />
+            <output name="output_tree" file="tree2_sort.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1.nhx" />
+            <param name="ladderize" value="--ladderize" />
+            <output name="output_tree" file="tree1_ladder.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree1_unroot.nhx" />
+            <param name="resolve_polytomies" value="--resolve_polytomies" />
+            <output name="output_tree" file="tree1_unroot_resolve.nhx" />
+        </test>
+        <test>
+            <param name="input_tree" ftype="nhx" value="tree3.nhx" />
+            <param name="standardize" value="--standardize" />
+            <output name="output_tree" file="tree3_stand.nhx" />
+        </test>
+    </tests>
+    <help><![CDATA[
+usage: ete3 mod [-h] [-t [SRC_TREES [SRC_TREES ...]]]
+                [--src_tree_list SRC_TREE_LIST]
+                [--src_tree_attr SRC_TREE_ATTR]
+                [--src_attr_parser SRC_ATTR_PARSER]
+                [--src_tree_format SRC_NEWICK_FORMAT] [-o OUTPUT]
+                [-v {0,1,2,3,4}] [--outgroup OUTGROUP [OUTGROUP ...]]
+                [--ultrametric [ULTRAMETRIC [ULTRAMETRIC ...]]]
+                [--prune PRUNE [PRUNE ...]] [--prune_preserve_lengths]
+                [--unroot] [--sort_branches] [--ladderize]
+                [--resolve_polytomies] [--standardize]
+
+SOURCE TREES
+-t [SRC_TREES [SRC_TREES ...]]
+                        a list of trees in newick format (filenames or quoted
+                        strings)
+--src_tree_list SRC_TREE_LIST
+                        path to a file containing many source trees, one per
+                        line
+--src_tree_attr SRC_TREE_ATTR
+                        attribute in source tree used as leaf name
+--src_attr_parser SRC_ATTR_PARSER
+                        Perl regular expression wrapping the portion of the
+                        target attribute that should be used.
+--src_tree_format SRC_NEWICK_FORMAT
+
+GENERAL OPTIONS
+-v {0,1,2,3,4}        Verbosity level: 0=totally quite, 1=errors only,
+                        2=warning+errors, 3=info+warnings+errors 4=debug
+
+TREE EDIT OPTIONS
+--outgroup OUTGROUP [OUTGROUP ...]
+                        Root the tree using the provided outgroup. If several
+                        names are provided, the first common ancestor grouping
+                        all of them will be selected as outgroup.
+--ultrametric [ULTRAMETRIC [ULTRAMETRIC ...]]
+                        Convert tree into ultrametric (all leaves have the
+                        same distance to root). If an argument is provided, it
+                        will be used as the expected tree length.
+--prune PRUNE [PRUNE ...]
+                        Remove all nodes in the tree except the ones provided.
+--prune_preserve_lengths
+                        branch lengths of the removed nodes are added to the
+                        kept branches, thus preserving original tree length.
+--unroot              Unroots the tree.
+--sort_branches       Sort branches according to node names.
+--ladderize           Sort branches by partition size.
+--resolve_polytomies  Converts polytomies into random bifurcations
+--standardize         Standardize tree topology by expanding polytomies and
+                        single child nodes.
+
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+@misc{renameTODO,
+  author = {LastTODO, FirstTODO},
+  year = {TODO},
+  title = {TODO},
+  url = {http://etetoolkit.org},
+}</citation>
+    </citations>
+</tool>
