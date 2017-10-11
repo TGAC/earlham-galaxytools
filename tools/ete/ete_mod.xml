@@ -107,64 +107,19 @@ $standardize
         </test>
     </tests>
     <help><![CDATA[
-usage: ete3 mod [-h] [-t [SRC_TREES [SRC_TREES ...]]]
-                [--src_tree_list SRC_TREE_LIST]
-                [--src_tree_attr SRC_TREE_ATTR]
-                [--src_attr_parser SRC_ATTR_PARSER]
-                [--src_tree_format SRC_NEWICK_FORMAT] [-o OUTPUT]
-                [-v {0,1,2,3,4}] [--outgroup OUTGROUP [OUTGROUP ...]]
-                [--ultrametric [ULTRAMETRIC [ULTRAMETRIC ...]]]
-                [--prune PRUNE [PRUNE ...]] [--prune_preserve_lengths]
-                [--unroot] [--sort_branches] [--ladderize]
-                [--resolve_polytomies] [--standardize]
-
-SOURCE TREES
--t [SRC_TREES [SRC_TREES ...]]
-                        a list of trees in newick format (filenames or quoted
-                        strings)
---src_tree_list SRC_TREE_LIST
-                        path to a file containing many source trees, one per
-                        line
---src_tree_attr SRC_TREE_ATTR
-                        attribute in source tree used as leaf name
---src_attr_parser SRC_ATTR_PARSER
-                        Perl regular expression wrapping the portion of the
-                        target attribute that should be used.
---src_tree_format SRC_NEWICK_FORMAT
-
-GENERAL OPTIONS
--v {0,1,2,3,4}        Verbosity level: 0=totally quite, 1=errors only,
-                        2=warning+errors, 3=info+warnings+errors 4=debug
-
-TREE EDIT OPTIONS
---outgroup OUTGROUP [OUTGROUP ...]
-                        Root the tree using the provided outgroup. If several
-                        names are provided, the first common ancestor grouping
-                        all of them will be selected as outgroup.
---ultrametric [ULTRAMETRIC [ULTRAMETRIC ...]]
-                        Convert tree into ultrametric (all leaves have the
-                        same distance to root). If an argument is provided, it
-                        will be used as the expected tree length.
---prune PRUNE [PRUNE ...]
-                        Remove all nodes in the tree except the ones provided.
---prune_preserve_lengths
-                        branch lengths of the removed nodes are added to the
-                        kept branches, thus preserving original tree length.
---unroot              Unroots the tree.
---sort_branches       Sort branches according to node names.
---ladderize           Sort branches by partition size.
---resolve_polytomies  Converts polytomies into random bifurcations
---standardize         Standardize tree topology by expanding polytomies and
-                        single child nodes.
-
-    ]]></help>
+Modify a given input tree using the etetoolkit: http://etetoolkit.org/
+]]></help>
     <citations>
         <citation type="bibtex">
-@misc{renameTODO,
-  author = {LastTODO, FirstTODO},
-  year = {TODO},
-  title = {TODO},
-  url = {http://etetoolkit.org},
-}</citation>
+@article{huerta2016ete,
+  title={ETE 3: reconstruction, analysis, and visualization of phylogenomic data},
+  author={Huerta-Cepas, Jaime and Serra, Fran{\c{c}}ois and Bork, Peer},
+  journal={Molecular Biology and Evolution},
+  volume={33},
+  number={6},
+  pages={1635-1638},
+  year={2016}
+}
+        </citation>
     </citations>
 </tool>
