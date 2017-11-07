@@ -1,8 +1,9 @@
-<tool id="ete_init_taxdb" name="ETE taxa DB generator" version="3.0.0b35">
+<tool id="ete_init_taxdb" name="ETE taxa DB generator" version="@VERSION@">
     <description>generates the ETE sqlite DB from the NCBI taxdump.tar.gz</description>
-    <requirements>
-        <requirement type="package" version="3.0.0b35">ete3</requirement>
-    </requirements>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/ete_init_taxdb.py'
 #if $latestcond.latest == "local"
@@ -43,7 +44,5 @@ Generates the ETE sqlite data base from the NCBI taxdump.tar.gz using the .. _ET
 
 - *(ETE3) Taxonomy Database* a sqlite database that has been created by ETE from the NCBI taxonomy dump
     ]]></help>
-    <citations>
-        <citation type="doi">10.1093/molbev/msw046</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>

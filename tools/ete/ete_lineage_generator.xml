@@ -1,8 +1,9 @@
-<tool id="ete_lineage_generator" name="ETE lineage generator" version="3.0.0b35">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@">
     <description>from a list of species/taxids using the ETE Toolkit</description>
-    <requirements>
-        <requirement type="package" version="3.0.0b35">ete3</requirement>
-    </requirements>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/ete_lineage_generator.py'
 -s '$speciesFile'
@@ -140,7 +141,5 @@ Generates a table with lineage information for a list of species (also taxids an
 Table (tab separated). The first column contains the species names. The following columns contain the
 rank names of the levels of interest.
     ]]></help>
-    <citations>
-        <citation type="doi">10.1093/molbev/msw046</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>

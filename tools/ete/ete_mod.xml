@@ -1,7 +1,9 @@
-<tool id="ete3_mod" name="ete3 manipulate tree topology by rooting, pruning or sorting branches" version="3.0.0b35">
-    <requirements>
-        <requirement type="package" version="3.0.0b35">ete3</requirement>
-    </requirements>
+<tool id="ete3_mod" name="ETE mod" version="@VERSION@">
+    <description>manipulates tree topology by rooting, pruning or sorting branches</description>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 ete3 mod -t
 #for $input_tree in $input_trees:
@@ -102,7 +104,5 @@ $standardize
     <help><![CDATA[
 Modify a given input tree using the etetoolkit: http://etetoolkit.org/
     ]]></help>
-    <citations>
-        <citation type="doi">10.1093/molbev/msw046</citation>
-    </citations>
+    <expand macro="citations" />
 </tool>
