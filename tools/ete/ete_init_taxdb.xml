@@ -3,19 +3,17 @@
     <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
     </requirements>
-    <command detect_errors="exit_code">
-    <![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/ete_init_taxdb.py'
 #if $latestcond.latest == "local"
     -t '$latestcond.taxdump'
 #end if
 -d '$database'
-    ]]>
-    </command>
+    ]]></command>
     <inputs>
         <conditional name="latestcond">
             <param name="latest" type="select" label="Get latest version" help="Get the latest version of the taxdump from the NCBI website">
-                <option value="local" selected="True">Use a local taxdump</option>
+                <option value="local" selected="true">Use a local taxdump</option>
                 <option value="latest">Get latest taxdump online</option>
             </param>
             <when value="local">
@@ -34,10 +32,8 @@ python '$__tool_directory__/ete_init_taxdb.py'
             <output name="database" file="taxdump.sqlite" compare="sim_size" />
         </test>
     </tests>
-    <help>
-    <![CDATA[
+    <help><![CDATA[
 Generates the ETE sqlite data base from the NCBI taxdump.tar.gz using the .. _ETE Toolkit: http://etetoolkit.org/
-
 
 **Input**
 
@@ -46,8 +42,7 @@ Generates the ETE sqlite data base from the NCBI taxdump.tar.gz using the .. _ET
 **Output**
 
 - *(ETE3) Taxonomy Database* a sqlite database that has been created by ETE from the NCBI taxonomy dump
-    ]]>
-    </help>
+    ]]></help>
     <citations>
         <citation type="doi">10.1093/molbev/msw046</citation>
     </citations>

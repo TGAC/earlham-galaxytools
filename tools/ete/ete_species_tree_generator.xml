@@ -1,4 +1,4 @@
-<tool id="ete_species_tree_generator" name="ETE species tree generator" version="3.0.0b35">
+<tool id="ete_species_tree_generator" name="ETE species tree generator" version="3.0.0b35.1">
     <description>from a list of species using the ETE Toolkit</description>
      <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
@@ -9,7 +9,7 @@
     </stdio>
     <command>
     <![CDATA[
-python $__tool_directory__/ete_species_tree_generator.py
+python '$__tool_directory__/ete_species_tree_generator.py'
 -s '$speciesFile'
 -d $database
 -o '$outputFile'
@@ -22,7 +22,7 @@ python $__tool_directory__/ete_species_tree_generator.py
     ]]>
     </command>
     <inputs>
-        <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species per line" />        
+        <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species per line" />
         <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
         <conditional name="output_format">
             <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if specie tree to be used in TreeBest">

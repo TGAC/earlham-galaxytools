@@ -3,27 +3,23 @@
     <requirements>
         <requirement type="package" version="3.0.0b35">ete3</requirement>
     </requirements>
-    <command detect_errors="exit_code">
-    <![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/ete_lineage_generator.py'
 -s '$speciesFile'
 -d '$database'
 -o '$outputFile'
 #if $ranks.levels == "full"
-    -f 
+    -f
 #elif $ranks.levels == "manual"
     #for $rank in $ranks.manualranks:
-        -r "$rank"
+        -r $rank
     #end for
 #end if
 #if $compresscond.compress == "-c"
     $compresscond.compress
     $compresscond.lower
 #end if
-    ]]>
-    </command>
-<!--
--->
+    ]]></command>
     <inputs>
         <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species/taxid per line" />
         <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
@@ -34,33 +30,33 @@ python '$__tool_directory__/ete_lineage_generator.py'
                 <option value="manual">Manual</option>
             </param>
             <when value="manual">
-                <param name="manualranks" type="select" multiple="True" label="Manual selection of ranks">
+                <param name="manualranks" type="select" multiple="true" label="Manual selection of ranks">
                     <option value="superkingdom">superkingdom</option>
-                    <option value="kingdom" selected="True">kingdom</option>
+                    <option value="kingdom" selected="true">kingdom</option>
                     <option value="subkingdom">subkingdom</option>
                     <option value="superphylum">superphylum</option>
-                    <option value="phylum" selected="True">phylum</option>
+                    <option value="phylum" selected="true">phylum</option>
                     <option value="subphylum">subphylum</option>
                     <option value="superclass">superclass</option>
-                    <option value="class" selected="True">class</option>
+                    <option value="class" selected="true">class</option>
                     <option value="subclass">subclass</option>
                     <option value="infraclass">infraclass</option>
                     <option value="cohort">cohort</option>
                     <option value="superorder">superorder</option>
-                    <option value="order" selected="True">order</option>
+                    <option value="order" selected="true">order</option>
                     <option value="suborder">suborder</option>
                     <option value="infraorder">infraorder</option>
                     <option value="parvorder">parvorder</option>
                     <option value="superfamily">superfamily</option>
-                    <option value="family" selected="True">family</option>
+                    <option value="family" selected="true">family</option>
                     <option value="subfamily">subfamily</option>
                     <option value="tribe">tribe</option>
                     <option value="subtribe">subtribe</option>
-                    <option value="genus" selected="True">genus</option>
+                    <option value="genus" selected="true">genus</option>
                     <option value="subgenus">subgenus</option>
                     <option value="species group">species group</option>
                     <option value="species subgroup">species subgroup</option>
-                    <option value="species" selected="True">species</option>
+                    <option value="species" selected="true">species</option>
                     <option value="subspecies">subspecies</option>
                     <option value="varietas">varietas</option>
                     <option value="forma">forma</option>
@@ -117,10 +113,8 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <output name="outputFile" file="lineage-full.txt" />
         </test>
     </tests>
-    <help>
-    <![CDATA[
+    <help><![CDATA[
 Generates a table with lineage information for a list of species (also taxids and arbitrary taxons are accepted) using the .. _ETE Toolkit: http://etetoolkit.org/
-
 
 **Input**
 
@@ -135,18 +129,17 @@ Generates a table with lineage information for a list of species (also taxids an
     - *Primary* contains the primary ranks (kingdom, phylum, class, order, family, genus, species)
     - *Manual* the ranks of interest can be chosen by the user. The primary levels are chosen by default.
 
-- *Fill unnamed ranks* Get missing data from "nearby" levels: 
+- *Fill unnamed ranks* Get missing data from "nearby" levels:
 
-    - Some nodes in the NCBI taxonomy tree have no name (no rank) these are shown by default as "NA" in the output. If the *compress* option is selected then the rank is accepted if the level name is included (e.g. superorder is accepted as order if the order is unnamed but the name of the superorder is given) 
+    - Some nodes in the NCBI taxonomy tree have no name (no rank) these are shown by default as "NA" in the output. If the *compress* option is selected then the rank is accepted if the level name is included (e.g. superorder is accepted as order if the order is unnamed but the name of the superorder is given)
 
 - *Prefer lower ranks for filling* for compressing lower levels are prefered over higher ones
 
 **Output**
 
-Table (tab separated). The first column contains the species names. The following columns contain the 
+Table (tab separated). The first column contains the species names. The following columns contain the
 rank names of the levels of interest.
-    ]]>
-    </help>
+    ]]></help>
     <citations>
         <citation type="doi">10.1093/molbev/msw046</citation>
     </citations>
