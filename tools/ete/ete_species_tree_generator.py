@@ -22,7 +22,7 @@ options, args = parser.parse_args()
 if options.database == "yes":
     try:
         ncbi.update_taxonomy_database()
-    except:
+    except Exception:
         pass
 
 if options.input_species_filename is None:

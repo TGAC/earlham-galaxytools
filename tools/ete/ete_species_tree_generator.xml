@@ -56,7 +56,12 @@ python $__tool_directory__/ete_species_tree_generator.py
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="treebest" value="yes" />
-            <output name="outputFile" file="out.nhx" />
+            <output name="outputFile">
+                <assert_contents>
+                    <has_text text="(Homosapiens*,Pantroglodytes*,Gorillagorillagorilla*)" />
+                    <has_text text=")root;" />
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help>
