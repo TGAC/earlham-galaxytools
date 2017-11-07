@@ -1,0 +1,48 @@
+<tool id="ete_init_taxdb" name="ETE taxa DB generator" version="@VERSION@">
+    <description>generates the ETE sqlite DB from the NCBI taxdump.tar.gz</description>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+python '$__tool_directory__/ete_init_taxdb.py'
+#if $latestcond.latest == "local"
+    -t '$latestcond.taxdump'
+#end if
+-d '$database'
+    ]]></command>
+    <inputs>
+        <conditional name="latestcond">
+            <param name="latest" type="select" label="Get latest version" help="Get the latest version of the taxdump from the NCBI website">
+                <option value="local" selected="true">Use a local taxdump</option>
+                <option value="latest">Get latest taxdump online</option>
+            </param>
+            <when value="local">
+                <param name="taxdump" type="data" format="tar" label="NCBI taxdump" help="NCBI taxonomy database dump in tar.gz format" />
+            </when>
+            <when value="latest" />
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="database" format="sqlite" label="${tool.name} on ${on_string}" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="latest" value="local" />
+            <param name="taxdump" ftype="tar" value="taxdump.tar.gz" />
+            <output name="database" file="taxdump.sqlite" compare="sim_size" />
+        </test>
+    </tests>
+    <help><![CDATA[
+Generates the ETE sqlite data base from the NCBI taxdump.tar.gz using the .. _ETE Toolkit: http://etetoolkit.org/
+
+**Input**
+
+- NCBI taxdump: NCBI taxdump in tar.gz format. If not given the latest is downloaded from ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+
+**Output**
+
+- *(ETE3) Taxonomy Database* a sqlite database that has been created by ETE from the NCBI taxonomy dump
+    ]]></help>
+    <expand macro="citations" />
+</tool>

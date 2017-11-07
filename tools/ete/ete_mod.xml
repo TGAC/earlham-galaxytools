@@ -1,0 +1,108 @@
+<tool id="ete3_mod" name="ETE mod" version="@VERSION@">
+    <description>manipulates tree topology by rooting, pruning or sorting branches</description>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code"><![CDATA[
+ete3 mod -t
+#for $input_tree in $input_trees:
+    '$input_tree'
+#end for
+-v '$verbosity'
+#if $outgroup:
+    --outgroup '$outgroup'
+#end if
+## #if float($ultrametric) > 0.0:
+##     --ultrametric $ultrametric
+## #end if
+#if $prune:
+    #set node_list = "'" + "' '".join($prune.split(',')) + "'"
+    --prune $node_list
+#end if
+$prune_preserve_lengths
+$unroot
+$sort_branches
+$ladderize
+$resolve_polytomies
+$standardize
+> '$output_tree'
+    ]]></command>
+    <inputs>
+        <param name="input_trees" argument="-t" type="data" format="nhx" multiple="true" label="Newick trees" />
+        <param name="verbosity" argument="-v" type="integer" value="0" min="0" max="4" label="Verbosity level"
+            help="0=totally quite, 1=errors only, 2=warning+errors, 3=info+warnings+errors 4=debug (-v)" />
+        <param argument="--outgroup" type="text" value="" label="Reroot tree with outgroup (space separated list of leaf names)"
+            help="Root the tree using the provided outgroup. If several
+                        names are provided, the first common ancestor grouping
+                        all of them will be selected as outgroup" />
+        <!-- parameter does not work in the current version
+        <param argument="- -ultrametric" type="float" value="0" min="0" label="Convert tree into ultrametric"
+            help="Convert tree into ultrametric (all leaves have the
+                same distance to root). If an argument (!=0) is provided, it
+                will be used as the expected tree length" />-->
+        <param argument="--prune" type="text" value="" label="Prune nodes from the tree (comma-separated list of leaf names)"
+            help="Remove all nodes in the tree except the ones provided (empty does not prune)" />
+        <param argument="--prune_preserve_lengths" type="boolean" truevalue="--prune_preserve_lengths" falsevalue="" label="Prune: preserve length"
+            help="Branch lengths of the removed nodes are added to the kept branches, thus preserving original tree length" />
+        <param argument="--unroot" type="boolean" truevalue="--unroot" falsevalue="" label="Unroots the tree" />
+        <param argument="--sort_branches" type="boolean" truevalue="--sort_branches" falsevalue="" label="Sort branches"
+            help="Sort branches according to node names" />
+        <param argument="--ladderize" type="boolean" truevalue="--ladderize" falsevalue="" label="Ladderize"
+            help="Sort branches by partition size" />
+        <param argument="--resolve_polytomies" type="boolean" truevalue="--resolve_polytomies" falsevalue="" label="Resolve polytomies"
+            help="Converts polytomies into bifurcations" />
+        <param argument="--standardize" type="boolean" truevalue="--standardize" falsevalue="" label="Standardize tree"
+            help="Standardize tree topology by expanding polytomies and single child nodes" />
+    </inputs>
+    <outputs>
+        <data name="output_tree" format="nhx" label="${tool.name} on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1.nhx" />
+            <param name="outgroup" value="A" />
+            <output name="output_tree" file="tree1_ogA.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1.nhx" />
+            <param name="prune" value="A,C" />
+            <output name="output_tree" file="tree1_pruneAC.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1.nhx" />
+            <param name="prune" value="A,C" />
+            <param name="prune_preserve_lengths" value="--prune_preserve_lengths" />
+            <output name="output_tree" file="tree1_pruneACpreserve.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1.nhx" />
+            <param name="unroot" value="--unroot" />
+            <output name="output_tree" file="tree1_unroot.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree2.nhx" />
+            <param name="sort_branches" value="--sort_branches" />
+            <output name="output_tree" file="tree2_sort.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1.nhx" />
+            <param name="ladderize" value="--ladderize" />
+            <output name="output_tree" file="tree1_ladder.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree1_unroot.nhx" />
+            <param name="resolve_polytomies" value="--resolve_polytomies" />
+            <output name="output_tree" file="tree1_unroot_resolve.nhx" />
+        </test>
+        <test>
+            <param name="input_trees" ftype="nhx" value="tree3.nhx" />
+            <param name="standardize" value="--standardize" />
+            <output name="output_tree" file="tree3_stand.nhx" />
+        </test>
+    </tests>
+    <help><![CDATA[
+Modify a given input tree using the etetoolkit: http://etetoolkit.org/
+    ]]></help>
+    <expand macro="citations" />
+</tool>
