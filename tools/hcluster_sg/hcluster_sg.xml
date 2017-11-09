@@ -1,4 +1,4 @@
-<tool id="hcluster_sg" name="hcluster_sg" version="0.5.1">
+<tool id="hcluster_sg" name="hcluster_sg" version="0.5.1.1">
     <description>Hierarchically clustering on a sparse graph</description>
     <requirements>
         <requirement type="package" version="0.5.1">hcluster_sg</requirement>
@@ -6,40 +6,50 @@
     <command detect_errors="exit_code"><![CDATA[
 hcluster_sg
 -w $w
--s $s
--m $m
-$c
--b $b
-$O.O_selector
-#if $O.O_selector == '-O'
-    -r $O.r
+$c_conditional.c
+#if $c_conditional.c == ''
+    -s $c_conditional.s
+    -m $c_conditional.m
+    -b $c_conditional.b
+    $c_conditional.O.O_selector
+    #if $c_conditional.O.O_selector == '-O'
+        -r $c_conditional.O.r
+    #end if
+    #if $c_conditional.C
+        -C '$c_conditional.C'
+    #end if
+    -L $c_conditional.L
 #end if
-#if $C
-    -C '$C'
-#end if
--L $L
 '$inputFile'
 > '$outputFile'
     ]]></command>
     <inputs>
         <param name="inputFile" type="data" format="tabular" label="Weight file" help="3-columns format: id-1 id-2 integer-weight" />
         <param argument="-w" type="integer" min="0" value="20" label="Minimum edge weight" />
-        <param argument="-s" type="float" value="0.5" label="Minimum edge density between a join" />
-        <param argument="-m" type="integer" value="500" label="Maximum size" />
-        <param argument="-c" type="boolean" truevalue="-c" falsevalue="" label="Only find single-linkage clusters" help="Bypass h-cluster" />
-        <param argument="-b" type="float" value="0.1" label="Breaking edge density" />
-        <conditional name="O">
-            <param name="O_selector" argument="-O" type="select" label="Use once-fail-inactive-forever mode">
-                <option value="-O">Yes</option>
+        <conditional name="c_conditional">
+            <param argument="-c" type="select" label="Only find single-linkage clusters" help="Bypass h-cluster">
+                <option value="-c">Yes</option>
                 <option value="" selected="true">No</option>
             </param>
-            <when value="-O">
-                <param argument="-r" type="integer" value="5" label="Weight resolution" />
+            <when value="-c" />
+            <when value="">
+                <param argument="-s" type="float" value="0.5" label="Minimum edge density between a join" />
+                <param argument="-m" type="integer" value="500" label="Maximum size" />
+                <param argument="-b" type="float" value="0.1" label="Breaking edge density" />
+                <conditional name="O">
+                    <param name="O_selector" argument="-O" type="select" label="Use once-fail-inactive-forever mode">
+                        <option value="-O">Yes</option>
+                        <option value="" selected="true">No</option>
+                    </param>
+                    <when value="-O">
+                        <param argument="-r" type="integer" value="5" label="Weight resolution" />
+                    </when>
+                    <when value="" />            
+                </conditional>
+                <param argument="-C" type="data" format="tabular" optional="true" label="Category file" />
+                <param argument="-L" type="integer" value="2" label="Stringency level" />
             </when>
-            <when value="" />            
         </conditional>
-        <param argument="-C" type="data" format="tabular" optional="true" label="Category file" />
-        <param argument="-L" type="integer" value="2" label="Stringency level" />
     </inputs>
     <outputs>
         <data name="outputFile" format="tabular" label="${tool.name} on ${on_string}" />
@@ -51,7 +61,7 @@ $O.O_selector
         </test>
         <test>
             <param name="inputFile" ftype="tabular" value="exam-1.txt" />
-            <param name="c" value="true" />
+            <param name="c" value="-c" />
             <output name="outputFile" file="hcluster_sg2.txt" />
         </test>
     </tests>
