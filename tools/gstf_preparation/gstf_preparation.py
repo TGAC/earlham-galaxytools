@@ -220,6 +220,9 @@ def write_gene_dict_to_db(conn, gene_dict):
     cur = conn.cursor()
 
     for gene in gene_dict.values():
+        if gene is None:
+            # This can happen when loading a JSON file from Ensembl
+            continue
         gene_id = gene['id']
         cur.execute('INSERT INTO gene (gene_id, gene_symbol, species, gene_json) VALUES (?, ?, ?, ?)',
                     (gene_id, gene.get('display_name', None), gene['species'], json.dumps(gene)))
