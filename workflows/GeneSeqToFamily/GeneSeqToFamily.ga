@@ -322,7 +322,7 @@
             "inputs": [
                 {
                     "description": "runtime parameter for tool hcluster_sg", 
-                    "name": "C"
+                    "name": "c_conditional"
                 }, 
                 {
                     "description": "runtime parameter for tool hcluster_sg", 
@@ -350,13 +350,13 @@
             }, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/hcluster_sg/hcluster_sg/0.5.1", 
             "tool_shed_repository": {
-                "changeset_revision": "891cc66ea91b", 
+                "changeset_revision": "1d2de27d7a9c", 
                 "name": "hcluster_sg", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"__page__\": null, \"C\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"b\": \"\\\"0.1\\\"\", \"__rerun_remap_job_id__\": null, \"m\": \"\\\"500\\\"\", \"c\": \"\\\"false\\\"\", \"O\": \"{\\\"O_selector\\\": \\\"\\\", \\\"__current_case__\\\": 1}\", \"L\": \"\\\"2\\\"\", \"s\": \"\\\"0.34\\\"\", \"w\": \"\\\"0\\\"\", \"inputFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
-            "tool_version": "0.5.1", 
+            "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"c_conditional\": \"{\\\"c\\\": \\\"\\\", \\\"b\\\": \\\"0.1\\\", \\\"m\\\": \\\"500\\\", \\\"C\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"O\\\": {\\\"O_selector\\\": \\\"\\\", \\\"__current_case__\\\": 1}, \\\"L\\\": \\\"2\\\", \\\"s\\\": \\\"0.34\\\", \\\"__current_case__\\\": 1}\", \"w\": \"\\\"0\\\"\", \"inputFile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_version": "0.5.1.1", 
             "type": "tool", 
             "uuid": "d2b2ba89-b47d-4241-8adf-0d780f834412", 
             "workflow_outputs": []
@@ -843,5 +843,5 @@
         }
     }, 
     "tags": [], 
-    "uuid": "1caa92d2-3017-433a-ba8d-5f437cf65641"
+    "uuid": "bbf45200-b853-41bf-a853-abb1dec8ca9d"
 }
