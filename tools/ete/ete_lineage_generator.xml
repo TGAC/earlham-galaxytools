@@ -12,9 +12,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
 #if $ranks.levels == "full"
     -f
 #elif $ranks.levels == "manual"
-    #for $rank in $ranks.manualranks:
-        -r $rank
-    #end for
+    -r $ranks.manualranks
 #end if
 #if $compresscond.compress == "-c"
     $compresscond.compress

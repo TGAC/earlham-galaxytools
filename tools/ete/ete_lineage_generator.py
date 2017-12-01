@@ -76,8 +76,13 @@ if options.input_species_filename is None:
     parser.error("-s option must be specified, Species list in text format one species in each line")
 if options.full and options.ranks:
     parser.error("-f and -r can not be used at the same time")
+
+# Galaxy gives a comma separated string for manual rank selection
+ranks = []
+for r in options.ranks:
+    ranks += r.split(",")
 if options.ranks:
-    for r in options.ranks:
+    for r in ranks:
         if r not in LONG_RANKS:
             parser.error("unknown rank %s" % r)
 # setup output
@@ -91,7 +96,7 @@ ncbi = NCBITaxa(dbfile=options.database)
 if options.ranks:
     RANKS = []
     for r in LONG_RANKS:
-        if r in options.ranks:
+        if r in ranks:
             RANKS.append(r)
 else:
     if options.full:
