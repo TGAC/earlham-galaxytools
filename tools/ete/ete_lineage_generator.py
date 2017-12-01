@@ -77,12 +77,8 @@ if options.input_species_filename is None:
 if options.full and options.ranks:
     parser.error("-f and -r can not be used at the same time")
 
-# Galaxy gives a comma separated string for manual rank selection
-ranks = []
-for r in options.ranks:
-    ranks += r.split(",")
 if options.ranks:
-    for r in ranks:
+    for r in options.ranks:
         if r not in LONG_RANKS:
             parser.error("unknown rank %s" % r)
 # setup output
@@ -96,7 +92,7 @@ ncbi = NCBITaxa(dbfile=options.database)
 if options.ranks:
     RANKS = []
     for r in LONG_RANKS:
-        if r in ranks:
+        if r in options.ranks:
             RANKS.append(r)
 else:
     if options.full:
@@ -110,6 +106,9 @@ if options.compress:
         for ilr in range(len(LONG_RANKS)):
             if RANKS[ir] in LONG_RANKS[ilr]:
                 COMP_RANK_IDX[LONG_RANKS[ilr]] = ir
+# write header
+of.write("species/taxid\t%s\n" % ("\t".join(RANKS)))
+# get and write data
 with open(options.input_species_filename) as f:
     for line in f.readlines():
         line = line.strip().replace('_', ' ')
