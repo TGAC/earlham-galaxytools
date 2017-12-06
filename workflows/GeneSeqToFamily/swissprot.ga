@@ -2,11 +2,12 @@
     "a_galaxy_workflow": "true", 
     "annotation": "", 
     "format-version": "0.1", 
-    "name": "SwisProt scratch", 
+    "name": "SwisProt", 
     "steps": {
         "0": {
             "annotation": "", 
             "content_id": null, 
+            "errors": null, 
             "id": 0, 
             "input_connections": {}, 
             "inputs": [
@@ -15,24 +16,30 @@
                     "name": "CDS"
                 }
             ], 
-            "label": null, 
+            "label": "CDS", 
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 163.95219802856445, 
-                "top": 290.93748664855957
+                "left": 163.9375, 
+                "top": 290.9375
             }, 
-            "tool_errors": null, 
             "tool_id": null, 
             "tool_state": "{\"name\": \"CDS\"}", 
             "tool_version": null, 
             "type": "data_input", 
             "uuid": "4fb3c053-8997-48fe-a31b-e5ae64617009", 
-            "workflow_outputs": []
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "81633688-02fb-4a42-a785-b784ffe3ee0e"
+                }
+            ]
         }, 
         "1": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: transeq101/5.0.0", 
+            "errors": null, 
             "id": 1, 
             "input_connections": {
                 "input1": {
@@ -55,8 +62,8 @@
                 }
             ], 
             "position": {
-                "left": 500.90070724487305, 
-                "top": 199.963228225708
+                "left": 500.890625, 
+                "top": 199.953125
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -65,10 +72,9 @@
                     "output_name": "out_file1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/emboss_5/EMBOSS: transeq101/5.0.0", 
             "tool_shed_repository": {
-                "changeset_revision": "511429456d3c", 
+                "changeset_revision": "1b6538ec8b56", 
                 "name": "emboss_5", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -82,6 +88,7 @@
         "2": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_blastp_wrapper/0.1.08", 
+            "errors": null, 
             "id": 2, 
             "input_connections": {
                 "query": {
@@ -104,8 +111,8 @@
                 }
             ], 
             "position": {
-                "left": 760.4779167175293, 
-                "top": 292.49998664855957
+                "left": 760.46875, 
+                "top": 292.5
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput1": {
@@ -114,16 +121,15 @@
                     "output_name": "output1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_blastp_wrapper/0.1.08", 
             "tool_shed_repository": {
-                "changeset_revision": "3034ce97dd33", 
+                "changeset_revision": "6f386c5dc4fb", 
                 "name": "ncbi_blast_plus", 
                 "owner": "devteam", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"evalue_cutoff\": \"\\\"0.001\\\"\", \"__page__\": 0, \"adv_opts\": \"{\\\"adv_opts_selector\\\": \\\"basic\\\", \\\"__current_case__\\\": 0}\", \"__rerun_remap_job_id__\": null, \"blast_type\": \"\\\"blastp\\\"\", \"db_opts\": \"{\\\"db_opts_selector\\\": \\\"db\\\", \\\"subject\\\": \\\"\\\", \\\"histdb\\\": \\\"\\\", \\\"__current_case__\\\": 0, \\\"database\\\": [\\\"swissprot\\\"]}\", \"output\": \"{\\\"out_format\\\": \\\"ext\\\", \\\"__current_case__\\\": 1}\", \"query\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
-            "tool_version": "0.1.08", 
+            "tool_state": "{\"evalue_cutoff\": \"\\\"0.001\\\"\", \"__page__\": null, \"adv_opts\": \"{\\\"adv_opts_selector\\\": \\\"basic\\\", \\\"__current_case__\\\": 0}\", \"__rerun_remap_job_id__\": null, \"db_opts\": \"{\\\"db_opts_selector\\\": \\\"db\\\", \\\"subject\\\": \\\"\\\", \\\"histdb\\\": \\\"\\\", \\\"__current_case__\\\": 0, \\\"database\\\": [\\\"swissprot\\\"]}\", \"query\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"blast_type\": \"\\\"blastp\\\"\", \"output\": \"{\\\"out_format\\\": \\\"ext\\\", \\\"__current_case__\\\": 1}\"}", 
+            "tool_version": "0.2.01", 
             "type": "tool", 
             "uuid": "c751b0ee-57ca-4aef-bbf5-d201a6b799a3", 
             "workflow_outputs": []
@@ -131,6 +137,7 @@
         "3": {
             "annotation": "", 
             "content_id": "Cut1", 
+            "errors": null, 
             "id": 3, 
             "input_connections": {
                 "input": {
@@ -153,8 +160,8 @@
                 }
             ], 
             "position": {
-                "left": 973.9337882995605, 
-                "top": 572.8860034942627
+                "left": 973.921875, 
+                "top": 572.875
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -163,7 +170,6 @@
                     "output_name": "out_file1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "Cut1", 
             "tool_state": "{\"columnList\": \"\\\"c2\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"delimiter\": \"\\\"T\\\"\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
             "tool_version": "1.0.2", 
@@ -174,6 +180,7 @@
         "4": {
             "annotation": "", 
             "content_id": "Cut1", 
+            "errors": null, 
             "id": 4, 
             "input_connections": {
                 "input": {
@@ -196,8 +203,8 @@
                 }
             ], 
             "position": {
-                "left": 983.9337882995605, 
-                "top": 728.970537185669
+                "left": 983.921875, 
+                "top": 728.96875
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -206,7 +213,6 @@
                     "output_name": "out_file1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "Cut1", 
             "tool_state": "{\"columnList\": \"\\\"c2\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"delimiter\": \"\\\"P\\\"\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
             "tool_version": "1.0.2", 
@@ -217,6 +223,7 @@
         "5": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/uniprot_rest_interface/uniprot/0.1", 
+            "errors": null, 
             "id": 5, 
             "input_connections": {
                 "infile": {
@@ -251,8 +258,8 @@
                 }
             ], 
             "position": {
-                "left": 1315.9558219909668, 
-                "top": 405.4779224395752
+                "left": 1315.953125, 
+                "top": 405.46875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile_map": {
@@ -276,15 +283,14 @@
                     "output_name": "outfile_retrieve_txt"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/uniprot_rest_interface/uniprot/0.1", 
             "tool_shed_repository": {
-                "changeset_revision": "cd2a41c65447", 
+                "changeset_revision": "df4c547b2533", 
                 "name": "uniprot_rest_interface", 
                 "owner": "bgruening", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"__page__\": 0, \"tool\": \"{\\\"to\\\": {\\\"db_GenomeAnnotationDB\\\": \\\"ENSEMBL_TRS_ID\\\", \\\"__current_case__\\\": 9, \\\"category_TO\\\": \\\"GenomeAnnotationDB\\\"}, \\\"from\\\": {\\\"category_FROM\\\": \\\"uniprot\\\", \\\"db_uniprot_FROM\\\": \\\"ACC+ID\\\", \\\"__current_case__\\\": 0}, \\\"__current_case__\\\": 0, \\\"tool_choice\\\": \\\"map\\\"}\", \"__rerun_remap_job_id__\": null, \"id_column\": \"\\\"1\\\"\", \"infile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_state": "{\"__page__\": 0, \"tool\": \"{\\\"to\\\": {\\\"db_GenomeAnnotationDB\\\": \\\"ENSEMBL_TRS_ID\\\", \\\"__current_case__\\\": 9, \\\"category_TO\\\": \\\"GenomeAnnotationDB\\\"}, \\\"from\\\": {\\\"category_FROM\\\": \\\"uniprot\\\", \\\"db_uniprot_FROM\\\": \\\"ACC+ID\\\", \\\"__current_case__\\\": 0}, \\\"__current_case__\\\": 0, \\\"tool_choice\\\": \\\"map\\\"}\", \"__rerun_remap_job_id__\": null, \"infile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"id_column\": \"\\\"1\\\"\"}", 
             "tool_version": "0.1", 
             "type": "tool", 
             "uuid": "8802d99a-7699-4c13-8d53-ea2c22280808", 
@@ -293,6 +299,7 @@
         "6": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/bgruening/uniprot_rest_interface/uniprot/0.1", 
+            "errors": null, 
             "id": 6, 
             "input_connections": {
                 "infile": {
@@ -327,8 +334,8 @@
                 }
             ], 
             "position": {
-                "left": 1326.9484977722168, 
-                "top": 817.9227466583252
+                "left": 1326.9375, 
+                "top": 817.921875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile_map": {
@@ -352,15 +359,14 @@
                     "output_name": "outfile_retrieve_txt"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/bgruening/uniprot_rest_interface/uniprot/0.1", 
             "tool_shed_repository": {
-                "changeset_revision": "cd2a41c65447", 
+                "changeset_revision": "df4c547b2533", 
                 "name": "uniprot_rest_interface", 
                 "owner": "bgruening", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"__page__\": 0, \"tool\": \"{\\\"to\\\": {\\\"db_GenomeAnnotationDB\\\": \\\"P_ENTREZGENEID\\\", \\\"__current_case__\\\": 9, \\\"category_TO\\\": \\\"GenomeAnnotationDB\\\"}, \\\"from\\\": {\\\"category_FROM\\\": \\\"uniprot\\\", \\\"db_uniprot_FROM\\\": \\\"ACC+ID\\\", \\\"__current_case__\\\": 0}, \\\"__current_case__\\\": 0, \\\"tool_choice\\\": \\\"map\\\"}\", \"__rerun_remap_job_id__\": null, \"id_column\": \"\\\"1\\\"\", \"infile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_state": "{\"__page__\": 0, \"tool\": \"{\\\"to\\\": {\\\"db_GenomeAnnotationDB\\\": \\\"P_ENTREZGENEID\\\", \\\"__current_case__\\\": 9, \\\"category_TO\\\": \\\"GenomeAnnotationDB\\\"}, \\\"from\\\": {\\\"category_FROM\\\": \\\"uniprot\\\", \\\"db_uniprot_FROM\\\": \\\"ACC+ID\\\", \\\"__current_case__\\\": 0}, \\\"__current_case__\\\": 0, \\\"tool_choice\\\": \\\"map\\\"}\", \"__rerun_remap_job_id__\": null, \"infile\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"id_column\": \"\\\"1\\\"\"}", 
             "tool_version": "0.1", 
             "type": "tool", 
             "uuid": "011b53a7-1aae-4bf1-af40-2df13c2cf41b", 
@@ -369,6 +375,7 @@
         "7": {
             "annotation": "", 
             "content_id": "Cut1", 
+            "errors": null, 
             "id": 7, 
             "input_connections": {
                 "input": {
@@ -391,8 +398,8 @@
                 }
             ], 
             "position": {
-                "left": 1619.9815788269043, 
-                "top": 493.40071296691895
+                "left": 1619.96875, 
+                "top": 493.390625
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -401,7 +408,6 @@
                     "output_name": "out_file1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "Cut1", 
             "tool_state": "{\"columnList\": \"\\\"c2\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"delimiter\": \"\\\"P\\\"\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
             "tool_version": "1.0.2", 
@@ -412,6 +418,7 @@
         "8": {
             "annotation": "", 
             "content_id": "Cut1", 
+            "errors": null, 
             "id": 8, 
             "input_connections": {
                 "input": {
@@ -434,8 +441,8 @@
                 }
             ], 
             "position": {
-                "left": 1621.9668083190918, 
-                "top": 869.908037185669
+                "left": 1621.953125, 
+                "top": 869.90625
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -444,7 +451,6 @@
                     "output_name": "out_file1"
                 }
             }, 
-            "tool_errors": null, 
             "tool_id": "Cut1", 
             "tool_state": "{\"columnList\": \"\\\"c2\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"delimiter\": \"\\\"T\\\"\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
             "tool_version": "1.0.2", 
@@ -455,6 +461,7 @@
         "9": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/ensembl_get_sequences/get_sequences/0.1.2", 
+            "errors": null, 
             "id": 9, 
             "input_connections": {
                 "input": {
@@ -477,19 +484,18 @@
                 }
             ], 
             "position": {
-                "left": 1935.5881462097168, 
-                "top": 501.12129402160645
+                "left": 1935.578125, 
+                "top": 501.109375
             }, 
             "post_job_actions": {}, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/ensembl_get_sequences/get_sequences/0.1.2", 
             "tool_shed_repository": {
-                "changeset_revision": "4b7261f484bb", 
+                "changeset_revision": "bce784076824", 
                 "name": "ensembl_get_sequences", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             }, 
-            "tool_state": "{\"__page__\": 0, \"species_selector\": \"\\\"ensembl\\\"\", \"__rerun_remap_job_id__\": null, \"expand_3prime\": \"\\\"0\\\"\", \"type_selector\": \"\\\"genomic\\\"\", \"expand_5prime\": \"\\\"0\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}", 
+            "tool_state": "{\"__page__\": 0, \"species_selector\": \"\\\"ensembl\\\"\", \"__rerun_remap_job_id__\": null, \"expand_3prime\": \"\\\"0\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"expand_5prime\": \"\\\"0\\\"\", \"type_selector\": \"\\\"genomic\\\"\"}", 
             "tool_version": "0.1.2", 
             "type": "tool", 
             "uuid": "1ad6ced1-1875-41d3-a075-f6b7049badc9", 
@@ -504,6 +510,7 @@
         "10": {
             "annotation": "", 
             "content_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/ensembl_get_feature_info/get_feature_info/0.1.2", 
+            "errors": null, 
             "id": 10, 
             "input_connections": {
                 "input": {
@@ -526,14 +533,13 @@
                 }
             ], 
             "position": {
-                "left": 1935.1285514831543, 
-                "top": 894.0808277130127
+                "left": 1935.125, 
+                "top": 894.078125
             }, 
             "post_job_actions": {}, 
-            "tool_errors": null, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/ensembl_get_feature_info/get_feature_info/0.1.2", 
             "tool_shed_repository": {
-                "changeset_revision": "840ea71e6318", 
+                "changeset_revision": "10dc420f725a", 
                 "name": "ensembl_get_feature_info", 
                 "owner": "earlhaminst", 
                 "tool_shed": "toolshed.g2.bx.psu.edu"
@@ -551,5 +557,6 @@
             ]
         }
     }, 
-    "uuid": "2aedea24-8fdc-4b58-b8b3-752b0ceba3e9"
+    "tags": [], 
+    "uuid": "ad63688b-8569-4d99-b86d-97e90141ce83"
 }
