@@ -251,7 +251,7 @@ def fetch_species_for_transcript(conn, transcript_id):
     return results[0]
 
 
-def fetch_geneid_for_transcript(conn, transcript_id):
+def fetch_gene_id_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
     cur.execute('SELECT gene_id FROM transcript WHERE transcript_id=?',
@@ -277,8 +277,8 @@ def __main__():
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
-    parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep longest CDS per gene')
-    parser.add_option('--headers', action='store_true', default=False, help='Extract the transcript id by removing everything after the first space')
+    parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep only the longest CDS per gene')
+    parser.add_option('--headers', action='store_true', default=False, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
     options, args = parser.parse_args()
@@ -346,7 +346,7 @@ def __main__():
             # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
             transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
 
-            gene_id = fetch_geneid_for_transcript(conn, transcript_id)
+            gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
 
             if gene_id in gene_transcripts_dict:
                 gene_transcripts_dict[gene_id].append((transcript_id, len(entry.sequence)))
@@ -370,14 +370,14 @@ def __main__():
                     print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
                     continue
 
-                # Remove any underscore in the species
-                species_for_transcript = species_for_transcript.replace('_', '')
+                if options.headers:
+                    # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
+                    # Remove any underscore in the species
+                    header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
+                else:
+                    header = entry.header
 
-                if not options.headers:
-                    transcript_id = entry.header[1:].lstrip()
-
-                # Write the FASTA sequence using '>TranscriptId_species' as the header, as required by TreeBest
-                output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
+                output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
 
     conn.close()
 
