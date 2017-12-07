@@ -375,7 +375,7 @@ def __main__():
 
                 if not options.headers:
                     transcript_id = entry.header[1:].lstrip()
-                    
+
                 # Write the FASTA sequence using '>TranscriptId_species' as the header, as required by TreeBest
                 output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
 
