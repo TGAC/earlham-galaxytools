@@ -339,24 +339,26 @@ def __main__():
         with open(json_arg) as f:
             write_gene_dict_to_db(conn, json.load(f))
 
-    gene_transcripts_dict = dict()
+    if options.longestCDS:
+        gene_transcripts_dict = dict()
+        for fasta_arg in options.fasta:
+            for entry in FASTAReader_gen(fasta_arg):
+                # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
+                transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
 
-    for fasta_arg in options.fasta:
-        for entry in FASTAReader_gen(fasta_arg):
-            # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
-            transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
+                gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
+                if not gene_id:
+                    continue
 
-            gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
+                if gene_id in gene_transcripts_dict:
+                    gene_transcripts_dict[gene_id].append((transcript_id, len(entry.sequence)))
+                else:
+                    gene_transcripts_dict[gene_id] = [(transcript_id, len(entry.sequence))]
 
-            if gene_id in gene_transcripts_dict:
-                gene_transcripts_dict[gene_id].append((transcript_id, len(entry.sequence)))
-            else:
-                gene_transcripts_dict[gene_id] = [(transcript_id, len(entry.sequence))]
-
-    # For each gene, select the transcript with the longest sequence
-    # If more than one transcripts have the same longest sequence for a gene, the
-    # first one to appear in the FASTA file is selected
-    selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
+        # For each gene, select the transcript with the longest sequence
+        # If more than one transcripts have the same longest sequence for a gene, the
+        # first one to appear in the FASTA file is selected
+        selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
 
     with open(options.of, 'w') as output_fasta_file:
         for fasta_arg in options.fasta:
