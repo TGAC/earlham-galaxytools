@@ -250,6 +250,15 @@ def fetch_species_for_transcript(conn, transcript_id):
         return None
     return results[0]
 
+def fetch_geneid_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT gene_id FROM transcript WHERE transcript_id=?',
+                (transcript_id, ))
+    results = cur.fetchone()
+    if not results:
+        return None
+    return results[0]
 
 def remove_id_version(s):
     """
@@ -266,6 +275,9 @@ def __main__():
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
+    parser.add_option('-l', action='store_true', default=False,
+                        dest='longestCDS',
+                        help='Keep longest CDS per gene')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
     options, args = parser.parse_args()
@@ -287,6 +299,7 @@ def __main__():
         cds_parent_dict = dict()
         five_prime_utr_parent_dict = dict()
         three_prime_utr_parent_dict = dict()
+
         with open(filename) as f:
             for i, line in enumerate(f, start=1):
                 line = line.strip()
@@ -325,22 +338,45 @@ def __main__():
         with open(json_arg) as f:
             write_gene_dict_to_db(conn, json.load(f))
 
+    gene_transcripts_dict = dict()
+    
+    for fasta_arg in options.fasta:
+        for entry in FASTAReader_gen(fasta_arg):
+            # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
+            transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
+
+            gene_id = fetch_geneid_for_transcript(conn, transcript_id)
+
+            if gene_id in gene_transcripts_dict:
+                gene_transcripts_dict[gene_id].append((transcript_id, len(entry.sequence)))
+            else:
+                gene_transcripts_dict[gene_id] = [(transcript_id, len(entry.sequence))]
+
+
+    # For each gene, select the transcript with the longest sequence
+    # If more than one transcripts have the same longest sequence for a gene, the
+    # first one to appear in the FASTA file is selected
+    selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
+
     with open(options.of, 'w') as output_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
-                # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
+                if options.longestCDS and transcript_id not in selected_transcript_ids:
+                    continue
+                
                 species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
                     continue
+
                 # Remove any underscore in the species
                 species_for_transcript = species_for_transcript.replace('_', '')
+
                 # Write the FASTA sequence using '>TranscriptId_species' as the header, as required by TreeBest
                 output_fasta_file.write(">%s_%s\n%s\n" % (transcript_id, species_for_transcript, entry.sequence))
 
     conn.close()
-
 
 if __name__ == '__main__':
     __main__()
