@@ -1,4 +1,4 @@
-<tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.3.0">
+<tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.4.0">
     <description>converts data for the workflow</description>
     <command detect_errors="exit_code">
 <![CDATA[
