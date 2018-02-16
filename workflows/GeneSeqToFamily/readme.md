@@ -67,11 +67,11 @@ The resulting gene families can be visualised using the [Aequatus.js](https://gi
 The Aequatus.js plugin provides an interactive visual representation of the phylogenetic and structural relationships among the homologous genes, using a shared colour scheme for coding regions to represent homology in internal gene structure alongside their corresponding gene trees. It is also able to indicate insertions and deletions in homologous genes with respect to shared ancestors.
 
 
-## Citation Information:
+## Citation information:
 
-If you are using GeneSeqToFamily for any kind of research purpose Please cite us:
+If you are using GeneSeqToFamily for any kind of research purpose, please cite the following paper:
 
-Anil S Thanki, Nicola Soranzo, Wilfried Haerty, Robert P Davey; GeneSeqToFamily: a Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline, GigaScience, giy005, [GigaScience](https://doi.org/10.1093/gigascience/giy005)
+Anil S. Thanki, Nicola Soranzo, Wilfried Haerty, Robert P. Davey (2018) [GeneSeqToFamily: a Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline](https://doi.org/10.1093/gigascience/giy005) *GigaScience* giy005, doi: 10.1093/gigascience/giy005
 
 
 ## References
