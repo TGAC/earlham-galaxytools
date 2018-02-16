@@ -67,6 +67,11 @@ The resulting gene families can be visualised using the [Aequatus.js](https://gi
 The Aequatus.js plugin provides an interactive visual representation of the phylogenetic and structural relationships among the homologous genes, using a shared colour scheme for coding regions to represent homology in internal gene structure alongside their corresponding gene trees. It is also able to indicate insertions and deletions in homologous genes with respect to shared ancestors.
 
 
+## Citation information:
+
+If you are using GeneSeqToFamily for any kind of research purpose, please cite the following paper:
+
+Anil S. Thanki, Nicola Soranzo, Wilfried Haerty, Robert P. Davey (2018) [GeneSeqToFamily: a Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline](https://doi.org/10.1093/gigascience/giy005) *GigaScience* giy005, doi: 10.1093/gigascience/giy005
 
 
 ## References
@@ -74,9 +79,6 @@ The Aequatus.js plugin provides an interactive visual representation of the phyl
 1. Vilella AJ, Severin J, Ureta-Vidal A, Heng L, Durbin R, Birney E (2009) [EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates.](http://genome.cshlp.org/content/19/2/327) *Genome Res.* 19(2):327–335, doi: 10.1101/gr.073585.107
 2. Thanki AS, Ayling S, Herrero J, Davey RP (2016) [Aequatus: An open-source homology browser.](http://biorxiv.org/content/early/2016/06/01/055632) *bioRxiv*, doi: 10.1101/055632
 
-## Pre-print
-
-Pre-print for this work can be found at [bioRxiv server](http://biorxiv.org/content/early/2017/04/19/096529)
 
 ## Project contacts:
 
@@ -84,4 +86,4 @@ Pre-print for this work can be found at [bioRxiv server](http://biorxiv.org/cont
 * Nicola Soranzo <Nicola.Soranzo@earlham.ac.uk>
 * Robert Davey <Robert.Davey@earlham.ac.uk>
 
-Copyright &copy; 2016-2017 Earlham Institute, Norwich, UK
+Copyright &copy; 2016-2018 Earlham Institute, Norwich, UK
