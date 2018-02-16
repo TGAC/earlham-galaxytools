@@ -86,4 +86,4 @@ Anil S Thanki, Nicola Soranzo, Wilfried Haerty, Robert P Davey; GeneSeqToFamily:
 * Nicola Soranzo <Nicola.Soranzo@earlham.ac.uk>
 * Robert Davey <Robert.Davey@earlham.ac.uk>
 
-Copyright &copy; 2016-2017 Earlham Institute, Norwich, UK
+Copyright &copy; 2016-2018 Earlham Institute, Norwich, UK
