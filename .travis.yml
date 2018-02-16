@@ -10,6 +10,7 @@ before_install:
 install:
   - pip install flake8 flake8-import-order planemo
   - planemo conda_init
+  - ~/miniconda3/bin/conda install -y -c conda-forge conda=4.3.34
   - planemo --version
   - ~/miniconda3/bin/conda --version
   - echo $TRAVIS_COMMIT_RANGE
