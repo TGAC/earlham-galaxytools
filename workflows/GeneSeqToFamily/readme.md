@@ -74,9 +74,11 @@ The Aequatus.js plugin provides an interactive visual representation of the phyl
 1. Vilella AJ, Severin J, Ureta-Vidal A, Heng L, Durbin R, Birney E (2009) [EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates.](http://genome.cshlp.org/content/19/2/327) *Genome Res.* 19(2):327–335, doi: 10.1101/gr.073585.107
 2. Thanki AS, Ayling S, Herrero J, Davey RP (2016) [Aequatus: An open-source homology browser.](http://biorxiv.org/content/early/2016/06/01/055632) *bioRxiv*, doi: 10.1101/055632
 
-## Pre-print
+## Citation Information:
 
-Pre-print for this work can be found at [bioRxiv server](http://biorxiv.org/content/early/2017/04/19/096529)
+If you are using GeneSeqToFamily for any kind of research purpose Please cite us:
+
+Anil S Thanki, Nicola Soranzo, Wilfried Haerty, Robert P Davey; GeneSeqToFamily: a Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline, GigaScience, giy005, [GigaScience](https://doi.org/10.1093/gigascience/giy005)
 
 ## Project contacts:
 
