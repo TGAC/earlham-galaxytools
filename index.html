@@ -3,10 +3,60 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>GeneSeqToFamily User Guide</title>
+
+    <script type="text/javascript" src="docs/jquery/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="docs/jquery/js/jquery-ui-1.11.2.js"></script>
+    <script type="text/javascript" src="docs/jquery/js/jquery-migrate-1.2.1.min.js"></script>
+
+
+    <link rel="stylesheet" href="docs/jquery/css/smoothness/jquery-ui-1.11.2.css" type="text/css">
+
+
+    <link rel="stylesheet" href="docs/stylesheets/stylesheet.css" type="text/css">
+    <!--<link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.css" type="text/css">-->
+    <link rel="stylesheet" href="docs/bootstrap-css/bootstrap.css" type="text/css">
+    <!---->
+
+    <link rel="icon"
+          type="image/png"
+          href="img/aequatus_favicon.png">
+
+
+    <script type="text/javascript">jQuery.noConflict();</script>
+
+
+    <script>
+        function showSelected(div) {
+            jQuery(".content").hide()
+            jQuery("#" + div).show()
+            jQuery('.active').removeClass('active')
+            jQuery("#" + div + "_list").addClass('active')
+
+
+        }
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-21666189-11', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
 </head>
 <body>
 <div class="header">
-  <h2>GeneSeqToFamily, a Galaxy workflow to find gene families based on the @ensembl Compara GeneTrees pipeline</h2>
+    <h2 style="color:white; text-align:center">GeneSeqToFamily, a Galaxy workflow to find gene families based on the
+        @ensembl Compara GeneTrees pipeline</h2>
 </div>
 <div class="main">
     <table width="100%" height="auto">
@@ -20,20 +70,20 @@
                             Introduction
                         </a>
                     </div>
-                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-info active" id="intro_list"
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-info " id="user-manual_list"
                            onclick="showSelected('user-manual')">
                             User Manual
                         </a>
                     </div>
-                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-info active" id="intro_list"
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-info " id="installation-manual_list"
                            onclick="showSelected('installation-manual')">
                             Installation Manual
                         </a>
                     </div>
-                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-info active" id="intro_list"
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-info " id="contact_list"
                            onclick="showSelected('contact')">
                             Contact
                         </a>
@@ -41,40 +91,159 @@
                 </div>
             </td>
             <td>
-                    <div class="content panel panel-primary" id="intro" style="display: block;">
+                <div class="content panel panel-primary" id="intro" style="display: block;">
                     <div class="panel-heading">Introduction:</div>
                     <div class="panel-body">
-                        <p>GeneSeqToFamily is an open-source Galaxy workflow based on the Ensembl GeneTrees pipeline. The Ensembl GeneTrees pipeline [1] infers the evolutionary history of gene families, represented as gene trees. It is a computational pipeline that comprises clustering, multiple sequence alignment, and tree generation (using TreeBeST), to discover familial relationship.
+                        <p>GeneSeqToFamily is an open-source Galaxy workflow based on the Ensembl GeneTrees pipeline.
+                            The Ensembl GeneTrees pipeline infers the evolutionary history of gene families,
+                            represented as gene trees. It is a computational pipeline that comprises clustering,
+                            multiple sequence alignment, and tree generation (using TreeBeST), to discover familial
+                            relationship.
+                        </p>
+
+                        <p>
+                        <h3>Citation information: </h3>
+
+                        If you are using GeneSeqToFamily for any kind of research purpose, please cite the following
+                        paper: <br>
+
+                        Anil S. Thanki, Nicola Soranzo, Wilfried Haerty, Robert P. Davey (2018) GeneSeqToFamily: a
+                        Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline
+                        GigaScience giy005, doi: 10.1093/gigascience/giy005
                         </p>
                     </div>
                 </div>
-                <div class="content panel panel-primary" id="user-manual" style="display: block;">
-                    <div class="panel-heading">user-manual:</div>
+                <div class="content panel panel-primary" id="user-manual" style="display: none;">
+                    <div class="panel-heading">User Manual:</div>
                     <div class="panel-body">
-                        <p>user-manual
+                        <p>
+                        <h3>Inputs</h3>
+
+                        GeneSeqToFamily requires the following inputs: <br>
+
+                        <ul>
+                            <li>the coding sequences (CDS) in FASTA<br>
+                                CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
+                            </li>
+                            <li>gene feature information in SQLite format
+                            </li>
+                            <li>a species tree in Newick format</li>
+                        </ul>
+
+                        </p>
+
+                        <p>
+                        <h3>Prepare Data</h3>
+
+                        Input data for GeneSeqToFamily can be prepared by following steps: <br>
+
+                        <ul>
+                            <li>GeneSeqToFamily preparation tool can be used to prepare CDS file and gene feature information in SQLite format.
+                                <br>
+                                It takes CDS file and gene feature in the format of GFF3 or JSON (downloaded from Ensembl) as input and generate formated CDS fasta and gene features in SQLite database
+                            </li>
+                            <li>Ete tool in Galaxy can be used to prepare species tree to be used in workflow
+                            <br>
+                            It takes list of species as input (one line per species) and generate species tree for workflow.</li>
+                        </ul>
+
+                        </p>
+                        <h3>Run workflow</h3>
+
+                        For running GeneSeqToFamily workflow follow steps below: <br>
+
+                        <ul>
+                            <li>Select GeneSeqToFamily workflow from left panel or top workflow menu, click on 'Run' </li>
+                            <li>Set CDS, species tree, and Gene Feature information for related input for workflow.</li>
+                            <li>Set Parameters to be used in workflow or keep default parameters</li>
+                            <li>Click on 'Run Workflow' to run workflow</li>
+                        </ul>
+
+                        </p>
+                        <h3>Results</h3>
+
+                        GeneSeqToFamily workflow generates results in GAFA SQLite format (SQLite database). It can be visualised using Aequatus Plugin within Galaxy<br>
+
+
                         </p>
                     </div>
                 </div>
-                <div class="content panel panel-primary" id="installation-manual" style="display: block;">
-                    <div class="panel-heading">installation-manual:</div>
+                <div class="content panel panel-primary" id="installation-manual" style="display: none;">
+                    <div class="panel-heading">Installation Manual:</div>
                     <div class="panel-body">
-                        <p>installation-manual
+                        <h3>Installing Workflow</h3>
+                            <p>GeneSeqToWorkflow can be installed just like any other Galaxy workflow.
+                            <ul>
+                        <li>
+                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-via-a-url">
+                            Importing a workflow via a URL
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories">
+                            Finding workflows in ToolShed repositories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-from-an-installed-toolshed-repository">
+                                Importing a workflow from an installed ToolShed repository
+                            </a>
+                        </li>
+                        Install missing tools for the workflow from Galaxy ToolShed <a href="https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/">Guide</a>
+                    </ul>
                         </p>
+                        <h3>Installing visualisation Plugin</h3>
+                        <p> Install the Aequatus visualisation on a Galaxy instance
+
+                            <br>
+
+                            <ol>
+                            <li>Galaxy needs to be correctly configured to serve visualisation plugins, see e.g. <a href="https://galaxyproject.org/admin/config/nginxProxy/ ">https://galaxyproject.org/admin/config/nginxProxy/ </a> if your server is behind a nginx proxy
+
+                            <br></li>
+                            <li>If you haven't done that already, clone this Git repository somewhere on the Galaxy instance:<br>
+
+                            <code>git clone --recursive https://github.com/TGAC/earlham-galaxytools</code>
+                            <br>
+                            Instead, if you have already cloned the repository before, update it with:
+                            <br>
+
+                                <code>git pull</code>
+                            <br>
+                                    <code>git submodule update --init</code>
+                            </li>
+                            <li>Create a symbolic link to <code>earlham-galaxytools/visualisations/aequatus/</code> inside Galaxy's <code>config/plugins/visualizations/</code> directory, e.g.:
+                            <br>
+
+                                <code>cd GALAXY_DIR/config/plugins/visualizations/</code>
+                            <br>
+                                    <code>ln -s EARLHAM-GALAXYTOOLS_DIR/visualisations/aequatus/</code></li></ol>
+                        </p>
+                        <h3>Installing Datatype</h3>
+
+                        <p>
+                            GAFA datatype is require for Aequatus visualisation plugin to identify data to be visualised.
+<br> Follow the steps from Galaxy's guide to add new data type <a href="https://galaxyproject.org/admin/datatypes/adding-datatypes/#adding-a-new-data-type">Guide</a>
+
+                        </p>
+
                     </div>
                 </div>
-                <div class="content panel panel-primary" id="contact" style="display: block;">
-                    <div class="panel-heading">Introduction:</div>
+                <div class="content panel panel-primary" id="contact" style="display: none;">
+                    <div class="panel-heading">Contact:</div>
                     <div class="panel-body">
-                        <p>Contact
-                        </p>
+                        Anil Thanki <br> <a href="mailto:Anil.Thanki@earlham.ac.uk"> Anil.Thanki@earlham.ac.uk </a> <br><br>
+                        Nicola Soranzo <br><a href="mailto:Nicola.Soranzo@earlham.ac.uk">
+                        Nicola.Soranzo@earlham.ac.uk</a><br><br>
+                        Robert Davey <br><a href="mailto:Robert.Davey@earlham.ac.uk"> Robert.Davey@earlham.ac.uk</a>
                     </div>
                 </div>
 
             </td>
-            </tr>
+        </tr>
     </table>
 </div>
-<div class="footer">
+<div class="footer" style="color:white; text-align:center">
     2015 - 2018 | Earlham Insitute, UK
 </div>
 </body>
