@@ -107,8 +107,8 @@
                         If you are using GeneSeqToFamily for any kind of research purpose, please cite the following
                         paper: <br>
 
-                        Anil S. Thanki, Nicola Soranzo, Wilfried Haerty, Robert P. Davey (2018) GeneSeqToFamily: a
-                        Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline
+                        Anil S. Thanki, Nicola Soranzo, Wilfried Haerty, Robert P. Davey (2018) <a target="_blank" href="https://doi.org/10.1093/gigascience/giy005">GeneSeqToFamily: a
+                        Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline </a>
                         GigaScience giy005, doi: 10.1093/gigascience/giy005
                         </p>
                     </div>
@@ -144,14 +144,16 @@
                                 Ensembl) as input and generate formatted <code>CDS FASTA</code> and <code>gene features
                                     in SQLite database</code>
                                 <br>
-                                 - CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
+                                - CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
                                 <br>
-                                 - gene features needs to be in the form of SQLite database
+                                - gene features needs to be in the form of SQLite database
                             </li>
-                            <li><code>ETE species tree generator</code> in Galaxy can be used to prepare species tree to be used in
+                            <li><code>ETE species tree generator</code> in Galaxy can be used to prepare species tree to
+                                be used in
                                 workflow
                                 <br>
-                                - It takes list of species as input (one line per species) and generate species tree for workflow.<br>
+                                - It takes list of species as input (one line per species) and generate species tree for
+                                workflow.<br>
                                 - select <code>Use in TreeBest</code>
 
                             </li>
@@ -163,7 +165,8 @@
                         For running GeneSeqToFamily workflow follow steps below: <br>
 
                         <ul>
-                            <li>Select <code>GeneSeqToFamily</code> workflow from left panel or top workflow menu, click on
+                            <li>Select <code>GeneSeqToFamily</code> workflow from left panel or top workflow menu, click
+                                on
                                 <code>Run</code></li>
                             <li>Set CDS, species tree, and Gene Feature information for related input for workflow.</li>
                             <li>Set Parameters to be used in workflow or keep default parameters</li>
@@ -189,55 +192,65 @@
 
                         <ul>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/emboss_5/">emboss_5</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/devteam/emboss_5/">emboss_5</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus/">ncbi_blast_plus</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus/">ncbi_blast_plus</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/blast_parser/">blast_parser</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/blast_parser/">blast_parser</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg/">hcluster_sg</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg/">hcluster_sg</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg_parser/">hcluster_sg_parser</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg_parser/">hcluster_sg_parser</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/t_coffee/">t_coffee</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/t_coffee/">t_coffee</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/galaxyp/filter_by_fasta_ids/">filter_by_fasta_ids</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/galaxyp/filter_by_fasta_ids/">filter_by_fasta_ids</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/treebest_best">treebest_best</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/treebest_best">treebest_best</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gafa/">gafa</a></li>
-                            <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/fasta_to_tabular/">fasta_to_tabular</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gafa/">gafa</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/bgruening/text_processing/">text_processing</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/devteam/fasta_to_tabular/">fasta_to_tabular</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/bgruening/uniprot_rest_interface/">uniprot_rest_interface</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/bgruening/text_processing/">text_processing</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/suite_ensembl_rest/">suite_ensembl_rest</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/bgruening/uniprot_rest_interface/">uniprot_rest_interface</a>
+                            </li>
+                            <li>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/suite_ensembl_rest/">suite_ensembl_rest</a>
                             </li>
                         </ul>
 
                         Helper tools for data preparation:
                         <ul>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ensembl_longest_cds_per_gene/">ensembl_longest_cds_per_gene</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ensembl_longest_cds_per_gene/">ensembl_longest_cds_per_gene</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ete/">ETE species tree generator</a>
+                                <a target="_blank" href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ete/">ETE
+                                    species tree generator</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gstf_preparation/">gstf_preparation</a>
+                                <a target="_blank"
+                                   href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gstf_preparation/">gstf_preparation</a>
                                 - to convert gene feature files from GFF3 and/or JSON format to SQLite and format CDS
                                 sequence headers
                             </li>
@@ -247,23 +260,27 @@
                         <p>GeneSeqToWorkflow can be installed just like any other Galaxy workflow.
                         <ul>
                             <li>
-                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-via-a-url">
+                                <a target="_blank"
+                                   href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-via-a-url">
                                     Importing a workflow via a URL
                                 </a>
                             </li>
                             <li>
-                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories">
+                                <a target="_blank"
+                                   href="https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories">
                                     Finding workflows in ToolShed repositories
                                 </a>
                             </li>
                             <li>
-                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-from-an-installed-toolshed-repository">
+                                <a target="_blank"
+                                   href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-from-an-installed-toolshed-repository">
                                     Importing a workflow from an installed ToolShed repository
                                 </a>
                             </li>
                         </ul>
-                        Install missing tools for the workflow from Galaxy ToolShed <a
-                            href="https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/">Guide</a>
+                        Install missing tools for the workflow from Galaxy ToolShed
+                        <a target="_blank"
+                           href="https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/">Guide</a>
                         </p>
                         <h3>Installing visualisation Plugin</h3>
                         <p> Install the Aequatus visualisation on a Galaxy instance
@@ -271,8 +288,8 @@
                             <br>
 
                         <ol>
-                            <li>Galaxy needs to be correctly configured to serve visualisation plugins, see e.g. <a
-                                    href="https://galaxyproject.org/admin/config/nginxProxy/ ">https://galaxyproject.org/admin/config/nginxProxy/ </a>
+                            <li>Galaxy needs to be correctly configured to serve visualisation plugins, see e.g.
+                                <a target="_blank" href="https://galaxyproject.org/admin/config/nginxProxy/ ">https://galaxyproject.org/admin/config/nginxProxy/ </a>
                                 if your server is behind a nginx proxy
 
                                 <br></li>
@@ -302,8 +319,9 @@
                         <p>
                             GAFA datatype is require for Aequatus visualisation plugin to identify data to be
                             visualised.
-                            <br> Follow the steps from Galaxy's guide to add new data type <a
-                                href="https://galaxyproject.org/admin/datatypes/adding-datatypes/#adding-a-new-data-type">Guide</a>
+                            <br> Follow the steps from Galaxy's guide to add new data type
+                            <a target="_blank"
+                               href="https://galaxyproject.org/admin/datatypes/adding-datatypes/#adding-a-new-data-type">Guide</a>
 
                         </p>
 
