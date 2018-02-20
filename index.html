@@ -144,13 +144,16 @@
                                 Ensembl) as input and generate formatted <code>CDS FASTA</code> and <code>gene features
                                     in SQLite database</code>
                                 <br>
-                                CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
+                                 - CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
+                                <br>
+                                 - gene features needs to be in the form of SQLite database
                             </li>
-                            <li><code>Ete tool</code> in Galaxy can be used to prepare species tree to be used in
+                            <li><code>ETE species tree generator</code> in Galaxy can be used to prepare species tree to be used in
                                 workflow
                                 <br>
-                                It takes list of species as input (one line per species) and generate species tree for
-                                workflow.
+                                - It takes list of species as input (one line per species) and generate species tree for workflow.<br>
+                                - select <code>Use in TreeBest</code>
+
                             </li>
                         </ul>
 
@@ -231,7 +234,7 @@
                                 <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ensembl_longest_cds_per_gene/">ensembl_longest_cds_per_gene</a>
                             </li>
                             <li>
-                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ete/">ete</a>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ete/">ETE species tree generator</a>
                             </li>
                             <li>
                                 <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gstf_preparation/">gstf_preparation</a>
