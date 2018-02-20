@@ -137,15 +137,21 @@
                         Input data for GeneSeqToFamily can be prepared by following steps: <br>
 
                         <ul>
-                            <li><code>GeneSeqToFamily preparation</code> tool can be used to prepare CDS file and gene feature information in SQLite format.
+                            <li><code>GeneSeqToFamily preparation</code> tool can be used to prepare CDS file and gene
+                                feature information in SQLite format.
                                 <br>
-                                It takes CDS file and gene feature in the format of GFF3 or JSON (downloaded from Ensembl) as input and generate formatted <code>CDS FASTA</code> and <code>gene features in SQLite database</code>
+                                It takes CDS file and gene feature in the format of GFF3 or JSON (downloaded from
+                                Ensembl) as input and generate formatted <code>CDS FASTA</code> and <code>gene features
+                                    in SQLite database</code>
                                 <br>
                                 CDS needs to be in the form of transcriptid_speciesname format e.g Q89MQ0_homosapiens
                             </li>
-                            <li><code>Ete tool</code> in Galaxy can be used to prepare species tree to be used in workflow
-                            <br>
-                            It takes list of species as input (one line per species) and generate species tree for workflow.</li>
+                            <li><code>Ete tool</code> in Galaxy can be used to prepare species tree to be used in
+                                workflow
+                                <br>
+                                It takes list of species as input (one line per species) and generate species tree for
+                                workflow.
+                            </li>
                         </ul>
 
                         </p>
@@ -154,7 +160,8 @@
                         For running GeneSeqToFamily workflow follow steps below: <br>
 
                         <ul>
-                            <li>Select GeneSeqToFamily workflow from left panel or top workflow menu, click on <code>Run</code> </li>
+                            <li>Select GeneSeqToFamily workflow from left panel or top workflow menu, click on
+                                <code>Run</code></li>
                             <li>Set CDS, species tree, and Gene Feature information for related input for workflow.</li>
                             <li>Set Parameters to be used in workflow or keep default parameters</li>
                             <li>Click on <code>Run Workflow</code> to run workflow</li>
@@ -163,7 +170,8 @@
                         </p>
                         <h3>Results</h3>
 
-                        GeneSeqToFamily workflow generates results in GAFA SQLite format (SQLite database). It can be visualised using Aequatus Plugin within Galaxy<br>
+                        GeneSeqToFamily workflow generates results in GAFA SQLite format (SQLite database). It can be
+                        visualised using Aequatus Plugin within Galaxy<br>
 
 
                         </p>
@@ -172,59 +180,127 @@
                 <div class="content panel panel-primary" id="installation-manual" style="display: none;">
                     <div class="panel-heading">Installation Manual:</div>
                     <div class="panel-body">
+                        <h3>List of required tools</h3>
+
+                        The Galaxy tools from the following ToolShed repositories:
+
+                        <ul>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/emboss_5/">emboss_5</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/ncbi_blast_plus/">ncbi_blast_plus</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/blast_parser/">blast_parser</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg/">hcluster_sg</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/hcluster_sg_parser/">hcluster_sg_parser</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/t_coffee/">t_coffee</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/galaxyp/filter_by_fasta_ids/">filter_by_fasta_ids</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/treebest_best">treebest_best</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gafa/">gafa</a></li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/devteam/fasta_to_tabular/">fasta_to_tabular</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/bgruening/text_processing/">text_processing</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/bgruening/uniprot_rest_interface/">uniprot_rest_interface</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/suite_ensembl_rest/">suite_ensembl_rest</a>
+                            </li>
+                        </ul>
+
+                        Helper tools for data preparation:
+                        <ul>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ensembl_longest_cds_per_gene/">ensembl_longest_cds_per_gene</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/ete/">ete</a>
+                            </li>
+                            <li>
+                                <a href="https://toolshed.g2.bx.psu.edu/view/earlhaminst/gstf_preparation/">gstf_preparation</a>
+                                - to convert gene feature files from GFF3 and/or JSON format to SQLite and format CDS
+                                sequence headers
+                            </li>
+                        </ul>
+
                         <h3>Installing Workflow</h3>
-                            <p>GeneSeqToWorkflow can be installed just like any other Galaxy workflow.
-                            <ul>
-                        <li>
-                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-via-a-url">
-                            Importing a workflow via a URL
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories">
-                            Finding workflows in ToolShed repositories
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-from-an-installed-toolshed-repository">
-                                Importing a workflow from an installed ToolShed repository
-                            </a>
-                        </li>
-                    </ul>
-                        Install missing tools for the workflow from Galaxy ToolShed <a href="https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/">Guide</a>
+                        <p>GeneSeqToWorkflow can be installed just like any other Galaxy workflow.
+                        <ul>
+                            <li>
+                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-via-a-url">
+                                    Importing a workflow via a URL
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#finding-workflows-in-toolshed-repositories">
+                                    Finding workflows in ToolShed repositories
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://galaxyproject.org/toolshed/workflow-sharing/#importing-a-workflow-from-an-installed-toolshed-repository">
+                                    Importing a workflow from an installed ToolShed repository
+                                </a>
+                            </li>
+                        </ul>
+                        Install missing tools for the workflow from Galaxy ToolShed <a
+                            href="https://galaxyproject.org/admin/tools/add-tool-from-toolshed-tutorial/">Guide</a>
                         </p>
                         <h3>Installing visualisation Plugin</h3>
                         <p> Install the Aequatus visualisation on a Galaxy instance
 
                             <br>
 
-                            <ol>
-                            <li>Galaxy needs to be correctly configured to serve visualisation plugins, see e.g. <a href="https://galaxyproject.org/admin/config/nginxProxy/ ">https://galaxyproject.org/admin/config/nginxProxy/ </a> if your server is behind a nginx proxy
+                        <ol>
+                            <li>Galaxy needs to be correctly configured to serve visualisation plugins, see e.g. <a
+                                    href="https://galaxyproject.org/admin/config/nginxProxy/ ">https://galaxyproject.org/admin/config/nginxProxy/ </a>
+                                if your server is behind a nginx proxy
 
-                            <br></li>
-                            <li>If you haven't done that already, clone this Git repository somewhere on the Galaxy instance:<br>
+                                <br></li>
+                            <li>If you haven't done that already, clone this Git repository somewhere on the Galaxy
+                                instance:<br>
 
-                            <code>git clone --recursive https://github.com/TGAC/earlham-galaxytools</code>
-                            <br>
-                            Instead, if you have already cloned the repository before, update it with:
-                            <br>
+                                <code>git clone --recursive https://github.com/TGAC/earlham-galaxytools</code>
+                                <br>
+                                Instead, if you have already cloned the repository before, update it with:
+                                <br>
 
                                 <code>git pull</code>
-                            <br>
-                                    <code>git submodule update --init</code>
+                                <br>
+                                <code>git submodule update --init</code>
                             </li>
-                            <li>Create a symbolic link to <code>earlham-galaxytools/visualisations/aequatus/</code> inside Galaxy's <code>config/plugins/visualizations/</code> directory, e.g.:
-                            <br>
+                            <li>Create a symbolic link to <code>earlham-galaxytools/visualisations/aequatus/</code>
+                                inside Galaxy's <code>config/plugins/visualizations/</code> directory, e.g.:
+                                <br>
 
                                 <code>cd GALAXY_DIR/config/plugins/visualizations/</code>
-                            <br>
-                                    <code>ln -s EARLHAM-GALAXYTOOLS_DIR/visualisations/aequatus/</code></li></ol>
+                                <br>
+                                <code>ln -s EARLHAM-GALAXYTOOLS_DIR/visualisations/aequatus/</code></li>
+                        </ol>
                         </p>
                         <h3>Installing Datatype</h3>
 
                         <p>
-                            GAFA datatype is require for Aequatus visualisation plugin to identify data to be visualised.
-<br> Follow the steps from Galaxy's guide to add new data type <a href="https://galaxyproject.org/admin/datatypes/adding-datatypes/#adding-a-new-data-type">Guide</a>
+                            GAFA datatype is require for Aequatus visualisation plugin to identify data to be
+                            visualised.
+                            <br> Follow the steps from Galaxy's guide to add new data type <a
+                                href="https://galaxyproject.org/admin/datatypes/adding-datatypes/#adding-a-new-data-type">Guide</a>
 
                         </p>
 
