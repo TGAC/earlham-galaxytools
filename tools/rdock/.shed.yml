@@ -1,7 +1,9 @@
 name: rdock
 owner: earlhaminst
-description: small molecule - protein docking
+description: Docking ligands to proteins and nucleic acids
 homepage_url: http://rdock.sourceforge.net/
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/rdock/
-long_description: A Fast, Versatile and Open Source Program for Docking Ligands to Proteins and Nucleic Acids
-categories: [Computational chemistry]
+long_description: A fast, versatile and Open Source program for docking ligands to proteins and nucleic acids
+categories:
+- Computational chemistry
+type: unrestricted
