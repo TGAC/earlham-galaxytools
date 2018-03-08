@@ -4,3 +4,7 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
 ---
+
+## Homepage
+
+[Test page]({{ site.baseurl }}{% link test.md %})
