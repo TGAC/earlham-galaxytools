@@ -15,7 +15,7 @@ CREATE TABLE gene_family (
         gene_tree VARCHAR NOT NULL);
 CREATE TABLE gene (
         gene_id VARCHAR PRIMARY KEY NOT NULL,
-        symbol VARCHAR,
+        gene_symbol VARCHAR,
         species VARCHAR NOT NULL,
         gene_json VARCHAR NOT NULL
         );
