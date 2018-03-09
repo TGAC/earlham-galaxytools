@@ -37,7 +37,7 @@ def main():
         # Removes '*' from Species names comes from Species tree configrured for TreeBest
         for leaf in speciestree:
             leaf.name = leaf.name.strip('*')
-        
+
         genetree, events = genetree.reconcile(speciestree)
 
     # splits tree by duplicatics which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
