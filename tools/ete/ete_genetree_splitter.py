@@ -4,6 +4,7 @@ import optparse
 
 from ete3 import PhyloTree
 
+
 def main():
     usage = "usage: %prog --genetree <genetree-file> --speciestree <speciestree-file> [options]"
     parser = optparse.OptionParser(usage=usage)
