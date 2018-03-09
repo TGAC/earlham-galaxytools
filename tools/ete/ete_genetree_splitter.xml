@@ -72,11 +72,11 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
             <param name="output_format" value="9" />
-            <output_collection name="genetrees_lists" type="list">
-                <element name="11" file="11_genetree.nhx" ftype="nhx" />
-                <element name="12" file="12_genetree.nhx" ftype="nhx" />
-                <element name="13" file="13_genetree.nhx" ftype="nhx" />
-                <element name="14" file="14_genetree.nhx" ftype="nhx" />
+            <output_collection name="genetrees_lists" type="list" count="4">
+                <element name="1" file="11_genetree.nhx" ftype="nhx" />
+                <element name="2" file="12_genetree.nhx" ftype="nhx" />
+                <element name="3" file="13_genetree.nhx" ftype="nhx" />
+                <element name="4" file="14_genetree.nhx" ftype="nhx" />
             </output_collection>
         </test>
         <test>
@@ -86,12 +86,12 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <param name="speciesFile" ftype="nhx" value="genetree.nhx" />
             <param name="species_format" value="8" />
             <param name="output_format" value="9" />
-            <output_collection name="genetrees_lists" type="list">
-                <element name="21" file="21_genetree.nhx" ftype="nhx" />
-                <element name="22" file="22_genetree.nhx" ftype="nhx" />
-                <element name="23" file="23_genetree.nhx" ftype="nhx" />
-                <element name="24" file="24_genetree.nhx" ftype="nhx" />
-                <element name="25" file="25_genetree.nhx" ftype="nhx" />
+            <output_collection name="genetrees_lists" type="list" count="5">
+                <element name="1" file="21_genetree.nhx" ftype="nhx" />
+                <element name="2" file="22_genetree.nhx" ftype="nhx" />
+                <element name="3" file="23_genetree.nhx" ftype="nhx" />
+                <element name="4" file="24_genetree.nhx" ftype="nhx" />
+                <element name="5" file="25_genetree.nhx" ftype="nhx" />
             </output_collection>
         </test>
     </tests>
