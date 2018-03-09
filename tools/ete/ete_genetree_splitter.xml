@@ -97,8 +97,10 @@ python '$__tool_directory__/ete_genetree_splitter.py'
     </tests>
     <help>
     <![CDATA[
-Generate a species tree from a list of species using the `ETE Toolkit`_.
+Split GeneTrees from single GeneTree using the `ETE Toolkit`_.
+
 .. _ETE Toolkit: http://etetoolkit.org/
+
 **Output format:**
 ======= ============================================= ========================================================================================
 FORMAT  DESCRIPTION                                     SAMPLE
