@@ -1,8 +1,8 @@
 from __future__ import print_function
-from ete3 import PhyloTree
-import optparse
-import string
 
+import optparse
+
+from ete3 import PhyloTree
 
 def main():
     usage = "usage: %prog --genetree <genetree-file> --speciestree <speciestree-file> [options]"
@@ -32,7 +32,7 @@ def main():
             parser.error("--speciestree option must be specified, species tree in nhx format")
 
         # reads species tree
-        speciestree = PhyloTree(options.speciestree, format = options.species_format)
+        speciestree = PhyloTree(options.speciestree, format=options.species_format)
 
         # Removes '*' from Species names comes from Species tree configrured for TreeBest
         for leaf in speciestree:
@@ -48,9 +48,10 @@ def main():
             f.write(node.write(format=options.output_format))
         cluster_id += 1
 
-def parse_sp_name(node_name):
-        return node_name.split("_")[1]
 
-          
+def parse_sp_name(node_name):
+    return node_name.split("_")[1]
+
+
 if __name__ == "__main__":
     main()
