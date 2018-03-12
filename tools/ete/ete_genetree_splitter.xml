@@ -86,7 +86,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
             <param name="gainlose" value="True" />
-            <param name="speciesFile" ftype="nhx" value="genetree.nhx" />
+            <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
             <param name="species_format" value="8" />
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="5">
