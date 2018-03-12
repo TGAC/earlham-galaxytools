@@ -13,7 +13,7 @@
 python '$__tool_directory__/ete_genetree_splitter.py'
 --genetree '$genetreeFile'
 --gene_node $gene_node
-#if $gainlose_conditional.gainlose == "true"
+#if $gainlose_conditional.gainlose == "True"
     --speciestree '$gainlose_conditional.speciesFile'
     --species_format $gainlose_conditional.species_format
     --gainlose
@@ -28,9 +28,12 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <option value="1">species_gene</option>
         </param>
         <conditional name="gainlose_conditional">
-            <param name="gainlose" type="boolean" checked="false" label="Find out gene gain/lose" help="Find out gene gain/lose"/>
-            <when value="false" />
-            <when value="true">
+            <param name="gainlose" type="select" label="Find out gene gain/lose" help="Find out gene gain/lose">
+                <option value="True">Yes</option>
+                <option value="False">No</option>
+            </param>
+            <when value="False" />
+            <when value="True">
                 <param name="speciesFile" type="data" format="nhx" label="Species file" help="Species Tree in nhx format" />
                 <param name="species_format" type="select" label="Input species tree format" help="See table below">
                     <option value="0">Flexible with support values (0)</option>

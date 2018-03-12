@@ -41,13 +41,11 @@ def main():
 
         genetree, events = genetree.reconcile(speciestree)
 
-    # splits tree by duplicatics which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
-    cluster_id = 1
-    for node in genetree.split_by_dups():
+    # splits tree by duplication events which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
+    for cluster_id, node in enumerate(genetree.split_by_dups(), 1):
         outfile = str(cluster_id) + '_genetree.nhx'
         with open(outfile, 'w') as f:
             f.write(node.write(format=options.output_format))
-        cluster_id += 1
 
 
 def parse_sp_name(node_name):
