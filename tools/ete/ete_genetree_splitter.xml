@@ -28,7 +28,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <option value="1">species_gene</option>
         </param>
         <conditional name="gainlose_conditional">
-            <param name="gainlose" type="select" label="Find out gene gain/lose" help="Find out gene gain/lose">
+            <param name="gainlose" type="select" label="Find out gene gain/lose">
                 <option value="True">Yes</option>
                 <option value="False">No</option>
             </param>
@@ -85,7 +85,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="gainlose" value="true" />
+            <param name="gainlose" value="True" />
             <param name="speciesFile" ftype="nhx" value="genetree.nhx" />
             <param name="species_format" value="8" />
             <param name="output_format" value="9" />
@@ -105,6 +105,7 @@ Split GeneTrees from single GeneTree by duplication event using the `ETE Toolkit
 .. _ETE Toolkit: http://etetoolkit.org/
 
 **Output format:**
+
 ======= ============================================= ========================================================================================
 FORMAT  DESCRIPTION                                     SAMPLE
 ------- --------------------------------------------- ----------------------------------------------------------------------------------------
