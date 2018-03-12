@@ -1,1 +1,1 @@
-(((brat1_rattusnorvegicus,brat1_musmusculus),(brat1_homosapiens,brat1_pantroglodytes)),(brat1_susscrofa,brat1_canisfamiliaris));
+(((insr_rattusnorvegicus,insr_musmusculus),(insr_homosapiens,insr_pantroglodytes)),insr_susscrofa);

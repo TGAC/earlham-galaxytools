@@ -1,1 +1,1 @@
-(((maoa_rattusnorvegicus,maoa_musmusculus),(maoa_homosapiens,maoa_pantroglodytes)),(maoa_susscrofa,maoa_canisfamiliaris));
+((maob_rattusnorvegicus,maob_musmusculus),((maob_homosapiens,maob_pantroglodytes),(maob_susscrofa,maob_canisfamiliaris)));
