@@ -1,0 +1,127 @@
+<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@.1">
+    <description>from a genetree using the ETE Toolkit</description>
+    <macros>
+        <import>ete_macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <stdio>
+        <!-- Anything other than zero is an error -->
+        <exit_code range="1:" />
+    </stdio>
+    <command>
+    <![CDATA[
+python '$__tool_directory__/ete_genetree_splitter.py'
+--genetree '$genetreeFile'
+--gene_node $gene_node
+#if $gainlose_conditional.gainlose == "True"
+    --speciestree '$gainlose_conditional.speciesFile'
+    --species_format $gainlose_conditional.species_format
+    --gainlose
+#end if
+--output_format $output_format
+    ]]>
+    </command>
+    <inputs>
+        <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format" />
+         <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
+            <option value="0" selected="true">gene_species</option>
+            <option value="1">species_gene</option>
+        </param>
+        <conditional name="gainlose_conditional">
+            <param name="gainlose" type="select" label="Find out gene gain/lose">
+                <option value="True">Yes</option>
+                <option value="False" selected="true">No</option>
+            </param>
+            <when value="False" />
+            <when value="True">
+                <param name="speciesFile" type="data" format="nhx" label="Species file" help="Species Tree in nhx format" />
+                <param name="species_format" type="select" label="Input species tree format" help="See table below">
+                    <option value="0">Flexible with support values (0)</option>
+                    <option value="1">Flexible with internal node names (1)</option>
+                    <option value="2">All branches + leaf names + internal supports (2)</option>
+                    <option value="3">All branches + all names (3)</option>
+                    <option value="4">Leaf branches + leaf names (4)</option>
+                    <option value="5">Internal and leaf branches + leaf names (5)</option>
+                    <option value="6">Internal branches + leaf names (6)</option>
+                    <option value="7">Leaf branches + all names (7)</option>
+                    <option value="8" selected="true">All names (8)</option>
+                    <option value="9">Leaf names (9)</option>
+                    <option value="100">Topology only (100)</option>
+                </param>
+             </when>
+        </conditional> 
+        
+        <param name="output_format" type="select" label="Output GeneTree format" help="See table below">
+            <option value="0">Flexible with support values (0)</option>
+            <option value="1">Flexible with internal node names (1)</option>
+            <option value="2">All branches + leaf names + internal supports (2)</option>
+            <option value="3">All branches + all names (3)</option>
+            <option value="4">Leaf branches + leaf names (4)</option>
+            <option value="5">Internal and leaf branches + leaf names (5)</option>
+            <option value="6">Internal branches + leaf names (6)</option>
+            <option value="7">Leaf branches + all names (7)</option>
+            <option value="8">All names (8)</option>
+            <option value="9" selected="true">Leaf names (9)</option>
+            <option value="100">Topology only (100)</option>
+        </param> 
+    </inputs>
+    <outputs>
+        <collection name="genetrees_lists" type="list" label="${tool.name} on ${on_string}">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)_genetree\.nhx" ext="nhx" />
+        </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
+            <param name="gene_node" value="0"/>
+            <param name="output_format" value="9" />
+            <output_collection name="genetrees_lists" type="list" count="4">
+                <element name="1" file="11_genetree.nhx" ftype="nhx" />
+                <element name="2" file="12_genetree.nhx" ftype="nhx" />
+                <element name="3" file="13_genetree.nhx" ftype="nhx" />
+                <element name="4" file="14_genetree.nhx" ftype="nhx" />
+            </output_collection>
+        </test>
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
+            <param name="gene_node" value="0"/>
+            <param name="gainlose" value="True" />
+            <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
+            <param name="species_format" value="8" />
+            <param name="output_format" value="9" />
+            <output_collection name="genetrees_lists" type="list" count="5">
+                <element name="1" file="21_genetree.nhx" ftype="nhx" />
+                <element name="2" file="22_genetree.nhx" ftype="nhx" />
+                <element name="3" file="23_genetree.nhx" ftype="nhx" />
+                <element name="4" file="24_genetree.nhx" ftype="nhx" />
+                <element name="5" file="25_genetree.nhx" ftype="nhx" />
+            </output_collection>
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+Split GeneTrees from single GeneTree by duplication event using the `ETE Toolkit`_.
+
+.. _ETE Toolkit: http://etetoolkit.org/
+
+**Output format:**
+
+======= ============================================= ========================================================================================
+FORMAT  DESCRIPTION                                     SAMPLE
+------- --------------------------------------------- ----------------------------------------------------------------------------------------
+0       flexible with support values                    ((D:0.723274,F:0.567784)1.000000:0.067192,(B:0.279326,H:0.756049)1.000000:0.807788);
+1       flexible with internal node names               ((D:0.723274,F:0.567784)E:0.067192,(B:0.279326,H:0.756049)B:0.807788);
+2       all branches + leaf names + internal supports   ((D:0.723274,F:0.567784)1.000000:0.067192,(B:0.279326,H:0.756049)1.000000:0.807788);
+3       all branches + all names                        ((D:0.723274,F:0.567784)E:0.067192,(B:0.279326,H:0.756049)B:0.807788);
+4       leaf branches + leaf names                      ((D:0.723274,F:0.567784),(B:0.279326,H:0.756049));
+5       internal and leaf branches + leaf names         ((D:0.723274,F:0.567784):0.067192,(B:0.279326,H:0.756049):0.807788);
+6       internal branches + leaf names                  ((D,F):0.067192,(B,H):0.807788);
+7       leaf branches + all names                       ((D:0.723274,F:0.567784)E,(B:0.279326,H:0.756049)B);
+8       all names                                       ((D,F)E,(B,H)B);
+9       leaf names                                      ((D,F),(B,H));
+100     topology only                                   ((,),(,));
+======= ============================================= ========================================================================================
+    ]]>
+    </help>
+    <expand macro="citations" />
+</tool>
