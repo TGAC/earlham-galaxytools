@@ -8,8 +8,7 @@
         <!-- Anything other than zero is an error -->
         <exit_code range="1:" />
     </stdio>
-    <command>
-    <![CDATA[
+    <command><![CDATA[
 python '$__tool_directory__/ete_genetree_splitter.py'
 --genetree '$genetreeFile'
 --gene_node $gene_node
@@ -19,8 +18,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
     --gainlose
 #end if
 --output_format $output_format
-    ]]>
-    </command>
+    ]]></command>
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format" />
          <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
@@ -98,8 +96,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             </output_collection>
         </test>
     </tests>
-    <help>
-    <![CDATA[
+    <help><![CDATA[
 Split GeneTrees from single GeneTree by duplication event using the `ETE Toolkit`_.
 
 .. _ETE Toolkit: http://etetoolkit.org/
@@ -121,7 +118,6 @@ FORMAT  DESCRIPTION                                     SAMPLE
 9       leaf names                                      ((D,F),(B,H));
 100     topology only                                   ((,),(,));
 ======= ============================================= ========================================================================================
-    ]]>
-    </help>
+    ]]></help>
     <expand macro="citations" />
 </tool>

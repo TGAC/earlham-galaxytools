@@ -102,7 +102,9 @@ $standardize
         </test>
     </tests>
     <help><![CDATA[
-Modify a given input tree using the etetoolkit: http://etetoolkit.org/
+Modify a given input tree using the `ETE Toolkit`_.
+
+.. _ETE Toolkit: http://etetoolkit.org/
     ]]></help>
     <expand macro="citations" />
 </tool>

@@ -115,7 +115,9 @@ python '$__tool_directory__/ete_lineage_generator.py'
         </test>
     </tests>
     <help><![CDATA[
-Generates a table with lineage information for a list of species (also taxids and arbitrary taxons are accepted) using the .. _ETE Toolkit: http://etetoolkit.org/
+Generates a table with lineage information for a list of species (also taxids and arbitrary taxons are accepted) using the `ETE Toolkit`_.
+
+.. _ETE Toolkit: http://etetoolkit.org/
 
 **Input**
 

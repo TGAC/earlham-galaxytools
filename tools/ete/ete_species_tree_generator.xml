@@ -8,8 +8,7 @@
         <!-- Anything other than zero is an error -->
         <exit_code range="1:" />
     </stdio>
-    <command>
-    <![CDATA[
+    <command><![CDATA[
 python '$__tool_directory__/ete_species_tree_generator.py'
 -s '$speciesFile'
 -d $database
@@ -20,8 +19,7 @@ python '$__tool_directory__/ete_species_tree_generator.py'
     -f ${output_format.format_selector}
 #end if
 -t $output_format.treebest
-    ]]>
-    </command>
+    ]]></command>
     <inputs>
         <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species per line" />
         <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
@@ -64,8 +62,7 @@ python '$__tool_directory__/ete_species_tree_generator.py'
             </output>
         </test>
     </tests>
-    <help>
-    <![CDATA[
+    <help><![CDATA[
 Generate a species tree from a list of species using the `ETE Toolkit`_.
 
 .. _ETE Toolkit: http://etetoolkit.org/
@@ -87,7 +84,6 @@ FORMAT  DESCRIPTION                                     SAMPLE
 9       leaf names                                      ((D,F),(B,H));
 100     topology only                                   ((,),(,));
 ======= ============================================= ========================================================================================
-    ]]>
-    </help>
+    ]]></help>
     <expand macro="citations" />
 </tool>
