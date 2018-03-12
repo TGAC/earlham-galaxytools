@@ -30,7 +30,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <conditional name="gainlose_conditional">
             <param name="gainlose" type="select" label="Find out gene gain/lose">
                 <option value="True">Yes</option>
-                <option value="False">No</option>
+                <option value="False" selected="true">No</option>
             </param>
             <when value="False" />
             <when value="True">
