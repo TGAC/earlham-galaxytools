@@ -40,12 +40,17 @@ class GAFASQLite(SQlite):
         return False
 
 
-# Since Binary.register_sniffable_binary_format() ignores the sniff order declared in datatypes_conf.xml and put TS datatypes at the end, instead of simply doing:
+# Since in Galaxy < 18.01 Binary.register_sniffable_binary_format() ignores the
+# sniff order declared in datatypes_conf.xml and put TS datatypes at the end,
+# instead of simply doing:
 # Binary.register_sniffable_binary_format("sqlite", "sqlite", SQlite)
 # we need to register specialized SQLite datatypes before SQlite
-for i, format_dict in enumerate(Binary.sniffable_binary_formats):
-    if format_dict['class'] == SQlite:
-        break
-else:
-    i += 1
-Binary.sniffable_binary_formats.insert(i, {'type': 'gafa.sqlite', 'ext': 'gafa.sqlite', 'class': GAFASQLite})
+try:
+    for i, format_dict in enumerate(Binary.sniffable_binary_formats):
+        if format_dict['class'] == SQlite:
+            break
+    else:
+        i += 1
+    Binary.sniffable_binary_formats.insert(i, {'type': 'gafa.sqlite', 'ext': 'gafa.sqlite', 'class': GAFASQLite})
+except AttributeError:
+    pass
