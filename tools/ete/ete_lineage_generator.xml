@@ -110,7 +110,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
-	    <param name="levels" value="manual" />
+            <param name="levels" value="manual" />
             <param name="manualranks" value="kingdom,family" />
             <output name="outputFile" file="lineage-full.txt" />
         </test>
