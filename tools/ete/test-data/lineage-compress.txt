@@ -1,3 +1,4 @@
+#species/taxid	kingdom	phylum	class	order	family	genus	species
 Latimeria chalumnae	Eukaryota	Chordata	NA	Coelacanthiformes	Coelacanthidae	Latimeria	Latimeria chalumnae
 Xenopus tropicalis	Eukaryota	Chordata	Amphibia	Batrachia	Pipoidea	Xenopus	Xenopus tropicalis
 Ornithorhynchus anatinus	Eukaryota	Chordata	Mammalia	Monotremata	Ornithorhynchidae	Ornithorhynchus	Ornithorhynchus anatinus

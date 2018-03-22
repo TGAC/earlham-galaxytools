@@ -12,7 +12,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
 #if $ranks.levels == "full"
     -f
 #elif $ranks.levels == "manual"
-    #for $rank in $ranks.manualranks:
+    #for $rank in str($ranks.manualranks).split(','):
         -r $rank
     #end for
 #end if
@@ -31,7 +31,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
                 <option value="manual">Manual</option>
             </param>
             <when value="manual">
-                <param name="manualranks" type="select" multiple="true" label="Manual selection of ranks">
+                <param name="manualranks" type="select" multiple="true" optional="false" label="Manual selection of ranks">
                     <option value="superkingdom">superkingdom</option>
                     <option value="kingdom" selected="true">kingdom</option>
                     <option value="subkingdom">subkingdom</option>
@@ -88,7 +88,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
-            <param name="levels" value="primary" />
+            <param name="levels" value="full" />
             <output name="outputFile" file="lineage.txt" />
         </test>
         <test>
@@ -110,7 +110,8 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
-            <param name="levels" value="full" />
+            <param name="levels" value="manual" />
+            <param name="manualranks" value="kingdom,family" />
             <output name="outputFile" file="lineage-full.txt" />
         </test>
     </tests>

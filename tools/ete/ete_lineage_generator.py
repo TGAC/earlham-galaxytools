@@ -76,6 +76,7 @@ if options.input_species_filename is None:
     parser.error("-s option must be specified, Species list in text format one species in each line")
 if options.full and options.ranks:
     parser.error("-f and -r can not be used at the same time")
+
 if options.ranks:
     for r in options.ranks:
         if r not in LONG_RANKS:
@@ -105,6 +106,9 @@ if options.compress:
         for ilr in range(len(LONG_RANKS)):
             if RANKS[ir] in LONG_RANKS[ilr]:
                 COMP_RANK_IDX[LONG_RANKS[ilr]] = ir
+# write header
+of.write("#species/taxid\t%s\n" % ("\t".join(RANKS)))
+# get and write data
 with open(options.input_species_filename) as f:
     for line in f.readlines():
         line = line.strip().replace('_', ' ')
