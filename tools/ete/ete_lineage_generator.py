@@ -107,7 +107,7 @@ if options.compress:
             if RANKS[ir] in LONG_RANKS[ilr]:
                 COMP_RANK_IDX[LONG_RANKS[ilr]] = ir
 # write header
-of.write("species/taxid\t%s\n" % ("\t".join(RANKS)))
+of.write("#species/taxid\t%s\n" % ("\t".join(RANKS)))
 # get and write data
 with open(options.input_species_filename) as f:
     for line in f.readlines():

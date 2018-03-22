@@ -81,14 +81,14 @@ python '$__tool_directory__/ete_lineage_generator.py'
         </conditional>
     </inputs>
     <outputs>
-        <data name="outputFile" format="tabular" label="${tool.name} on ${on_string}"/>
+        <data name="outputFile" format="tsv" label="${tool.name} on ${on_string}"/>
     </outputs>
     <tests>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
-            <param name="levels" value="primary" />
+            <param name="levels" value="full" />
             <output name="outputFile" file="lineage.txt" />
         </test>
         <test>
@@ -110,7 +110,8 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="compress" value="" />
-            <param name="levels" value="full" />
+	    <param name="levels" value="manual" />
+            <param name="manualranks" value="kingdom,family" />
             <output name="outputFile" file="lineage-full.txt" />
         </test>
     </tests>

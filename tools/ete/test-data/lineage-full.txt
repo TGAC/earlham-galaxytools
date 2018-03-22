@@ -1,62 +1,63 @@
-Latimeria chalumnae	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	NA	NA	NA	NA	NA	Coelacanthiformes	NA	NA	NA	NA	Coelacanthidae	NA	NA	NA	Latimeria	NA	NA	NA	Latimeria chalumnae	NA	NA	NA
-Xenopus tropicalis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Amphibia	NA	NA	NA	Batrachia	Anura	NA	NA	NA	Pipoidea	Pipidae	Xenopodinae	NA	NA	Xenopus	Silurana	NA	NA	Xenopus tropicalis	NA	NA	NA
-Ornithorhynchus anatinus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	NA	Monotremata	NA	NA	NA	NA	Ornithorhynchidae	NA	NA	NA	Ornithorhynchus	NA	NA	NA	Ornithorhynchus anatinus	NA	NA	NA
-Macropus eugenii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	NA	Diprotodontia	NA	NA	NA	NA	Macropodidae	NA	NA	NA	Notamacropus	NA	NA	NA	Notamacropus eugenii	NA	NA	NA
-Sarcophilus harrisii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	NA	Dasyuromorphia	NA	NA	NA	NA	Dasyuridae	NA	NA	NA	Sarcophilus	NA	NA	NA	Sarcophilus harrisii	NA	NA	NA
-Monodelphis domestica	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	NA	Didelphimorphia	NA	NA	NA	NA	Didelphidae	Didelphinae	NA	NA	Monodelphis	NA	NA	NA	Monodelphis domestica	NA	NA	NA
-Echinops telfairi	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Afrotheria	NA	NA	NA	NA	NA	Tenrecidae	Tenrecinae	NA	NA	Echinops	NA	NA	NA	Echinops telfairi	NA	NA	NA
-Procavia capensis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Afrotheria	Hyracoidea	NA	NA	NA	NA	Procaviidae	NA	NA	NA	Procavia	NA	NA	NA	Procavia capensis	NA	NA	NA
-Loxodonta africana	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Afrotheria	Proboscidea	NA	NA	NA	NA	Elephantidae	NA	NA	NA	Loxodonta	NA	NA	NA	Loxodonta africana	NA	NA	NA
-Dasypus novemcinctus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Xenarthra	Cingulata	NA	NA	NA	NA	Dasypodidae	NA	NA	NA	Dasypus	NA	NA	NA	Dasypus novemcinctus	NA	NA	NA
-Choloepus hoffmanni	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Xenarthra	Pilosa	Folivora	NA	NA	NA	Megalonychidae	NA	NA	NA	Choloepus	NA	NA	NA	Choloepus hoffmanni	NA	NA	NA
-Ochotona princeps	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Lagomorpha	NA	NA	NA	NA	Ochotonidae	NA	NA	NA	Ochotona	NA	NA	NA	Ochotona princeps	NA	NA	NA
-Oryctolagus cuniculus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Lagomorpha	NA	NA	NA	NA	Leporidae	NA	NA	NA	Oryctolagus	NA	NA	NA	Oryctolagus cuniculus	NA	NA	NA
-Cavia porcellus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Rodentia	Hystricomorpha	NA	NA	NA	Caviidae	NA	NA	NA	Cavia	NA	NA	NA	Cavia porcellus	NA	NA	NA
-Ictidomys tridecemlineatus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Rodentia	Sciuromorpha	NA	NA	NA	Sciuridae	Xerinae	Marmotini	NA	Ictidomys	NA	NA	NA	Ictidomys tridecemlineatus	NA	NA	NA
-Dipodomys ordii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Rodentia	Castorimorpha	NA	NA	NA	Heteromyidae	Dipodomyinae	NA	NA	Dipodomys	NA	NA	NA	Dipodomys ordii	NA	NA	NA
-Rattus norvegicus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Rodentia	Myomorpha	NA	NA	NA	Muridae	Murinae	NA	NA	Rattus	NA	NA	NA	Rattus norvegicus	NA	NA	NA
-Mus musculus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Rodentia	Myomorpha	NA	NA	NA	Muridae	Murinae	NA	NA	Mus	Mus	NA	NA	Mus musculus	NA	NA	NA
-Tupaia belangeri	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Scandentia	NA	NA	NA	NA	Tupaiidae	NA	NA	NA	Tupaia	NA	NA	NA	Tupaia belangeri	NA	NA	NA
-Otolemur garnettii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Strepsirrhini	Lorisiformes	NA	NA	Galagidae	NA	NA	NA	Otolemur	NA	NA	NA	Otolemur garnettii	NA	NA	NA
-Microcebus murinus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Strepsirrhini	Lemuriformes	NA	NA	Cheirogaleidae	NA	NA	NA	Microcebus	NA	NA	NA	Microcebus murinus	NA	NA	NA
-Tarsius syrichta	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Tarsiiformes	NA	NA	Tarsiidae	NA	NA	NA	Carlito	NA	NA	NA	Carlito syrichta	NA	NA	NA
-Callithrix jacchus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Platyrrhini	NA	Cebidae	Callitrichinae	NA	NA	Callithrix	Callithrix	NA	NA	Callithrix jacchus	NA	NA	NA
-Chlorocebus sabaeus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Cercopithecoidea	Cercopithecidae	Cercopithecinae	NA	NA	Chlorocebus	NA	NA	NA	Chlorocebus sabaeus	NA	NA	NA
-Papio anubis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Cercopithecoidea	Cercopithecidae	Cercopithecinae	NA	NA	Papio	NA	NA	NA	Papio anubis	NA	NA	NA
-Macaca mulatta	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Cercopithecoidea	Cercopithecidae	Cercopithecinae	NA	NA	Macaca	NA	NA	NA	Macaca mulatta	NA	NA	NA
-Nomascus leucogenys	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hylobatidae	NA	NA	NA	Nomascus	NA	NA	NA	Nomascus leucogenys	NA	NA	NA
-Pongo abelii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Ponginae	NA	NA	Pongo	NA	NA	NA	Pongo abelii	NA	NA	NA
-Gorilla gorilla gorilla	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Gorilla	NA	NA	NA	Gorilla gorilla	Gorilla gorilla gorilla	NA	NA
-Pan troglodytes	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Pan	NA	NA	NA	Pan troglodytes	NA	NA	NA
-Homo sapiens	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Homo	NA	NA	NA	Homo sapiens	NA	NA	NA
-Sorex araneus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Insectivora	NA	NA	NA	NA	Soricidae	Soricinae	NA	NA	Sorex	NA	NA	NA	Sorex araneus	NA	NA	NA
-Erinaceus europaeus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Insectivora	NA	NA	NA	NA	Erinaceidae	Erinaceinae	NA	NA	Erinaceus	NA	NA	NA	Erinaceus europaeus	NA	NA	NA
-Pteropus vampyrus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Chiroptera	Megachiroptera	NA	NA	NA	Pteropodidae	Pteropodinae	NA	NA	Pteropus	NA	NA	NA	Pteropus vampyrus	NA	NA	NA
-Myotis lucifugus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Chiroptera	Microchiroptera	NA	NA	NA	Vespertilionidae	NA	NA	NA	Myotis	NA	NA	NA	Myotis lucifugus	NA	NA	NA
-Felis catus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Carnivora	Feliformia	NA	NA	NA	Felidae	Felinae	NA	NA	Felis	NA	NA	NA	Felis catus	NA	NA	NA
-Canis lupus familiaris	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Carnivora	Caniformia	NA	NA	NA	Canidae	NA	NA	NA	Canis	NA	NA	NA	Canis lupus	Canis lupus familiaris	NA	NA
-Mustela putorius furo	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Carnivora	Caniformia	NA	NA	NA	Mustelidae	Mustelinae	NA	NA	Mustela	NA	NA	NA	Mustela putorius	Mustela putorius furo	NA	NA
-Ailuropoda melanoleuca	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Carnivora	Caniformia	NA	NA	NA	Ursidae	NA	NA	NA	Ailuropoda	NA	NA	NA	Ailuropoda melanoleuca	NA	NA	NA
-Equus caballus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Perissodactyla	NA	NA	NA	NA	Equidae	NA	NA	NA	Equus	Equus	NA	NA	Equus caballus	NA	NA	NA
-Vicugna pacos	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	NA	Tylopoda	NA	NA	NA	Camelidae	NA	NA	NA	Vicugna	NA	NA	NA	Vicugna pacos	NA	NA	NA
-Sus scrofa	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	NA	NA	Suina	NA	NA	Suidae	NA	NA	NA	Sus	NA	NA	NA	Sus scrofa	NA	NA	NA
-Tursiops truncatus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Cetacea	Odontoceti	NA	NA	NA	Delphinidae	NA	NA	NA	Tursiops	NA	NA	NA	Tursiops truncatus	NA	NA	NA
-Ovis aries	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	NA	Ruminantia	Pecora	NA	NA	Bovidae	Caprinae	NA	NA	Ovis	NA	NA	NA	Ovis aries	NA	NA	NA
-Bos taurus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	NA	Ruminantia	Pecora	NA	NA	Bovidae	Bovinae	NA	NA	Bos	NA	NA	NA	Bos taurus	NA	NA	NA
-Anolis carolinensis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	NA	NA	NA	NA	Lepidosauria	Squamata	Iguania	NA	NA	NA	Dactyloidae	NA	NA	NA	Anolis	NA	NA	NA	Anolis carolinensis	NA	NA	NA
-Pelodiscus sinensis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	NA	NA	NA	NA	NA	Testudines	Cryptodira	NA	NA	NA	Trionychidae	NA	NA	NA	Pelodiscus	NA	NA	NA	Pelodiscus sinensis	NA	NA	NA
-Taeniopygia guttata	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Aves	NA	NA	NA	Neognathae	Passeriformes	NA	NA	NA	Passeroidea	Estrildidae	Estrildinae	NA	NA	Taeniopygia	NA	NA	NA	Taeniopygia guttata	NA	NA	NA
-Ficedula albicollis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Aves	NA	NA	NA	Neognathae	Passeriformes	NA	NA	NA	NA	Muscicapidae	NA	NA	NA	Ficedula	NA	NA	NA	Ficedula albicollis	NA	NA	NA
-Anas platyrhynchos	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Aves	NA	NA	NA	Neognathae	Anseriformes	NA	NA	NA	NA	Anatidae	NA	NA	NA	Anas	NA	NA	NA	Anas platyrhynchos	NA	NA	NA
-Meleagris gallopavo	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Aves	NA	NA	NA	Neognathae	Galliformes	NA	NA	NA	NA	Phasianidae	Meleagridinae	NA	NA	Meleagris	NA	NA	NA	Meleagris gallopavo	NA	NA	NA
-Gallus gallus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Aves	NA	NA	NA	Neognathae	Galliformes	NA	NA	NA	NA	Phasianidae	Phasianinae	NA	NA	Gallus	NA	NA	NA	Gallus gallus	NA	NA	NA
-Lepisosteus oculatus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Holostei	NA	NA	Semionotiformes	NA	NA	NA	NA	Lepisosteidae	NA	NA	NA	Lepisosteus	NA	NA	NA	Lepisosteus oculatus	NA	NA	NA
-Danio rerio	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	Cypriniphysae	Cypriniformes	NA	NA	NA	Cyprinoidea	Cyprinidae	NA	NA	NA	Danio	NA	NA	NA	Danio rerio	NA	NA	NA
-Astyanax mexicanus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	Characiphysae	Characiformes	Characoidei	NA	NA	NA	Characidae	NA	NA	NA	Astyanax	NA	NA	NA	Astyanax mexicanus	NA	NA	NA
-Gadus morhua	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	NA	Gadiformes	Gadoidei	NA	NA	NA	Gadidae	NA	NA	NA	Gadus	NA	NA	NA	Gadus morhua	NA	NA	NA
-Oreochromis niloticus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	Cichlomorphae	Cichliformes	NA	NA	NA	NA	Cichlidae	Pseudocrenilabrinae	Oreochromini	NA	Oreochromis	NA	NA	NA	Oreochromis niloticus	NA	NA	NA
-Poecilia formosa	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	Atherinomorphae	Cyprinodontiformes	Cyprinodontoidei	NA	NA	NA	Poeciliidae	Poeciliinae	NA	NA	Poecilia	NA	NA	NA	Poecilia formosa	NA	NA	NA
-Xiphophorus maculatus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	Atherinomorphae	Cyprinodontiformes	Cyprinodontoidei	NA	NA	NA	Poeciliidae	Poeciliinae	NA	NA	Xiphophorus	NA	NA	NA	Xiphophorus maculatus	NA	NA	NA
-Gasterosteus aculeatus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	NA	Perciformes	Cottioidei	Gasterosteales	NA	NA	Gasterosteidae	NA	NA	NA	Gasterosteus	NA	NA	NA	Gasterosteus aculeatus	NA	NA	NA
-Tetraodon nigroviridis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	NA	Tetraodontiformes	Tetraodontoidei	NA	NA	Tetradontoidea	Tetraodontidae	NA	NA	NA	Tetraodon	NA	NA	NA	Tetraodon nigroviridis	NA	NA	NA
-Takifugu rubripes	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	Actinopterygii	Actinopteri	Neopterygii	Teleostei	NA	NA	Tetraodontiformes	Tetraodontoidei	NA	NA	Tetradontoidea	Tetraodontidae	NA	NA	NA	Takifugu	NA	NA	NA	Takifugu rubripes	NA	NA	NA
+#species/taxid	kingdom	family
+Latimeria chalumnae	Metazoa	Coelacanthidae
+Xenopus tropicalis	Metazoa	Pipidae
+Ornithorhynchus anatinus	Metazoa	Ornithorhynchidae
+Macropus eugenii	Metazoa	Macropodidae
+Sarcophilus harrisii	Metazoa	Dasyuridae
+Monodelphis domestica	Metazoa	Didelphidae
+Echinops telfairi	Metazoa	Tenrecidae
+Procavia capensis	Metazoa	Procaviidae
+Loxodonta africana	Metazoa	Elephantidae
+Dasypus novemcinctus	Metazoa	Dasypodidae
+Choloepus hoffmanni	Metazoa	Megalonychidae
+Ochotona princeps	Metazoa	Ochotonidae
+Oryctolagus cuniculus	Metazoa	Leporidae
+Cavia porcellus	Metazoa	Caviidae
+Ictidomys tridecemlineatus	Metazoa	Sciuridae
+Dipodomys ordii	Metazoa	Heteromyidae
+Rattus norvegicus	Metazoa	Muridae
+Mus musculus	Metazoa	Muridae
+Tupaia belangeri	Metazoa	Tupaiidae
+Otolemur garnettii	Metazoa	Galagidae
+Microcebus murinus	Metazoa	Cheirogaleidae
+Tarsius syrichta	Metazoa	Tarsiidae
+Callithrix jacchus	Metazoa	Cebidae
+Chlorocebus sabaeus	Metazoa	Cercopithecidae
+Papio anubis	Metazoa	Cercopithecidae
+Macaca mulatta	Metazoa	Cercopithecidae
+Nomascus leucogenys	Metazoa	Hylobatidae
+Pongo abelii	Metazoa	Hominidae
+Gorilla gorilla gorilla	Metazoa	Hominidae
+Pan troglodytes	Metazoa	Hominidae
+Homo sapiens	Metazoa	Hominidae
+Sorex araneus	Metazoa	Soricidae
+Erinaceus europaeus	Metazoa	Erinaceidae
+Pteropus vampyrus	Metazoa	Pteropodidae
+Myotis lucifugus	Metazoa	Vespertilionidae
+Felis catus	Metazoa	Felidae
+Canis lupus familiaris	Metazoa	Canidae
+Mustela putorius furo	Metazoa	Mustelidae
+Ailuropoda melanoleuca	Metazoa	Ursidae
+Equus caballus	Metazoa	Equidae
+Vicugna pacos	Metazoa	Camelidae
+Sus scrofa	Metazoa	Suidae
+Tursiops truncatus	Metazoa	Delphinidae
+Ovis aries	Metazoa	Bovidae
+Bos taurus	Metazoa	Bovidae
+Anolis carolinensis	Metazoa	Dactyloidae
+Pelodiscus sinensis	Metazoa	Trionychidae
+Taeniopygia guttata	Metazoa	Estrildidae
+Ficedula albicollis	Metazoa	Muscicapidae
+Anas platyrhynchos	Metazoa	Anatidae
+Meleagris gallopavo	Metazoa	Phasianidae
+Gallus gallus	Metazoa	Phasianidae
+Lepisosteus oculatus	Metazoa	Lepisosteidae
+Danio rerio	Metazoa	Cyprinidae
+Astyanax mexicanus	Metazoa	Characidae
+Gadus morhua	Metazoa	Gadidae
+Oreochromis niloticus	Metazoa	Cichlidae
+Poecilia formosa	Metazoa	Poeciliidae
+Xiphophorus maculatus	Metazoa	Poeciliidae
+Gasterosteus aculeatus	Metazoa	Gasterosteidae
+Tetraodon nigroviridis	Metazoa	Tetraodontidae
+Takifugu rubripes	Metazoa	Tetraodontidae
