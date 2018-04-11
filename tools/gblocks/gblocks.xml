@@ -43,7 +43,7 @@ $output_opt
             <option value="c">Codons</option>
         </param>
         <conditional name="advanced">
-            <param name="a" type="select" label="Advanced Parameters" help="Run with default parameters">
+            <param name="a" type="select" label="Specify Advanced Parameters">
                 <option value="-a">Yes</option>
                 <option value="" selected="true">No</option>
             </param>
@@ -66,32 +66,32 @@ $output_opt
             </when>
         </conditional> 
         <param name="outputs" type="select" multiple="true" optional="true" display="checkboxes" label="Output formats">
-            <option value="-s" selected="true">Selected Blocks</option>
-            <option value="-p" selected="true">Results And Parameters File</option>
-            <option value="-n">Nonconserved Blocks</option>
-            <option value="-u">Ungapped Alignment</option>
-            <option value="-k">Mask File With The Selected Blocks</option>
-            <option value="-d">Postscript File With The Selected Blocks</option>
+            <option value="-s" selected="true">Selected blocks</option>
+            <option value="-p" selected="true">Results and parameters File</option>
+            <option value="-n">Nonconserved blocks</option>
+            <option value="-u">Ungapped alignment</option>
+            <option value="-k">Mask file with the selected blocks</option>
+            <option value="-d">Postscript file with the selected blocks</option>
         </param>
     </inputs>
     <outputs>
         <data name="outputFile" format="txt" label="${tool.name} on ${on_string}" />
-        <data name="Results And Parameters File" format="html" from_work_dir="input.pir-gb.htm" label="${tool.name} Results And Parameters on ${on_string}" >
+        <data name="Results and parameters file" format="html" from_work_dir="input.pir-gb.htm" label="${tool.name} Results and parameters on ${on_string}" >
             <filter>outputs and '-p' in outputs</filter>
         </data>
-        <data name="Selected Blocks" format="txt" from_work_dir="input.pir-gb" label="${tool.name} Selected Blocks on ${on_string}" >
+        <data name="Selected blocks" format="txt" from_work_dir="input.pir-gb" label="${tool.name} Selected blocks on ${on_string}" >
             <filter>outputs and '-s' in outputs</filter>
         </data>
-        <data name="Nonconserved Blocks" format="txt" from_work_dir="input.pir-gbComp" label="${tool.name} Nonconserved Blocks on ${on_string}" >
+        <data name="Nonconserved blocks" format="txt" from_work_dir="input.pir-gbComp" label="${tool.name} Nonconserved blocks on ${on_string}" >
             <filter>outputs and '-n' in outputs</filter>
         </data>
-        <data name="Ungapped Alignment" format="txt" from_work_dir="input.pir--" label="${tool.name} Ungapped Alignment on ${on_string}" >
+        <data name="Ungapped alignment" format="txt" from_work_dir="input.pir--" label="${tool.name} Ungapped alignment on ${on_string}" >
             <filter>outputs and '-u' in outputs</filter>
         </data>
-        <data name="Masked File With The Selected Blocks" format="txt" from_work_dir="input.pir-gbMask" label="${tool.name} Masked File With The Selected Blocks on ${on_string}" >
+        <data name="Masked file with the selected blocks" format="txt" from_work_dir="input.pir-gbMask" label="${tool.name} Masked file with the selected blocks on ${on_string}" >
             <filter>outputs and '-k' in outputs</filter>
         </data>
-        <data name="Postscript File With The Selected Blocks" format="eps" from_work_dir="input.pir-gbPS" label="${tool.name} Postscript on ${on_string}" >
+        <data name="Postscript file with the selected blocks" format="eps" from_work_dir="input.pir-gbPS" label="${tool.name} Postscript on ${on_string}" >
             <filter>outputs and '-d' in outputs</filter>
         </data>
     </outputs>
@@ -101,15 +101,15 @@ $output_opt
             <param name="-t" value="p" />
             <param name="outputs" value="-s,-p" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
-            <output name="Results And Parameters File" file="Gblocks_Results_And_Parameters_on_data_95_html.html" />
-            <output name="Selected Blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
+            <output name="Results and parameters file" file="Gblocks_Results_And_Parameters_on_data_95_html.html" />
+            <output name="Selected blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
         </test>
         <test>
             <param name="inputFile" ftype="fasta" value="nad3.fasta" />
             <param name="-t" value="p" />
             <param name="outputs" value="-s" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
-            <output name="Selected Blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
+            <output name="Selected blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
         </test>
     </tests>
     <help><![CDATA[
