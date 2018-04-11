@@ -6,5 +6,5 @@ homepage_url: http://molevol.cmima.csic.es/castresana/Gblocks.html
 name: gblocks
 owner: earlhaminst
 long_description: Selection of conserved blocks from multiple alignments for their use in phylogenetic analysis.
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/Gblocks
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/gblocks
 type: unrestricted
