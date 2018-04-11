@@ -97,7 +97,7 @@ $output_opt
     </outputs>
     <tests>
         <test>
-            <param name="inputFile" ftype="pir" value="nad3.pir" />
+            <param name="inputFile" ftype="fasta" value="nad3.fasta" />
             <param name="-t" value="p" />
             <param name="outputs" value="-s,-p" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
@@ -105,7 +105,7 @@ $output_opt
             <output name="Selected Blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
         </test>
         <test>
-            <param name="inputFile" ftype="pir" value="nad3.pir" />
+            <param name="inputFile" ftype="fasta" value="nad3.fasta" />
             <param name="-t" value="p" />
             <param name="outputs" value="-s" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
