@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import json
 import optparse
+from itertools import islice
 
 import requests
 from six.moves.urllib.parse import urljoin
@@ -31,13 +32,27 @@ ext = 'lookup/id'
 
 headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
 params = dict((k, getattr(options, k)) for k in ['format', 'expand'])
+
+first = True
+
+print('{')
+
 with open(options.input) as f:
-    ids = [line.strip() for line in f]
-data = {'ids': ids}
-r = requests.post(urljoin(server, ext), params=params, headers=headers,
-                  data=json.dumps(data))
+  while True:
+    ids = [line.strip() for line in islice(f, 50)]
+    if not ids:
+        break
+    if first == False:
+      print(",")
+    data = {'ids': ids}
+    r = requests.post(urljoin(server, ext), params=params, headers=headers,
+                      data=json.dumps(data))
 
-if not r.ok:
-    r.raise_for_status()
+    if not r.ok:
+        r.raise_for_status()
 
-print(r.text)
+    print(r.text[1:-1])
+
+    first = False
+
+print('}')
