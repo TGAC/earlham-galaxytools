@@ -38,21 +38,21 @@ first = True
 print('{')
 
 with open(options.input) as f:
-  while True:
-    ids = [line.strip() for line in islice(f, 50)]
-    if not ids:
-        break
-    if first == False:
-      print(",")
-    data = {'ids': ids}
-    r = requests.post(urljoin(server, ext), params=params, headers=headers,
-                      data=json.dumps(data))
+    while True:
+        ids = [line.strip() for line in islice(f, 50)]
+        if not ids:
+            break
+        if first is False:
+            print(",")
+        data = {'ids': ids}
+        r = requests.post(urljoin(server, ext), params=params, headers=headers,
+                          data=json.dumps(data))
 
-    if not r.ok:
-        r.raise_for_status()
+        if not r.ok:
+            r.raise_for_status()
 
-    print(r.text[1:-1])
+        print(r.text[1:-1])
 
-    first = False
+        first = False
 
 print('}')
