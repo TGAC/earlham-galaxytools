@@ -172,8 +172,9 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
             cds_list = cds_parent_dict[transcript_id]
             cds_ids = set(_['id'] for _ in cds_list)
             if len(cds_ids) > 1:
-                raise Exception("Transcript %s has multiple CDSs: this is not supported by Ensembl JSON format" % parent)
-            translation['id'] = cds_ids.pop()
+                raise Exception("Transcript %s has multiple CDSs: this is not supported by Ensembl JSON format" % transcript_id)
+            cds_id = cds_ids.pop()
+            translation['id'] = cds_id
             cds_list.sort(key=lambda _: _['start'])
             translation['CDS'] = cds_list
             translation['start'] = cds_list[0]['start']
@@ -196,13 +197,13 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
         if derived_translation_start is not None:
             if found_cds:
                 if derived_translation_start > translation['start']:
-                    raise Exception("UTR overlaps with CDS")
+                    raise Exception("Transcript %s has the start of CDS %s overlapping with the UTR end" % (transcript_id, cds_id))
             else:
                 translation['start'] = derived_translation_start
         if derived_translation_end is not None:
             if found_cds:
                 if derived_translation_end < translation['end']:
-                    raise Exception("UTR overlaps with CDS")
+                    raise Exception("Transcript %s has the end of CDS %s overlapping with the UTR start" % (transcript_id, cds_id))
             else:
                 translation['end'] = derived_translation_end
         if found_cds or derived_translation_start is not None or derived_translation_end is not None:
