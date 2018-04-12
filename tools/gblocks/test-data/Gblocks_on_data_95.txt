@@ -1,0 +1,8 @@
+
+17 sequences and 153 positions in the first alignment file:
+input.pir
+
+input.pir
+Original alignment: 153 positions
+Gblocks alignment:  56 positions (36 %) in 3 selected block(s)
+

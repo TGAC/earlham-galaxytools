@@ -1,0 +1,123 @@
+<tool id="gblocks" name="Gblocks" version="0.91b">
+    <description>Selection of conserved blocks from multiple alignments for their use in phylogenetic analysis</description>
+    <requirements>
+        <requirement type="package" version="0.91b">gblocks</requirement>
+    </requirements>
+    <command><![CDATA[
+ln -s '$inputFile' input.pir && Gblocks
+input.pir
+-t=$t
+#if $advanced.a == '-a'
+    #if str($advanced.b1)
+        -b1=$advanced.b1
+    #end if
+    #if str($advanced.b2)
+        -b2=$advanced.b2
+    #end if
+    -b3=$advanced.b3
+    -b4=$advanced.b4
+    -b5=$advanced.b5
+    -b6=$advanced.b6
+    -b0=$advanced.b0
+#end if
+#set $output_opt = ''
+#if $outputs
+    #set $outputs_arr = str($outputs).split(',')
+    #for $o in $outputs_arr
+        #set $output_opt += $o + '=y '
+    #end for
+#else
+    #set $outputs_arr = []
+#end if
+#if $output_opt
+    #set $output_opt = $output_opt[:-1]
+#end if
+$output_opt
+> '$outputFile'
+    ]]></command>
+    <inputs>
+        <param name="inputFile" type="data" format="fasta,pir" label="Multiple Sequence Alignment" help="Multiple Sequence Alignment in Fasta format." />
+        <param argument="-t" type="select" label="Type Of Sequence">
+            <option value="p" selected="true">Protein</option>
+            <option value="d">DNA</option>
+            <option value="c">Codons</option>
+        </param>
+        <conditional name="advanced">
+            <param name="a" type="select" label="Specify Advanced Parameters">
+                <option value="-a">Yes</option>
+                <option value="" selected="true">No</option>
+            </param>
+            <when value="" />
+            <when value="-a">
+                <param argument="-b1" type="integer" min="1" value="" optional="true" label="Minimum number of sequences for a conserved position" help="Any integer bigger than half the number of sequences and smaller or equal than the total number of sequences" />
+                <param argument="-b2" type="integer" min="1" value="" optional="true" label="Minimum number of sequences for a flank position" help="Any integer equal or bigger than minimum number of sequences for a conserved position" />
+                <param argument="-b3" type="integer" value="8" label="Maximum number of contiguous nonconserved positions" />
+                <param argument="-b4" type="integer" value="10" min="2" label="Minimum length of a block" />
+                <param argument="-b5" type="select" label="Allowed gap positions">
+                    <option value="n" selected="true">None</option>
+                    <option value="h">With Half</option>
+                    <option value="a">All</option>
+                </param>
+                <param argument="-b6" type="select" label="Use similarity matrices">
+                    <option value="y" selected="true">Yes</option>
+                    <option value="n">No</option>
+                </param>
+                <param argument="-b0" type="integer" value="10" min="2" label="Minimum length of an intial block" />
+            </when>
+        </conditional> 
+        <param name="outputs" type="select" multiple="true" optional="true" display="checkboxes" label="Output formats">
+            <option value="-s" selected="true">Selected blocks</option>
+            <option value="-p" selected="true">Results and parameters File</option>
+            <option value="-n">Nonconserved blocks</option>
+            <option value="-u">Ungapped alignment</option>
+            <option value="-k">Mask file with the selected blocks</option>
+            <option value="-d">Postscript file with the selected blocks</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="outputFile" format="txt" label="${tool.name} on ${on_string}" />
+        <data name="Results_and_parameters_file" format="html" from_work_dir="input.pir-gb.htm" label="${tool.name} Results and parameters on ${on_string}" >
+            <filter>outputs and '-p' in outputs</filter>
+        </data>
+        <data name="Selected_blocks" format="txt" from_work_dir="input.pir-gb" label="${tool.name} Selected blocks on ${on_string}" >
+            <filter>outputs and '-s' in outputs</filter>
+        </data>
+        <data name="Nonconserved_blocks" format="txt" from_work_dir="input.pir-gbComp" label="${tool.name} Nonconserved blocks on ${on_string}" >
+            <filter>outputs and '-n' in outputs</filter>
+        </data>
+        <data name="Ungapped_alignment" format="txt" from_work_dir="input.pir--" label="${tool.name} Ungapped alignment on ${on_string}" >
+            <filter>outputs and '-u' in outputs</filter>
+        </data>
+        <data name="Masked_file_with_the_selected_blocks" format="txt" from_work_dir="input.pir-gbMask" label="${tool.name} Masked file with the selected blocks on ${on_string}" >
+            <filter>outputs and '-k' in outputs</filter>
+        </data>
+        <data name="Postscript_file_with_the_selected_blocks" format="eps" from_work_dir="input.pir-gbPS" label="${tool.name} Postscript on ${on_string}" >
+            <filter>outputs and '-d' in outputs</filter>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="inputFile" ftype="fasta" value="nad3.fasta" />
+            <param name="-t" value="p" />
+            <param name="outputs" value="-s,-p" />
+            <output name="outputFile" file="Gblocks_on_data_95.txt" />
+            <output name="Results_and_parameters_file" file="Gblocks_Results_And_Parameters_on_data_95_html.html" />
+            <output name="Selected_blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
+        </test>
+        <test>
+            <param name="inputFile" ftype="fasta" value="nad3.fasta" />
+            <param name="-t" value="p" />
+            <param name="outputs" value="-s" />
+            <output name="outputFile" file="Gblocks_on_data_95.txt" />
+            <output name="Selected_blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />
+        </test>
+    </tests>
+    <help><![CDATA[
+Simple wrapper for `Gblocks`_. Selection of conserved blocks from multiple alignments for their use in phylogenetic analysis.
+
+.. _Gblocks: http://molevol.cmima.csic.es/castresana/Gblocks.html
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/oxfordjournals.molbev.a026334</citation>
+    </citations>
+</tool>
