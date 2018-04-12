@@ -109,7 +109,7 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output">
+            <output name="output" ftype="json">
                 <assert_contents>
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
@@ -124,7 +124,7 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output">
+            <output name="output" ftype="json">
                 <assert_contents>
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
@@ -138,7 +138,7 @@ python '$__tool_directory__/get_genetree.py'
             <param name="output_format_selector" value="phyloxml" />
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
-            <output name="output">
+            <output name="output" ftype="phyloxml">
                 <assert_contents>
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
