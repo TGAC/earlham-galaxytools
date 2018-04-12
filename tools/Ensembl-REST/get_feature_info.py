@@ -42,7 +42,7 @@ with open(options.input) as f:
         ids = [line.strip() for line in islice(f, 50)]
         if not ids:
             break
-        if first is False:
+        if not first:
             print(",")
         data = {'ids': ids}
         r = requests.post(urljoin(server, ext), params=params, headers=headers,

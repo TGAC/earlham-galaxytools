@@ -109,7 +109,13 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
+            <output name="output" file="genetree.json" ftype="json">
+                <assert_contents>
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            <output>
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />
@@ -118,7 +124,13 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
+            <output name="output" file="genetree.json" ftype="json">
+                <assert_contents>
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            <output>
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />
@@ -126,7 +138,13 @@ python '$__tool_directory__/get_genetree.py'
             <param name="output_format_selector" value="phyloxml" />
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
-            <output name="output" file="genetree.phyloxml" ftype="phyloxml" compare="sim_size" />
+            <output name="output" file="genetree.phyloxml" ftype="phyloxml">
+                <assert_contents>
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            <output>
         </test>
     </tests>
 
