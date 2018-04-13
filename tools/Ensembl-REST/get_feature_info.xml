@@ -36,7 +36,14 @@ python '$__tool_directory__/get_feature_info.py'
         <test>
             <param name="input" ftype="txt" value="input.txt" />
             <param name="expand" value="false" />
-            <output name="output" file="out.json" />
+            <output name="output" ftype="json">
+                <assert_contents>
+                    <has_text text="ENSG00000157764" />
+                    <has_text text="ENSG00000248378" />
+                    <has_text text="homo_sapiens" />
+                    <has_text text="protein_coding" />
+                </assert_contents>
+            </output>
         </test>
     </tests>
 

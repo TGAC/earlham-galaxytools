@@ -109,7 +109,26 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
+            <output name="output" ftype="json">
+                <assert_contents>
+                    <has_text text="tree" />
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="input_type" value="gene_id" />
+            <param name="input" value="ENSGALP00000027524" />
+            <param name="output_format_selector" value="nh" />
+            <param name="nh_format" value="simple" />
+            <output name="output" ftype="nhx">
+                <assert_contents>
+                    <has_text text="ENSGALP00000027524" />
+                    <has_text text="ENSP00000369497" />
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />
@@ -118,7 +137,14 @@ python '$__tool_directory__/get_genetree.py'
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
             <param name="cigar" value="0" />
-            <output name="output" file="genetree.json" ftype="json" compare="sim_size" />
+            <output name="output" ftype="json">
+                <assert_contents>
+                    <has_text text="tree" />
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            </output>
         </test>
         <test>
             <param name="input_type" value="gene_tree_id" />
@@ -126,7 +152,14 @@ python '$__tool_directory__/get_genetree.py'
             <param name="output_format_selector" value="phyloxml" />
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
-            <output name="output" file="genetree.phyloxml" ftype="phyloxml" compare="sim_size" />
+            <output name="output" ftype="phyloxml">
+                <assert_contents>
+                    <has_text text="Euteleostomi" />
+                    <has_text text="ENSG00000139618" />
+                    <has_text text="ENSMUSG00000041147" />
+                    <has_text text="&lt;/phyloxml&gt;" />
+                </assert_contents>
+            </output>
         </test>
     </tests>
 
