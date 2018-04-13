@@ -157,7 +157,7 @@ python '$__tool_directory__/get_genetree.py'
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
                     <has_text text="ENSMUSG00000041147" />
-                    <has_text text="</phyloxml>" />
+                    <has_text text="&lt;/phyloxml&gt;" />
                 </assert_contents>
             </output>
         </test>
