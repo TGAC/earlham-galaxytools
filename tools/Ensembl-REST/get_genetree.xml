@@ -123,7 +123,7 @@ python '$__tool_directory__/get_genetree.py'
             <param name="input" value="ENSGALP00000027524" />
             <param name="output_format_selector" value="nh" />
             <param name="nh_format" value="simple" />
-            <output name="output" ftype="nh">
+            <output name="output" ftype="nhx">
                 <assert_contents>
                     <has_text text="ENSGALP00000027524" />
                     <has_text text="ENSP00000369497" />
