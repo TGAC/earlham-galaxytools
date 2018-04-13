@@ -42,7 +42,12 @@ python '$__tool_directory__/get_sequences.py'
                 <param name="expand_3prime" value="0" />
                 <param name="expand_5prime" value="0" />
                 <param name="type_selector" value="genomic" />
-                <output name="output" file="sequences.fasta" />
+                <output name="output" ftype="fasta">
+                    <assert_contents>
+                        <has_text text="ENSG00000157764" />
+                        <has_text text="ENSG00000248378" />
+                    </assert_contents>
+            </output>
           </test>
      </tests>
 
