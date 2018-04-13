@@ -301,6 +301,7 @@ def __main__():
         cds_parent_dict = dict()
         five_prime_utr_parent_dict = dict()
         three_prime_utr_parent_dict = dict()
+        unimplemented_feature_nlines_dict = dict()
 
         with open(filename) as f:
             for i, line in enumerate(f, start=1):
@@ -328,10 +329,15 @@ def __main__():
                         feature_to_dict(cols, three_prime_utr_parent_dict)
                     elif feature_type == 'CDS':
                         add_cds_to_dict(cols, cds_parent_dict)
+                    elif feature_type in unimplemented_feature_nlines_dict:
+                        unimplemented_feature_nlines_dict[feature_type] += 1
                     else:
-                        print("Line %i in file '%s': '%s' is not an implemented feature type" % (i, filename, feature_type), file=sys.stderr)
+                        unimplemented_feature_nlines_dict[feature_type] = 0
                 except Exception as e:
                     print("Line %i in file '%s': %s" % (i, filename, e), file=sys.stderr)
+
+        for unimplemented_feature, nlines in unimplemented_feature_nlines_dict.items():
+            print("Skipped %d lines in file '%s': '%s' is not an implemented feature type" % (nlines, filename, unimplemented_feature), file=sys.stderr)
 
         join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict)
         write_gene_dict_to_db(conn, gene_dict)
@@ -349,6 +355,7 @@ def __main__():
 
                 gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
                 if not gene_id:
+                    print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
                 if gene_id in gene_transcripts_dict:
@@ -370,7 +377,7 @@ def __main__():
 
                 species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
-                    print("Transcript '%s' not found in the gene feature information" % transcript_id, file=sys.stderr)
+                    print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
                 if options.headers:
