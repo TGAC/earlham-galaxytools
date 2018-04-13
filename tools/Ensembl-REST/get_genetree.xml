@@ -111,9 +111,22 @@ python '$__tool_directory__/get_genetree.py'
             <param name="cigar" value="0" />
             <output name="output" ftype="json">
                 <assert_contents>
+                    <has_text text="tree" />
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
                     <has_text text="ENSMUSG00000041147" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="input_type" value="gene_id" />
+            <param name="input" value="ENSGALP00000027524" />
+            <param name="output_format_selector" value="nh" />
+            <param name="nh_format" value="simple" />
+            <output name="output" ftype="nh">
+                <assert_contents>
+                    <has_text text="ENSGALP00000027524" />
+                    <has_text text="ENSP00000369497" />
                 </assert_contents>
             </output>
         </test>
@@ -126,6 +139,7 @@ python '$__tool_directory__/get_genetree.py'
             <param name="cigar" value="0" />
             <output name="output" ftype="json">
                 <assert_contents>
+                    <has_text text="tree" />
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
                     <has_text text="ENSMUSG00000041147" />
@@ -143,6 +157,7 @@ python '$__tool_directory__/get_genetree.py'
                     <has_text text="Euteleostomi" />
                     <has_text text="ENSG00000139618" />
                     <has_text text="ENSMUSG00000041147" />
+                    <has_text text="</phyloxml>" />
                 </assert_contents>
             </output>
         </test>
