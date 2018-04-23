@@ -21,7 +21,7 @@ python '$__tool_directory__/gstf_preparation.py'
     -l
 #end if
 #if $keys
-    --keys $keys
+    --keys '$keys'
 #end if
 -o '$output_db'
 --of '$output_fasta'
@@ -39,7 +39,7 @@ python '$__tool_directory__/gstf_preparation.py'
         <param name="fasta_inputs" type="data" format="fasta" multiple="true" label="Corresponding FASTA datasets" help="Each FASTA header line should start with a transcript id" />
         <param name="longestCDS" type="boolean" checked="false" label="Keep only the longest CDS per gene" />
         <param name="headers" type="boolean" checked="true" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow" />
-        <param name="keys" type="text" label="List of keywords (Chromosome names) to ignore FASTA sequences" help="Use comma (,) separated keywords. i.e. MT, Chr 1, Chr X" />
+        <param name="keys" type="text" optional="true" label="List of keywords (Chromosome names) to ignore FASTA sequences" help="Use comma (,) separated keywords. i.e. MT, Chr 1, Chr X" />
     </inputs>
 
     <outputs>
