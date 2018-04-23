@@ -7,6 +7,7 @@ import shutil
 import sqlite3
 
 version = "0.3.0"
+compatible_version = ['0.3.0','0.4.0']
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 
@@ -54,7 +55,7 @@ def create_tables(conn):
     cur.execute('SELECT version FROM meta')
     result = cur.fetchone()
     input_meta_version = result[0]
-    if input_meta_version != '0.3.0':
+    if input_meta_version not in compatible_version:
         raise Exception("Incompatible input meta version '%s'" % input_meta_version)
     cur.execute('UPDATE meta SET version=?',
                 (version, ))
@@ -68,6 +69,7 @@ def create_tables(conn):
         protein_id VARCHAR KEY NOT NULL REFERENCES transcript(protein_id),
         protein_alignment VARCHAR NOT NULL,
         PRIMARY KEY (gene_family_id, protein_id))''')
+
     conn.commit()
 
 

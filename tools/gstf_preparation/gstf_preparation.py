@@ -6,7 +6,7 @@ import optparse
 import sqlite3
 import sys
 
-version = "0.3.0"
+version = "0.4.0"
 gene_count = 0
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
@@ -41,6 +41,10 @@ def create_tables(conn):
     cur.execute('''CREATE TABLE gene (
         gene_id VARCHAR PRIMARY KEY NOT NULL,
         gene_symbol VARCHAR,
+        seq_region_name VARCHAR NOT NULL,
+        seq_region_start int NOT NULL,
+        seq_region_end int NOT NULL,
+        seq_region_strand VARCHAR NOT NULL,
         species VARCHAR NOT NULL,
         gene_json VARCHAR NOT NULL)''')
     cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
@@ -110,6 +114,9 @@ def add_gene_to_dict(cols, species, gene_dict):
         'member_id': gene_count,
         'object_type': 'Gene',
         'seq_region_name': cols[0],
+        'start': cols[3],
+        'end': cols[4],
+        'strand': cols[6]+"1",
         'species': species,
         'Transcript': [],
         'display_name': gene.get('Name', None)
@@ -225,8 +232,8 @@ def write_gene_dict_to_db(conn, gene_dict):
             # This can happen when loading a JSON file from Ensembl
             continue
         gene_id = gene['id']
-        cur.execute('INSERT INTO gene (gene_id, gene_symbol, species, gene_json) VALUES (?, ?, ?, ?)',
-                    (gene_id, gene.get('display_name', None), gene['species'], json.dumps(gene)))
+        cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                    (gene_id, gene.get('display_name', None), gene.get('seq_region_name', None), gene.get('start', None), gene.get('end', None), gene.get('strand', None), gene['species'], json.dumps(gene)))
 
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
@@ -245,6 +252,17 @@ def fetch_species_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
     cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
+                (transcript_id, ))
+    results = cur.fetchone()
+    if not results:
+        return None
+    return results[0]
+
+
+def fetch_reference_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT seq_region_name FROM gene g, transcript t WHERE t.gene_id = g.gene_id AND t.transcript_id=?',
                 (transcript_id, ))
     results = cur.fetchone()
     if not results:
@@ -280,8 +298,11 @@ def __main__():
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
     parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep only the longest CDS per gene')
     parser.add_option('--headers', action='store_true', default=False, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
+    parser.add_option('--keys', default="", help='List of keywords (Chromosome names) to ignore FASTA sequences')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
+    parser.add_option('--nsff', help='Path of the non-standard codon output FASTA file')
+
     options, args = parser.parse_args()
     if args:
         raise Exception('Use options to provide inputs')
@@ -368,7 +389,8 @@ def __main__():
         # first one to appear in the FASTA file is selected
         selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
 
-    with open(options.of, 'w') as output_fasta_file:
+    keys = options.keys.split(",")
+    with open(options.of, 'w') as output_fasta_file, open(options.nsff, 'w') as non_standard_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
@@ -387,7 +409,13 @@ def __main__():
                 else:
                     header = entry.header
 
-                output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+                reference_for_transcript = fetch_reference_for_transcript(conn, transcript_id)
+
+                if reference_for_transcript in keys:
+                    non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+                else:
+                    output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+
 
     conn.close()
 

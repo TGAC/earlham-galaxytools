@@ -20,6 +20,9 @@ python '$__tool_directory__/gstf_preparation.py'
 #if $longestCDS
     -l
 #end if
+#if $keys
+    --keys $keys
+#end if
 -o '$output_db'
 --of '$output_fasta'
 ]]>
@@ -36,11 +39,13 @@ python '$__tool_directory__/gstf_preparation.py'
         <param name="fasta_inputs" type="data" format="fasta" multiple="true" label="Corresponding FASTA datasets" help="Each FASTA header line should start with a transcript id" />
         <param name="longestCDS" type="boolean" checked="false" label="Keep only the longest CDS per gene" />
         <param name="headers" type="boolean" checked="true" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow" />
+        <param name="keys" type="text" label="List of keywords (Chromosome names) to ignore FASTA sequences" help="Use comma (,) separated keywords. i.e. MT, Chr 1, Chr X" />
     </inputs>
 
     <outputs>
          <data name="output_db" format="sqlite" label="${tool.name} on ${on_string}: SQLite" />
          <data name="output_fasta" format="fasta" label="${tool.name} on ${on_string}: FASTA" />
+         <data name="non_standard_fasta_file" format="fasta" label="${tool.name} on ${on_string}: Mitochondrial FASTA" />
     </outputs>
 
     <tests>
@@ -53,6 +58,7 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" />
             <output name="output_fasta" file="test1.fasta" />
+            <output name="non_standard_fasta_file" file="test1.ns.fasta" />
         </test>
         <test>
             <param name="fasta_inputs" ftype="fasta" value="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
@@ -63,6 +69,7 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" />
             <output name="output_fasta" file="test1_longest.fasta" />
+            <output name="non_standard_fasta_file" file="test1.ns.fasta" />
         </test>
         <test>
             <param name="fasta_inputs" ftype="fasta" value="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
@@ -73,6 +80,7 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" />
             <output name="output_fasta" file="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
+            <output name="non_standard_fasta_file" file="test1.ns.fasta" />
         </test>
         <test>
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
@@ -80,8 +88,20 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="longestCDS" value="false" />
             <param name="headers" value="true" />
 
-            <output name="output_db" file="test2.sqlite" compare="sim_size" />
-            <output name="output_fasta" file="test2.fasta" />
+            <output name="output_db" file="test4.sqlite" compare="sim_size" />
+            <output name="output_fasta" file="test4.fasta" />
+            <output name="non_standard_fasta_file" file="test4.ns.fasta" />
+        </test>
+        <test>
+            <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
+            <param name="json" ftype="json" value="gene.json" />
+            <param name="longestCDS" value="false" />
+            <param name="headers" value="true" />
+            <param name="keys" value="X" />
+
+            <output name="output_db" file="test5.sqlite" compare="sim_size" />
+            <output name="output_fasta" file="test5_filtered.fasta" />
+            <output name="non_standard_fasta_file" file="test5.ns.fasta" />
         </test>
     </tests>
     <help>
