@@ -7,7 +7,7 @@ import shutil
 import sqlite3
 
 version = "0.3.0"
-compatible_version = ['0.3.0','0.4.0']
+compatible_version = ['0.3.0', '0.4.0']
 
 Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
 

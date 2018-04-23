@@ -116,7 +116,7 @@ def add_gene_to_dict(cols, species, gene_dict):
         'seq_region_name': cols[0],
         'start': cols[3],
         'end': cols[4],
-        'strand': cols[6]+"1",
+        'strand': cols[6] + "1",
         'species': species,
         'Transcript': [],
         'display_name': gene.get('Name', None)
@@ -415,7 +415,6 @@ def __main__():
                     non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
                 else:
                     output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
-
 
     conn.close()
 
