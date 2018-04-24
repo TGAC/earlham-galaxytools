@@ -25,6 +25,7 @@ python '$__tool_directory__/gstf_preparation.py'
 #end if
 -o '$output_db'
 --of '$output_fasta'
+--nsff '$non_standard_fasta_file'
 ]]>
     </command>
 
