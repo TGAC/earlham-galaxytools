@@ -9,7 +9,7 @@
     <version_command>
         t_coffee -version | grep Version
     </version_command>
-    <command>
+    <command use_shared_home="false">
 <![CDATA[
         #if str($input_type.filter_fasta) == 'yes'
             #set $input = 'temp.fasta'
