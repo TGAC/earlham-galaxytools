@@ -375,7 +375,7 @@ def __main__():
         # first one to appear in the FASTA file is selected
         selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
 
-    keys = options.keys.split(",")
+    keys = [_.lower() for _ in options.keys.split(",")]
     with open(options.of, 'w') as output_fasta_file, open(options.nsff, 'w') as non_standard_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
@@ -383,7 +383,7 @@ def __main__():
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
 
-                species_for_transcript, reference_for_transcript = fetch_species_and_seqregion_for_transcript(conn, transcript_id)
+                species_for_transcript, seqregion_for_transcript = fetch_species_and_seqregion_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
@@ -395,7 +395,7 @@ def __main__():
                 else:
                     header = entry.header
 
-                if reference_for_transcript in keys:
+                if seqregion_for_transcript.lower() in keys:
                     non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
                 else:
                     output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
