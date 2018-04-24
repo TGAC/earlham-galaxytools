@@ -56,7 +56,7 @@ def create_tables(conn):
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
     cur.execute('''CREATE VIEW transcript_species AS
-        SELECT transcript_id, species
+        SELECT transcript_id, species, seq_region_name
         FROM transcript JOIN gene
         ON transcript.gene_id = gene.gene_id''')
 
@@ -114,9 +114,6 @@ def add_gene_to_dict(cols, species, gene_dict):
         'member_id': gene_count,
         'object_type': 'Gene',
         'seq_region_name': cols[0],
-        'start': cols[3],
-        'end': cols[4],
-        'strand': cols[6] + "1",
         'species': species,
         'Transcript': [],
         'display_name': gene.get('Name', None)
@@ -248,26 +245,15 @@ def write_gene_dict_to_db(conn, gene_dict):
     conn.commit()
 
 
-def fetch_species_for_transcript(conn, transcript_id):
+def fetch_species_and_seqregion_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
-    cur.execute('SELECT species FROM transcript_species WHERE transcript_id=?',
+    cur.execute('SELECT species, seq_region_name FROM transcript_species WHERE transcript_id=?',
                 (transcript_id, ))
     results = cur.fetchone()
     if not results:
         return None
-    return results[0]
-
-
-def fetch_reference_for_transcript(conn, transcript_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT seq_region_name FROM gene g, transcript t WHERE t.gene_id = g.gene_id AND t.transcript_id=?',
-                (transcript_id, ))
-    results = cur.fetchone()
-    if not results:
-        return None
-    return results[0]
+    return results
 
 
 def fetch_gene_id_for_transcript(conn, transcript_id):
@@ -397,7 +383,7 @@ def __main__():
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
 
-                species_for_transcript = fetch_species_for_transcript(conn, transcript_id)
+                species_for_transcript, reference_for_transcript = fetch_species_and_seqregion_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
@@ -408,8 +394,6 @@ def __main__():
                     header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
                 else:
                     header = entry.header
-
-                reference_for_transcript = fetch_reference_for_transcript(conn, transcript_id)
 
                 if reference_for_transcript in keys:
                     non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
