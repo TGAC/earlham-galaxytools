@@ -376,7 +376,7 @@ def __main__():
         selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
 
     regions = [_.strip().lower() for _ in options.regions.split(",")]
-    with open(options.of, 'w') as output_fasta_file, open(options.ff, 'w') as non_standard_fasta_file:
+    with open(options.of, 'w') as output_fasta_file, open(options.ff, 'w') as filtered_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
@@ -396,7 +396,7 @@ def __main__():
                     header = entry.header
 
                 if seq_region_for_transcript.lower() in regions:
-                    non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+                    filtered_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
                 else:
                     output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
 
