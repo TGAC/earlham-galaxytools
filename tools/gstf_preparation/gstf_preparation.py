@@ -42,9 +42,9 @@ def create_tables(conn):
         gene_id VARCHAR PRIMARY KEY NOT NULL,
         gene_symbol VARCHAR,
         seq_region_name VARCHAR NOT NULL,
-        seq_region_start int NOT NULL,
-        seq_region_end int NOT NULL,
-        seq_region_strand VARCHAR NOT NULL,
+        seq_region_start INTEGER NOT NULL,
+        seq_region_end INTEGER NOT NULL,
+        seq_region_strand INTEGER NOT NULL,
         species VARCHAR NOT NULL,
         gene_json VARCHAR NOT NULL)''')
     cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
@@ -230,7 +230,7 @@ def write_gene_dict_to_db(conn, gene_dict):
             continue
         gene_id = gene['id']
         cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (gene_id, gene.get('display_name', None), gene.get('seq_region_name', None), gene.get('start', None), gene.get('end', None), gene.get('strand', None), gene['species'], json.dumps(gene)))
+                    (gene_id, gene.get('display_name', None), gene['seq_region_name'], gene['start'], gene['end'], gene['strand'], gene['species'], json.dumps(gene)))
 
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
@@ -245,7 +245,7 @@ def write_gene_dict_to_db(conn, gene_dict):
     conn.commit()
 
 
-def fetch_species_and_seqregion_for_transcript(conn, transcript_id):
+def fetch_species_and_seq_region_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
     cur.execute('SELECT species, seq_region_name FROM transcript_species WHERE transcript_id=?',
@@ -284,10 +284,10 @@ def __main__():
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
     parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep only the longest CDS per gene')
     parser.add_option('--headers', action='store_true', default=False, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
-    parser.add_option('--keys', default="", help='List of keywords (Chromosome names) to ignore FASTA sequences')
+    parser.add_option('--regions', default="", help='Comma-separated list of region IDs for which FASTA sequences should be filtered')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
-    parser.add_option('--nsff', help='Path of the non-standard codon output FASTA file')
+    parser.add_option('--ff', help='Path of the filtered sequences output FASTA file')
 
     options, args = parser.parse_args()
     if args:
@@ -375,15 +375,15 @@ def __main__():
         # first one to appear in the FASTA file is selected
         selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
 
-    keys = [_.lower() for _ in options.keys.split(",")]
-    with open(options.of, 'w') as output_fasta_file, open(options.nsff, 'w') as non_standard_fasta_file:
+    regions = [_.strip().lower() for _ in options.regions.split(",")]
+    with open(options.of, 'w') as output_fasta_file, open(options.ff, 'w') as non_standard_fasta_file:
         for fasta_arg in options.fasta:
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
 
-                species_for_transcript, seqregion_for_transcript = fetch_species_and_seqregion_for_transcript(conn, transcript_id)
+                species_for_transcript, seq_region_for_transcript = fetch_species_and_seq_region_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
@@ -395,7 +395,7 @@ def __main__():
                 else:
                     header = entry.header
 
-                if seqregion_for_transcript.lower() in keys:
+                if seq_region_for_transcript.lower() in regions:
                     non_standard_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
                 else:
                     output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
