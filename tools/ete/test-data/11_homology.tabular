@@ -1,0 +1,10 @@
+insr_rattusnorvegicus	insr_musmusculus	one-to-one
+insr_rattusnorvegicus	insr_homosapiens	one-to-one
+insr_rattusnorvegicus	insr_pantroglodytes	one-to-one
+insr_rattusnorvegicus	insr_susscrofa	one-to-one
+insr_musmusculus	insr_homosapiens	one-to-one
+insr_musmusculus	insr_pantroglodytes	one-to-one
+insr_musmusculus	insr_susscrofa	one-to-one
+insr_homosapiens	insr_pantroglodytes	one-to-one
+insr_homosapiens	insr_susscrofa	one-to-one
+insr_pantroglodytes	insr_susscrofa	one-to-one
