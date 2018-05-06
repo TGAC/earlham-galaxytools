@@ -30,8 +30,6 @@ def main():
 
     # Genetree nodes are required to be in gene_species format
     leaves_list = [_ for _ in leaves_list if '_' in _]
-    for leaf in leaves_list:
-        species_list.append(leaf.split("_")[1])
 
     species_dict = {}
 
@@ -49,7 +47,7 @@ def main():
         'paralogs': []
     }
 
-    # stores relevant homolgy types in dict
+    # stores relevant homology types in dict
     for i, val in enumerate(leaves_list):
         for j in range(i + 1, len(leaves_list)):
             id1 = leaves_list[i].split(":")[1] if ":" in leaves_list[i] else leaves_list[i]
