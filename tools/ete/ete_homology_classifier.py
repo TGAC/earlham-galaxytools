@@ -21,21 +21,17 @@ def main():
     genetree = PhyloTree(options.genetree)
 
     leaves_list = genetree.get_leaf_names()
-
-    species_list = []
-
     # Genetree nodes are required to be in gene_species format
     leaves_list = [_ for _ in leaves_list if '_' in _]
-    for leaf in leaves_list:
-        species_list.append(leaf.split("_")[1])
+
+    species_list = [_.split("_")[1] for _ in leaves_list]
 
     species_dict = {}
-
-    for val in species_list:
+    for species in species_list:
         count = "one"
-        if val in species_dict:
+        if species in species_dict:
             count = "many"
-        species_dict[val] = count
+        species_dict[species] = count
 
     homologies = {
         'one-to-one': [],
@@ -46,29 +42,28 @@ def main():
     }
 
     # stores relevant homology types in dict
-    for i, val in enumerate(leaves_list):
-        for j in range(i + 1, len(leaves_list)):
-            id1 = leaves_list[i].split(":")[1] if ":" in leaves_list[i] else leaves_list[i]
-            id2 = leaves_list[j].split(":")[1] if ":" in leaves_list[j] else leaves_list[j]
-            if(id1.split("_")[1] == id2.split("_")[1]):
-                homologies["paralogs"].append({id1: id2})
+    for i, leaf1 in enumerate(leaves_list):
+        for leaf2 in leaves_list[i + 1:]:
+            id1 = leaf1.split(":")[1] if ":" in leaf1 else leaf1
+            id2 = leaf2.split(":")[1] if ":" in leaf2 else leaf2
+            if id1.split("_")[1] == id2.split("_")[1]:
+                homologies["paralogs"].append((id1, id2))
             else:
-                homologies[species_dict[id1.split("_")[1]] + "-to-" + species_dict[id2.split("_")[1]]].append({id1: id2})
+                homologies[species_dict[id1.split("_")[1]] + "-to-" + species_dict[id2.split("_")[1]]].append((id1, id2))
 
     options.filters = options.filters.split(",")
 
     if options.out_format == 'tabular':
-        for homology, homologs in homologies.items():
+        for homology_type, homologs_list in homologies.items():
             # checks if homology type is in filter
-            if homology in options.filters:
-                for element in homologies[homology]:
-                    for key, value in element.items():
-                        print(key + "\t" + value + "\t" + homology)
+            if homology_type in options.filters:
+                for (gene1, gene2) in homologs_list:
+                    print(gene1 + "\t" + gene2 + "\t" + homology_type)
 
     elif options.out_format == 'csv':
         flag = False
-        for homology, homologs in homologies.items():
-            if len(homologs) > 0 and homology in options.filters:
+        for homology_type, homologs_list in homologies.items():
+            if len(homologs_list) > 0 and homology_type in options.filters:
                 flag = True
 
         # prints family if homology type is not found in filter
