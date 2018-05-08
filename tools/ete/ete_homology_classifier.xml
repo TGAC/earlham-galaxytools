@@ -9,7 +9,9 @@
 python '$__tool_directory__/ete_homology_classifier.py'
 --genetree '$genetreeFile'
 --out_format '$format_type.out_format'
---filters $format_type.homologies
+#if $format_type.homologies:
+    --filters $format_type.homologies
+#end if
 > $homology
     ]]>
     </command>
@@ -21,7 +23,7 @@ python '$__tool_directory__/ete_homology_classifier.py'
                 <option value="csv">CSV</option>
             </param>
             <when value="tabular">
-                <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="Pair Types to keep:">
+                <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="Pair types to keep">
                     <option value="one-to-one" selected="true">one-to-one</option>
                     <option value="one-to-many" selected="true">one-to-many</option>
                     <option value="many-to-one" selected="true">many-to-one</option>
@@ -30,7 +32,7 @@ python '$__tool_directory__/ete_homology_classifier.py'
                 </param>
             </when>
             <when value="csv">
-                <param name="homologies" type="select" multiple="true" optional="true" display="checkboxes" label="Discard families with:">
+                <param name="homologies" type="select" multiple="true" optional="true" display="checkboxes" label="Discard families with">
                     <option value="one-to-one">one-to-one</option>
                     <option value="one-to-many">one-to-many</option>
                     <option value="many-to-one">many-to-one</option>

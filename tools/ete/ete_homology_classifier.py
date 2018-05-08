@@ -10,7 +10,7 @@ def main():
     parser = optparse.OptionParser(usage=usage)
     parser.add_option('--genetree', help='GeneTree in nhx format')
     parser.add_option('--out_format', type='string', default='tabular', help='Choose output format')
-    parser.add_option('--filters', default=[], help='Filter families')
+    parser.add_option('--filters', default='', help='Filter families')
 
     options, args = parser.parse_args()
 
@@ -46,10 +46,13 @@ def main():
         for leaf2 in leaves_list[i + 1:]:
             id1 = leaf1.split(":")[1] if ":" in leaf1 else leaf1
             id2 = leaf2.split(":")[1] if ":" in leaf2 else leaf2
-            if id1.split("_")[1] == id2.split("_")[1]:
-                homologies["paralogs"].append((id1, id2))
+            species1 = id1.split("_")[1]
+            species2 = id2.split("_")[1]
+            if species1 == species2:
+                homology_type = 'paralogs'
             else:
-                homologies[species_dict[id1.split("_")[1]] + "-to-" + species_dict[id2.split("_")[1]]].append((id1, id2))
+                homology_type = species_dict[species1] + "-to-" + species_dict[species2]
+            homologies[homology_type].append((id1, id2))
 
     options.filters = options.filters.split(",")
 
@@ -58,16 +61,15 @@ def main():
             # checks if homology type is in filter
             if homology_type in options.filters:
                 for (gene1, gene2) in homologs_list:
-                    print(gene1 + "\t" + gene2 + "\t" + homology_type)
-
+                    print("%s\t%s\t%s" % (gene1, gene2, homology_type))
     elif options.out_format == 'csv':
-        flag = False
+        print_family = True
         for homology_type, homologs_list in homologies.items():
-            if len(homologs_list) > 0 and homology_type in options.filters:
-                flag = True
+            if homologs_list and homology_type in options.filters:
+                print_family = False
 
         # prints family if homology type is not found in filter
-        if not flag:
+        if print_family:
             print(','.join(leaves_list))
 
 
