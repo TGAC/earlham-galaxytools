@@ -1,7 +1,7 @@
 <tool id="smina" name="smina" version="1.0">
     <description>Scoring and Minimization with AutoDock Vina</description>
     <requirements>
-        <requirement type="package" version="1.1.2">smina</requirement>
+        <requirement type="package" version="2017.11.9">smina</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" />
@@ -9,7 +9,7 @@
     <command><![CDATA[
 ln -s '$input.receptor' receptor.pdbqt &&
 ln -s '$input.ligand' ligand.pdbqt &&
-smina.static
+smina
     --receptor receptor.pdbqt
     --ligand ligand.pdbqt
 #if $input.flex
