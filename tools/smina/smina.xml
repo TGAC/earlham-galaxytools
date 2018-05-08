@@ -3,15 +3,12 @@
     <requirements>
         <requirement type="package" version="2017.11.9">smina</requirement>
     </requirements>
-    <stdio>
-        <exit_code range="1:" />
-    </stdio>
-    <command><![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 ln -s '$input.receptor' receptor.pdbqt &&
 ln -s '$input.ligand' ligand.pdbqt &&
 smina
-    --receptor receptor.pdbqt
-    --ligand ligand.pdbqt
+--receptor receptor.pdbqt
+--ligand ligand.pdbqt
 #if $input.flex
     --flex '$input.flex'
 #end if
