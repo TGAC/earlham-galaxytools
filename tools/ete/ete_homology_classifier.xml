@@ -27,23 +27,22 @@ python '$__tool_directory__/ete_homology_classifier.py'
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format, where nodes are in form of geneid_species" />
         <conditional name="format_type">
-            <param name="out_format" type="select" label="Output format" help="">
-                <option value="tabular" selected="true">Table</option>
-                <option value="csv">CSV</option>
+            <param name="out_format" type="select" label="Output format">
+                <option value="tabular" selected="true">Tabular</option>
+                <option value="csv">One-line CSV</option>
             </param>
             <when value="tabular">
                 <expand macro="homologies_macro" label="Pair types to keep"/>
             </when>
             <when value="csv">
-                <expand macro="homologies_macro" label="Keep GeneTree with selected homology types." help="GeneTree contain any other homology type than the selected will be discarded"/>
+                <expand macro="homologies_macro" label="Allowed homology types for the GeneTree" help="If the GeneTree contains any other homology type, then the output will be empty" />
             </when>
         </conditional>
     </inputs>
     <outputs>
         <data format="tabular" name="homology" label="${tool.name} on ${on_string}">
             <change_format>
-                <when input="format_type.out_format" value="tabular" format="tabular" />
-                <when input="format_type.out_format" value="csv" format="txt" />
+                <when input="format_type.out_format" value="csv" format="csv" />
             </change_format>
         </data>
     </outputs>
@@ -68,27 +67,28 @@ Classify and filter Homology from single GeneTree by utilising the `ETE Toolkit`
 
 **Output format:**
 
-*tabular*
+*tabular*:
 
-====================== ======================== =============
-gene_1                 gene_2                   homology
----------------------- ------------------------ -------------
-insr_rattusnorvegicus   insr_musmusculus        one-to-one
-insr_rattusnorvegicus   insr_homosapiens        one-to-one
-insr_rattusnorvegicus   insr_pantroglodytes     one-to-one
-insr_rattusnorvegicus   insr_susscrofa          one-to-one
-insr_musmusculus        insr_homosapiens        one-to-one
-insr_musmusculus        insr_pantroglodytes     one-to-one
-insr_musmusculus        insr_susscrofa          one-to-one
-insr_homosapiens        insr_pantroglodytes     one-to-one
-insr_homosapiens        insr_susscrofa          one-to-one
-insr_pantroglodytes     insr_susscrofa          one-to-one
-====================== ======================== =============
+======================  ========================  ============
+       gene_1                  gene_2               homology
+======================  ========================  ============
+insr_rattusnorvegicus   insr_musmusculus          one-to-one
+insr_rattusnorvegicus   insr_homosapiens          one-to-one
+insr_rattusnorvegicus   insr_pantroglodytes       one-to-one
+insr_rattusnorvegicus   insr_susscrofa            one-to-one
+insr_musmusculus        insr_homosapiens          one-to-one
+insr_musmusculus        insr_pantroglodytes       one-to-one
+insr_musmusculus        insr_susscrofa            one-to-one
+insr_homosapiens        insr_pantroglodytes       one-to-one
+insr_homosapiens        insr_susscrofa            one-to-one
+insr_pantroglodytes     insr_susscrofa            one-to-one
+======================  ========================  ============
 
+\
 
-*CSV*
+*One-line CSV*::
 
-insr_rattusnorvegicus,insr_musmusculus,insr_homosapiens,insr_pantroglodytes,insr_susscrofa
+    insr_rattusnorvegicus,insr_musmusculus,insr_homosapiens,insr_pantroglodytes,insr_susscrofa
     ]]>
     </help>
     <expand macro="citations" />
