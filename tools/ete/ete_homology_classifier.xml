@@ -2,6 +2,15 @@
     <description>from a genetree utilising the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
+        <xml name="homologies_macro" token_label="" token_help="">
+            <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="@LABEL@" help="@HELP@">
+                <option value="one-to-one" selected="true">one-to-one</option>
+                <option value="one-to-many" selected="true">one-to-many</option>
+                <option value="many-to-one" selected="true">many-to-one</option>
+                <option value="many-to-many" selected="true">many-to-many</option>
+                <option value="paralogs" selected="true">Paralogs</option>
+            </param>
+        </xml>
     </macros>
     <expand macro="requirements" />
     <command detect_errors="exit_code">
@@ -18,27 +27,15 @@ python '$__tool_directory__/ete_homology_classifier.py'
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format, where nodes are in form of geneid_species" />
         <conditional name="format_type">
-            <param name="out_format" type="select" label="Output format">
+            <param name="out_format" type="select" label="Output format" help="">
                 <option value="tabular" selected="true">Table</option>
                 <option value="csv">CSV</option>
             </param>
             <when value="tabular">
-                <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="Pair types to keep">
-                    <option value="one-to-one" selected="true">one-to-one</option>
-                    <option value="one-to-many" selected="true">one-to-many</option>
-                    <option value="many-to-one" selected="true">many-to-one</option>
-                    <option value="many-to-many" selected="true">many-to-many</option>
-                    <option value="paralogs" selected="true">Paralogs</option>
-                </param>
+                <expand macro="homologies_macro" label="Pair types to keep"/>
             </when>
             <when value="csv">
-                <param name="homologies" type="select" multiple="true" optional="true" display="checkboxes" label="Keep GeneTree with selected homology types." help="GeneTree contain any other homology type than the selected will be discarded">
-                    <option value="one-to-one">one-to-one</option>
-                    <option value="one-to-many">one-to-many</option>
-                    <option value="many-to-one">many-to-one</option>
-                    <option value="many-to-many">many-to-many</option>
-                    <option value="paralogs">Paralogs</option>
-                </param>
+                <expand macro="homologies_macro" label="Keep GeneTree with selected homology types." help="GeneTree contain any other homology type than the selected will be discarded"/>
             </when>
         </conditional>
     </inputs>

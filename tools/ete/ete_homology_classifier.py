@@ -67,6 +67,7 @@ def main():
         for homology_type, homologs_list in homologies.items():
             if homologs_list and homology_type not in options.filters:
                 print_family = False
+                break
 
         # prints family if homology type is not found in filter
         if print_family:
