@@ -52,7 +52,7 @@ python '$__tool_directory__/ete_homology_classifier.py'
     </outputs>
     <tests>
         <test>
-            <param name="genetreeFile" ftype="nhx" value="11_genetree.nhx" />
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="out_format" value="tabular"/>
             <param name="homologies" value="one-to-one,one-to-many,many-to-one,many-to-many,paralogs" />
             <output name="homology" file="11_homology.tabular" />
