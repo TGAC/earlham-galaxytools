@@ -1,0 +1,95 @@
+<tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@VERSION@">
+    <description>from a genetree utilising the ETE Toolkit</description>
+    <macros>
+        <import>ete_macros.xml</import>
+        <xml name="homologies_macro" token_label="" token_help="">
+            <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="@LABEL@" help="@HELP@">
+                <option value="one-to-one" selected="true">one-to-one</option>
+                <option value="one-to-many" selected="true">one-to-many</option>
+                <option value="many-to-one" selected="true">many-to-one</option>
+                <option value="many-to-many" selected="true">many-to-many</option>
+                <option value="paralogs" selected="true">Paralogs</option>
+            </param>
+        </xml>
+    </macros>
+    <expand macro="requirements" />
+    <command detect_errors="exit_code">
+    <![CDATA[
+python '$__tool_directory__/ete_homology_classifier.py'
+--genetree '$genetreeFile'
+--out_format '$format_type.out_format'
+#if $format_type.homologies:
+    --filters $format_type.homologies
+#end if
+> $homology
+    ]]>
+    </command>
+    <inputs>
+        <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format, where nodes are in form of geneid_species" />
+        <conditional name="format_type">
+            <param name="out_format" type="select" label="Output format">
+                <option value="tabular" selected="true">Tabular</option>
+                <option value="csv">One-line CSV</option>
+            </param>
+            <when value="tabular">
+                <expand macro="homologies_macro" label="Pair types to keep"/>
+            </when>
+            <when value="csv">
+                <expand macro="homologies_macro" label="Allowed homology types for the GeneTree" help="If the GeneTree contains any other homology type, then the output will be empty" />
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="homology" label="${tool.name} on ${on_string}">
+            <change_format>
+                <when input="format_type.out_format" value="csv" format="csv" />
+            </change_format>
+        </data>
+    </outputs>
+    <tests>
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
+            <param name="out_format" value="tabular"/>
+            <param name="homologies" value="one-to-one,one-to-many,many-to-one,many-to-many,paralogs" />
+            <output name="homology" file="11_homology.tabular" />
+        </test>
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="11_genetree.nhx" />
+            <param name="out_format" value="csv"/>
+            <output name="homology" file="11_homology.csv" />
+        </test>
+    </tests>
+    <help>
+    <![CDATA[
+Classify and filter Homology from single GeneTree by utilising the `ETE Toolkit`_.
+
+.. _ETE Toolkit: http://etetoolkit.org/
+
+**Output format:**
+
+*tabular*:
+
+======================  ========================  ============
+       gene_1                  gene_2               homology
+======================  ========================  ============
+insr_rattusnorvegicus   insr_musmusculus          one-to-one
+insr_rattusnorvegicus   insr_homosapiens          one-to-one
+insr_rattusnorvegicus   insr_pantroglodytes       one-to-one
+insr_rattusnorvegicus   insr_susscrofa            one-to-one
+insr_musmusculus        insr_homosapiens          one-to-one
+insr_musmusculus        insr_pantroglodytes       one-to-one
+insr_musmusculus        insr_susscrofa            one-to-one
+insr_homosapiens        insr_pantroglodytes       one-to-one
+insr_homosapiens        insr_susscrofa            one-to-one
+insr_pantroglodytes     insr_susscrofa            one-to-one
+======================  ========================  ============
+
+\
+
+*One-line CSV*::
+
+    insr_rattusnorvegicus,insr_musmusculus,insr_homosapiens,insr_pantroglodytes,insr_susscrofa
+    ]]>
+    </help>
+    <expand macro="citations" />
+</tool>
