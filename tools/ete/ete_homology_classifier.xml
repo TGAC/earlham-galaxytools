@@ -32,7 +32,7 @@ python '$__tool_directory__/ete_homology_classifier.py'
                 </param>
             </when>
             <when value="csv">
-                <param name="homologies" type="select" multiple="true" optional="true" display="checkboxes" label="Discard families with">
+                <param name="homologies" type="select" multiple="true" optional="true" display="checkboxes" label="Keep GeneTree with selected homology types." help="GeneTree contain any other homology type than the selected will be discarded">
                     <option value="one-to-one">one-to-one</option>
                     <option value="one-to-many">one-to-many</option>
                     <option value="many-to-one">many-to-one</option>

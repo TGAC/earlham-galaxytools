@@ -65,7 +65,7 @@ def main():
     elif options.out_format == 'csv':
         print_family = True
         for homology_type, homologs_list in homologies.items():
-            if homologs_list and homology_type in options.filters:
+            if homologs_list and homology_type not in options.filters:
                 print_family = False
 
         # prints family if homology type is not found in filter
