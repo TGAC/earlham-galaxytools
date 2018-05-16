@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-import collections
 import json
 import optparse
 import sqlite3
@@ -9,7 +8,23 @@ import sys
 version = "0.4.0"
 gene_count = 0
 
-Sequence = collections.namedtuple('Sequence', ['header', 'sequence'])
+
+class Sequence(object):
+    def __init__(self, header, sequence_parts):
+        self.header = header
+        self.sequence_parts = sequence_parts
+        self._sequence = None
+
+    @property
+    def sequence(self):
+        if self._sequence is None:
+            self._sequence = ''.join(self.sequence_parts)
+        return self._sequence
+
+    def print(self, fh=sys.stdout):
+        print(self.header, file=fh)
+        for line in self.sequence_parts:
+            print(line, file=fh)
 
 
 def FASTAReader_gen(fasta_filename):
@@ -25,8 +40,7 @@ def FASTAReader_gen(fasta_filename):
             while line and line[0] != '>':
                 sequence_parts.append(line.rstrip())
                 line = fasta_file.readline()
-            sequence = "\n".join(sequence_parts)
-            yield Sequence(header, sequence)
+            yield Sequence(header, sequence_parts)
 
 
 def create_tables(conn):
@@ -360,6 +374,10 @@ def __main__():
                 # Extract the transcript id by removing everything after the first space and then removing the version if it is an Ensembl id
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0])
 
+                if len(entry.sequence) % 3 != 0:
+                    print("Transcript '%s' in file '%s' has a coding sequence length which is not multiple of 3" % (transcript_id, fasta_arg), file=sys.stderr)
+                    continue
+
                 gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
                 if not gene_id:
                     print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
@@ -383,6 +401,10 @@ def __main__():
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
 
+                if len(entry.sequence) % 3 != 0:
+                    print("Transcript '%s' in file '%s' has a coding sequence length which is not multiple of 3" % (transcript_id, fasta_arg), file=sys.stderr)
+                    continue
+
                 species_for_transcript, seq_region_for_transcript = fetch_species_and_seq_region_for_transcript(conn, transcript_id)
                 if not species_for_transcript:
                     print("Transcript '%s' in file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
@@ -391,14 +413,12 @@ def __main__():
                 if options.headers:
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
-                    header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
-                else:
-                    header = entry.header
+                    entry.header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
 
                 if seq_region_for_transcript.lower() in regions:
-                    filtered_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+                    entry.print(filtered_fasta_file)
                 else:
-                    output_fasta_file.write("%s\n%s\n" % (header, entry.sequence))
+                    entry.print(output_fasta_file)
 
     conn.close()
 
