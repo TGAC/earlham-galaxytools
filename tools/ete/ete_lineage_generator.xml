@@ -1,4 +1,4 @@
-<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@.1">
     <description>from a list of species/taxids using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -20,6 +20,7 @@ python '$__tool_directory__/ete_lineage_generator.py'
     $compresscond.compress
     $compresscond.lower
 #end if
+$includeid
     ]]></command>
     <inputs>
         <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species/taxid per line" />
@@ -68,17 +69,16 @@ python '$__tool_directory__/ete_lineage_generator.py'
         </conditional>
         <conditional name="compresscond">
             <param name="compress" type="select" label="Fill unnamed ranks" help="Fill unnamed ranks with super/sub ranks (see -l)">
-                <option value="-c">Yes</option>
+                <option value="-c" selected="True">Yes</option>
                 <option value="">No</option>
             </param>
             <when value="-c">
-                <param name="lower" type="select" label="Prefer lower ranks for filling" help="Prefer lower levels for filling">
-                    <option value="-l">Yes</option>
-                    <option value="">No</option>
-                </param>
+                <param name="lower" type="boolean" truevalue="-l" falsevalue="" checked="False" label="Prefer lower ranks" help="Take the next available lower rank (default: higher)"/> 
             </when>
             <when value="" />
         </conditional>
+        <param name="includeid" type="boolean" truevalue="--includeid" falsevalue="" label="Include taxid in the table"
+            help="For the case when the input consists of taxon names" />
     </inputs>
     <outputs>
         <data name="outputFile" format="tsv" label="${tool.name} on ${on_string}"/>
@@ -113,6 +113,12 @@ python '$__tool_directory__/ete_lineage_generator.py'
             <param name="levels" value="manual" />
             <param name="manualranks" value="kingdom,family" />
             <output name="outputFile" file="lineage-full.txt" />
+        </test>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
+            <param name="includeid" value="--includeid" />
+            <output name="outputFile" file="lineage-wid.txt" />
         </test>
     </tests>
     <help><![CDATA[

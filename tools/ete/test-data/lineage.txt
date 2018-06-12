@@ -1,4 +1,4 @@
-#species/taxid	superkingdom	kingdom	subkingdom	superphylum	phylum	subphylum	superclass	class	subclass	infraclass	cohort	superorder	order	suborder	infraorder	parvorder	superfamily	family	subfamily	tribe	subtribe	genus	subgenus	species group	species subgroup	species	subspecies	varietas	forma
+# query	superkingdom	kingdom	subkingdom	superphylum	phylum	subphylum	superclass	class	subclass	infraclass	cohort	superorder	order	suborder	infraorder	parvorder	superfamily	family	subfamily	tribe	subtribe	genus	subgenus	species group	species subgroup	species	subspecies	varietas	forma
 Latimeria chalumnae	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	NA	NA	NA	NA	NA	Coelacanthiformes	NA	NA	NA	NA	Coelacanthidae	NA	NA	NA	Latimeria	NA	NA	NA	Latimeria chalumnae	NA	NA	NA
 Xenopus tropicalis	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Amphibia	NA	NA	NA	Batrachia	Anura	NA	NA	NA	Pipoidea	Pipidae	Xenopodinae	NA	NA	Xenopus	Silurana	NA	NA	Xenopus tropicalis	NA	NA	NA
 Ornithorhynchus anatinus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	NA	Monotremata	NA	NA	NA	NA	Ornithorhynchidae	NA	NA	NA	Ornithorhynchus	NA	NA	NA	Ornithorhynchus anatinus	NA	NA	NA
