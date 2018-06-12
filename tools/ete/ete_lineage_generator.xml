@@ -24,7 +24,7 @@ $includeid
     ]]></command>
     <inputs>
         <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species/taxid per line" />
-		<param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
+        <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
         <conditional name="ranks">
             <param name="levels" type="select" label="Taxonomic levels" help="Taxonomic levels to include in the output">
                 <option value="primary" selected="true">Primary</option>
@@ -69,11 +69,11 @@ $includeid
         </conditional>
         <conditional name="compresscond">
             <param name="compress" type="select" label="Fill unnamed ranks" help="Fill unnamed ranks with super/sub ranks (see -l)">
-                <option value="-c">Yes</option>
+                <option value="-c" selected="True">Yes</option>
                 <option value="">No</option>
             </param>
             <when value="-c">
-				<param name="lower" type="boolean" truevalue="-l" falsevalue="" checked="False" label="Prefer lower ranks" help="Take the next available lower rank (default: higher)"/> 
+                <param name="lower" type="boolean" truevalue="-l" falsevalue="" checked="False" label="Prefer lower ranks" help="Take the next available lower rank (default: higher)"/> 
             </when>
             <when value="" />
         </conditional>
