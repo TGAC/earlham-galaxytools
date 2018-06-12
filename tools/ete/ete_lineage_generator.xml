@@ -77,7 +77,7 @@ $includeid
             </when>
             <when value="" />
         </conditional>
-        <param argument="--includeid" type="boolean" truevalue="--includeid" falsevalue="" label="Include taxid in the table"
+        <param name="includeid" type="boolean" truevalue="--includeid" falsevalue="" label="Include taxid in the table"
             help="For the case when the input consists of taxon names" />
     </inputs>
     <outputs>
