@@ -1,4 +1,4 @@
-#species/taxid	kingdom	family
+# query	kingdom	family
 Latimeria chalumnae	Metazoa	Coelacanthidae
 Xenopus tropicalis	Metazoa	Pipidae
 Ornithorhynchus anatinus	Metazoa	Ornithorhynchidae

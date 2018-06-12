@@ -69,6 +69,8 @@ parser.add_option('-l', dest="lower", action="store_true", default=False,
                   help='Prefer lower levels when compressed')
 parser.add_option('-r', '--rank', dest='ranks', action="append",
                   help='include rank - multiple ones can be specified')
+parser.add_option('-i', '--includeid', dest="addid", action="store_true", default=False,
+                  help='add taxid column')
 
 options, args = parser.parse_args()
 # check command line options
@@ -106,8 +108,13 @@ if options.compress:
         for ilr in range(len(LONG_RANKS)):
             if RANKS[ir] in LONG_RANKS[ilr]:
                 COMP_RANK_IDX[LONG_RANKS[ilr]] = ir
+
 # write header
-of.write("#species/taxid\t%s\n" % ("\t".join(RANKS)))
+of.write("# query")
+if options.addid:
+    of.write("\ttaxid")
+of.write("\t%s\n" % ("\t".join(RANKS)))
+
 # get and write data
 with open(options.input_species_filename) as f:
     for line in f.readlines():
@@ -128,5 +135,8 @@ with open(options.input_species_filename) as f:
         process_taxid(ncbi, taxid, ranks, RANK_IDX)
         if options.compress:
             process_taxid(ncbi, taxid, ranks, COMP_RANK_IDX, options.lower)
-        of.write("%s\t%s\n" % (line, "\t".join(ranks)))
+        of.write("%s" % line)
+        if options.addid:
+            of.write("\t%d" % taxid)
+        of.write("\t%s\n" % "\t".join(ranks))
 of.close()
