@@ -2,7 +2,7 @@
     default_title = "Aequatus of"
 
     # Use root for resource loading.
-    root = h.url_for( '/' )
+    root = h.url_for( '/static/' )
     app_root    = root + "plugins/visualizations/aequatus/static/"
 %>
 ## ----------------------------------------------------------------------------
