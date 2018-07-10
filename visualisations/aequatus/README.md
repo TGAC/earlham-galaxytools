@@ -22,3 +22,15 @@ Install the Aequatus visualisation on a Galaxy instance
    cd GALAXY_DIR/config/plugins/visualizations/
    ln -s EARLHAM-GALAXYTOOLS_DIR/visualisations/aequatus/
    ```
+
+Authors:
+--------
+
+<a href="https://github.com/anilthanki">Anil Thanki</a>, <a href="https://github.com/nsoranzo">Nicola Soranzo</a> and <a href="https://github.com/froggleston">Rob Davey</a>.
+
+
+Citation:
+---------
+If you are using Aequatus for any kind of research purpose, please cite:
+
+Thanki AS, Soranzo S, Herrero J, Haerty W. Davey RP. Aequatus: An open-source homology browser. bioRxiv 055632; doi: [10.1101/055632](https://doi.org/10.1101/055632)
