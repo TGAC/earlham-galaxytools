@@ -26,12 +26,12 @@ Install the Aequatus visualisation on a Galaxy instance
 Authors:
 --------
 
-<a href="http://github.com/anilthanki"> Anil Thanki</a>, <a href="http://github.com/nsoranzo"> Nicola Soranzo </a>, <a href="http://github.com/froggleston"> Rob Davey</a>
+<a href="https://github.com/anilthanki">Anil Thanki</a>, <a href="https://github.com/nsoranzo">Nicola Soranzo</a> and <a href="https://github.com/froggleston">Rob Davey</a>.
 
 
 Citation:
 ---------
-If you are using Aequatus for any kind of research purpose, Please cite us:
+If you are using Aequatus for any kind of research purpose, please cite:
 
 Thanki AS, Soranzo S, Haerty W. Herrero J, Davey RP. Aequatus: An open-source homology browser. bioRxiv 055632; doi: https://doi.org/10.1101/055632
 
