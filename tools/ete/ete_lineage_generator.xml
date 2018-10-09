@@ -1,4 +1,4 @@
-<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@.1">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@">
     <description>from a list of species/taxids using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>

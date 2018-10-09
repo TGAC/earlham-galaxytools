@@ -1,4 +1,4 @@
-<tool id="ete_species_tree_generator" name="ETE species tree generator" version="@VERSION@.1">
+<tool id="ete_species_tree_generator" name="ETE species tree generator" version="@VERSION@">
     <description>from a list of species using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>

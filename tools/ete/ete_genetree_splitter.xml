@@ -1,4 +1,4 @@
-<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@.1">
+<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
