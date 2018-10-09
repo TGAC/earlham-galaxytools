@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import re
 import optparse
 
 from ete3 import PhyloTree
@@ -17,8 +17,11 @@ def main():
     if options.genetree is None:
         parser.error("--genetree option must be specified, GeneTree in nhx format")
 
-    # reads single gene tree
-    genetree = PhyloTree(options.genetree)
+    with open(options.genetree, 'r') as f:
+        contents = re.sub(r'\[[^]]+]','',f.read())
+
+    #reads single gene tree
+    genetree = PhyloTree(contents)
 
     leaves_list = genetree.get_leaf_names()
     # Genetree nodes are required to be in gene_species format
