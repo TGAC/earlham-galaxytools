@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import optparse
-import re
 
 from ete3 import PhyloTree
 
@@ -21,8 +20,10 @@ def main():
     with open(options.genetree, 'r') as f:
         contents = f.read()
 
+    # Remove empty NHX features that can be produced by TreeBest but break ete3
+    contents = contents.replace('[&&NHX]', '')
     # reads single gene tree
-    genetree = PhyloTree(contents.replace('[&&NHX]', ''))
+    genetree = PhyloTree(contents)
 
     leaves_list = genetree.get_leaf_names()
     # Genetree nodes are required to be in gene_species format
