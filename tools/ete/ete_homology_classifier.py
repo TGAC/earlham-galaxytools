@@ -18,9 +18,9 @@ def main():
         parser.error("--genetree option must be specified, GeneTree in nhx format")
 
     with open(options.genetree, 'r') as f:
-        contents = re.sub(r'\[[^]]+]','',f.read())
+        contents = re.sub(r'\[[^]]+]', '', f.read())
 
-    #reads single gene tree
+    # reads single gene tree
     genetree = PhyloTree(contents)
 
     leaves_list = genetree.get_leaf_names()
