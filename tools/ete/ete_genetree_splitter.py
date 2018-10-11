@@ -19,8 +19,14 @@ def main():
     if options.genetree is None:
         parser.error("--genetree option must be specified, GeneTree in nhx format")
 
+    with open(options.genetree, 'r') as f:
+        contents = f.read()
+
+    # Remove empty NHX features that can be produced by TreeBest but break ete3
+    contents = contents.replace('[&&NHX]', '')
+
     # reads single gene tree
-    genetree = PhyloTree(options.genetree)
+    genetree = PhyloTree(contents)
 
     # sets species naming function
     if options.gene_node == 0:
