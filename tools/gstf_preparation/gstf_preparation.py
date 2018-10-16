@@ -264,10 +264,10 @@ def fetch_species_and_seq_region_for_transcript(conn, transcript_id):
 
     cur.execute('SELECT species, seq_region_name FROM transcript_species WHERE transcript_id=?',
                 (transcript_id, ))
-    results = cur.fetchone()
-    if not results:
-        return None
-    return results
+    row = cur.fetchone()
+    if not row:
+        return (None, None)
+    return row
 
 
 def fetch_gene_id_for_transcript(conn, transcript_id):
@@ -275,10 +275,10 @@ def fetch_gene_id_for_transcript(conn, transcript_id):
 
     cur.execute('SELECT gene_id FROM transcript WHERE transcript_id=?',
                 (transcript_id, ))
-    results = cur.fetchone()
-    if not results:
+    row = cur.fetchone()
+    if not row:
         return None
-    return results[0]
+    return row[0]
 
 
 def remove_id_version(s):
