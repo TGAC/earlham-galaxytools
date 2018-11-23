@@ -1,11 +1,10 @@
-sudo: false
 language: python
 cache: pip
 
 python: 2.7
 
 before_install:
-  - export GALAXY_RELEASE=release_18.05
+  - export GALAXY_RELEASE=release_18.09
 
 install:
   - pip install flake8 flake8-import-order planemo
