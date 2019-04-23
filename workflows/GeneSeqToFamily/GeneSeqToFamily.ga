@@ -2,7 +2,7 @@
     "a_galaxy_workflow": "true", 
     "annotation": "", 
     "format-version": "0.1", 
-    "name": "GeneSeqToFamily_2", 
+    "name": "GeneSeqToFamily", 
     "steps": {
         "0": {
             "annotation": "", 
@@ -20,7 +20,7 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 200, 
+                "left": 225.984375, 
                 "top": 532.5
             }, 
             "tool_id": null, 
@@ -52,8 +52,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 204.90625, 
-                "top": 1277.59375
+                "left": 244.875, 
+                "top": 947.578125
             }, 
             "tool_id": null, 
             "tool_state": "{\"name\": \"Species tree\"}", 
@@ -84,8 +84,8 @@
             "name": "Input dataset", 
             "outputs": [], 
             "position": {
-                "left": 203.8125, 
-                "top": 1488.5625
+                "left": 247.796875, 
+                "top": 1200.5625
             }, 
             "tool_id": null, 
             "tool_state": "{\"name\": \"Gene feature information\"}", 
@@ -121,8 +121,8 @@
                 }
             ], 
             "position": {
-                "left": 524.0625, 
-                "top": 260.5
+                "left": 550.046875, 
+                "top": 260.484375
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -169,8 +169,8 @@
                 }
             ], 
             "position": {
-                "left": 526.5, 
-                "top": 428
+                "left": 552.484375, 
+                "top": 427.984375
             }, 
             "post_job_actions": {
                 "HideDatasetActiondiscarded": {
@@ -223,7 +223,7 @@
                 }
             ], 
             "position": {
-                "left": 820, 
+                "left": 845.96875, 
                 "top": 315
             }, 
             "post_job_actions": {
@@ -272,8 +272,8 @@
                 }
             ], 
             "position": {
-                "left": 806.15625, 
-                "top": 518.375
+                "left": 832.140625, 
+                "top": 518.359375
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutfile": {
@@ -320,7 +320,7 @@
                 }
             ], 
             "position": {
-                "left": 1150.5, 
+                "left": 1176.484375, 
                 "top": 228
             }, 
             "post_job_actions": {
@@ -364,8 +364,8 @@
                 }
             ], 
             "position": {
-                "left": 1188.5, 
-                "top": 440
+                "left": 1214.484375, 
+                "top": 439.984375
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -408,16 +408,10 @@
                 }
             ], 
             "position": {
-                "left": 1240.40625, 
-                "top": 587.40625
+                "left": 1266.390625, 
+                "top": 587.390625
             }, 
-            "post_job_actions": {
-                "HideDatasetActionoutput": {
-                    "action_arguments": {}, 
-                    "action_type": "HideDatasetAction", 
-                    "output_name": "output"
-                }
-            }, 
+            "post_job_actions": {}, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/blast_parser/blast_parser/0.1.2", 
             "tool_shed_repository": {
                 "changeset_revision": "363f3480622d", 
@@ -429,7 +423,13 @@
             "tool_version": "0.1.2", 
             "type": "tool", 
             "uuid": "3eb98d54-a52d-4605-b068-28a700290d92", 
-            "workflow_outputs": []
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "ecb78ea1-f143-4b34-96e3-ec4e885c17f2"
+                }
+            ]
         }, 
         "10": {
             "annotation": "", 
@@ -457,8 +457,8 @@
                 }
             ], 
             "position": {
-                "left": 1518.90625, 
-                "top": 392.5
+                "left": 1544.875, 
+                "top": 392.484375
             }, 
             "post_job_actions": {}, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/hcluster_sg/hcluster_sg/0.5.1.1", 
@@ -505,15 +505,10 @@
                 }
             ], 
             "position": {
-                "left": 1523, 
-                "top": 597.59375
+                "left": 1548.984375, 
+                "top": 597.578125
             }, 
             "post_job_actions": {
-                "HideDatasetActiondiscarded": {
-                    "action_arguments": {}, 
-                    "action_type": "HideDatasetAction", 
-                    "output_name": "discarded"
-                }, 
                 "HideDatasetActionids_lists": {
                     "action_arguments": {}, 
                     "action_type": "HideDatasetAction", 
@@ -531,7 +526,13 @@
             "tool_version": "0.2.0", 
             "type": "tool", 
             "uuid": "df3ae47f-f5a3-4f44-9b25-9bc36b049d60", 
-            "workflow_outputs": []
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "discarded", 
+                    "uuid": "cb6ee2ad-6310-4f91-9653-f7795c279e83"
+                }
+            ]
         }, 
         "12": {
             "annotation": "", 
@@ -558,8 +559,8 @@
                 }
             ], 
             "position": {
-                "left": 677.90625, 
-                "top": 739.0625
+                "left": 703.890625, 
+                "top": 739.046875
             }, 
             "post_job_actions": {
                 "HideDatasetActionfasta_aln": {
@@ -602,7 +603,7 @@
                 }
             ], 
             "position": {
-                "left": 1511.65625, 
+                "left": 1537.640625, 
                 "top": 802.59375
             }, 
             "post_job_actions": {
@@ -644,7 +645,7 @@
                 }
             ], 
             "position": {
-                "left": 1503.8125, 
+                "left": 1529.78125, 
                 "top": 952.5
             }, 
             "post_job_actions": {
@@ -692,8 +693,8 @@
                 }
             ], 
             "position": {
-                "left": 968.84375, 
-                "top": 1161.5
+                "left": 994.828125, 
+                "top": 1161.484375
             }, 
             "post_job_actions": {
                 "HideDatasetActionout_file1": {
@@ -745,8 +746,8 @@
                 }
             ], 
             "position": {
-                "left": 1251.90625, 
-                "top": 1273
+                "left": 1412.875, 
+                "top": 1147.96875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -789,8 +790,8 @@
                 }
             ], 
             "position": {
-                "left": 1061, 
-                "top": 1562
+                "left": 1908.984375, 
+                "top": 1125.984375
             }, 
             "post_job_actions": {
                 "HideDatasetActiongenetrees_lists": {
@@ -841,8 +842,8 @@
                 }
             ], 
             "position": {
-                "left": 1537.90625, 
-                "top": 1400
+                "left": 2184.890625, 
+                "top": 629.96875
             }, 
             "post_job_actions": {}, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/gafa/gafa/0.3.0", 
@@ -885,8 +886,8 @@
                 }
             ], 
             "position": {
-                "left": 1335, 
-                "top": 1741
+                "left": 2206.984375, 
+                "top": 1024.96875
             }, 
             "post_job_actions": {
                 "HideDatasetActionoutput": {
@@ -923,8 +924,8 @@
                 }
             ], 
             "position": {
-                "left": 1581, 
-                "top": 1654
+                "left": 2341.984375, 
+                "top": 1160.96875
             }, 
             "post_job_actions": {}, 
             "tool_id": "toolshed.g2.bx.psu.edu/repos/earlhaminst/ete/ete_homology_classifier/3.1.1", 
@@ -948,6 +949,6 @@
         }
     }, 
     "tags": [], 
-    "uuid": "99dc977a-a43d-4526-9e87-312c69d431ba", 
-    "version": 18
+    "uuid": "45eedb69-98b5-4ea2-9f17-791fa54ef823", 
+    "version": 20
 }
