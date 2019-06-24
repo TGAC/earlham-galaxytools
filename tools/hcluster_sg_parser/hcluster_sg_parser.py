@@ -17,20 +17,23 @@ def main():
     parser.add_option('-M', '--max', type='int', default=sys.maxsize, help='Maximum number of cluster elements')
     options, args = parser.parse_args()
 
-    with open(args[1], 'w') as discarded_out:
-        with open(args[0]) as fh:
-            for line in fh:
-                line = line.rstrip()
-                line_cols = line.split('\t')
-                cluster_id = line_cols[0]
-                n_ids = int(line_cols[-2])
-                id_list = line_cols[-1].replace(',', '\n')
-                if n_ids >= options.min and n_ids <= options.max:
-                    outfile = cluster_id + '_output.txt'
-                    with open(outfile, 'w') as f:
-                        f.write(id_list)
-                else:
-                    discarded_out.write(id_list)
+    with open(args[2], 'w') as discarded_max_out:
+        with open(args[1], 'w') as discarded_min_out:
+            with open(args[0]) as fh:
+                for line in fh:
+                    line = line.rstrip()
+                    line_cols = line.split('\t')
+                    cluster_id = line_cols[0]
+                    n_ids = int(line_cols[-2])
+                    id_list = line_cols[-1].replace(',', '\n')
+                    if n_ids < options.min:
+                        discarded_min_out.write(id_list)
+                    elif n_ids > options.max:
+                        discarded_max_out.write(id_list)
+                    else:
+                        outfile = cluster_id + '_output.txt'
+                        with open(outfile, 'w') as f:
+                            f.write(id_list)
 
 
 if __name__ == "__main__":

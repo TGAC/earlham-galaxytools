@@ -1,4 +1,4 @@
-<tool id="hcluster_sg_parser" name="hcluster_sg parser" version="0.2.0">
+<tool id="hcluster_sg_parser" name="hcluster_sg parser" version="0.2.1">
     <description>converts hcluster_sg 3-column output into lists of IDs</description>
     <command detect_errors="exit_code">
 <![CDATA[
@@ -9,7 +9,8 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
 #if str($max_elems)
     -M $max_elems
 #end if
-'$discarded'
+'$discarded_min'
+'$discarded_max'
 ]]>
     </command>
     <inputs>
@@ -21,7 +22,8 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
         <collection name="ids_lists" type="list" label="${tool.name} on ${on_string}">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)_output\.txt" ext="txt" />
         </collection>
-        <data name="discarded" format="txt" label="${tool.name} on ${on_string}: discarded IDs" />
+        <data name="discarded_min" format="txt" label="${tool.name} on ${on_string}: discarded IDs less than specified" />
+        <data name="discarded_max" format="txt" label="${tool.name} on ${on_string}: discarded IDs more than specified" />
     </outputs>
     <tests>
         <test>
@@ -32,7 +34,8 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
                 <element name="2" file="2_output.txt" ftype="txt" />
                 <element name="3" file="3_output.txt" ftype="txt" />
             </output_collection>
-            <output name="discarded" file="empty.txt" />
+            <output name="discarded_min" file="empty.txt" />
+            <output name="discarded_max" file="empty.txt" />
         </test>
         <test>
             <param name="inputFile" ftype="tabular" value="hcluster_sg.tabular" />
@@ -41,10 +44,11 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
                 <element name="0" file="0_output.txt" ftype="txt" />
                 <element name="1" file="1_output.txt" ftype="txt" />
             </output_collection>
-            <output name="discarded" file="discarded.txt" />
+            <output name="discarded_min" file="discarded.txt" />
+            <output name="discarded_max" file="empty.txt" />
         </test>
         <test>
-            <param name="inputFile" ftype="tabular" value="hcluster_sg1.txt" />
+            <param name="inputFile" ftype="tabular" value="hcluster_sg1.tabular" />
             <output_collection name="ids_lists" type="list">
                 <element name="0" file="hcluster_sg1_0_output.txt" ftype="txt" />
                 <element name="1" file="hcluster_sg1_1_output.txt" ftype="txt" />
@@ -56,7 +60,8 @@ python '$__tool_directory__/hcluster_sg_parser.py' '$inputFile'
                 <element name="7" file="hcluster_sg1_7_output.txt" ftype="txt" />
                 <element name="8" file="hcluster_sg1_8_output.txt" ftype="txt" />
             </output_collection>
-            <output name="discarded" file="empty.txt" />
+            <output name="discarded_min" file="empty.txt" />
+            <output name="discarded_max" file="empty.txt" />
         </test>
     </tests>
     <help>
