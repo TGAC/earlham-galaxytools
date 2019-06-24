@@ -4,7 +4,7 @@ cache: pip
 python: 2.7
 
 before_install:
-  - export GALAXY_RELEASE=release_18.09
+  - export GALAXY_RELEASE=release_19.05
 
 install:
   - pip install flake8 flake8-import-order planemo
