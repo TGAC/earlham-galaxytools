@@ -7,47 +7,45 @@
         <exit_code range="1:" level="fatal" />
     </stdio>
     <version_command>
-        t_coffee -version | grep Version
+t_coffee -version | grep Version
     </version_command>
-    <command use_shared_home="false">
-<![CDATA[
-        #if str($input_type.filter_fasta) == 'yes'
-            #set $input = 'temp.fasta'
-            python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' > temp.fasta &&
-        #end if
+    <command use_shared_home="false"><![CDATA[
+#if str($input_type.filter_fasta) == 'yes'
+    #set $input = 'temp.fasta'
+    python '$__tool_directory__/filter_by_fasta_ids.py' '$input_type.identifiers' '$input_type.fasta_input' > temp.fasta &&
+#end if
 
-        #set $method_opt = ''
-        #if $method01
-            #set $method_opt += str($method01) + ','
-        #end if
-        #if $method02
-            #set $method_opt += str($method02) + ','
-        #end if
-        #if $method03
-            #set $method_opt += str($method03) + ','
-        #end if
-        #if $method_opt
-            #set $method_opt = '-method ' + $method_opt[:-1]
-        #end if
+#set $method_opt = ''
+#if $method01
+    #set $method_opt += str($method01) + ','
+#end if
+#if $method02
+    #set $method_opt += str($method02) + ','
+#end if
+#if $method03
+    #set $method_opt += str($method03) + ','
+#end if
+#if $method_opt
+    #set $method_opt = '-method ' + $method_opt[:-1]
+#end if
 
-        #set $output_opt = ''
-        #if $outputs
-            #set $outputs_arr = str($outputs).split(',')
-            #for $o in $outputs_arr
-                #if $o != 'dnd'
-                    #set $output_opt += $o + ','
-                #end if
-            #end for
-        #else
-            #set $outputs_arr = []
+#set $output_opt = ''
+#if $outputs
+    #set $outputs_arr = str($outputs).split(',')
+    #for $o in $outputs_arr
+        #if $o != 'dnd'
+            #set $output_opt += $o + ','
         #end if
-        #if $output_opt
-            #set $output_opt = '-output ' + $output_opt[:-1]
-        #end if
+    #end for
+#else
+    #set $outputs_arr = []
+#end if
+#if $output_opt
+    #set $output_opt = '-output ' + $output_opt[:-1]
+#end if
 
-        t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
-]]>
-    </command>
+t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name t_coffee_out -quiet
+    ]]></command>
     <inputs>
         <conditional name="input_type">
             <param name="filter_fasta" type="select" label="Filter FASTA input?">
@@ -147,7 +145,7 @@
             <output name="fasta_aln" file="output2.fasta" ftype="fasta" />
         </test>
     </tests>
-    <help>
+    <help><![CDATA[
 **What it does**
 
 This tool is a wrapper for the T-Coffee multiple sequence alignment suite. The input is a set of sequences in FASTA format. Apart from running on the complete FASTA input, it can also run on a subset of sequences by providing a list of the FASTA IDs.
@@ -192,7 +190,7 @@ By selecting "Yes" in output fasta_aln in the wrapper, the user will obtain the 
     >1ihvA
     NF-RVYYRDSRDPVWKGPA-KLLWKGEGAV-------VIQDN-------S
     DI--------------KVVPRRKAK-----IIRD
-    </help>
+    ]]></help>
     <citations>
         <citation type="doi">10.1006/jmbi.2000.4042</citation>
     </citations>

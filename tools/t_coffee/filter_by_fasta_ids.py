@@ -35,15 +35,11 @@ def target_match(target, search_entry):
 
 
 def main():
-    ''' the main function'''
-
     used_sequences = set()
     work_summary = {'wanted': 0, 'found': 0, 'duplicates': 0}
-    targets = []
 
     with open(sys.argv[1]) as f_target:
-        for line in f_target.readlines():
-            targets.append(">%s" % line.strip().upper())
+        targets = [">%s" % _.strip().upper() for _ in f_target]
 
     work_summary['wanted'] = len(targets)
 
