@@ -1,7 +1,6 @@
 <tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.4.1">
     <description>converts data for the workflow</description>
-    <command detect_errors="exit_code">
-<![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/gstf_preparation.py'
 #for $q in $queries
     --gff3 '${q.genome}:${q.gff3_input}'
@@ -26,8 +25,7 @@ python '$__tool_directory__/gstf_preparation.py'
 -o '$output_db'
 --of '$output_fasta'
 --ff '$filtered_fasta'
-]]>
-    </command>
+    ]]></command>
 
     <inputs>
         <repeat name="queries" title="GFF3 dataset">
@@ -57,7 +55,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="longestCDS" value="false" />
             <param name="headers" value="true" />
 
-            <output name="output_db" file="test1.sqlite" compare="sim_size" />
+            <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1.fasta" />
             <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
@@ -68,7 +66,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="longestCDS" value="true" />
             <param name="headers" value="true" />
 
-            <output name="output_db" file="test1.sqlite" compare="sim_size" />
+            <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1_longest.fasta" />
             <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
@@ -79,7 +77,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="longestCDS" value="false" />
             <param name="headers" value="false" />
 
-            <output name="output_db" file="test1.sqlite" compare="sim_size" />
+            <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
             <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
@@ -89,7 +87,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="longestCDS" value="false" />
             <param name="headers" value="true" />
 
-            <output name="output_db" file="test4.sqlite" compare="sim_size" />
+            <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test4.fasta" />
             <output name="filtered_fasta" file="test4.ns.fasta" />
         </test>
@@ -100,13 +98,12 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="headers" value="true" />
             <param name="regions" value="X" />
 
-            <output name="output_db" file="test5.sqlite" compare="sim_size" />
+            <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test5_filtered.fasta" />
             <output name="filtered_fasta" file="test5.ns.fasta" />
         </test>
     </tests>
-    <help>
-<![CDATA[
+    <help><![CDATA[
 **What it does**
 
 This tool converts a set of GFF3 and/or JSON gene feature information datasets into SQLite format.
@@ -140,8 +137,7 @@ The following features are parsed: **gene**, **mRNA**, **transcript**, **exon**,
 .. class:: warningmark
 
 If a value in the **ID** and **Parent** attribute contains a colon, everything up to the first colon will be discarded.
-]]>
-    </help>
+    ]]></help>
     <citations>
     </citations>
 </tool>

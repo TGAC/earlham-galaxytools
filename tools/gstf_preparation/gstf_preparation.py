@@ -114,10 +114,7 @@ def feature_to_dict(cols, parent_dict=None):
         # a 5' UTR can be split among multiple exons
         # a CDS can be part of multiple transcripts
         for parent in d['Parent'].split(','):
-            if parent not in parent_dict:
-                parent_dict[parent] = [d]
-            else:
-                parent_dict[parent].append(d)
+            parent_dict.setdefault(parent, []).append(d)
     return d
 
 
@@ -403,10 +400,7 @@ def __main__():
             else:
                 break
 
-            if gene_id in gene_transcripts_dict:
-                gene_transcripts_dict[gene_id].append((transcript_id, len(entry.sequence)))
-            else:
-                gene_transcripts_dict[gene_id] = [(transcript_id, len(entry.sequence))]
+            gene_transcripts_dict.setdefault(gene_id, []).append((transcript_id, len(entry.sequence)))
 
     if options.longestCDS:
         # For each gene, select the transcript with the longest sequence.
