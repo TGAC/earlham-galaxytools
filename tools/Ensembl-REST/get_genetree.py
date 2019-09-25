@@ -18,10 +18,6 @@ parser.add_option('-s', '--sequence', type='choice',
                   choices=['protein', 'cdna', 'none'], default='protein',
                   help='The type of sequence to bring back. Setting it to none results in no sequence being returned')
 
-parser.add_option('-g', '--species', type='choice',
-                  choices=['ensembl', 'ensemblgenomes'], default='ensembl',
-                  help='Specify the genome databases for vertebrates and other eukaryotic species')
-
 parser.add_option('-a', '--aligned', type='choice', choices=['0', '1'],
                   default='0', help='Return the aligned string if true. Otherwise, return the original sequence (no insertions)')
 parser.add_option('-c', '--cigar_line', type='choice', choices=['0', '1'],
@@ -35,7 +31,7 @@ options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
 
-server = 'http://rest.%s.org' % options.species
+server = 'http://rest.ensembl.org' % options.species
 
 if options.id_type == 'gene_id':
     ext = 'genetree/member/id'
