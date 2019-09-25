@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-import optparse
 import collections
+import argparse
 
 from ete3 import PhyloTree
 
@@ -28,20 +28,20 @@ def printCSV(myDict, speciesList, colList=None):
 
 def main():
     usage = "usage: %prog --genetree <genetree-file> [options]"
-    parser = optparse.OptionParser(usage=usage)
-    parser.add_option('--genetree', help='GeneTree in nhx format')
-    parser.add_option('--speciesorder', help='Comma separated species list')
-    options, args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='Gene Copy Number Finder')
+    parser.add_argument('--genetree', help='GeneTree in nhx format')
+    parser.add_argument('--speciesorder', help='Comma separated species list')
+    args = parser.parse_args()
 
-    if options.genetree is None:
+    if args.genetree is None:
         parser.error("--genetree option must be specified, GeneTree in nhx format")
 
-    if options.speciesorder is None:
+    if args.speciesorder is None:
         parser.error("--speciesorder option must be specified, Comma separated species list")
 
-    f = open(options.genetree, "r")
+    f = open(args.genetree, "r")
 
-    speciesList = options.speciesorder.split(",")
+    speciesList = args.speciesorder.split(",")
 
     table = []
 
