@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-import collections
 import argparse
+import collections
 
 from ete3 import PhyloTree
 
@@ -27,7 +27,6 @@ def printCSV(myDict, speciesList, colList=None):
 
 
 def main():
-    usage = "usage: %prog --genetree <genetree-file> [options]"
     parser = argparse.ArgumentParser(description='Gene Copy Number Finder')
     parser.add_argument('--genetree', help='GeneTree in nhx format')
     parser.add_argument('--speciesorder', help='Comma separated species list')
