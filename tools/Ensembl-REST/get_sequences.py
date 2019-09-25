@@ -23,7 +23,7 @@ options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
 
-server = 'http://rest.ensembl.org' % options.species
+server = 'http://rest.ensembl.org'
 ext = 'sequence/id'
 
 headers = {'Content-Type': 'text/x-fasta', 'Accept': 'text/x-fasta'}
