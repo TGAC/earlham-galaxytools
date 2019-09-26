@@ -31,6 +31,7 @@ python '$__tool_directory__/ete_gene_cnv.py'
     <tests>
         <test>
             <param name="genetreeFile" ftype="nhx" value="test.nhx" />
+            <param name="speciesorder" value="w,x,y,z,zz" />
             <output name="genes" file="test.csv" />
         </test>
     </tests>
