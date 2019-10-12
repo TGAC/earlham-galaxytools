@@ -1,47 +1,33 @@
 <tool id="ete_gene_csv_finder" name="Gene Copy Number Finder" version="@VERSION@">
-    <description>from a genetree utilising the ETE Toolkit</description>
+    <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
-        <xml name="homologies_macro" token_label="" token_help="">
-            <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="@LABEL@" help="@HELP@">
-                <option value="one-to-one" selected="true">one-to-one</option>
-                <option value="one-to-many" selected="true">one-to-many</option>
-                <option value="many-to-one" selected="true">many-to-one</option>
-                <option value="many-to-many" selected="true">many-to-many</option>
-                <option value="paralogs" selected="true">Paralogs</option>
-            </param>
-        </xml>
     </macros>
     <expand macro="requirements" />
-    <command detect_errors="exit_code">
-    <![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 python '$__tool_directory__/ete_gene_cnv.py'
 --genetree '$genetreeFile'
 --speciesorder '$speciesorder'
-> $genes
-    ]]>
-    </command>
+> '$genes'
+    ]]></command>
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format, where nodes are in form of geneid_species" />
-        <param name="speciesorder" type="text" label="Species in order" help="Comma separated species list" />
+        <param name="speciesorder" type="text" label="Species in order" help="Comma-separated species list" />
     </inputs>
     <outputs>
-        <data format="csv" name="genes" label="${tool.name} on ${on_string}"/>
+        <data name="genes" format="tabular" label="${tool.name} on ${on_string}"/>
     </outputs>
     <tests>
         <test>
             <param name="genetreeFile" ftype="nhx" value="test.nhx" />
             <param name="speciesorder" value="w,x,y,z,zz" />
-            <output name="genes" file="test.csv" />
+            <output name="genes" file="test.tsv" />
         </test>
     </tests>
-    <help>
-    <![CDATA[
+    <help><![CDATA[
 Find copy number for genes from GeneTree by utilising the `ETE Toolkit`_. Input can be single GeneTree or multiple GeneTree in a file with one GeneTree per line.
 
 .. _ETE Toolkit: http://etetoolkit.org/
-
-    ]]>
-    </help>
+    ]]></help>
     <expand macro="citations" />
 </tool>
