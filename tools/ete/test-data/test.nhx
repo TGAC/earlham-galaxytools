@@ -1,0 +1,3 @@
+(((a_w,a_x),(a_y,a_z)),a_zz);
+(((a_w,a_w),(a_y,a_z)),a_zz);
+(((a_w,a_x),(a_y,a_y)),a_zz);

@@ -1,5 +1,5 @@
 <tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@VERSION@">
-    <description>from a genetree utilising the ETE Toolkit</description>
+    <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
         <xml name="homologies_macro" token_label="" token_help="">
