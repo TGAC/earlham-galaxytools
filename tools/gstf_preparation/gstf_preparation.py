@@ -289,6 +289,7 @@ def fetch_biotype_for_transcript(conn, transcript_id):
         return None
     return row[0]
 
+
 def fetch_gene_id_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
@@ -428,27 +429,26 @@ def __main__():
     if options.longestCDS:
         selected_transcript_ids = []
         for transcripts in gene_transcripts_dict.values():
-            print("transcripts")
-            exists = False;
+            exists = False
             for transcript in transcripts:
                 if transcript[1] == "protein_coding":
-                    exists =True;
-                    break;
-            if exists == True:
-                length = 0;
-                longest_id = 0;
+                    exists = True
+                    break
+            if exists is True:
+                length = 0
+                longest_id = 0
                 for transcript in transcripts:
                     if transcript[1] == "protein_coding" and transcript[2] > length:
                         longest_id = transcript[0]
                         length = transcript[2]
                 selected_transcript_ids.append(longest_id)
             else:
-                length = 0;
-                longest_id = 0;
+                length = 0
+                longest_id = 0
                 for transcript in transcripts:
                     if transcript[2] > length:
                         longest_id = transcript[0]
-                        length = transcript[2]                        
+                        length = transcript[2]
                 selected_transcript_ids.append(longest_id)
 
     regions = [_.strip().lower() for _ in options.regions.split(",")]
