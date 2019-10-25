@@ -67,6 +67,7 @@ def create_tables(conn):
         transcript_id VARCHAR PRIMARY KEY NOT NULL,
         protein_id VARCHAR UNIQUE,
         protein_sequence VARCHAR,
+        biotype VARCHAR,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
     cur.execute('''CREATE VIEW transcript_species AS
@@ -97,6 +98,9 @@ def feature_to_dict(cols, parent_dict=None):
     for attr in cols[8].split(';'):
         if '=' in attr:
             (tag, value) = attr.split('=')
+            if tag == 'biotype':
+                d[tag] = value
+                print("biotype")
             if tag == 'ID':
                 tag = 'id'
                 value = remove_type_from_id(value)
@@ -121,6 +125,7 @@ def feature_to_dict(cols, parent_dict=None):
 def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
     gene = feature_to_dict(cols)
+    print(gene)
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
@@ -247,9 +252,13 @@ def write_gene_dict_to_db(conn, gene_dict):
             for transcript in gene["Transcript"]:
                 transcript_id = transcript['id']
                 protein_id = transcript.get('Translation', {}).get('id', None)
+                if "biotype" in transcript:
+                    biotype = transcript["biotype"]
+                else:
+                    biotype = "NULL"
                 try:
-                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
-                                (transcript_id, protein_id, gene_id))
+                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id, biotype) VALUES (?, ?, ?, ?)',
+                                (transcript_id, protein_id, gene_id, biotype))
                 except Exception as e:
                     raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
 
@@ -266,6 +275,16 @@ def fetch_species_and_seq_region_for_transcript(conn, transcript_id):
         return (None, None)
     return row
 
+
+def fetch_biotype_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT biotype FROM transcript WHERE transcript_id=?',
+                (transcript_id, ))
+    row = cur.fetchone()
+    if not row:
+        return None
+    return row[0]
 
 def fetch_gene_id_for_transcript(conn, transcript_id):
     cur = conn.cursor()
@@ -400,13 +419,34 @@ def __main__():
             else:
                 break
 
-            gene_transcripts_dict.setdefault(gene_id, []).append((transcript_id, len(entry.sequence)))
+            transcript_type = fetch_biotype_for_transcript(conn, transcript_id)
+            gene_transcripts_dict.setdefault(gene_id, []).append((transcript_id, transcript_type, len(entry.sequence)))
 
     if options.longestCDS:
-        # For each gene, select the transcript with the longest sequence.
-        # If more than one transcripts have the same longest sequence for a
-        # gene, the first one to appear in the FASTA file is selected
-        selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
+        selected_transcript_ids = []
+        for transcripts in gene_transcripts_dict.values():
+            print("transcripts")
+            exists = False;
+            for transcript in transcripts:
+                if transcript[1] == "protein_coding":
+                    exists =True;
+                    break;
+            if exists == True:
+                length = 0;
+                longest_id = 0;
+                for transcript in transcripts:
+                    if transcript[1] == "protein_coding" and transcript[2] > length:
+                        longest_id = transcript[0]
+                        length = transcript[2]
+                selected_transcript_ids.append(longest_id)
+            else:
+                length = 0;
+                longest_id = 0;
+                for transcript in transcripts:
+                    if transcript[2] > length:
+                        longest_id = transcript[0]
+                        length = transcript[2]                        
+                selected_transcript_ids.append(longest_id)
 
     regions = [_.strip().lower() for _ in options.regions.split(",")]
     with open(options.of, 'w') as output_fasta_file, open(options.ff, 'w') as filtered_fasta_file:
