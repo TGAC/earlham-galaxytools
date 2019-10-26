@@ -101,7 +101,6 @@ def feature_to_dict(cols, parent_dict=None):
             (tag, value) = attr.split('=')
             if tag == 'biotype':
                 d[tag] = value
-                print("biotype")
             if tag == 'ID':
                 tag = 'id'
                 value = remove_type_from_id(value)
@@ -126,7 +125,6 @@ def feature_to_dict(cols, parent_dict=None):
 def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
     gene = feature_to_dict(cols)
-    print(gene)
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
@@ -258,7 +256,7 @@ def write_gene_dict_to_db(conn, gene_dict):
                 if "biotype" in transcript:
                     biotype = transcript["biotype"]
                 else:
-                    biotype = "NULL"
+                    biotype = None
                 try:
                     cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id, biotype) VALUES (?, ?, ?, ?)',
                                 (transcript_id, protein_id, gene_id, biotype))
