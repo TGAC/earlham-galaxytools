@@ -137,6 +137,8 @@ def add_gene_to_dict(cols, species, gene_dict):
 
 def add_transcript_to_dict(cols, species, transcript_dict):
     transcript = feature_to_dict(cols)
+    if 'biotype' in transcript and transcript['biotype'] != 'protein_coding':
+        return
     transcript.update({
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
