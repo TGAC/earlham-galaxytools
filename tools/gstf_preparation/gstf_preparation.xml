@@ -21,10 +21,10 @@ python '$__tool_directory__/gstf_preparation.py'
 #end if
 #if $regions
     --regions '$regions'
+    --ff '$filtered_fasta'
 #end if
 -o '$output_db'
 --of '$output_fasta'
---ff '$filtered_fasta'
     ]]></command>
 
     <inputs>
@@ -38,17 +38,19 @@ python '$__tool_directory__/gstf_preparation.py'
         <param name="fasta_inputs" type="data" format="fasta" multiple="true" label="Corresponding CDS datasets in FASTA format" help="Each FASTA header line should start with a transcript id" />
         <param name="longestCDS" type="boolean" checked="false" label="Keep only the longest CDS per gene" />
         <param name="headers" type="boolean" checked="true" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow" />
-        <param name="regions" type="text" optional="true" label="Comma-separated list of region IDs (e.g. chromosomes or scaffolds) for which FASTA sequences should be filtered" help="Region IDs are in the `seqid` column for GFF3 and in the `seq_region_name` field in JSON. This is typically used to filter chromosomes with a non-standard genetic code, like mitochondria, to be analysed separately" />
+        <param name="regions" type="text" optional="true" label="Comma-separated list of region IDs (e.g. chromosomes or scaffolds) for which FASTA sequences should be filtered out" help="Region IDs are in the `seqid` column for GFF3 and in the `seq_region_name` field in JSON. This is typically used to filter out chromosomes with a non-standard genetic code, like mitochondria, to be analysed separately" />
     </inputs>
 
     <outputs>
-         <data name="output_db" format="sqlite" label="${tool.name} on ${on_string}: SQLite" />
-         <data name="output_fasta" format="fasta" label="${tool.name} on ${on_string}: FASTA" />
-         <data name="filtered_fasta" format="fasta" label="${tool.name} on ${on_string}: filtered sequences" />
+        <data name="output_db" format="sqlite" label="${tool.name} on ${on_string}: SQLite" />
+        <data name="output_fasta" format="fasta" label="${tool.name} on ${on_string}: FASTA" />
+        <data name="filtered_fasta" format="fasta" label="${tool.name} on ${on_string}: filtered sequences">
+            <filter>regions</filter>
+        </data>
     </outputs>
 
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="fasta_inputs" ftype="fasta" value="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
@@ -57,9 +59,8 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1.fasta" />
-            <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
-        <test>
+        <test expect_num_outputs="2">
             <param name="fasta_inputs" ftype="fasta" value="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
@@ -68,9 +69,8 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1_longest.fasta" />
-            <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
-        <test>
+        <test expect_num_outputs="2">
             <param name="fasta_inputs" ftype="fasta" value="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
@@ -79,9 +79,8 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
-            <output name="filtered_fasta" file="test1.ns.fasta" />
         </test>
-        <test>
+        <test expect_num_outputs="2">
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
             <param name="json" ftype="json" value="gene.json" />
             <param name="longestCDS" value="false" />
@@ -89,7 +88,6 @@ python '$__tool_directory__/gstf_preparation.py'
 
             <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test4.fasta" />
-            <output name="filtered_fasta" file="test4.ns.fasta" />
         </test>
         <test>
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />

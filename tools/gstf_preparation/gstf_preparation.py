@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import json
 import optparse
+import os
 import sqlite3
 import sys
 
@@ -299,7 +300,7 @@ def __main__():
     parser.add_option('--regions', default="", help='Comma-separated list of region IDs for which FASTA sequences should be filtered')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
-    parser.add_option('--ff', help='Path of the filtered sequences output FASTA file')
+    parser.add_option('--ff', default=os.devnull, help='Path of the filtered sequences output FASTA file')
 
     options, args = parser.parse_args()
     if args:
