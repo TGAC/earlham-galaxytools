@@ -26,7 +26,7 @@ A detailed discussion of Docker's parameters is given in the [Docker manual](htt
 
 ## Adding custom data
 
-Docker configuration comes with test data, but if a user wants to start docker with custom data then modify the library_data.yml file as shown in example within. These data will be available as data libraries in Galaxy.
+Docker configuration comes with test data, but if a user wants to start docker with custom data then modify the `library_data.yml` file as shown in example within. These data will be available as data libraries in Galaxy.
 
 ## Reference 
 
