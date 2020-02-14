@@ -15,6 +15,6 @@ RUN workflow-to-tools -w $GALAXY_HOME/workflows/gstf.ga -o $GALAXY_ROOT/gstf-too
 RUN startup_lite && \
     galaxy-wait && \
     shed-tools install -g http://localhost:8080 -a $GALAXY_DEFAULT_ADMIN_KEY -t $GALAXY_ROOT/gstf-tools.yml && \
-    workflow-install --workflow_path $GALAXY_HOME/workflows/ -g http://localhost:8080 -u $GALAXY_DEFAULT_ADMIN_USER -p $GALAXY_DEFAULT_ADMIN_PASSWORD && \
-    setup-data-libraries -i $GALAXY_ROOT/library_data.yml -g http://localhost:8080 -u $GALAXY_DEFAULT_ADMIN_USER -p $GALAXY_DEFAULT_ADMIN_PASSWORD
+    workflow-install --workflow_path $GALAXY_HOME/workflows/ -g http://localhost:8080 -a $GALAXY_DEFAULT_ADMIN_KEY && \
+    setup-data-libraries -i $GALAXY_ROOT/library_data.yml -g http://localhost:8080 -a $GALAXY_DEFAULT_ADMIN_KEY
 
