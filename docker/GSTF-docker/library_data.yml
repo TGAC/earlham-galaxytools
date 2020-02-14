@@ -13,3 +13,7 @@ libraries:
           file_type: fasta
         - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/tools/gstf_preparation/test-data/gene.json
           file_type: json
+
+    # Example of loading data from Ensembl  
+    # - url: ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
+    #   file_type: fasta.gz
