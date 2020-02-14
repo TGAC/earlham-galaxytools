@@ -1,0 +1,19 @@
+libraries:
+    - name: "Test data for workflow"
+      files:
+        - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/workflows/GeneSeqToFamily/test-data/CDS.fasta
+          file_type: fasta
+        - url: https://github.com/TGAC/earlham-galaxytools/raw/master/workflows/GeneSeqToFamily/test-data/gene_family.gafa.sqlite
+          file_type: gafa.sqlite
+        - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/workflows/GeneSeqToFamily/test-data/species.nhx
+          file_type: nhx
+    - name: "Test data for GSTF preparation"
+      files:
+        - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/tools/gstf_preparation/test-data/CDS.fasta
+          file_type: fasta
+        - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/tools/gstf_preparation/test-data/gene.json
+          file_type: json
+
+    # Example of loading data from Ensembl  
+    # - url: ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
+    #   file_type: fasta.gz
