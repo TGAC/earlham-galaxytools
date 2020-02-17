@@ -8,7 +8,7 @@ The Galaxy Admin User has username `admin@galaxy.org` and password `admin`. In o
 
 The PostgreSQL username is `galaxy`, the password `galaxy` and the database name `galaxy`.
 
-If you want to create new users, please make sure to use the /export/ volume. Otherwise your user will be removed after your docker session is finished.
+For more information please have a look at: https://github.com/bgruening/docker-galaxy-stable/blob/master/README.md 
 
 ## Starting docker
 
