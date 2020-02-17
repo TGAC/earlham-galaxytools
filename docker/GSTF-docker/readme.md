@@ -4,9 +4,9 @@ The GeneSeqToFamily workflow is a comprehensive pipeline based on Ensembl Compar
 
 ## Users and passwords
 
-The Galaxy Admin User has the username admin@galaxy.org and the password admin. In order to use certain features of Galaxy, like e.g. workflows, one has to be logged in. Also the installation of additional tools requires a login.
+The Galaxy Admin User has username `admin@galaxy.org` and password `admin`. In order to use certain features of Galaxy, for example workflows, one has to be logged in. Also the installation of additional tools requires a login.
 
-The PostgreSQL username is galaxy, the password galaxy and the database name galaxy.
+The PostgreSQL username is `galaxy`, the password `galaxy` and the database name `galaxy`.
 
 If you want to create new users, please make sure to use the /export/ volume. Otherwise your user will be removed after your docker session is finished.
 
@@ -26,7 +26,7 @@ A detailed discussion of Docker's parameters is given in the [Docker manual](htt
 
 ## Adding custom data
 
-Docker configuration comes with test data, but if a user wants to start docker with custom data then modify the `library_data.yml` file as shown in example within. These data will be available as data libraries in Galaxy.
+Docker configuration comes with test data, but if you want to pre-load custom data, then modify the `library_data.yml` file as shown in the example within. These data will be available as data libraries in Galaxy.
 
 ## Reference 
 
