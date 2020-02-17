@@ -3,8 +3,8 @@ libraries:
       files:
         - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/workflows/GeneSeqToFamily/test-data/CDS.fasta
           file_type: fasta
-        - url: https://github.com/TGAC/earlham-galaxytools/raw/master/workflows/GeneSeqToFamily/test-data/gene_family.gafa.sqlite
-          file_type: gafa.sqlite
+        - url: https://github.com/TGAC/earlham-galaxytools/raw/master/tools/gstf_preparation/test-data/test4.sqlite
+          file_type: sqlite
         - url: https://raw.githubusercontent.com/TGAC/earlham-galaxytools/master/workflows/GeneSeqToFamily/test-data/species.nhx
           file_type: nhx
     - name: "Test data for GSTF preparation"
