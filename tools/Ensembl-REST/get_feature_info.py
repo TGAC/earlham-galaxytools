@@ -15,10 +15,6 @@ parser.add_option('-e', '--expand', type='choice', choices=['0', '1'],
                   default='0',
                   help='Expands the search to include any connected features. e.g. If the object is a gene, its transcripts, translations and exons will be returned as well.')
 
-parser.add_option('-s', '--species', type='choice',
-                  choices=['ensembl', 'ensemblgenomes'], default='ensembl',
-                  help='Specify the genome databases for vertebrates and other eukaryotic species')
-
 parser.add_option('-f', '--format', type='choice',
                   choices=['full', 'condensed'], default='full',
                   help='Specify the formats to emit from this endpoint')
@@ -27,7 +23,7 @@ if options.input is None:
     raise Exception('-i option must be specified')
 
 
-server = 'http://rest.%s.org' % options.species
+server = 'http://rest.ensembl.org'
 ext = 'lookup/id'
 
 headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}

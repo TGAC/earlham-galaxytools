@@ -7,7 +7,6 @@
     <command detect_errors="exit_code">
 <![CDATA[
 python '$__tool_directory__/get_sequences.py'
--s $species_selector
 --expand_3prime $expand_3prime
 --expand_5prime $expand_5prime
 -t $type_selector
@@ -18,10 +17,6 @@ python '$__tool_directory__/get_sequences.py'
 
     <inputs>
         <param name="input" type="data" format="txt" label="List of Ensembl IDs" />
-        <param name="species_selector" type="select" label="Select Species">
-            <option value="ensembl" selected="true">Vertebrates</option>
-            <option value="ensemblgenomes">Other species</option>
-        </param>
         <param name="expand_3prime" type="integer" value="0" min="0" label="expand_3prime" help="Expand each sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
         <param name="expand_5prime" type="integer" value="0" min="0" label="expand_5prime" help="Expand each sequence downstream of the sequence by this many basepairs. Only available when using genomic sequence type." />
         <param name="type_selector" type="select" label="Type" help="Type of sequence. Defaults to genomic where applicable, i.e. not translations. cDNA refers to the spliced transcript sequence with UTR; CDS refers to the spliced transcript sequence without UTR">
