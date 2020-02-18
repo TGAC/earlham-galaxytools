@@ -98,8 +98,6 @@ def feature_to_dict(cols, parent_dict=None):
     for attr in cols[8].split(';'):
         if '=' in attr:
             (tag, value) = attr.split('=')
-            if tag == 'biotype':
-                d[tag] = value
             if tag == 'ID':
                 tag = 'id'
                 value = remove_type_from_id(value)
