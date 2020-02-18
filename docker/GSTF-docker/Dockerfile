@@ -1,4 +1,4 @@
-FROM bgruening/galaxy-stable
+FROM bgruening/galaxy-stable:latest
 
 MAINTAINER Anil Thanki, Anil.Thanki@earlham.ac.uk
 
@@ -17,10 +17,11 @@ RUN mkdir -p $GALAXY_HOME/workflows
 ADD workflow/gstf.ga $GALAXY_HOME/workflows/
 
 # Generate list of tools required by the workflow
-RUN workflow-to-tools -w $GALAXY_HOME/workflows/gstf.ga -o $GALAXY_ROOT/gstf-tools.yml -l "GSTF workflow tools"
-
 # Start Galaxy instance, install tools, workflow and set up data libraries
-RUN startup_lite && \
+RUN . /tool_deps/_conda/etc/profile.d/conda.sh && \
+    conda activate base && \
+    workflow-to-tools -w $GALAXY_HOME/workflows/gstf.ga -o $GALAXY_ROOT/gstf-tools.yml -l "GSTF workflow tools" && \
+    startup_lite && \
     galaxy-wait && \
     shed-tools install -g http://localhost:8080 -a $GALAXY_DEFAULT_ADMIN_KEY -t $GALAXY_ROOT/gstf-tools.yml && \
     shed-tools install -g http://localhost:8080 -a $GALAXY_DEFAULT_ADMIN_KEY -t $GALAXY_ROOT/tools.yml && \
