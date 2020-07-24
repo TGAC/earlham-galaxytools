@@ -298,6 +298,16 @@ def fetch_gene_id_for_transcript(conn, transcript_id):
         return None
     return row[0]
 
+def fetch_gene_symbol_for_gene(conn, gene_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT gene_symbol FROM gene WHERE gene_id=?',
+                (gene_id, ))
+    row = cur.fetchone()
+    if not row:
+        return None
+    return row[0]
+
 
 def remove_id_version(s, force=False):
     """
@@ -316,7 +326,7 @@ def __main__():
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
     parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep only the longest CDS per gene')
-    parser.add_option('--headers', action='store_true', default=False, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
+    parser.add_option('--headers', default=None, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
     parser.add_option('--regions', default="", help='Comma-separated list of region IDs for which FASTA sequences should be filtered')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
@@ -455,6 +465,8 @@ def __main__():
             force_remove_id_version = fasta_arg in force_remove_id_version_file_list
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0], force_remove_id_version)
+
+
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
 
@@ -467,10 +479,15 @@ def __main__():
                     print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
-                if options.headers:
+                if options.headers == "transcript":
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
                     entry.header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
+                elif options.headers == "gene":
+                    # Change the FASTA header to '>GeneSymbol_species', as required by TreeBest
+                    # Remove any underscore in the species
+                    gene_name = fetch_gene_symbol_for_gene(conn, fetch_gene_id_for_transcript(conn, transcript_id))
+                    entry.header = ">%s_%s" % (gene_name, species_for_transcript.replace('_', ''))
 
                 if seq_region_for_transcript.lower() in regions:
                     entry.print(filtered_fasta_file)
