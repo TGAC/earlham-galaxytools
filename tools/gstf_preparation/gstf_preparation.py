@@ -298,6 +298,7 @@ def fetch_gene_id_for_transcript(conn, transcript_id):
         return None
     return row[0]
 
+
 def fetch_gene_symbol_for_gene(conn, gene_id):
     cur = conn.cursor()
 
@@ -465,7 +466,6 @@ def __main__():
             force_remove_id_version = fasta_arg in force_remove_id_version_file_list
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0], force_remove_id_version)
-
 
                 if options.longestCDS and transcript_id not in selected_transcript_ids:
                     continue
