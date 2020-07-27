@@ -66,6 +66,7 @@ def create_tables(conn):
 
     cur.execute('''CREATE TABLE transcript (
         transcript_id VARCHAR PRIMARY KEY NOT NULL,
+        transcript_symbol VARCHAR,
         protein_id VARCHAR UNIQUE,
         protein_sequence VARCHAR,
         biotype VARCHAR,
@@ -146,6 +147,7 @@ def add_transcript_to_dict(cols, species, transcript_dict):
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
         'species': species,
+        'display_name': transcript.get('Name', None)
     })
     transcript_dict[transcript['id']] = transcript
 
@@ -252,14 +254,15 @@ def write_gene_dict_to_db(conn, gene_dict):
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 transcript_id = transcript['id']
+                transcript_symbol = transcript.get('display_name', None)
                 protein_id = transcript.get('Translation', {}).get('id', None)
                 if "biotype" in transcript:
                     biotype = transcript["biotype"]
                 else:
                     biotype = None
                 try:
-                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id, biotype) VALUES (?, ?, ?, ?)',
-                                (transcript_id, protein_id, gene_id, biotype))
+                    cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, gene_id, biotype) VALUES (?, ?, ?, ?, ?)',
+                                (transcript_id, transcript_symbol, protein_id, gene_id, biotype))
                 except Exception as e:
                     raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
 
@@ -304,6 +307,17 @@ def fetch_gene_symbol_for_gene(conn, gene_id):
 
     cur.execute('SELECT gene_symbol FROM gene WHERE gene_id=?',
                 (gene_id, ))
+    row = cur.fetchone()
+    if not row:
+        return None
+    return row[0]
+
+
+def fetch_transcript_symbol_for_transcript(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT transcript_symbol FROM transcript WHERE transcript_id=?',
+                (transcript_id, ))
     row = cur.fetchone()
     if not row:
         return None
@@ -487,7 +501,12 @@ def __main__():
                     # Change the FASTA header to '>GeneSymbol_species', as required by TreeBest
                     # Remove any underscore in the species
                     gene_name = fetch_gene_symbol_for_gene(conn, fetch_gene_id_for_transcript(conn, transcript_id))
-                    entry.header = ">%s_%s" % (gene_name, species_for_transcript.replace('_', ''))
+                    entry.header = ">%s-%s_%s" % (gene_name, transcript_id, species_for_transcript.replace('_', ''))
+                elif options.headers == "transcript_symbol":
+                    # Change the FASTA header to '>GeneSymbol_species', as required by TreeBest
+                    # Remove any underscore in the species
+                    transcript_name = fetch_transcript_symbol_for_transcript(conn, transcript_id)
+                    entry.header = ">%s-%s_%s" % (transcript_name, transcript_id, species_for_transcript.replace('_', ''))
 
                 if seq_region_for_transcript.lower() in regions:
                     entry.print(filtered_fasta_file)

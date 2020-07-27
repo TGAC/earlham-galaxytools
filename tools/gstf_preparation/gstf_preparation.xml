@@ -36,9 +36,10 @@ python '$__tool_directory__/gstf_preparation.py'
         <param name="fasta_inputs" type="data" format="fasta" multiple="true" label="Corresponding CDS datasets in FASTA format" help="Each FASTA header line should start with a transcript id" />
         <param name="longestCDS" type="boolean" checked="false" label="Keep only the longest CDS per gene" />
 
-        <param name="headers" type="select" display="radio" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species or GeneSymbol_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow">
+        <param name="headers" type="select" display="radio" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species or GeneSymbol_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow, only TranscriptId_species is acceptable format by Aequatus visualisation">
             <option value="transcript" selected="true">TranscriptId_species</option>
-            <option value="gene">GeneSymbol_species</option>
+            <option value="gene">GeneSymbol_TrascnriptID_species</option>
+            <option value="transcript_symbol">TranscriptSymbol_TrascnriptID_species</option>
         </param>
         <param name="regions" type="text" optional="true" label="Comma-separated list of region IDs (e.g. chromosomes or scaffolds) for which FASTA sequences should be filtered out" help="Region IDs are in the `seqid` column for GFF3 and in the `seq_region_name` field in JSON. This is typically used to filter out chromosomes with a non-standard genetic code, like mitochondria, to be analysed separately" />
     </inputs>
