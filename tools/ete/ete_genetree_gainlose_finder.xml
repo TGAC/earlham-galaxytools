@@ -1,4 +1,4 @@
-<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@">
+<tool id="ete_genetree_gainlose_finder" name="ETE GeneTree gainlose finder" version="@VERSION@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -9,21 +9,33 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-python '$__tool_directory__/ete_genetree_splitter.py'
+python '$__tool_directory__/ete_genetree_gainlose_finder.py'
 --genetree '$genetreeFile'
---split '$split'
 --gene_node $gene_node
+--speciestree '$speciesFile'
+--species_format $species_format
 --output_format $output_format
+> $output
     ]]></command>
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format" />
-         <param name="split" type="select" label="Split Algorithm">
-            <option value="dups" selected="true">Duplication - Uses ETE split_by_dups() function</option>
-            <option value="treeKO">Treeko - Uses Treeko implementation in ETE</option>
-        </param>
-         <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
+        <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
             <option value="0" selected="true">gene_species</option>
             <option value="1">species_gene</option>
+        </param>
+        <param name="speciesFile" type="data" format="nhx" label="Species file" help="Species Tree in nhx format" />
+        <param name="species_format" type="select" label="Input species tree format" help="See table below">
+            <option value="0">Flexible with support values (0)</option>
+            <option value="1">Flexible with internal node names (1)</option>
+            <option value="2">All branches + leaf names + internal supports (2)</option>
+            <option value="3">All branches + all names (3)</option>
+            <option value="4">Leaf branches + leaf names (4)</option>
+            <option value="5">Internal and leaf branches + leaf names (5)</option>
+            <option value="6">Internal branches + leaf names (6)</option>
+            <option value="7">Leaf branches + all names (7)</option>
+            <option value="8" selected="true">All names (8)</option>
+            <option value="9">Leaf names (9)</option>
+            <option value="100">Topology only (100)</option>
         </param>
         <param name="output_format" type="select" label="Output GeneTree format" help="See table below">
             <option value="0">Flexible with support values (0)</option>
@@ -40,22 +52,16 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         </param> 
     </inputs>
     <outputs>
-        <collection name="genetrees_lists" type="list" label="${tool.name} on ${on_string}">
-            <discover_datasets pattern="(?P&lt;designation&gt;.+)_genetree\.nhx" ext="nhx" />
-        </collection>
+        <data format="nhx" name="output" label="${tool.name} on ${on_string}" />
     </outputs>
     <tests>
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
-            <param name="split" value="dups"/>
             <param name="gene_node" value="0"/>
+            <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
+            <param name="species_format" value="8" />
             <param name="output_format" value="9" />
-            <output_collection name="genetrees_lists" type="list" count="4">
-                <element name="1" file="11_genetree.nhx" ftype="nhx" />
-                <element name="2" file="12_genetree.nhx" ftype="nhx" />
-                <element name="3" file="13_genetree.nhx" ftype="nhx" />
-                <element name="4" file="14_genetree.nhx" ftype="nhx" />
-            </output_collection>
+            <output name="output" file="genetree_out.nhx" />
         </test>
     </tests>
     <help><![CDATA[
