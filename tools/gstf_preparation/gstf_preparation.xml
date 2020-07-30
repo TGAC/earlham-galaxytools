@@ -13,7 +13,9 @@ python '$__tool_directory__/gstf_preparation.py'
 #for $fasta_input in $fasta_inputs
     --fasta '${fasta_input}'
 #end for
---headers $headers
+#if $headers
+    --headers $headers
+#end if
 #if $longestCDS
     -l
 #end if
