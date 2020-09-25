@@ -38,8 +38,8 @@ python '$__tool_directory__/gstf_preparation.py'
         <param name="fasta_inputs" type="data" format="fasta" multiple="true" label="Corresponding CDS datasets in FASTA format" help="Each FASTA header line should start with a transcript id" />
         <param name="longestCDS" type="boolean" checked="false" label="Keep only the longest CDS per gene" />
 
-        <param name="headers" type="select" display="radio" label="Change the header line of the FASTA sequences to the &gt;TranscriptId_species or GeneSymbol_species format" help="As required by TreeBest, part of the GeneSeqToFamily workflow, only TranscriptId_species is acceptable format by Aequatus visualisation">
-            <option value="transcript" selected="true">TranscriptId_species</option>
+        <param name="headers" type="select" display="radio" label="Change the header line of the FASTA sequences to the following format" help="As required by TreeBest, part of the GeneSeqToFamily workflow, only TranscriptId_species is acceptable format by Aequatus visualisation">
+            <option value="TranscriptId_species" selected="true">TranscriptId_species</option>
             <option value="gene">GeneSymbol_TranscriptID_species</option>
             <option value="transcript_symbol">TranscriptSymbol_TranscriptID_species</option>
             <option value="">Don't change</option>
@@ -61,7 +61,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
             <param name="longestCDS" value="false" />
-            <param name="headers" value="true" />
+            <param name="headers" value="TranscriptId_species" />
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1.fasta" />
@@ -71,7 +71,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
             <param name="longestCDS" value="true" />
-            <param name="headers" value="true" />
+            <param name="headers" value="TranscriptId_species" />
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test1_longest.fasta" />
@@ -81,7 +81,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="gff3_input" ftype="gff3" value="Caenorhabditis_elegans.WBcel235.87.chromosome.I.shortened.gff3" />
             <param name="genome" value="caenorhabditis_elegans" />
             <param name="longestCDS" value="false" />
-            <param name="headers" value="false" />
+            <param name="headers" value="" />
 
             <output name="output_db" file="test1.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="Caenorhabditis_elegans.WBcel235.cds.all.shortened.fa" />
@@ -90,7 +90,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
             <param name="json" ftype="json" value="gene.json" />
             <param name="longestCDS" value="false" />
-            <param name="headers" value="true" />
+            <param name="headers" value="TranscriptId_species" />
 
             <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test4.fasta" />
@@ -99,7 +99,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
             <param name="json" ftype="json" value="gene.json" />
             <param name="longestCDS" value="false" />
-            <param name="headers" value="true" />
+            <param name="headers" value="TranscriptId_species" />
             <param name="regions" value="X" />
 
             <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
@@ -111,7 +111,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <param name="gff3_input" ftype="gff3" value="MGP_PahariEiJ_G0008413.1.gff3" />
             <param name="genome" value="mus_pahari" />
             <param name="longestCDS" value="true" />
-            <param name="headers" value="true" />
+            <param name="headers" value="TranscriptId_species" />
 
             <output name="output_db" file="test6.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test6.fasta" />

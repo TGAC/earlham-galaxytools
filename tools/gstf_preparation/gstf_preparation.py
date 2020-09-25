@@ -493,7 +493,7 @@ def __main__():
                     print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
-                if options.headers == "transcript":
+                if options.headers == "TranscriptId_species":
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
                     entry.header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
@@ -503,7 +503,6 @@ def __main__():
                     gene_name = fetch_gene_symbol_for_gene(conn, fetch_gene_id_for_transcript(conn, transcript_id))
                     entry.header = ">%s-%s_%s" % (gene_name, transcript_id, species_for_transcript.replace('_', ''))
                 elif options.headers == "transcript_symbol":
-                    # Change the FASTA header to '>GeneSymbol_species', as required by TreeBest
                     # Remove any underscore in the species
                     transcript_name = fetch_transcript_symbol_for_transcript(conn, transcript_id)
                     entry.header = ">%s-%s_%s" % (transcript_name, transcript_id, species_for_transcript.replace('_', ''))
