@@ -41,17 +41,19 @@ def process_taxid(ncbi, taxid, ranks, RANK_IDX, lower=False):
     RANK_IDX: mapping from rank names to indices (distance to root/leaf?)
     lower: use lower taxa for filling "NA"s
     """
-    lineage = ncbi.get_lineage(taxid)
-    lineage_ranks = ncbi.get_rank(lineage)
-    lineage_names = ncbi.get_taxid_translator(lineage, try_synonyms=True)
+    lineage_taxids = ncbi.get_lineage(taxid)
+    lineage_ranks = ncbi.get_rank(lineage_taxids)
+    lineage_names = ncbi.get_taxid_translator(lineage_taxids, try_synonyms=True)
     if lower:
-        lineage.reverse()
-    for l in lineage:
-        if not lineage_ranks[l] in RANK_IDX:
+        lineage_taxids.reverse()
+    for parent_taxid in lineage_taxids:
+        parent_rank = lineage_ranks[parent_taxid]
+        if parent_rank not in RANK_IDX:
             continue
-        if ranks[RANK_IDX[lineage_ranks[l]]] != "NA":
+        parent_rank_index = RANK_IDX[parent_rank]
+        if ranks[parent_rank_index] != "NA":
             continue
-        ranks[RANK_IDX[lineage_ranks[l]]] = lineage_names[l]
+        ranks[parent_rank_index] = lineage_names[parent_taxid]
 
 
 # get command line options
