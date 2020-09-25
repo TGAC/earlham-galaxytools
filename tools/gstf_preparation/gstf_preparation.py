@@ -75,7 +75,7 @@ def create_tables(conn):
     cur.execute('''CREATE VIEW transcript_species AS
         SELECT transcript_id, species, seq_region_name
         FROM transcript JOIN gene
-        ON transcript.gene_id = gene.gene_id''')
+        USING (gene_id)''')
 
     conn.commit()
 
@@ -100,8 +100,6 @@ def feature_to_dict(cols, parent_dict=None):
     for attr in cols[8].split(';'):
         if '=' in attr:
             (tag, value) = attr.split('=')
-            if tag == 'biotype':
-                d[tag] = value
             if tag == 'ID':
                 tag = 'id'
                 value = remove_type_from_id(value)
@@ -126,38 +124,33 @@ def feature_to_dict(cols, parent_dict=None):
 def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
     gene = feature_to_dict(cols)
-    if 'biotype' in gene and gene['biotype'] != 'protein_coding':
-        return
-
+    if not gene['id']:
+        raise Exception("Id not found among column 9 attribute tags: %s" % cols[8])
     if 'confidence' in gene and gene['confidence'] != 'high':
-        return
-    
+        raise Exception("Gene %s has confidence %s (not high), discarding" % (gene['id'], gene['confidence']))
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
         'seq_region_name': cols[0],
         'species': species,
         'Transcript': [],
-        'display_name': gene.get('Name', None)
+        'display_name': gene.get('Name'),
     })
-    if gene['id']:
-        gene_dict[gene['id']] = gene
-        gene_count = gene_count + 1
+    gene_dict[gene['id']] = gene
+    gene_count = gene_count + 1
 
 
 def add_transcript_to_dict(cols, species, transcript_dict):
     transcript = feature_to_dict(cols)
     if 'biotype' in transcript and transcript['biotype'] != 'protein_coding':
-        return
-        
+        raise Exception("Transcript %s has biotype %s (not protein-coding), discarding" % (transcript['id'], transcript['biotype']))
     if 'representative' in transcript and transcript['representative'] != 'true':
-        return
-            
+        raise Exception("Transcript %s has representative %s (not true), discarding" % (transcript['id'], transcript['representative']))
     transcript.update({
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
         'species': species,
-        'display_name': transcript.get('Name', None)
+        'display_name': transcript.get('Name'),
     })
     transcript_dict[transcript['id']] = transcript
 
@@ -259,17 +252,14 @@ def write_gene_dict_to_db(conn, gene_dict):
             continue
         gene_id = gene['id']
         cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (gene_id, gene.get('display_name', None), gene['seq_region_name'], gene['start'], gene['end'], gene['strand'], gene['species'], json.dumps(gene)))
+                    (gene_id, gene.get('display_name'), gene['seq_region_name'], gene['start'], gene['end'], gene['strand'], gene['species'], json.dumps(gene)))
 
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 transcript_id = transcript['id']
-                transcript_symbol = transcript.get('display_name', None)
-                protein_id = transcript.get('Translation', {}).get('id', None)
-                if "biotype" in transcript:
-                    biotype = transcript["biotype"]
-                else:
-                    biotype = None
+                transcript_symbol = transcript.get('display_name')
+                protein_id = transcript.get('Translation', {}).get('id')
+                biotype = transcript.get("biotype")
                 try:
                     cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, gene_id, biotype) VALUES (?, ?, ?, ?, ?)',
                                 (transcript_id, transcript_symbol, protein_id, gene_id, biotype))
