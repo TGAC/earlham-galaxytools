@@ -78,8 +78,8 @@ def create_tables(conn):
     conn.commit()
 
 
-def remove_type_from_list_of_ids(l):
-    return ','.join(remove_type_from_id(_) for _ in l.split(','))
+def remove_type_from_list_of_ids(ids):
+    return ','.join(remove_type_from_id(id_) for id_ in ids.split(','))
 
 
 def remove_type_from_id(id_):
