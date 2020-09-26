@@ -6,7 +6,7 @@ import os
 import sqlite3
 import sys
 
-version = "0.4.0"
+version = "0.5.0"
 gene_count = 0
 
 
@@ -72,8 +72,10 @@ def create_tables(conn):
         biotype VARCHAR,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
-    cur.execute('''CREATE VIEW transcript_species AS
-        SELECT transcript_id, species, seq_region_name
+    # The following temporary view is not used in GAFA, so schema changes to it
+    # don't require a meta version upgrade.
+    cur.execute('''CREATE TEMPORARY VIEW transcript_join_gene AS
+        SELECT transcript_id, transcript_symbol, gene_id, gene_symbol, species, seq_region_name
         FROM transcript JOIN gene
         USING (gene_id)''')
 
@@ -269,15 +271,12 @@ def write_gene_dict_to_db(conn, gene_dict):
     conn.commit()
 
 
-def fetch_species_and_seq_region_for_transcript(conn, transcript_id):
+def fetch_transcript_and_gene(conn, transcript_id):
     cur = conn.cursor()
 
-    cur.execute('SELECT species, seq_region_name FROM transcript_species WHERE transcript_id=?',
+    cur.execute('SELECT transcript_symbol, gene_id, gene_symbol, species, seq_region_name FROM transcript_join_gene WHERE transcript_id=?',
                 (transcript_id, ))
-    row = cur.fetchone()
-    if not row:
-        return (None, None)
-    return row
+    return cur.fetchone()
 
 
 def fetch_biotype_for_transcript(conn, transcript_id):
@@ -295,28 +294,6 @@ def fetch_gene_id_for_transcript(conn, transcript_id):
     cur = conn.cursor()
 
     cur.execute('SELECT gene_id FROM transcript WHERE transcript_id=?',
-                (transcript_id, ))
-    row = cur.fetchone()
-    if not row:
-        return None
-    return row[0]
-
-
-def fetch_gene_symbol_for_gene(conn, gene_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT gene_symbol FROM gene WHERE gene_id=?',
-                (gene_id, ))
-    row = cur.fetchone()
-    if not row:
-        return None
-    return row[0]
-
-
-def fetch_transcript_symbol_for_transcript(conn, transcript_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT transcript_symbol FROM transcript WHERE transcript_id=?',
                 (transcript_id, ))
     row = cur.fetchone()
     if not row:
@@ -352,6 +329,7 @@ def __main__():
         raise Exception('Use options to provide inputs')
 
     conn = sqlite3.connect(options.output)
+    conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA foreign_keys = ON')
     create_tables(conn)
 
@@ -488,26 +466,23 @@ def __main__():
                     print("Transcript '%s' in FASTA file '%s' has a coding sequence length which is not multiple of 3" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
-                species_for_transcript, seq_region_for_transcript = fetch_species_and_seq_region_for_transcript(conn, transcript_id)
-                if not species_for_transcript:
+                transcript = fetch_transcript_and_gene(conn, transcript_id)
+                if not transcript:
                     print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
                 if options.headers == "TranscriptId_species":
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
-                    entry.header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
-                elif options.headers == "gene":
-                    # Change the FASTA header to '>GeneSymbol_species', as required by TreeBest
+                    entry.header = ">%s_%s" % (transcript_id, transcript['species'].replace('_', ''))
+                elif options.headers == "GeneSymbol-TranscriptID_species":
                     # Remove any underscore in the species
-                    gene_name = fetch_gene_symbol_for_gene(conn, fetch_gene_id_for_transcript(conn, transcript_id))
-                    entry.header = ">%s-%s_%s" % (gene_name, transcript_id, species_for_transcript.replace('_', ''))
-                elif options.headers == "transcript_symbol":
+                    entry.header = ">%s-%s_%s" % (transcript['gene_symbol'], transcript_id, transcript['species'].replace('_', ''))
+                elif options.headers == "TranscriptSymbol-TranscriptID_species":
                     # Remove any underscore in the species
-                    transcript_name = fetch_transcript_symbol_for_transcript(conn, transcript_id)
-                    entry.header = ">%s-%s_%s" % (transcript_name, transcript_id, species_for_transcript.replace('_', ''))
+                    entry.header = ">%s-%s_%s" % (transcript['transcript_symbol'], transcript_id, transcript['species'].replace('_', ''))
 
-                if seq_region_for_transcript.lower() in regions:
+                if transcript['seq_region_name'].lower() in regions:
                     entry.print(filtered_fasta_file)
                 else:
                     entry.print(output_fasta_file)
