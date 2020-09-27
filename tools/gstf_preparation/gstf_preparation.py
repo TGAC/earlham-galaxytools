@@ -6,7 +6,7 @@ import os
 import sqlite3
 import sys
 
-version = "0.4.0"
+version = "0.5.0"
 gene_count = 0
 
 
@@ -61,21 +61,35 @@ def create_tables(conn):
         seq_region_end INTEGER NOT NULL,
         seq_region_strand INTEGER NOT NULL,
         species VARCHAR NOT NULL,
+        biotype VARCHAR,
         gene_json VARCHAR NOT NULL)''')
     cur.execute('CREATE INDEX gene_symbol_index ON gene (gene_symbol)')
 
     cur.execute('''CREATE TABLE transcript (
         transcript_id VARCHAR PRIMARY KEY NOT NULL,
+        transcript_symbol VARCHAR,
         protein_id VARCHAR UNIQUE,
         protein_sequence VARCHAR,
+        biotype VARCHAR,
+        is_canonical BOOLEAN NOT NULL DEFAULT FALSE,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id))''')
 
-    cur.execute('''CREATE VIEW transcript_species AS
-        SELECT transcript_id, species, seq_region_name
+    # The following temporary view is not used in GAFA, so schema changes to it
+    # don't require a meta version upgrade.
+    cur.execute('''CREATE TEMPORARY VIEW transcript_join_gene AS
+        SELECT transcript_id, transcript_symbol, COALESCE(transcript.biotype, gene.biotype) AS biotype, is_canonical, gene_id, gene_symbol, seq_region_name, species
         FROM transcript JOIN gene
-        ON transcript.gene_id = gene.gene_id''')
+        USING (gene_id)''')
 
     conn.commit()
+
+
+def fetch_transcript_and_gene(conn, transcript_id):
+    cur = conn.cursor()
+
+    cur.execute('SELECT * FROM transcript_join_gene WHERE transcript_id=?',
+                (transcript_id, ))
+    return cur.fetchone()
 
 
 def remove_type_from_list_of_ids(ids):
@@ -103,6 +117,8 @@ def feature_to_dict(cols, parent_dict=None):
                 value = remove_type_from_id(value)
             elif tag == 'Parent':
                 value = remove_type_from_list_of_ids(value)
+            elif tag == 'representative':
+                tag = 'is_canonical'
             d[tag] = value
     if cols[6] == '+':
         d['strand'] = 1
@@ -122,27 +138,27 @@ def feature_to_dict(cols, parent_dict=None):
 def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
     gene = feature_to_dict(cols)
+    if not gene['id']:
+        raise Exception("Id not found among column 9 attribute tags: %s" % cols[8])
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
         'seq_region_name': cols[0],
         'species': species,
         'Transcript': [],
-        'display_name': gene.get('Name', None)
+        'display_name': gene.get('Name'),
     })
-    if gene['id']:
-        gene_dict[gene['id']] = gene
-        gene_count = gene_count + 1
+    gene_dict[gene['id']] = gene
+    gene_count = gene_count + 1
 
 
 def add_transcript_to_dict(cols, species, transcript_dict):
     transcript = feature_to_dict(cols)
-    if 'biotype' in transcript and transcript['biotype'] != 'protein_coding':
-        return
     transcript.update({
         'object_type': 'Transcript',
         'seq_region_name': cols[0],
         'species': species,
+        'display_name': transcript.get('Name'),
     })
     transcript_dict[transcript['id']] = transcript
 
@@ -242,43 +258,28 @@ def write_gene_dict_to_db(conn, gene_dict):
         if gene is None:
             # This can happen when loading a JSON file from Ensembl
             continue
+        if 'confidence' in gene and gene['confidence'] != 'high':
+            print("Gene %s has confidence %s (not high), discarding" % (gene['id'], gene['confidence']), file=sys.stderr)
+            continue
         gene_id = gene['id']
-        cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (gene_id, gene.get('display_name', None), gene['seq_region_name'], gene['start'], gene['end'], gene['strand'], gene['species'], json.dumps(gene)))
+        cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, biotype, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    (gene_id, gene.get('display_name'), gene['seq_region_name'], gene['start'], gene['end'], gene['strand'], gene['species'], gene.get('biotype'), json.dumps(gene)))
 
         if "Transcript" in gene:
             for transcript in gene["Transcript"]:
                 transcript_id = transcript['id']
-                protein_id = transcript.get('Translation', {}).get('id', None)
+                transcript_symbol = transcript.get('display_name')
+                protein_id = transcript.get('Translation', {}).get('id')
+                biotype = transcript.get('biotype')
+                is_canonical = transcript.get('is_canonical', False)
+                to_insert = (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id)
                 try:
-                    cur.execute('INSERT INTO transcript (transcript_id, protein_id, gene_id) VALUES (?, ?, ?)',
-                                (transcript_id, protein_id, gene_id))
+                    cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id) VALUES (?, ?, ?, ?, ?, ?)',
+                                to_insert)
                 except Exception as e:
-                    raise Exception("Error while inserting (%s, %s, %s) into transcript table: %s" % (transcript_id, protein_id, gene_id, e))
+                    raise Exception("Error while inserting %s into transcript table: %s" % (str(to_insert), e))
 
     conn.commit()
-
-
-def fetch_species_and_seq_region_for_transcript(conn, transcript_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT species, seq_region_name FROM transcript_species WHERE transcript_id=?',
-                (transcript_id, ))
-    row = cur.fetchone()
-    if not row:
-        return (None, None)
-    return row
-
-
-def fetch_gene_id_for_transcript(conn, transcript_id):
-    cur = conn.cursor()
-
-    cur.execute('SELECT gene_id FROM transcript WHERE transcript_id=?',
-                (transcript_id, ))
-    row = cur.fetchone()
-    if not row:
-        return None
-    return row[0]
 
 
 def remove_id_version(s, force=False):
@@ -297,8 +298,10 @@ def __main__():
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
     parser.add_option('--json', action='append', default=[], help='JSON file to merge. Use multiple times to add more files')
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
-    parser.add_option('-l', action='store_true', default=False, dest='longestCDS', help='Keep only the longest CDS per gene')
-    parser.add_option('--headers', action='store_true', default=False, help='Change the header line of the FASTA sequences to the >TranscriptId_species format')
+    parser.add_option('--filter', type='choice', choices=['canonical', 'coding', ''], default='', help='Which transcripts to keep')
+    parser.add_option('--headers', type='choice',
+                      choices=['TranscriptId_species', 'GeneSymbol-TranscriptID_species', 'TranscriptSymbol-TranscriptID_species', ''],
+                      default='', help='Change the header line of the FASTA sequences to this format')
     parser.add_option('--regions', default="", help='Comma-separated list of region IDs for which FASTA sequences should be filtered')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
     parser.add_option('--of', help='Path of the output FASTA file')
@@ -309,6 +312,7 @@ def __main__():
         raise Exception('Use options to provide inputs')
 
     conn = sqlite3.connect(options.output)
+    conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA foreign_keys = ON')
     create_tables(conn)
 
@@ -371,7 +375,7 @@ def __main__():
     # Read the FASTA files a first time to:
     # - determine for each file if we need to force the removal of the version
     #   from the transcript id
-    # - fill gene_transcripts_dict when keeping only the longest CDS per gene
+    # - fill gene_transcripts_dict when keeping only the canonical transcripts
     force_remove_id_version_file_list = []
     gene_transcripts_dict = dict()
     for fasta_arg in options.fasta:
@@ -381,35 +385,45 @@ def __main__():
             # Extract the transcript id by removing everything after the first space and then removing the version if needed
             transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0], force_remove_id_version)
 
-            if len(entry.sequence) % 3 != 0:
-                continue
-
-            gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
-            if not gene_id and not found_gene_transcript:
+            transcript = fetch_transcript_and_gene(conn, transcript_id)
+            if not transcript and not found_gene_transcript:
                 # We have not found a proper gene transcript in this file yet,
                 # try to force the removal of the version from the transcript id
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0], True)
-                gene_id = fetch_gene_id_for_transcript(conn, transcript_id)
+                transcript = fetch_transcript_and_gene(conn, transcript_id)
                 # Remember that we need to force the removal for this file
-                if gene_id:
+                if transcript:
                     force_remove_id_version = True
                     force_remove_id_version_file_list.append(fasta_arg)
                     print("Forcing removal of id version in FASTA file '%s'" % fasta_arg, file=sys.stderr)
-            if not gene_id:
+            if not transcript:
                 print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                 continue
-            if options.longestCDS:
-                found_gene_transcript = True
-            else:
+            if options.filter != 'canonical':
                 break
+            found_gene_transcript = True
 
-            gene_transcripts_dict.setdefault(gene_id, []).append((transcript_id, len(entry.sequence)))
+            if len(entry.sequence) % 3 != 0:
+                continue
+            transcript_biotype = transcript['biotype']  # This is the biotype of the transcript or, if that is NULL, the one of the gene
+            if transcript_biotype and transcript_biotype != 'protein_coding':
+                continue
+            gene_transcripts_dict.setdefault(transcript['gene_id'], []).append((transcript_id, transcript['is_canonical'], len(entry.sequence)))
 
-    if options.longestCDS:
-        # For each gene, select the transcript with the longest sequence.
-        # If more than one transcripts have the same longest sequence for a
-        # gene, the first one to appear in the FASTA file is selected
-        selected_transcript_ids = [max(transcript_id_lengths, key=lambda _: _[1])[0] for transcript_id_lengths in gene_transcripts_dict.values()]
+    if options.filter == 'canonical':
+        selected_transcript_ids = []
+        for gene_id, transcript_tuples in gene_transcripts_dict.items():
+            canonical_transcript_ids = [id_ for (id_, is_canonical, _) in transcript_tuples if is_canonical]
+            if not canonical_transcript_ids:
+                # Select the transcript with the longest sequence. If more than
+                # one transcripts have the same longest sequence for a gene, the
+                # first one to appear in the FASTA file is selected.
+                selected_transcript_id = max(transcript_tuples, key=lambda transcript_tuple: transcript_tuple[2])[0]
+            elif len(canonical_transcript_ids) > 1:
+                raise Exception("Gene %s has more than 1 canonical transcripts" % (gene_id))
+            else:
+                selected_transcript_id = canonical_transcript_ids[0]
+            selected_transcript_ids.append(selected_transcript_id)
 
     regions = [_.strip().lower() for _ in options.regions.split(",")]
     with open(options.of, 'w') as output_fasta_file, open(options.ff, 'w') as filtered_fasta_file:
@@ -417,24 +431,37 @@ def __main__():
             force_remove_id_version = fasta_arg in force_remove_id_version_file_list
             for entry in FASTAReader_gen(fasta_arg):
                 transcript_id = remove_id_version(entry.header[1:].lstrip().split(' ')[0], force_remove_id_version)
-                if options.longestCDS and transcript_id not in selected_transcript_ids:
-                    continue
 
-                if len(entry.sequence) % 3 != 0:
-                    print("Transcript '%s' in FASTA file '%s' has a coding sequence length which is not multiple of 3" % (transcript_id, fasta_arg), file=sys.stderr)
-                    continue
-
-                species_for_transcript, seq_region_for_transcript = fetch_species_and_seq_region_for_transcript(conn, transcript_id)
-                if not species_for_transcript:
+                transcript = fetch_transcript_and_gene(conn, transcript_id)
+                if not transcript:
                     print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
                     continue
 
-                if options.headers:
+                if options.filter == 'canonical':
+                    # We already filtered out non-protein-coding transcripts when populating gene_transcripts_dict
+                    if transcript_id not in selected_transcript_ids:
+                        continue
+                elif options.filter == 'coding':
+                    if len(entry.sequence) % 3 != 0:
+                        print("Transcript '%s' in FASTA file '%s' has a coding sequence length which is not multiple of 3, removing from FASTA output" % (transcript_id, fasta_arg), file=sys.stderr)
+                        continue
+                    transcript_biotype = transcript['biotype']  # This is the biotype of the transcript or, if that is NULL, the one of the gene
+                    if transcript_biotype and transcript_biotype != 'protein_coding':
+                        print("Transcript %s has biotype %s (not protein-coding), removing from FASTA output" % (transcript_id, transcript_biotype), file=sys.stderr)
+                        continue
+
+                if options.headers == "TranscriptId_species":
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
-                    entry.header = ">%s_%s" % (transcript_id, species_for_transcript.replace('_', ''))
+                    entry.header = ">%s_%s" % (transcript_id, transcript['species'].replace('_', ''))
+                elif options.headers == "GeneSymbol-TranscriptID_species":
+                    # Remove any underscore in the species
+                    entry.header = ">%s-%s_%s" % (transcript['gene_symbol'], transcript_id, transcript['species'].replace('_', ''))
+                elif options.headers == "TranscriptSymbol-TranscriptID_species":
+                    # Remove any underscore in the species
+                    entry.header = ">%s-%s_%s" % (transcript['transcript_symbol'], transcript_id, transcript['species'].replace('_', ''))
 
-                if seq_region_for_transcript.lower() in regions:
+                if transcript['seq_region_name'].lower() in regions:
                     entry.print(filtered_fasta_file)
                 else:
                     entry.print(output_fasta_file)
