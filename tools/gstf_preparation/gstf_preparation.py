@@ -258,7 +258,7 @@ def write_gene_dict_to_db(conn, gene_dict):
         if gene is None:
             # This can happen when loading a JSON file from Ensembl
             continue
-        if 'confidence' in gene and gene['confidence'] != 'high':
+        if 'confidence' in gene and gene['confidence'].lower() != 'high':
             print("Gene %s has confidence %s (not high), discarding" % (gene['id'], gene['confidence']), file=sys.stderr)
             continue
         gene_id = gene['id']
@@ -300,7 +300,7 @@ def __main__():
     parser.add_option('--fasta', action='append', default=[], help='Path of the input FASTA files')
     parser.add_option('--filter', type='choice', choices=['canonical', 'coding', ''], default='', help='Which transcripts to keep')
     parser.add_option('--headers', type='choice',
-                      choices=['TranscriptId_species', 'GeneSymbol-TranscriptID_species', 'TranscriptSymbol-TranscriptID_species', ''],
+                      choices=['TranscriptId_species', 'TranscriptID-GeneSymbol_species', 'TranscriptID-TranscriptSymbol_species', ''],
                       default='', help='Change the header line of the FASTA sequences to this format')
     parser.add_option('--regions', default="", help='Comma-separated list of region IDs for which FASTA sequences should be filtered')
     parser.add_option('-o', '--output', help='Path of the output SQLite file')
@@ -454,12 +454,12 @@ def __main__():
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
                     entry.header = ">%s_%s" % (transcript_id, transcript['species'].replace('_', ''))
-                elif options.headers == "GeneSymbol-TranscriptID_species":
+                elif options.headers == "TranscriptID-GeneSymbol_species":
                     # Remove any underscore in the species
-                    entry.header = ">%s-%s_%s" % (transcript['gene_symbol'], transcript_id, transcript['species'].replace('_', ''))
-                elif options.headers == "TranscriptSymbol-TranscriptID_species":
+                    entry.header = ">%s-%s_%s" % (transcript_id, transcript['gene_symbol'], transcript['species'].replace('_', ''))
+                elif options.headers == "TranscriptID-TranscriptSymbol_species":
                     # Remove any underscore in the species
-                    entry.header = ">%s-%s_%s" % (transcript['transcript_symbol'], transcript_id, transcript['species'].replace('_', ''))
+                    entry.header = ">%s-%s_%s" % (transcript_id, transcript['transcript_symbol'], transcript['species'].replace('_', ''))
 
                 if transcript['seq_region_name'].lower() in regions:
                     entry.print(filtered_fasta_file)

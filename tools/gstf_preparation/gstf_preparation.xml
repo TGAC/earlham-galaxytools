@@ -1,4 +1,4 @@
-<tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.4.2">
+<tool id="gstf_preparation" name="GeneSeqToFamily preparation" version="0.4.3">
     <description>converts data for the workflow</description>
     <requirements>
         <requirement type="package" version="3.7">python</requirement>
@@ -47,8 +47,8 @@ python '$__tool_directory__/gstf_preparation.py'
 
         <param name="headers" type="select" display="radio" label="Change the header line of the FASTA sequences to the following format" help="As required by TreeBest, part of the GeneSeqToFamily workflow, only TranscriptId_species is acceptable format by Aequatus visualisation">
             <option value="TranscriptId_species" selected="true">TranscriptId_species</option>
-            <option value="GeneSymbol-TranscriptID_species">GeneSymbol-TranscriptID_species</option>
-            <option value="TranscriptSymbol-TranscriptID_species">TranscriptSymbol-TranscriptID_species</option>
+            <option value="TranscriptID-GeneSymbol_species">GeneSymbol-TranscriptID_species</option>
+            <option value="TranscriptID-TranscriptSymbol_species">TranscriptSymbol-TranscriptID_species</option>
             <option value="">Don't change</option>
         </param>
         <param name="regions" type="text" optional="true" label="Comma-separated list of region IDs (e.g. chromosomes or scaffolds) for which FASTA sequences should be filtered out" help="Region IDs are in the `seqid` column for GFF3 and in the `seq_region_name` field in JSON. This is typically used to filter out chromosomes with a non-standard genetic code, like mitochondria, to be analysed separately" />
