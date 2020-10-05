@@ -258,7 +258,7 @@ def write_gene_dict_to_db(conn, gene_dict):
         if gene is None:
             # This can happen when loading a JSON file from Ensembl
             continue
-        if 'confidence' in gene and gene['confidence'] != 'high':
+        if 'confidence' in gene and gene['confidence'].lower() != 'high':
             print("Gene %s has confidence %s (not high), discarding" % (gene['id'], gene['confidence']), file=sys.stderr)
             continue
         gene_id = gene['id']
