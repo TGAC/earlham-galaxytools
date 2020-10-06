@@ -8,6 +8,19 @@ version = "0.5.0"
 gene_count = 0
 
 
+def asbool(val):
+    if isinstance(val, str):
+        val_lower = val.strip().lower()
+        if val_lower in ('true', '1'):
+            return True
+        elif val_lower in ('false', '0'):
+            return False
+        else:
+            raise ValueError(f"Cannot convert {val} to bool")
+    else:
+        return bool(val)
+
+
 class Sequence:
     def __init__(self, header, sequence_parts):
         self.header = header
@@ -269,7 +282,7 @@ def write_gene_dict_to_db(conn, gene_dict):
                 transcript_symbol = transcript.get('display_name')
                 protein_id = transcript.get('Translation', {}).get('id')
                 biotype = transcript.get('biotype')
-                is_canonical = transcript.get('is_canonical', False)
+                is_canonical = asbool(transcript.get('is_canonical', False))
                 to_insert = (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id)
                 try:
                     cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id) VALUES (?, ?, ?, ?, ?, ?)',
