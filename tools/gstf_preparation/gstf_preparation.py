@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import json
 import optparse
 import os
@@ -10,7 +8,20 @@ version = "0.5.0"
 gene_count = 0
 
 
-class Sequence(object):
+def asbool(val):
+    if isinstance(val, str):
+        val_lower = val.strip().lower()
+        if val_lower in ('true', '1'):
+            return True
+        elif val_lower in ('false', '0'):
+            return False
+        else:
+            raise ValueError(f"Cannot convert {val} to bool")
+    else:
+        return bool(val)
+
+
+class Sequence:
     def __init__(self, header, sequence_parts):
         self.header = header
         self.sequence_parts = sequence_parts
@@ -204,7 +215,7 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
         derived_translation_end = None
         if transcript_id in cds_parent_dict:
             cds_list = cds_parent_dict[transcript_id]
-            cds_ids = set(_['id'] for _ in cds_list)
+            cds_ids = {_['id'] for _ in cds_list}
             if len(cds_ids) > 1:
                 raise Exception("Transcript %s has multiple CDSs: this is not supported by Ensembl JSON format" % transcript_id)
             cds_id = cds_ids.pop()
@@ -231,13 +242,13 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
         if derived_translation_start is not None:
             if found_cds:
                 if derived_translation_start > translation['start']:
-                    raise Exception("Transcript %s has the start of CDS %s overlapping with the UTR end" % (transcript_id, cds_id))
+                    raise Exception(f"Transcript {transcript_id} has the start of CDS {cds_id} overlapping with the UTR end")
             else:
                 translation['start'] = derived_translation_start
         if derived_translation_end is not None:
             if found_cds:
                 if derived_translation_end < translation['end']:
-                    raise Exception("Transcript %s has the end of CDS %s overlapping with the UTR start" % (transcript_id, cds_id))
+                    raise Exception(f"Transcript {transcript_id} has the end of CDS {cds_id} overlapping with the UTR start")
             else:
                 translation['end'] = derived_translation_end
         if found_cds or derived_translation_start is not None or derived_translation_end is not None:
@@ -259,7 +270,7 @@ def write_gene_dict_to_db(conn, gene_dict):
             # This can happen when loading a JSON file from Ensembl
             continue
         if 'confidence' in gene and gene['confidence'].lower() != 'high':
-            print("Gene %s has confidence %s (not high), discarding" % (gene['id'], gene['confidence']), file=sys.stderr)
+            print("Gene {} has confidence {} (not high), discarding".format(gene['id'], gene['confidence']), file=sys.stderr)
             continue
         gene_id = gene['id']
         cur.execute('INSERT INTO gene (gene_id, gene_symbol, seq_region_name, seq_region_start, seq_region_end, seq_region_strand, species, biotype, gene_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
@@ -271,13 +282,13 @@ def write_gene_dict_to_db(conn, gene_dict):
                 transcript_symbol = transcript.get('display_name')
                 protein_id = transcript.get('Translation', {}).get('id')
                 biotype = transcript.get('biotype')
-                is_canonical = transcript.get('is_canonical', False)
+                is_canonical = asbool(transcript.get('is_canonical', False))
                 to_insert = (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id)
                 try:
                     cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id) VALUES (?, ?, ?, ?, ?, ?)',
                                 to_insert)
                 except Exception as e:
-                    raise Exception("Error while inserting %s into transcript table: %s" % (str(to_insert), e))
+                    raise Exception("Error while inserting {} into transcript table: {}".format(str(to_insert), e))
 
     conn.commit()
 
@@ -397,7 +408,7 @@ def __main__():
                     force_remove_id_version_file_list.append(fasta_arg)
                     print("Forcing removal of id version in FASTA file '%s'" % fasta_arg, file=sys.stderr)
             if not transcript:
-                print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
+                print(f"Transcript '{transcript_id}' in FASTA file '{fasta_arg}' not found in the gene feature information", file=sys.stderr)
                 continue
             if options.filter != 'canonical':
                 break
@@ -434,7 +445,7 @@ def __main__():
 
                 transcript = fetch_transcript_and_gene(conn, transcript_id)
                 if not transcript:
-                    print("Transcript '%s' in FASTA file '%s' not found in the gene feature information" % (transcript_id, fasta_arg), file=sys.stderr)
+                    print(f"Transcript '{transcript_id}' in FASTA file '{fasta_arg}' not found in the gene feature information", file=sys.stderr)
                     continue
 
                 if options.filter == 'canonical':
@@ -443,23 +454,23 @@ def __main__():
                         continue
                 elif options.filter == 'coding':
                     if len(entry.sequence) % 3 != 0:
-                        print("Transcript '%s' in FASTA file '%s' has a coding sequence length which is not multiple of 3, removing from FASTA output" % (transcript_id, fasta_arg), file=sys.stderr)
+                        print(f"Transcript '{transcript_id}' in FASTA file '{fasta_arg}' has a coding sequence length which is not multiple of 3, removing from FASTA output", file=sys.stderr)
                         continue
                     transcript_biotype = transcript['biotype']  # This is the biotype of the transcript or, if that is NULL, the one of the gene
                     if transcript_biotype and transcript_biotype != 'protein_coding':
-                        print("Transcript %s has biotype %s (not protein-coding), removing from FASTA output" % (transcript_id, transcript_biotype), file=sys.stderr)
+                        print(f"Transcript {transcript_id} has biotype {transcript_biotype} (not protein-coding), removing from FASTA output", file=sys.stderr)
                         continue
 
                 if options.headers == "TranscriptId_species":
                     # Change the FASTA header to '>TranscriptId_species', as required by TreeBest
                     # Remove any underscore in the species
-                    entry.header = ">%s_%s" % (transcript_id, transcript['species'].replace('_', ''))
+                    entry.header = ">{}_{}".format(transcript_id, transcript['species'].replace('_', ''))
                 elif options.headers == "TranscriptID-GeneSymbol_species":
                     # Remove any underscore in the species
-                    entry.header = ">%s-%s_%s" % (transcript_id, transcript['gene_symbol'], transcript['species'].replace('_', ''))
+                    entry.header = ">{}-{}_{}".format(transcript_id, transcript['gene_symbol'], transcript['species'].replace('_', ''))
                 elif options.headers == "TranscriptID-TranscriptSymbol_species":
                     # Remove any underscore in the species
-                    entry.header = ">%s-%s_%s" % (transcript_id, transcript['transcript_symbol'], transcript['species'].replace('_', ''))
+                    entry.header = ">{}-{}_{}".format(transcript_id, transcript['transcript_symbol'], transcript['species'].replace('_', ''))
 
                 if transcript['seq_region_name'].lower() in regions:
                     entry.print(filtered_fasta_file)
