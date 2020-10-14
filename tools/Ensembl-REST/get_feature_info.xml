@@ -50,7 +50,7 @@ Retrieve feature information in JSON format from Ensembl using its REST API.
 
 Uses the `"POST lookup/id"`_ API endpoint.
 
-.. _"POST lookup/id": http://rest.ensembl.org/documentation/info/lookup_post
+.. _"POST lookup/id": https://rest.ensembl.org/documentation/info/lookup_post
 ]]>
     </help>
     <citations>

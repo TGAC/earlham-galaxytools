@@ -1,7 +1,8 @@
-<tool id="apoc" name="APoc" version="1.0">
+<tool id="apoc" name="APoc" version="1.0+galaxy1">
     <description>Large-scale identification of similar protein pockets</description>
     <requirements>
         <requirement type="package" version="1b16">apoc</requirement>
+        <requirement type="package" version="8.31">coreutils</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
 #if $templates_source.template_source_select == 'list'
