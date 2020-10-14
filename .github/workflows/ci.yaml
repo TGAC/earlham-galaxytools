@@ -10,7 +10,7 @@ env:
 jobs:
   setup:
     name: Setup cache
-    if: github.repository_owner == 'galaxyproject'
+    if: github.repository_owner == 'TGAC'
     runs-on: ubuntu-latest
     strategy:
       matrix:
