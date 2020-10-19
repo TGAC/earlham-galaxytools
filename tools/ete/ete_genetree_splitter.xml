@@ -77,7 +77,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value"dups"/>
+            <param name="splitter" value="dups"/>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="11_genetree.nhx" ftype="nhx" />
@@ -89,7 +89,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value"dups"/>
+            <param name="splitter" value="dups"/>
             <param name="gainlose" value="True" />
             <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
             <param name="species_format" value="8" />
