@@ -55,7 +55,7 @@ def main():
             with open(outfile, 'w') as f:
                 f.write(node.write(format=options.output_format))
     elif options.split == "treeko":
-        # splits tree by using TreeKO algorithms.
+        # splits tree using the TreeKO algorithm.
         ntrees, ndups, sptrees = genetree.get_speciation_trees()
 
         cluster_id = 0
