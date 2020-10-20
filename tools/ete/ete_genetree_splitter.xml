@@ -1,4 +1,4 @@
-<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@">
+<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@+galaxy1">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -12,6 +12,7 @@
 python '$__tool_directory__/ete_genetree_splitter.py'
 --genetree '$genetreeFile'
 --gene_node $gene_node
+--split $splitter
 #if $gainlose_conditional.gainlose == "True"
     --speciestree '$gainlose_conditional.speciesFile'
     --species_format $gainlose_conditional.species_format
@@ -24,6 +25,10 @@ python '$__tool_directory__/ete_genetree_splitter.py'
          <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
             <option value="0" selected="true">gene_species</option>
             <option value="1">species_gene</option>
+        </param>
+        <param name="splitter" type="select" label="GeneTree splitting algorithm">
+            <option value="dups">Split by Duplication</option>
+            <option value="treeko">Split using TreeKO algorithm</option>
         </param>
         <conditional name="gainlose_conditional">
             <param name="gainlose" type="select" label="Find out gene gain/lose">
@@ -72,6 +77,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
+            <param name="splitter" value="dups"/>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="11_genetree.nhx" ftype="nhx" />
@@ -83,6 +89,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
+            <param name="splitter" value="dups"/>
             <param name="gainlose" value="True" />
             <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
             <param name="species_format" value="8" />
@@ -93,6 +100,18 @@ python '$__tool_directory__/ete_genetree_splitter.py'
                 <element name="3" file="23_genetree.nhx" ftype="nhx" />
                 <element name="4" file="24_genetree.nhx" ftype="nhx" />
                 <element name="5" file="25_genetree.nhx" ftype="nhx" />
+            </output_collection>
+        </test>
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
+            <param name="gene_node" value="0"/>
+            <param name="splitter" value="treeko"/>
+            <param name="output_format" value="9" />
+            <output_collection name="genetrees_lists" type="list" count="5">
+                <element name="1" file="31_genetree.nhx" ftype="nhx" />
+                <element name="2" file="32_genetree.nhx" ftype="nhx" />
+                <element name="3" file="33_genetree.nhx" ftype="nhx" />
+                <element name="4" file="34_genetree.nhx" ftype="nhx" />
             </output_collection>
         </test>
     </tests>

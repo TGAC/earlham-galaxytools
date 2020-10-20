@@ -54,7 +54,7 @@ Retrieves FASTA sequences from Ensembl using its REST API.
 
 Uses the `"POST sequence/id"`_ API endpoint.
 
-.. _"POST sequence/id": http://rest.ensembl.org/documentation/info/sequence_id_post
+.. _"POST sequence/id": https://rest.ensembl.org/documentation/info/sequence_id_post
 ]]>
     </help>
     <citations>

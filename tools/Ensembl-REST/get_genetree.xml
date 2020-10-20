@@ -166,8 +166,8 @@ Retrieve a gene tree from Ensembl using its REST API.
 
 Uses the `"GET genetree/id"`_ and `"GET genetree/member/id"`_ API endpoint.
 
-.. _"GET genetree/id": http://rest.ensembl.org/documentation/info/genetree
-.. _"GET genetree/member/id": http://rest.ensembl.org/documentation/info/genetree_member_id
+.. _"GET genetree/id": https://rest.ensembl.org/documentation/info/genetree
+.. _"GET genetree/member/id": https://rest.ensembl.org/documentation/info/genetree_member_id
 ]]>
     </help>
     <citations>
