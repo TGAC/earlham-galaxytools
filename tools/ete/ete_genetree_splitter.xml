@@ -28,7 +28,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         </param>
         <param name="splitter" type="select" label="GeneTree splitting algorithm">
             <option value="dups">Split by Duplication</option>
-            <option value="treeko" selected="true">Split using TreeKO algorithm</option>
+            <option value="treeko">Split using TreeKO algorithm</option>
         </param>
         <conditional name="gainlose_conditional">
             <param name="gainlose" type="select" label="Find out gene gain/lose">
