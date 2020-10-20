@@ -13,6 +13,7 @@ def main():
     parser.add_option('--species_format', type='int', default=8, help='Species Tree input format (0-9)')
     parser.add_option('--gene_node', type='int', default=0, help='Gene node format 0=gene_species, 1=species_gene')
     parser.add_option('--gainlose', action='store_true', default=False, help='Find out gene gain/lose')
+    parser.add_option('--split', type='choice', choices=['dups', 'treeko'], dest="split", default='dups', help='Choose GeneTree splitting algorithms')
     parser.add_option('--output_format', type='int', default=9, help='GeneTree output format (0-9)')
     options, args = parser.parse_args()
 
@@ -47,11 +48,22 @@ def main():
 
         genetree, events = genetree.reconcile(speciestree)
 
-    # splits tree by duplication events which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
-    for cluster_id, node in enumerate(genetree.split_by_dups(), 1):
-        outfile = str(cluster_id) + '_genetree.nhx'
-        with open(outfile, 'w') as f:
-            f.write(node.write(format=options.output_format))
+    if options.split == "dups":
+        # splits tree by duplication events which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
+        for cluster_id, node in enumerate(genetree.split_by_dups(), 1):
+            outfile = str(cluster_id) + '_genetree.nhx'
+            with open(outfile, 'w') as f:
+                f.write(node.write(format=options.output_format))
+    elif options.split == "treeko":
+        # splits tree using the TreeKO algorithm.
+        ntrees, ndups, sptrees = genetree.get_speciation_trees()
+
+        cluster_id = 0
+        for spt in sptrees:
+            cluster_id = cluster_id + 1
+            outfile = str(cluster_id) + '_genetree.nhx'
+            with open(outfile, 'w') as f:
+                f.write(spt.write(format=options.output_format))
 
 
 def parse_sp_name(node_name):
