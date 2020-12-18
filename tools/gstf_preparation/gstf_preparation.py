@@ -215,10 +215,14 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
         derived_translation_end = None
         if transcript_id in cds_parent_dict:
             cds_list = cds_parent_dict[transcript_id]
-            cds_ids = {_['id'] for _ in cds_list}
-            if len(cds_ids) > 1:
-                raise Exception("Transcript %s has multiple CDSs: this is not supported by Ensembl JSON format" % transcript_id)
-            cds_id = cds_ids.pop()
+            unique_cds_ids = {cds['id'] for cds in cds_list}
+            if len(unique_cds_ids) > 1:
+                msg = """Found multiple CDS IDs (%s) for transcript '%s'.
+This is not supported by the Ensembl JSON format. If a CDS is split across
+multiple discontinuous genomic locations, the GFF3 standard requires that all
+corresponding lines use the same ID attribute."""
+                raise Exception(msg % (unique_cds_ids, transcript_id))
+            cds_id = unique_cds_ids.pop()
             translation['id'] = cds_id
             cds_list.sort(key=lambda _: _['start'])
             translation['CDS'] = cds_list
