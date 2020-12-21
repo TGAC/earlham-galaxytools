@@ -5,8 +5,7 @@
         <requirement type="package" version="3.9">python</requirement>
     </requirements>
     <version_command>miranda --version|grep 'miranda v'</version_command>
-    <command detect_errors="exit_code">
-<![CDATA[
+    <command detect_errors="exit_code"><![CDATA[
 miranda '$microrna' '$query'
 #if str($sc)
     -sc $sc
@@ -17,13 +16,12 @@ miranda '$microrna' '$query'
 -out '$raw_output'
 &&
 python '$__tool_directory__/miranda_parser.py' '$raw_output' '$tabular_output'
-]]>
-    </command>
+    ]]></command>
     <inputs>
         <param name="microrna" type="data" format="fasta" label="MicroRNA sequences" help="FASTA format" />
         <param name="query" type="data" format="fasta" label="Query sequences" help="FASTA format" />
-        <param name="sc" type="float" min="0.0" value="140.0" optional="true" label="Alignment score threshold" help="Only alignments with score greater or equal to this value will be used for further analysis (-sc)" />
-        <param name="en" type="float" value="1.0" optional="true" label="Set energy threshold to -E kcal/mol" help="Only alignments with energy less or equal to this value will be used for further analysis. A negative value is required for filtering to occur (-en)" />
+        <param argument="-sc" type="float" min="0.0" value="140.0" optional="true" label="Alignment score threshold" help="Only alignments with score greater or equal to this value will be used for further analysis" />
+        <param argument="-en" type="float" value="1.0" optional="true" label="Set energy threshold to -E kcal/mol" help="Only alignments with energy less or equal to this value will be used for further analysis. A negative value is required for filtering to occur" />
     </inputs>
     <outputs>
         <data name="raw_output" format="txt" label="${tool.name} on ${on_string}: raw output" />
@@ -36,9 +34,8 @@ python '$__tool_directory__/miranda_parser.py' '$raw_output' '$tabular_output'
             <output name="raw_output" file="raw_output.txt" lines_diff="4" />
         </test>
     </tests>
-    <help>
-<![CDATA[
-`miRanda`_ is an algorithm for the detection of potential microRNA target sites in genomic sequences.
+    <help><![CDATA[
+miRanda is an algorithm for the detection of potential microRNA target sites in genomic sequences.
 
 One or more miRNA sequences are scanned against all query sequences and potential target sites are reported. Potential target sites are identified using a two-step strategy. First a dynamic programming local alignment is carried out between the query miRNA sequence and the reference sequence. This alignment procedure scores based on sequence complementarity and not on sequence identity. In other words we look for A:U and G:C matches instead of A:A, G:G, etc. The G:U wobble bair is also permitted, but generally scores less than the more optimal matches.
 
@@ -47,10 +44,7 @@ The second phase of the algorithm takes high-scoring alignments (i.e. those abov
 Finally, detected targets with energies less than a chosen energy threshold are selected as potential target sites. Target site alignments passing both thresholds and other information is produced as output.
 
 View the original miRanda manual: http://cbio.mskcc.org/microrna_data/manual.html
-
-.. _miRanda: http://www.microrna.org/
-]]>
-    </help>
+    ]]></help>
     <citations>
         <citation type="doi">10.1186/gb-2003-5-1-r1</citation>
     </citations>
