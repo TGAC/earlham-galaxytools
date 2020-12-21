@@ -1,7 +1,8 @@
-<tool id="miranda" name="miRanda" version="3.3a">
+<tool id="miranda" name="miRanda" version="3.3a+galaxy1">
     <description>finds potential target sites for miRNAs in genomic sequences</description>
     <requirements>
         <requirement type="package" version="3.3a">miranda</requirement>
+        <requirement type="package" version="3.9">python</requirement>
     </requirements>
     <version_command>miranda --version|grep 'miranda v'</version_command>
     <command detect_errors="exit_code">
