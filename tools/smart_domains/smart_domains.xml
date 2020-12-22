@@ -42,18 +42,18 @@ $outputFormat
             <param name="Schnipsel" value="false" />
             <param name="outputFormat" value="--outputFormat=txt" />
             <output_collection name="output_lists" type="list" count="12">
-                <element name="ENSCAFP00000021307" file="ENSCAFP00000021307_SMART_results.txt" ftype="txt" />
-                <element name="ENSCAFP00000021330" file="ENSCAFP00000021330_SMART_results.txt" ftype="txt" />
-                <element name="ENSMUSP00000026013" file="ENSMUSP00000026013_SMART_results.txt" ftype="txt" />
-                <element name="ENSMUSP00000040550" file="ENSMUSP00000040550_SMART_results.txt" ftype="txt" />
-                <element name="ENSP00000340684" file="ENSP00000340684_SMART_results.txt" ftype="txt" />
-                <element name="ENSP00000367309" file="ENSP00000367309_SMART_results.txt" ftype="txt" />
-                <element name="ENSPTRP00000037440" file="ENSPTRP00000037440_SMART_results.txt" ftype="txt" />
-                <element name="ENSPTRP00000037441" file="ENSPTRP00000037441_SMART_results.txt" ftype="txt" />
-                <element name="ENSRNOP00000043466" file="ENSRNOP00000043466_SMART_results.txt" ftype="txt" />
-                <element name="ENSRNOP00000063784" file="ENSRNOP00000063784_SMART_results.txt" ftype="txt" />
-                <element name="ENSSSCP00000013044" file="ENSSSCP00000013044_SMART_results.txt" ftype="txt" />
-                <element name="ENSSSCP00000028353" file="ENSSSCP00000028353_SMART_results.txt" ftype="txt" />
+                <element name="ENSCAFP00000021307" file="ENSCAFP00000021307_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSCAFP00000021330" file="ENSCAFP00000021330_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSMUSP00000026013" file="ENSMUSP00000026013_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSMUSP00000040550" file="ENSMUSP00000040550_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSP00000340684" file="ENSP00000340684_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSP00000367309" file="ENSP00000367309_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSPTRP00000037440" file="ENSPTRP00000037440_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSPTRP00000037441" file="ENSPTRP00000037441_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSRNOP00000043466" file="ENSRNOP00000043466_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSRNOP00000063784" file="ENSRNOP00000063784_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSSSCP00000013044" file="ENSSSCP00000013044_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSSSCP00000028353" file="ENSSSCP00000028353_SMART_results.txt" ftype="txt" compare="sim_size" delta_frac="0.1" />
             </output_collection>
         </test>
         <test>
@@ -65,18 +65,18 @@ $outputFormat
             <param name="Schnipsel" value="false" />
             <param name="outputFormat" value="--outputFormat=json" />
             <output_collection name="output_lists" type="list" count="12">
-                <element name="ENSCAFP00000021307" file="ENSCAFP00000021307_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSCAFP00000021330" file="ENSCAFP00000021330_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSMUSP00000026013" file="ENSMUSP00000026013_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSMUSP00000040550" file="ENSMUSP00000040550_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSP00000340684" file="ENSP00000340684_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSP00000367309" file="ENSP00000367309_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSPTRP00000037440" file="ENSPTRP00000037440_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSPTRP00000037441" file="ENSPTRP00000037441_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSRNOP00000043466" file="ENSRNOP00000043466_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSRNOP00000063784" file="ENSRNOP00000063784_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSSSCP00000013044" file="ENSSSCP00000013044_SMART_results.json" ftype="json" compare="sim_size" />
-                <element name="ENSSSCP00000028353" file="ENSSSCP00000028353_SMART_results.json" ftype="json" compare="sim_size" />
+                <element name="ENSCAFP00000021307" file="ENSCAFP00000021307_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSCAFP00000021330" file="ENSCAFP00000021330_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSMUSP00000026013" file="ENSMUSP00000026013_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSMUSP00000040550" file="ENSMUSP00000040550_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSP00000340684" file="ENSP00000340684_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSP00000367309" file="ENSP00000367309_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSPTRP00000037440" file="ENSPTRP00000037440_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSPTRP00000037441" file="ENSPTRP00000037441_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSRNOP00000043466" file="ENSRNOP00000043466_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSRNOP00000063784" file="ENSRNOP00000063784_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSSSCP00000013044" file="ENSSSCP00000013044_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
+                <element name="ENSSSCP00000028353" file="ENSSSCP00000028353_SMART_results.json" ftype="json" compare="sim_size" delta_frac="0.1" />
             </output_collection>
         </test>
     </tests>
