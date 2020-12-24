@@ -1,7 +1,10 @@
-<tool id="t_coffee" name="T-Coffee" version="11.0.8_1">
+<tool id="t_coffee" name="T-Coffee" version="@TOOL_VERSION@">
     <description>multiple sequence alignment</description>
+    <macros>
+        <token name="@TOOL_VERSION@">13.45.0.4846264</token>
+    </macros>
     <requirements>
-        <requirement type="package" version="11.0.8">t_coffee</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">t-coffee</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" level="fatal" />
