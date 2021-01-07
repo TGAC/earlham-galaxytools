@@ -69,7 +69,6 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
             <option value="mustang_pair">mustang_pair</option>
         </param>
         <param name="method02" type="select" display="checkboxes" multiple="true" label="Multiple Sequence Alignment Methods">
-            <option value="pcma_msa">pcma_msa</option>
             <option value="clustalw_msa">clustalw_msa</option>
             <option value="dialigntx_msa">dialigntx_msa</option>
             <option value="poa_msa">poa_msa</option>
