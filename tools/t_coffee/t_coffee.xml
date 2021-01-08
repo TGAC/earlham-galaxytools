@@ -63,27 +63,29 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
                 <param name="input" type="data" format="fasta" label="FASTA sequences" />
             </when>
         </conditional>
-        <param name="method01" type="select" display="checkboxes" multiple="true" label="Pairwise Structual Method">
-            <option value="sap_pair">sap_pair</option>
-            <option value="TMalign_pair">TMalign_pair</option>
-            <option value="mustang_pair">mustang_pair</option>
-        </param>
-        <param name="method02" type="select" display="checkboxes" multiple="true" label="Multiple Sequence Alignment Methods">
-            <option value="clustalw_msa">clustalw_msa</option>
-            <option value="dialigntx_msa">dialigntx_msa</option>
-            <option value="poa_msa">poa_msa</option>
-            <option value="muscle_msa">muscle_msa</option>
-            <option value="probcons_msa">probcons_msa</option>
-            <option value="t_coffee_msa">t_coffee_msa</option>
-            <option value="amap_msa">amap_msa</option>
-            <option value="kalign_msa">kalign_msa</option>
-        </param>
         <param name="method03" type="select" display="checkboxes" multiple="true" label="Pairwise Sequence Alignment Methods">
             <option value="fast_pair">fast_pair</option>
             <option value="clustalw_pair">clustalw_pair</option>
             <option value="lalign_id_pair">lalign_id_pair</option>
             <option value="slow_pair">slow_pair</option>
             <option value="proba_pair">proba_pair</option>
+            <option value="t_coffee_pair">t_coffee_pair</option>
+        </param>
+        <param name="method01" type="select" display="checkboxes" multiple="true" label="Pairwise Structual Alignment Methods">
+            <option value="sap_pair">sap_pair</option>
+            <option value="mustang_pair">mustang_pair</option>
+            <option value="TMalign_pair">TMalign_pair</option>
+        </param>
+        <param name="method02" type="select" display="checkboxes" multiple="true" label="Multiple Sequence Alignment Methods">
+            <option value="3dcoffee_msa">3dcoffee_msa</option>
+            <option value="mafft_msa">mafft_msa</option>
+            <option value="clustalw_msa">clustalw_msa</option>
+            <option value="dialigntx_msa">dialigntx_msa</option>
+            <option value="poa_msa">poa_msa</option>
+            <option value="probcons_msa">probcons_msa</option>
+            <option value="muscle_msa">muscle_msa</option>
+            <option value="t_coffee_msa">t_coffee_msa</option>
+            <option value="kalign_msa">kalign_msa</option>
         </param>
         <param name="outputs" type="select" multiple="true" optional="false" display="checkboxes" label="Output formats">
             <option value="clustalw_aln">clustalw_aln</option>
