@@ -133,20 +133,47 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="1">
             <param name="filter_fasta" value="no" />
             <param name="input" value="input.fasta" ftype="fasta" />
             <param name="method02" value="clustalw_msa" />
             <param name="outputs" value="fasta_aln" />
-            <output name="fasta_aln" file="output1.fasta" ftype="fasta" />
+            <output name="fasta_aln" file="output1.fasta" />
         </test>
-        <test>
+        <test expect_num_outputs="1">
             <param name="filter_fasta" value="yes" />
             <param name="fasta_input" value="input.fasta" ftype="fasta" />
             <param name="identifiers" value="ids.txt" ftype="txt" />
             <param name="method02" value="clustalw_msa" />
             <param name="outputs" value="fasta_aln" />
-            <output name="fasta_aln" file="output2.fasta" ftype="fasta" />
+            <output name="fasta_aln" file="output2.fasta" />
+        </test>
+        <!-- Test all non-builtin methods and all outputs -->
+        <test expect_num_outputs="10">
+            <param name="filter_fasta" value="no" />
+            <param name="input" value="input.fasta" ftype="fasta" />
+            <param name="method03" value="clustalw_pair,t_coffee_pair" />
+            <param name="method01" value="sap_pair,mustang_pair,TMalign_pair" />
+            <param name="method02" value="mafft_msa,clustalw_msa,dialigntx_msa,poa_msa,probcons_msa,muscle_msa,t_coffee_msa,kalign_msa" />
+            <param name="outputs" value="clustalw_aln,dnd,fasta_aln,fasta_seq,msf_aln,phylip,pir_aln,pir_seq,score_ascii,score_html" />
+            <output name="clustalw_aln" file="output3.clustal" />
+            <output name="dnd" file="output3.nhx" />
+            <output name="fasta_aln" file="output3.fasta_aln" />
+            <output name="fasta_seq" file="output3.fasta_seq" />
+            <output name="msf_aln" file="output3.msf" />
+            <output name="phylip" file="output3.phylip" />
+            <output name="pir_aln" file="output3.pir_aln" />
+            <output name="pir_seq" file="output3.pir_seq" />
+            <output name="score_ascii" file="output3.txt" />
+            <output name="score_html">
+                <assert_contents>
+                    <has_text text="ENSMUST00000091" />
+                    <has_text text="ENSCAFT00000026" />
+                    <has_text text="ENSMUST00000005" />
+                    <has_text text="ENSRNOT00000019" />
+                    <has_text text="ENSPTRT00000013" />
+                </assert_contents>
+            </output>
         </test>
     </tests>
     <help><![CDATA[
