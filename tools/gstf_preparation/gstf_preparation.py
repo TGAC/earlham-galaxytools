@@ -136,7 +136,7 @@ def feature_to_dict(cols, parent_dict=None):
     elif cols[6] == '-':
         d['strand'] = -1
     else:
-        raise Exception("Unrecognized strand '%s'" % cols[6])
+        raise Exception(f"Unrecognized strand: {cols[6]}")
     if parent_dict is not None and 'Parent' in d:
         # a 3' UTR can be split among multiple exons
         # a 5' UTR can be split among multiple exons
@@ -150,7 +150,7 @@ def add_gene_to_dict(cols, species, gene_dict):
     global gene_count
     gene = feature_to_dict(cols)
     if not gene['id']:
-        raise Exception("Id not found among column 9 attribute tags: %s" % cols[8])
+        raise Exception(f"Id not found among column 9 attribute tags: {cols[8]}")
     gene.update({
         'member_id': gene_count,
         'object_type': 'Gene',
@@ -217,11 +217,11 @@ def join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, fi
             cds_list = cds_parent_dict[transcript_id]
             unique_cds_ids = {cds['id'] for cds in cds_list}
             if len(unique_cds_ids) > 1:
-                msg = """Found multiple CDS IDs (%s) for transcript '%s'.
+                msg = f"""Found multiple CDS IDs ({unique_cds_ids}) for transcript '{transcript_id}'.
 This is not supported by the Ensembl JSON format. If a CDS is split across
 multiple discontinuous genomic locations, the GFF3 standard requires that all
 corresponding lines use the same ID attribute."""
-                raise Exception(msg % (unique_cds_ids, transcript_id))
+                raise Exception(msg)
             cds_id = unique_cds_ids.pop()
             translation['id'] = cds_id
             cds_list.sort(key=lambda _: _['start'])
@@ -292,7 +292,7 @@ def write_gene_dict_to_db(conn, gene_dict):
                     cur.execute('INSERT INTO transcript (transcript_id, transcript_symbol, protein_id, biotype, is_canonical, gene_id) VALUES (?, ?, ?, ?, ?, ?)',
                                 to_insert)
                 except Exception as e:
-                    raise Exception("Error while inserting {} into transcript table: {}".format(str(to_insert), e))
+                    raise Exception(f"Error while inserting {to_insert} into transcript table: {e}")
 
     conn.commit()
 
@@ -335,7 +335,7 @@ def __main__():
         try:
             (species, filename) = gff3_arg.split(':')
         except ValueError:
-            raise Exception("Argument for --gff3 '%s' is not in the SPECIES:FILENAME format" % gff3_arg)
+            raise Exception(f"Argument for --gff3 '{gff3_arg}' is not in the SPECIES:FILENAME format")
         gene_dict = dict()
         transcript_dict = dict()
         exon_parent_dict = dict()
@@ -355,7 +355,7 @@ def __main__():
                     continue
                 cols = line.split('\t')
                 if len(cols) != 9:
-                    raise Exception("Line %i in file '%s': '%s' does not have 9 columns" % (i, filename, line))
+                    raise Exception(f"Line {i} in file '{filename}': '{line}' does not have 9 columns")
                 feature_type = cols[2]
                 try:
                     if feature_type == 'gene':
@@ -375,10 +375,10 @@ def __main__():
                     else:
                         unimplemented_feature_nlines_dict[feature_type] = 0
                 except Exception as e:
-                    print("Line %i in file '%s': %s" % (i, filename, e), file=sys.stderr)
+                    print(f"Line {i} in file '{filename}': {e}", file=sys.stderr)
 
         for unimplemented_feature, nlines in unimplemented_feature_nlines_dict.items():
-            print("Skipped %d lines in GFF3 file '%s': '%s' is not an implemented feature type" % (nlines, filename, unimplemented_feature), file=sys.stderr)
+            print(f"Skipped {nlines} lines in GFF3 file '{filename}': '{unimplemented_feature}' is not an implemented feature type", file=sys.stderr)
 
         join_dicts(gene_dict, transcript_dict, exon_parent_dict, cds_parent_dict, five_prime_utr_parent_dict, three_prime_utr_parent_dict)
         write_gene_dict_to_db(conn, gene_dict)
@@ -410,7 +410,7 @@ def __main__():
                 if transcript:
                     force_remove_id_version = True
                     force_remove_id_version_file_list.append(fasta_arg)
-                    print("Forcing removal of id version in FASTA file '%s'" % fasta_arg, file=sys.stderr)
+                    print(f"Forcing removal of id version in FASTA file '{fasta_arg}'", file=sys.stderr)
             if not transcript:
                 print(f"Transcript '{transcript_id}' in FASTA file '{fasta_arg}' not found in the gene feature information", file=sys.stderr)
                 continue
@@ -435,7 +435,7 @@ def __main__():
                 # first one to appear in the FASTA file is selected.
                 selected_transcript_id = max(transcript_tuples, key=lambda transcript_tuple: transcript_tuple[2])[0]
             elif len(canonical_transcript_ids) > 1:
-                raise Exception("Gene %s has more than 1 canonical transcripts" % (gene_id))
+                raise Exception(f"Gene {gene_id} has more than 1 canonical transcripts")
             else:
                 selected_transcript_id = canonical_transcript_ids[0]
             selected_transcript_ids.append(selected_transcript_id)
