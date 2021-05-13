@@ -1,0 +1,202 @@
+<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.01">
+    <description>fast OTU processing pipeline</description>
+    <macros>
+        <token name="@VERSION@">2.04</token>
+    </macros>
+    <requirements>
+        <requirement type="package" version="@VERSION@">lotus2</requirement>
+    </requirements>
+    <version_command>lotus2 --version</version_command>
+    <command detect_errors="exit_code"><![CDATA[
+mkdir input
+&&
+#if $inputs.paired_or_single == 'single':
+    #for i, f in enumerate($inputs.input):
+        #set ext = $f.ext.replace('sanger', '')
+        ln -s '$f' 'input/input${i}.${ext}' &&
+    #end for
+#elif $inputs.paired_or_single == 'paired':
+    #for i, f in enumerate($inputs.left_input):
+        #set ext = $f.ext.replace('sanger', '')
+        ln -s '$f' 'input/input${i}.1.${ext}' &&
+    #end for
+    #for i, f in enumerate($inputs.right_input):
+        #set ext = $f.ext.replace('sanger', '')
+        ln -s '$f' 'input/input${i}.2.${ext}' &&
+    #end for
+#else:
+    #for i, f in enumerate($inputs.pair_input):
+        #set ext = $f.forward.ext.replace('sanger', '')
+        ln -s '$f.forward' 'input/input${i}.1.${ext}' &&
+        #set ext = $f.reverse.ext.replace('sanger', '')
+        ln -s '$f.reverse' 'input/input${i}.2.${ext}' &&
+    #end for
+#end if
+
+lotus2 -create_map mapping.txt -i input/ &&
+cat mapping.txt &&
+
+lotus2
+-i input/
+-o output
+-tmpDir tmp_folder
+-threads "\${GALAXY_SLOTS:-1}"
+-map mapping.txt
+-platform $platform
+#if $barcode:
+    -barcode '$barcode'
+#end if
+#if $forwardPrimer:
+    -forwardPrimer '$forwardPrimer'
+#end if
+#if $reversePrimer:
+    -reversePrimer '$reversePrimer'
+#end if
+
+-clustering $clu_args.clustering
+-id $clu_args.id
+-derepMin $clu_args.derepMin
+-chim_skew $clu_args.chim_skew
+-deactivateChimeraCheck $clu_args.deactivateChimeraCheck
+-readOverlap  $clu_args.readOverlap
+
+-refDB $tax_args.refDB
+-amplicon_type $tax_args.amplicon_type
+-tax_group $tax_args.tax_group
+-rdp_thr $tax_args.rdp_thr
+-utax_thr $tax_args.utax_thr
+-keepUnclassified $tax_args.keepUnclassified
+-taxAligner $tax_args.taxAligner
+-useBestBlastHitOnly $tax_args.useBestBlastHitOnly
+-LCA_cover $tax_args.LCA_cover
+-LCA_frac $tax_args.LCA_frac
+-greengenesSpecies $tax_args.greengenesSpecies
+-pseudoRefOTUcalling $tax_args.pseudoRefOTUcalling
+
+&&
+
+cd output/ &&
+tar -cvzf higherLvl.tar.gz higherLvl/ &&
+tar -cvzf ExtraFiles.tar.gz ExtraFiles/ &&
+tar -cvzf LotuSLogS.tar.gz LotuSLogS/ &&
+tar -cvzf primary.tar.gz primary/
+    ]]></command>
+
+    <inputs>
+        <conditional name="inputs">
+            <param name="paired_or_single" type="select" label="Paired or Single-end data?">
+                <option value="single" selected="true">Single-end</option>
+                <option value="paired">Paired-end</option>
+                <option value="paired_collection">Paired-end collection</option>
+            </param>
+            <when value="single">
+                <param name="input" type="data" format="fastqsanger,fastqsanger.gz" multiple="true" label="Single-end reads" />
+            </when>
+            <when value="paired">
+                <param name="left_input" type="data" format="fastqsanger,fastqsanger.gz" multiple="true" label="Left/Forward strand reads" />
+                <param name="right_input" type="data" format="fastqsanger,fastqsanger.gz" multiple="true" label="Right/Reverse strand reads" />
+            </when>
+            <when value="paired_collection">
+                <param name="pair_input" type="data_collection" collection_type="list:paired" format="fastqsanger,fastqsanger.gz" label="List of paired reads" />
+            </when>
+        </conditional>
+        <param argument="-platform" type="select" label="Sequencing platform">
+            <option value="miSeq" selected="true">miSeq</option>
+            <option value="hiSeq">hiSeq</option>
+            <option value="454">454</option>
+            <option value="PacBio">PacBio</option>
+        </param>
+        <param argument="-barcode" type="data" format="fastqsanger" optional="true" label="Barcodes (MIDs)" help="FASTQ file with barcodes (in the processed mi/hiSeq format)" />
+        <param argument="-forwardPrimer" type="text" value="" label="Forward primer used to amplify DNA region" help="E.g. 16S primer fwd" />
+        <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region" help="E.g. 16S primer rev" />
+        <section name="clu_args" title="Clustering Options">
+            <param argument="-clustering" type="select" label="Clustering algorithm">
+                <option value="1">UPARSE</option>
+                <option value="2">swarm</option>
+                <option value="3" selected="true">cd-hit</option>
+                <option value="6">unoise3</option>
+                <option value="7">dada2</option>
+            </param>
+            <param argument="-id" type="float" min="0" max="1" value="0.97" label="Clustering threshold for OTUs" />
+            <param argument="-derepMin" type="integer" min="0" value="1" label="Minimum size of dereplicated clustered" />
+            <param argument="-chim_skew" type="integer" min="0" value="2" label="Skew in chimeric fragment abundance" />
+            <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
+                <option value="0" selected="true">OTU chimera checks</option>
+                <option value="1">No chimera check at all</option>
+                <option value="2">Deactivate deNovo chimera check</option>
+                <option value="3">Deactivate ref based chimera check</option>
+            </param>
+            <param argument="-readOverlap" type="integer" min="0" value="300" label="Maximum number of basepairs that two reads are overlapping" />
+        </section>
+        <section name="tax_args" title="Taxonomy Options">
+            <param argument="-refDB" type="select" label="Reference Database">
+                <option value="SLV" selected="true">Silva LSU (23/28S) or SSU (16/18S)</option>
+                <option value="GG">Greengenes</option>
+                <option value="UNITE">ITS focused on fungi</option>
+                <option value="PR2">SSU focused on Protists</option>
+                <option value="beetax">Bee gut specific database and tax names</option>
+                <option value="HITdb">Human gut microbiota</option>
+            </param>
+            <param argument="-amplicon_type" type="select" label="Amplicon type">
+                <option value="LSU">LSU Large subunit (23S/28S)</option>
+                <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
+                <option value="ITS">ITS internal transcribed spacer</option>
+                <option value="ITS1">ITS1</option>
+                <option value="ITS2">ITS2</option>
+            </param>
+            <param argument="-tax_group" type="select" label="Tax group">
+                <option value="bacteria" selected="true">bacterial 16S rDNA annnotation</option>
+                <option value="fungi">fungal 18S/23S/ITS annotation</option>
+            </param>
+            <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP"/>
+            <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for UTAX"/>
+            <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
+            <param argument="-taxAligner" type="select" label="Taxonomy aligner">
+                <option value="0" selected="true">Deactivated (just use RDP)</option>
+                <option value="1">Blast</option>
+                <option value="2">Use LAMBDA to search against a 16S reference database for taxonomic profiling of OTUs</option>
+                <option value="3">Use UTAX with custom databases</option>
+                <option value="4">Use VSEARCH to align OTUs to custom databases</option>
+                <option value="5">Use USEARCH to align OTUs to custom databases</option>
+            </param>
+            <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use best blast hit only" help="If selected, do not use LCA (lowest common ancestor) to determine most likely taxonomic level (not recommended)" />
+            <param argument="-LCA_cover" type="float" min="0" max="1" value="0.9" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
+            <param argument="-LCA_frac" type="float" min="0" max="1" value="0.9" label="Minimum fraction of reads with identical taxonomy"/>
+            <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
+            <param argument="-pseudoRefOTUcalling" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create Reference based (open) OTUs" />
+        </section>
+    </inputs>
+
+    <outputs>
+        <data name="otu" format="tabular" label="${tool.name} on ${on_string}: OTU abundance matrix" from_work_dir="output/OTU.txt" />
+        <data name="otu_biom" format="biom" label="${tool.name} on ${on_string}: biom-formatted OTU abundance matrix" from_work_dir="output/OTU.biom" />
+        <data name="otu_fna" format="fasta" label="${tool.name} on ${on_string}: FASTA-formatted extended OTU seed sequences" from_work_dir="output/OTU.fna" />
+        <data name="OTUphylo_nwk" format="newick" label="${tool.name} on ${on_string}: Newick-formatted phylogenetic tree between sequences" from_work_dir="output/OTUphylo.nwk" />
+        <data name="hiera_blast" format="tabular" label="${tool.name} on ${on_string}: OTU taxonomy assignments based on Blastn" from_work_dir="output/hiera_BLAST.txt" />
+        <data name="hiera_rdp" format="tabular" label="${tool.name} on ${on_string}: OTU taxonomy assignments based on RDP classifier" from_work_dir="output/hiera_RDP.txt" />
+        <data name="primary" format="tar" label="${tool.name} on ${on_string}: Copies of sdm options and mapping file" from_work_dir="output/primary.tar.gz" />
+        <data name="higherlvl" format="tar" label="${tool.name} on ${on_string}: Abundance matrices" from_work_dir="output/higherLvl.tar.gz" />
+        <data name="lotuslogs" format="tar" label="${tool.name} on ${on_string}: Log files" from_work_dir="output/LotuSLogS.tar.gz" />
+        <data name="extrafiles" format="tar" label="${tool.name} on ${on_string}: Extra files" from_work_dir="output/ExtraFiles.tar.gz" />
+    </outputs>
+
+    <tests>
+        <test>
+            <param name="paired_or_single" value="single"/>
+            <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
+            <param name="platform" value="454" />
+            <output name="otu" file="OTU.txt" compare="sim_size" />
+            <output name="otu_fna" file="OTU.fna" compare="sim_size" />
+            <output name="hiera_rdp" file="hiera_RDP.txt" compare="sim_size" />
+        </test>
+    </tests>
+
+    <help><![CDATA[
+If you have separate FASTA and quality files, these can be combined in a FASTQ file using the "Combine FASTA and QUAL into FASTQ" tool.
+
+Documentation can be found at `<http://lotus2.earlham.ac.uk/>`_.
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1186/2049-2618-2-30</citation>
+    </citations>
+</tool>
