@@ -1,4 +1,4 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy2" profile="20.01">
+<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy3" profile="20.01">
     <description>fast OTU processing pipeline</description>
     <macros>
         <token name="@VERSION@">2.06</token>
@@ -138,7 +138,6 @@ lotus2
 #end if
 -tax_group $tax_args.tax_group
 -keepUnclassified $tax_args.keepUnclassified
--useBestBlastHitOnly $tax_args.useBestBlastHitOnly
 -LCA_cover $tax_args.LCA_cover
 -LCA_frac $tax_args.LCA_frac
 -lulu $tax_args.lulu
@@ -279,7 +278,6 @@ exit \$EXIT_VALUE
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
-            <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use best blast hit only" help="If selected, do not use LCA (lowest common ancestor) to determine most likely taxonomic level (not recommended)" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="0.9" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="0.9" label="Minimum fraction of reads with identical taxonomy"/>
             <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
