@@ -35,9 +35,6 @@
     </macros>
     <requirements>
         <requirement type="package" version="@VERSION@">lotus2</requirement>
-        <requirement type="package" version="3.0">zip</requirement>
-        <!-- Help conda to resolve the environment -->
-        <requirement type="package" version="4.1.0">r-base</requirement>
     </requirements>
     <version_command>lotus2 --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
@@ -149,7 +146,7 @@ lotus2
 
 ; EXIT_VALUE=\$? ;
 
-zip -8 -r -v output.zip output/
+tar -cvzf output.tar.gz output/
 &&
 exit \$EXIT_VALUE
     ]]></command>
@@ -301,7 +298,7 @@ exit \$EXIT_VALUE
         <data name="OTUphylo_nwk" format="newick" label="${tool.name} on ${on_string}: Newick-formatted phylogenetic tree between sequences" from_work_dir="output/OTUphylo.nwk" />
         <data name="mapping" format="tabular" label="${tool.name} on ${on_string}: mapping file" from_work_dir="output/primary/in.map" />
         <data name="runlog" format="txt" label="${tool.name} on ${on_string}: main log file" from_work_dir="output/LotuSLogS/LotuS_run.log" />
-        <data name="outputs" format="zip" label="${tool.name} on ${on_string}: All output files" from_work_dir="output.zip" />
+        <data name="outputs" format="tar" label="${tool.name} on ${on_string}: All output files" from_work_dir="output.tar.gz" />
     </outputs>
 
     <tests>
