@@ -1,20 +1,36 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy1" profile="20.01">
+<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy2" profile="20.01">
     <description>fast OTU processing pipeline</description>
     <macros>
         <token name="@VERSION@">2.06</token>
         <xml name="refDB_macro">
-            <param argument="-refDB" type="select" label="Reference Database">
-                <option value="SLV" selected="true">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
-                <option value="GG">Greengenes (GG)</option>
-                <option value="UNITE">ITS focused on fungi (UNITE)</option>
-                <option value="PR2">SSU focused on Protists (PR2)</option>
-                <option value="beetax">Bee gut specific database and tax names (beetax)</option>
-                <option value="HITdb">Human gut microbiota (HITdb)</option>
-            </param>
+            <conditional name="refDB_cond">
+                <param argument="-refDB" type="select" label="Taxonomy reference database">
+                    <option value="cached">Use a built-in taxonomy database</option>
+                    <option value="history">Use a taxonomy from history</option>
+                </param>
+                <when value="cached">
+                    <param argument="ref_db" type="select" label="Using reference database" help="Select database from the list">
+                        <option value="SLV" selected="true">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
+                        <option value="GG">Greengenes (GG)</option>
+                        <option value="UNITE">ITS focused on fungi (UNITE)</option>
+                        <option value="PR2">SSU focused on Protists (PR2)</option>
+                        <option value="beetax">Bee gut specific database and tax names (beetax)</option>
+                        <option value="HITdb">Human gut microbiota (HITdb)</option>
+                    </param>
+                    <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
+                </when>
+                <when value="history">
+                    <param name="ref_fasta" type="data" format="fasta" label="Taxonomy reference sequences" help="In FASTA format" />
+                    <param argument="-tax4refDB" type="data" format="tabular" label="Taxonomy reference lineages" help="Tab-separated file with 2 columns mapping each FASTA header of the reference sequences to a GTDB-style taxonomy string" />
+                </when>
+            </conditional>
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
         </xml>
         <xml name="id_macro">
             <param argument="-id" type="float" min="0" max="1" value="0.97" label="Clustering threshold for OTUs" />
+        </xml>
+        <xml name="ITSx_macro">
+            <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
         </xml>
     </macros>
     <requirements>
@@ -63,15 +79,18 @@ mkdir input
     #end for
 #end if
 
-lotus2 -create_map mapping.txt -i input/ &&
-cat mapping.txt &&
+#if not $map:
+    lotus2 -create_map mapping.txt -i input/ &&
+    cat mapping.txt &&
+    #set map = 'mapping.txt'
+#end if
 
 lotus2
 -i input/
 -o output
 -tmpDir tmp_folder
 -threads "\${GALAXY_SLOTS:-1}"
--map mapping.txt
+-map '$map'
 -platform $platform
 #if $barcode:
     -barcode '$barcode'
@@ -97,7 +116,6 @@ lotus2
 #end if
 -deactivateChimeraCheck $clu_args.deactivateChimeraCheck
 -chim_skew $clu_args.chim_skew
--readOverlap  $clu_args.readOverlap
 
 -taxAligner $tax_args.aligner_cond.taxAligner
 #if $tax_args.aligner_cond.taxAligner == '0':
@@ -105,16 +123,24 @@ lotus2
 #elif $tax_args.aligner_cond.taxAligner == '3':
     -utax_thr $tax_args.aligner_cond.utax_thr
 #else:
-    -refDB $tax_args.aligner_cond.refDB
+    #if $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
+        -refDB $tax_args.aligner_cond.refDB_cond.ref_db
+        -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+    #else:
+        -refDB $tax_args.aligner_cond.refDB_cond.ref_fasta
+        -tax4refDB $tax_args.aligner_cond.refDB_cond.tax4refDB
+    #end if
     -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
 #end if
--amplicon_type $tax_args.amplicon_type
+-amplicon_type $tax_args.amplicon_cond.amplicon_type
+#if $tax_args.amplicon_cond.amplicon_type in ('ITS', 'ITS1', 'ITS2'):
+    -ITSx $tax_args.amplicon_cond.ITSx_macro
+#end if
 -tax_group $tax_args.tax_group
 -keepUnclassified $tax_args.keepUnclassified
 -useBestBlastHitOnly $tax_args.useBestBlastHitOnly
 -LCA_cover $tax_args.LCA_cover
 -LCA_frac $tax_args.LCA_frac
--greengenesSpecies $tax_args.greengenesSpecies
 -lulu $tax_args.lulu
 -buildPhylo $tax_args.buildPhylo
 
@@ -144,6 +170,7 @@ exit \$EXIT_VALUE
                 <param name="pair_input" type="data_collection" collection_type="list:paired" format="fastqsanger,fastqsanger.gz" label="List of paired reads" />
             </when>
         </conditional>
+        <param argument="-map" type="data" format="tabular" optional="true" label="Mapping file (optional)" help="Needed to demultiplex the FASTQ files using sdm. If the FASTQ are already demultiplexed, this can be omitted." />
         <param argument="-platform" type="select" label="Sequencing platform">
             <option value="miSeq" selected="true">miSeq</option>
             <option value="hiSeq">hiSeq</option>
@@ -203,7 +230,6 @@ exit \$EXIT_VALUE
                 <option value="3">Disable ref based chimera check</option>
             </param>
             <param argument="-chim_skew" type="integer" min="0" value="2" label="Skew in chimeric fragment abundance" />
-            <param argument="-readOverlap" type="integer" min="0" value="300" label="Maximum number of basepairs that two reads are overlapping" />
         </section>
         <section name="tax_args" title="Taxonomy Options">
             <conditional name="aligner_cond">
@@ -230,13 +256,24 @@ exit \$EXIT_VALUE
                     <expand macro="refDB_macro" />
                 </when>
             </conditional>
-            <param argument="-amplicon_type" type="select" label="Amplicon type">
-                <option value="LSU">LSU Large subunit (23S/28S)</option>
-                <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
-                <option value="ITS">ITS internal transcribed spacer</option>
-                <option value="ITS1">ITS1</option>
-                <option value="ITS2">ITS2</option>
-            </param>
+            <conditional name="amplicon_cond">
+                <param argument="-amplicon_type" type="select" label="Amplicon type">
+                    <option value="LSU">LSU Large subunit (23S/28S)</option>
+                    <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
+                    <option value="ITS">ITS internal transcribed spacer</option>
+                    <option value="ITS1">ITS1</option>
+                    <option value="ITS2">ITS2</option>
+                </param>
+                <when value="ITS">
+                    <expand macro="ITSx_macro" />
+                </when>
+                <when value="ITS1">
+                    <expand macro="ITSx_macro" />
+                </when>
+                <when value="ITS2">
+                    <expand macro="ITSx_macro" />
+                </when>
+            </conditional>
             <param argument="-tax_group" type="select" label="Tax group">
                 <option value="bacteria" selected="true">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
@@ -245,8 +282,7 @@ exit \$EXIT_VALUE
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use best blast hit only" help="If selected, do not use LCA (lowest common ancestor) to determine most likely taxonomic level (not recommended)" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="0.9" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="0.9" label="Minimum fraction of reads with identical taxonomy"/>
-            <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
-            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurence" />
+            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
                 <option value="1" selected="true">Use fasttree2</option>
@@ -261,6 +297,7 @@ exit \$EXIT_VALUE
         <data name="otu_fna" format="fasta" label="${tool.name} on ${on_string}: FASTA-formatted extended OTU seed sequences" from_work_dir="output/OTU.fna" />
         <data name="OTUphylo_nwk" format="newick" label="${tool.name} on ${on_string}: Newick-formatted phylogenetic tree between sequences" from_work_dir="output/OTUphylo.nwk" />
         <data name="mapping" format="tabular" label="${tool.name} on ${on_string}: mapping file" from_work_dir="output/primary/in.map" />
+        <data name="runlog" format="txt" label="${tool.name} on ${on_string}: main log file" from_work_dir="output/LotuSLogS/LotuS_run.log" />
         <data name="outputs" format="tar" label="${tool.name} on ${on_string}: All output files" from_work_dir="output.tar.gz" />
     </outputs>
 
@@ -273,6 +310,15 @@ exit \$EXIT_VALUE
             <output name="otu" file="OTU.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU.fna" compare="sim_size" />
             <output name="mapping" file="mapping.txt" />
+        </test>
+        <test>
+            <param name="paired_or_single" value="single"/>
+            <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
+            <param name="mapping" value="mapping.txt" />
+            <param name="platform" value="454" />
+            <param name="clustering" value="3" />
+            <output name="otu" file="OTU.txt" compare="sim_size" />
+            <output name="otu_fna" file="OTU.fna" compare="sim_size" />
         </test>
     </tests>
 
