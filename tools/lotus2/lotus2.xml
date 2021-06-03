@@ -10,7 +10,8 @@
                 </param>
                 <when value="cached">
                     <param argument="ref_db" type="select" label="Using reference database" help="Select database from the list">
-                        <option value="SLV" selected="true">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
+                        <option value="" style="color:gray" selected="true">(Default)</option>
+                        <option value="SLV">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
                         <option value="GG">Greengenes (GG)</option>
                         <option value="UNITE">ITS focused on fungi (UNITE)</option>
                         <option value="PR2">SSU focused on Protists (PR2)</option>
@@ -27,7 +28,7 @@
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
         </xml>
         <xml name="id_macro">
-            <param argument="-id" type="float" min="0" max="1" value="0.97" label="Clustering threshold for OTUs" />
+            <param argument="-id" type="float" min="0.9" max="1" value="0.97" label="Clustering threshold for OTUs" />
         </xml>
         <xml name="ITSx_macro">
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
@@ -91,7 +92,9 @@ lotus2
 -tmpDir tmp_folder
 -threads "\${GALAXY_SLOTS:-1}"
 -map '$map'
--platform $platform
+#if $platform != '':
+    -platform $platform
+#end if
 #if $barcode:
     -barcode '$barcode'
 #end if
@@ -106,16 +109,21 @@ lotus2
 #end if
 
 -clustering $clu_args.clu_cond.clustering
-#if $clu_args.clu_cond.clustering in ('1', '3'):
-    -id $clu_args.clu_cond.id
+#if ($clu_args.clu_cond.clustering in ('1', '3') ) and ( $clu_args.clu_cond.id != 0.97 ):
+    -id $clu_args.clu_cond.id 
 #elif $clu_args.clu_cond.clustering == '2':
     -swarm_distance $clu_args.clu_cond.swarm_distance
 #end if
-#if $clu_args.derepMin:
+#if ( $clu_args.derepMin ) and ( $clu_args.derepMin != '' ) :
     -derepMin '$clu_args.derepMin'
 #end if
+
+#if $clu_args.deactivateChimeraCheck != '':
 -deactivateChimeraCheck $clu_args.deactivateChimeraCheck
+#end if
+#if $clu_args.chim_skew != '2':
 -chim_skew $clu_args.chim_skew
+#end if
 
 -taxAligner $tax_args.aligner_cond.taxAligner
 #if $tax_args.aligner_cond.taxAligner == '0':
@@ -123,7 +131,8 @@ lotus2
 #elif $tax_args.aligner_cond.taxAligner == '3':
     -utax_thr $tax_args.aligner_cond.utax_thr
 #else:
-    #if $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
+    #if $tax_args.aligner_cond.refDB_cond.refDB == '':
+    #elif $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
         -refDB $tax_args.aligner_cond.refDB_cond.ref_db
         -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
     #else:
@@ -132,16 +141,31 @@ lotus2
     #end if
     -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
 #end if
--amplicon_type $tax_args.amplicon_cond.amplicon_type
+#if $tax_args.amplicon_cond.amplicon_type != '':
+    -amplicon_type $tax_args.amplicon_cond.amplicon_type
+#end if
 #if $tax_args.amplicon_cond.amplicon_type in ('ITS', 'ITS1', 'ITS2'):
     -ITSx $tax_args.amplicon_cond.ITSx_macro
 #end if
--tax_group $tax_args.tax_group
--keepUnclassified $tax_args.keepUnclassified
--LCA_cover $tax_args.LCA_cover
--LCA_frac $tax_args.LCA_frac
--lulu $tax_args.lulu
+
+#if $tax_args.tax_group != '':
+    -tax_group $tax_args.tax_group
+#end if
+#if $tax_args.keepUnclassified != '1':
+    -keepUnclassified $tax_args.keepUnclassified
+#end if
+#if $tax_args.LCA_cover != '0.9':
+    -LCA_cover $tax_args.LCA_cover
+#end if
+#if $tax_args.LCA_frac != '0.9':
+    -LCA_frac $tax_args.LCA_frac
+#end if
+#if $tax_args.lulu == "true":
+    -lulu $tax_args.lulu
+#end if
+#if $tax_args.buildPhylo != '':
 -buildPhylo $tax_args.buildPhylo
+#end if
 
 ; EXIT_VALUE=\$? ;
 
@@ -171,7 +195,8 @@ exit \$EXIT_VALUE
         </conditional>
         <param argument="-map" type="data" format="tabular" optional="true" label="Mapping file (optional)" help="Needed to demultiplex the FASTQ files using sdm. If the FASTQ are already demultiplexed, this can be omitted." />
         <param argument="-platform" type="select" label="Sequencing platform">
-            <option value="miSeq" selected="true">miSeq</option>
+            <option value="" style="color:gray" selected="true">(Default)</option>
+            <option value="miSeq">miSeq</option>
             <option value="hiSeq">hiSeq</option>
             <option value="454">454</option>
             <option value="PacBio">PacBio</option>
@@ -223,7 +248,8 @@ exit \$EXIT_VALUE
             </conditional>
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
             <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
-                <option value="0" selected="true">OTU chimera checks</option>
+                <option value="" style="color:gray" selected="true">(Default)</option>
+                <option value="0">OTU chimera checks</option>
                 <option value="1">No chimera check at all</option>
                 <option value="2">Disable deNovo chimera check</option>
                 <option value="3">Disable ref based chimera check</option>
@@ -258,7 +284,8 @@ exit \$EXIT_VALUE
             <conditional name="amplicon_cond">
                 <param argument="-amplicon_type" type="select" label="Amplicon type">
                     <option value="LSU">LSU Large subunit (23S/28S)</option>
-                    <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
+                    <option value="SSU">SSU small subunit (16S/18S)</option>
+                    <option value="" style="color:gray" selected="true">(Default)</option>
                     <option value="ITS">ITS internal transcribed spacer</option>
                     <option value="ITS1">ITS1</option>
                     <option value="ITS2">ITS2</option>
@@ -274,7 +301,8 @@ exit \$EXIT_VALUE
                 </when>
             </conditional>
             <param argument="-tax_group" type="select" label="Tax group">
-                <option value="bacteria" selected="true">bacterial 16S rDNA annnotation</option>
+                <option value="" style="color:gray" selected="true">(Default)</option>
+                <option value="bacteria">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
