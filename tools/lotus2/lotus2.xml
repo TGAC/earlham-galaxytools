@@ -29,6 +29,9 @@
         <xml name="id_macro">
             <param argument="-id" type="float" min="0" max="1" value="0.97" label="Clustering threshold for OTUs" />
         </xml>
+        <xml name="ITSx_macro">
+            <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
+        </xml>
     </macros>
     <requirements>
         <requirement type="package" version="@VERSION@">lotus2</requirement>
@@ -132,7 +135,10 @@ lotus2
     #end if
     -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
 #end if
--amplicon_type $tax_args.amplicon_type
+-amplicon_type $tax_args.amplicon_cond.amplicon_type
+#if $tax_args.amplicon_cond.amplicon_type in ('ITS', 'ITS1', 'ITS2'):
+    -ITSx $tax_args.amplicon_cond.ITSx_macro
+#end if
 -tax_group $tax_args.tax_group
 -keepUnclassified $tax_args.keepUnclassified
 -useBestBlastHitOnly $tax_args.useBestBlastHitOnly
@@ -253,13 +259,24 @@ exit \$EXIT_VALUE
                     <expand macro="refDB_macro" />
                 </when>
             </conditional>
-            <param argument="-amplicon_type" type="select" label="Amplicon type">
-                <option value="LSU">LSU Large subunit (23S/28S)</option>
-                <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
-                <option value="ITS">ITS internal transcribed spacer</option>
-                <option value="ITS1">ITS1</option>
-                <option value="ITS2">ITS2</option>
-            </param>
+            <conditional name="amplicon_cond">
+                <param argument="-amplicon_type" type="select" label="Amplicon type">
+                    <option value="LSU">LSU Large subunit (23S/28S)</option>
+                    <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
+                    <option value="ITS">ITS internal transcribed spacer</option>
+                    <option value="ITS1">ITS1</option>
+                    <option value="ITS2">ITS2</option>
+                </param>
+                <when value="ITS">
+                    <expand macro="ITSx_macro" />
+                </when>
+                <when value="ITS1">
+                    <expand macro="ITSx_macro" />
+                </when>
+                <when value="ITS2">
+                    <expand macro="ITSx_macro" />
+                </when>
+            </conditional>
             <param argument="-tax_group" type="select" label="Tax group">
                 <option value="bacteria" selected="true">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
