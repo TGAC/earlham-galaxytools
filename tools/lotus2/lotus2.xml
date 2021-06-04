@@ -287,7 +287,6 @@ exit \$EXIT_VALUE
                     <option value="" selected="true">(Default)</option>
                     <option value="LSU">LSU Large subunit (23S/28S)</option>
                     <option value="SSU">SSU small subunit (16S/18S)</option>
-                    <option value="" style="color:gray" selected="true">(Default)</option>
                     <option value="ITS">ITS internal transcribed spacer</option>
                     <option value="ITS1">ITS1</option>
                     <option value="ITS2">ITS2</option>
