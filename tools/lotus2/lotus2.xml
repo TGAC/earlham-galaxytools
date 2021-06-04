@@ -9,7 +9,7 @@
                     <option value="history">Use a taxonomy from history</option>
                 </param>
                 <when value="cached">
-                    <param argument="ref_db" type="select" label="Using reference database" help="Select database from the list">
+                    <param argument="-ref_db" type="select" label="Using reference database" help="Select database from the list">
                         <option value="" selected="true">(Default)</option>
                         <option value="SLV">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
                         <option value="GG">Greengenes (GG)</option>
