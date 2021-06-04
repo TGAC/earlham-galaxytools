@@ -121,8 +121,8 @@ lotus2
 #if $clu_args.deactivateChimeraCheck != '':
     -deactivateChimeraCheck $clu_args.deactivateChimeraCheck
 #end if
-#if $clu_args.chim_skew != '2':
--chim_skew $clu_args.chim_skew
+#if str($clu_args.chim_skew):
+    -chim_skew $clu_args.chim_skew
 #end if
 
 -taxAligner $tax_args.aligner_cond.taxAligner
@@ -152,21 +152,15 @@ lotus2
 #if $tax_args.tax_group != '':
     -tax_group $tax_args.tax_group
 #end if
-#if $tax_args.keepUnclassified != '1':
-    -keepUnclassified $tax_args.keepUnclassified
-#end if
-#if $tax_args.LCA_cover != '0.9':
+-keepUnclassified $tax_args.keepUnclassified
+#if str($tax_args.LCA_cover):
     -LCA_cover $tax_args.LCA_cover
 #end if
-#if $tax_args.LCA_frac != '0.9':
+#if str($tax_args.LCA_frac):
     -LCA_frac $tax_args.LCA_frac
 #end if
-#if $tax_args.lulu == "true":
-    -lulu $tax_args.lulu
-#end if
-#if $tax_args.buildPhylo != '':
+-lulu $tax_args.lulu
 -buildPhylo $tax_args.buildPhylo
-#end if
 
 ; EXIT_VALUE=\$? ;
 
@@ -255,7 +249,7 @@ exit \$EXIT_VALUE
                 <option value="2">Disable deNovo chimera check</option>
                 <option value="3">Disable ref based chimera check</option>
             </param>
-            <param argument="-chim_skew" type="integer" min="0" value="2" label="Skew in chimeric fragment abundance" />
+            <param argument="-chim_skew" type="integer" min="0" value="" optional="true" label="Skew in chimeric fragment abundance" />
         </section>
         <section name="tax_args" title="Taxonomy Options">
             <conditional name="aligner_cond">
@@ -307,8 +301,8 @@ exit \$EXIT_VALUE
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
-            <param argument="-LCA_cover" type="float" min="0" max="1" value="0.9" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
-            <param argument="-LCA_frac" type="float" min="0" max="1" value="0.9" label="Minimum fraction of reads with identical taxonomy"/>
+            <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
+            <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy"/>
             <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
