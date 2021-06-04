@@ -249,7 +249,7 @@ exit \$EXIT_VALUE
             </conditional>
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
             <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
-                <option value="" style="color:gray" selected="true">(Default)</option>
+                <option value="" selected="true">(Default)</option>
                 <option value="0">OTU chimera checks</option>
                 <option value="1">No chimera check at all</option>
                 <option value="2">Disable deNovo chimera check</option>
