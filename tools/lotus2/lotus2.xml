@@ -109,7 +109,7 @@ lotus2
 #end if
 
 -clustering $clu_args.clu_cond.clustering
-#if ($clu_args.clu_cond.clustering in ('1', '3') ) and ( $clu_args.clu_cond.id != 0.97 ):
+#if $clu_args.clu_cond.clustering in ('1', '3') and str($clu_args.clu_cond.id):
     -id $clu_args.clu_cond.id 
 #elif $clu_args.clu_cond.clustering == '2':
     -swarm_distance $clu_args.clu_cond.swarm_distance
