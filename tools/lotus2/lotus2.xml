@@ -131,10 +131,11 @@ lotus2
 #elif $tax_args.aligner_cond.taxAligner == '3':
     -utax_thr $tax_args.aligner_cond.utax_thr
 #else:
-    #if $tax_args.aligner_cond.refDB_cond.refDB == '':
-    #elif $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
-        -refDB $tax_args.aligner_cond.refDB_cond.ref_db
-        -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+    #if $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
+        #if $tax_args.aligner_cond.refDB_cond.ref_db != '':
+            -refDB $tax_args.aligner_cond.refDB_cond.ref_db
+            -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+        #end if
     #else:
         -refDB $tax_args.aligner_cond.refDB_cond.ref_fasta
         -tax4refDB $tax_args.aligner_cond.refDB_cond.tax4refDB
