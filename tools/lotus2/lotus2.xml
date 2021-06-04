@@ -119,7 +119,7 @@ lotus2
 #end if
 
 #if $clu_args.deactivateChimeraCheck != '':
--deactivateChimeraCheck $clu_args.deactivateChimeraCheck
+    -deactivateChimeraCheck $clu_args.deactivateChimeraCheck
 #end if
 #if $clu_args.chim_skew != '2':
 -chim_skew $clu_args.chim_skew
