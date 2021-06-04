@@ -92,6 +92,9 @@ lotus2
 -tmpDir tmp_folder
 -threads "\${GALAXY_SLOTS:-1}"
 -map '$map'
+#if $sdmopt:
+    -sdmopt '$sdmopt'
+#end if
 #if $platform != '':
     -platform $platform
 #end if
@@ -189,6 +192,7 @@ exit \$EXIT_VALUE
             </when>
         </conditional>
         <param argument="-map" type="data" format="tabular" optional="true" label="Mapping file (optional)" help="Needed to demultiplex the FASTQ files using sdm. If the FASTQ are already demultiplexed, this can be omitted." />
+        <param argument="-sdmopt" type="data" format="txt" optional="true" label="SDM option file" />
         <param argument="-platform" type="select" label="Sequencing platform">
             <option value="" selected="true">(Default)</option>
             <option value="miSeq">miSeq</option>
