@@ -302,7 +302,7 @@ exit \$EXIT_VALUE
                 </when>
             </conditional>
             <param argument="-tax_group" type="select" label="Tax group">
-                <option value="" style="color:gray" selected="true">(Default)</option>
+                <option value="" selected="true">(Default)</option>
                 <option value="bacteria">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
