@@ -10,7 +10,7 @@
                 </param>
                 <when value="cached">
                     <param argument="ref_db" type="select" label="Using reference database" help="Select database from the list">
-                        <option value="" style="color:gray" selected="true">(Default)</option>
+                        <option value="" selected="true">(Default)</option>
                         <option value="SLV">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
                         <option value="GG">Greengenes (GG)</option>
                         <option value="UNITE">ITS focused on fungi (UNITE)</option>
