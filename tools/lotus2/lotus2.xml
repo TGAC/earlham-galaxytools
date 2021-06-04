@@ -284,6 +284,7 @@ exit \$EXIT_VALUE
             </conditional>
             <conditional name="amplicon_cond">
                 <param argument="-amplicon_type" type="select" label="Amplicon type">
+                    <option value="" selected="true">(Default)</option>
                     <option value="LSU">LSU Large subunit (23S/28S)</option>
                     <option value="SSU">SSU small subunit (16S/18S)</option>
                     <option value="" style="color:gray" selected="true">(Default)</option>
