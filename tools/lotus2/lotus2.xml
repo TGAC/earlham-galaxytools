@@ -114,7 +114,7 @@ lotus2
 #elif $clu_args.clu_cond.clustering == '2':
     -swarm_distance $clu_args.clu_cond.swarm_distance
 #end if
-#if ( $clu_args.derepMin ) and ( $clu_args.derepMin != '' ) :
+#if $clu_args.derepMin:
     -derepMin '$clu_args.derepMin'
 #end if
 
