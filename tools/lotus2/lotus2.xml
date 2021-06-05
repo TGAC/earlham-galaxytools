@@ -2,7 +2,7 @@
     <description>fast OTU processing pipeline</description>
     <macros>
         <token name="@VERSION@">2.07</token>
-        <xml name="refDB_macro">
+        <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
                     <option value="cached">Use a built-in taxonomy database</option>
@@ -21,7 +21,7 @@
                     <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
                 </when>
                 <when value="history">
-                    <param name="ref_fasta" type="data" format="fasta" label="Taxonomy reference sequences" help="In FASTA format" />
+                    <param name="ref_fasta" type="data" format="@REF_FASTA_FORMATS@" label="Taxonomy reference sequences" help="In FASTA format" />
                     <param argument="-tax4refDB" type="data" format="tabular" label="Taxonomy reference lineages" help="Tab-separated file with 2 columns mapping each FASTA header of the reference sequences to a GTDB-style taxonomy string" />
                 </when>
             </conditional>
@@ -231,7 +231,7 @@ exit \$EXIT_VALUE
                 </param>
             </when>
             <when value="history">
-                <param name="ref_file" type="data" format="fasta" label="FASTA reference genome" />
+                <param name="ref_file" type="data" format="fasta,fasta.gz" label="FASTA reference genome" />
             </when>
         </conditional>
         <section name="clu_args" title="Clustering Options">
@@ -280,7 +280,7 @@ exit \$EXIT_VALUE
                     <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP"/>
                 </when>
                 <when value="1">
-                    <expand macro="refDB_macro" />
+                    <expand macro="refDB_macro" ref_fasta_formats="fasta" />
                 </when>
                 <when value="2">
                     <expand macro="refDB_macro" />
