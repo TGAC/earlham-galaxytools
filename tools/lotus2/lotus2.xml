@@ -42,13 +42,20 @@
 #import os.path
 #import re
 #def symlink_basename($f):
-    #set fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
-    #if fn.endswith('.gz'):
-        #set fn = fn[:-3]
+    #set $fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
+    #if $fn.endswith('.gz'):
+        #set $fn = $fn[:-3]
     #end if
-    #for ext in ('.fq', '.fastq', '.fastqsanger'):
-        #if fn.endswith($ext):
-            #set fn = fn[:-len($ext)]
+    #if $f.ext.startswith('fastqsanger'):
+        #set $exts_to_drop = ('.fq', '.fastq', '.fastqsanger')
+    #elif $f.ext.startswith('fasta'):
+        #set $exts_to_drop = ('.fa', '.fasta', '.fna')
+    #else
+        #set $exts_to_drop = []
+    #end if
+    #for $ext in $exts_to_drop:
+        #if $fn.endswith($ext):
+            #set $fn = $fn[:-len($ext)]
             #break
         #end if
     #end for
@@ -58,8 +65,8 @@ $fn#slurp
 mkdir input
 &&
 #if $inputs.paired_or_single == 'single':
-    #for f in $inputs.input:
-        #set ext = $f.ext.replace('sanger', '')
+    #for $f in $inputs.input:
+        #set $ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/${symlink_basename(f)}.${ext}' &&
     #end for
 #elif $inputs.paired_or_single == 'paired':
@@ -67,17 +74,22 @@ mkdir input
         #set ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/input${i}.1.${ext}' &&
     #end for
-    #for i, f in enumerate($inputs.right_input):
-        #set ext = $f.ext.replace('sanger', '')
+    #for $i, $f in enumerate($inputs.right_input):
+        #set $ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/input${i}.2.${ext}' &&
     #end for
 #else:
-    #for f in $inputs.pair_input:
-        #set ext = $f.forward.ext.replace('sanger', '')
+    #for $f in $inputs.pair_input:
+        #set $ext = $f.forward.ext.replace('sanger', '')
         ln -s '$f.forward' 'input/${symlink_basename(f)}.1.${ext}' &&
-        #set ext = $f.reverse.ext.replace('sanger', '')
+        #set $ext = $f.reverse.ext.replace('sanger', '')
         ln -s '$f.reverse' 'input/${symlink_basename(f)}.2.${ext}' &&
     #end for
+#end if
+
+#if $tax_args.aligner_cond.taxAligner not in ('0', '3') and $tax_args.aligner_cond.refDB_cond.refDB == 'history':
+    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta) + '.' + $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
+    ln -s '$tax_args.aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
 #end if
 
 #if not $map:
@@ -140,8 +152,8 @@ lotus2
             -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
         #end if
     #else:
-        -refDB $tax_args.aligner_cond.refDB_cond.ref_fasta
-        -tax4refDB $tax_args.aligner_cond.refDB_cond.tax4refDB
+        -refDB '$ref_fasta_symlink'
+        -tax4refDB '$tax_args.aligner_cond.refDB_cond.tax4refDB'
     #end if
     -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
 #end if
