@@ -1,16 +1,17 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy3" profile="20.01">
+<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.01">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.06</token>
-        <xml name="refDB_macro">
+        <token name="@VERSION@">2.07</token>
+        <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
                     <option value="cached">Use a built-in taxonomy database</option>
                     <option value="history">Use a taxonomy from history</option>
                 </param>
                 <when value="cached">
-                    <param argument="ref_db" type="select" label="Using reference database" help="Select database from the list">
-                        <option value="SLV" selected="true">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
+                    <param argument="-ref_db" type="select" label="Using reference database" help="Select database from the list">
+                        <option value="" selected="true">(Default)</option>
+                        <option value="SLV">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
                         <option value="GG">Greengenes (GG)</option>
                         <option value="UNITE">ITS focused on fungi (UNITE)</option>
                         <option value="PR2">SSU focused on Protists (PR2)</option>
@@ -20,14 +21,14 @@
                     <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
                 </when>
                 <when value="history">
-                    <param name="ref_fasta" type="data" format="fasta" label="Taxonomy reference sequences" help="In FASTA format" />
+                    <param name="ref_fasta" type="data" format="@REF_FASTA_FORMATS@" label="Taxonomy reference sequences" help="In FASTA format" />
                     <param argument="-tax4refDB" type="data" format="tabular" label="Taxonomy reference lineages" help="Tab-separated file with 2 columns mapping each FASTA header of the reference sequences to a GTDB-style taxonomy string" />
                 </when>
             </conditional>
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
         </xml>
         <xml name="id_macro">
-            <param argument="-id" type="float" min="0" max="1" value="0.97" label="Clustering threshold for OTUs" />
+            <param argument="-id" type="float" min="0.9" max="1" value="" optional="true" label="Clustering threshold for OTUs" />
         </xml>
         <xml name="ITSx_macro">
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
@@ -41,13 +42,20 @@
 #import os.path
 #import re
 #def symlink_basename($f):
-    #set fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
-    #if fn.endswith('.gz'):
-        #set fn = fn[:-3]
+    #set $fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
+    #if $fn.endswith('.gz'):
+        #set $fn = $fn[:-3]
     #end if
-    #for ext in ('.fq', '.fastq', '.fastqsanger'):
-        #if fn.endswith($ext):
-            #set fn = fn[:-len($ext)]
+    #if $f.ext.startswith('fastqsanger'):
+        #set $exts_to_drop = ('.fq', '.fastq', '.fastqsanger')
+    #elif $f.ext.startswith('fasta'):
+        #set $exts_to_drop = ('.fa', '.fasta', '.fna')
+    #else
+        #set $exts_to_drop = []
+    #end if
+    #for $ext in $exts_to_drop:
+        #if $fn.endswith($ext):
+            #set $fn = $fn[:-len($ext)]
             #break
         #end if
     #end for
@@ -57,8 +65,8 @@ $fn#slurp
 mkdir input
 &&
 #if $inputs.paired_or_single == 'single':
-    #for f in $inputs.input:
-        #set ext = $f.ext.replace('sanger', '')
+    #for $f in $inputs.input:
+        #set $ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/${symlink_basename(f)}.${ext}' &&
     #end for
 #elif $inputs.paired_or_single == 'paired':
@@ -66,17 +74,22 @@ mkdir input
         #set ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/input${i}.1.${ext}' &&
     #end for
-    #for i, f in enumerate($inputs.right_input):
-        #set ext = $f.ext.replace('sanger', '')
+    #for $i, $f in enumerate($inputs.right_input):
+        #set $ext = $f.ext.replace('sanger', '')
         ln -s '$f' 'input/input${i}.2.${ext}' &&
     #end for
 #else:
-    #for f in $inputs.pair_input:
-        #set ext = $f.forward.ext.replace('sanger', '')
+    #for $f in $inputs.pair_input:
+        #set $ext = $f.forward.ext.replace('sanger', '')
         ln -s '$f.forward' 'input/${symlink_basename(f)}.1.${ext}' &&
-        #set ext = $f.reverse.ext.replace('sanger', '')
+        #set $ext = $f.reverse.ext.replace('sanger', '')
         ln -s '$f.reverse' 'input/${symlink_basename(f)}.2.${ext}' &&
     #end for
+#end if
+
+#if $tax_args.aligner_cond.taxAligner not in ('0', '3') and $tax_args.aligner_cond.refDB_cond.refDB == 'history':
+    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta) + '.' + $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
+    ln -s '$tax_args.aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
 #end if
 
 #if not $map:
@@ -91,7 +104,12 @@ lotus2
 -tmpDir tmp_folder
 -threads "\${GALAXY_SLOTS:-1}"
 -map '$map'
--platform $platform
+#if $sdmopt:
+    -sdmopt '$sdmopt'
+#end if
+#if $platform != '':
+    -platform $platform
+#end if
 #if $barcode:
     -barcode '$barcode'
 #end if
@@ -106,7 +124,7 @@ lotus2
 #end if
 
 -clustering $clu_args.clu_cond.clustering
-#if $clu_args.clu_cond.clustering in ('1', '3'):
+#if $clu_args.clu_cond.clustering in ('1', '3') and str($clu_args.clu_cond.id):
     -id $clu_args.clu_cond.id
 #elif $clu_args.clu_cond.clustering == '2':
     -swarm_distance $clu_args.clu_cond.swarm_distance
@@ -114,8 +132,13 @@ lotus2
 #if $clu_args.derepMin:
     -derepMin '$clu_args.derepMin'
 #end if
--deactivateChimeraCheck $clu_args.deactivateChimeraCheck
--chim_skew $clu_args.chim_skew
+
+#if $clu_args.deactivateChimeraCheck != '':
+    -deactivateChimeraCheck $clu_args.deactivateChimeraCheck
+#end if
+#if str($clu_args.chim_skew):
+    -chim_skew $clu_args.chim_skew
+#end if
 
 -taxAligner $tax_args.aligner_cond.taxAligner
 #if $tax_args.aligner_cond.taxAligner == '0':
@@ -124,22 +147,33 @@ lotus2
     -utax_thr $tax_args.aligner_cond.utax_thr
 #else:
     #if $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
-        -refDB $tax_args.aligner_cond.refDB_cond.ref_db
-        -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+        #if $tax_args.aligner_cond.refDB_cond.ref_db != '':
+            -refDB $tax_args.aligner_cond.refDB_cond.ref_db
+            -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+        #end if
     #else:
-        -refDB $tax_args.aligner_cond.refDB_cond.ref_fasta
-        -tax4refDB $tax_args.aligner_cond.refDB_cond.tax4refDB
+        -refDB '$ref_fasta_symlink'
+        -tax4refDB '$tax_args.aligner_cond.refDB_cond.tax4refDB'
     #end if
     -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
 #end if
--amplicon_type $tax_args.amplicon_cond.amplicon_type
+#if $tax_args.amplicon_cond.amplicon_type != '':
+    -amplicon_type $tax_args.amplicon_cond.amplicon_type
+#end if
 #if $tax_args.amplicon_cond.amplicon_type in ('ITS', 'ITS1', 'ITS2'):
     -ITSx $tax_args.amplicon_cond.ITSx_macro
 #end if
--tax_group $tax_args.tax_group
+
+#if $tax_args.tax_group != '':
+    -tax_group $tax_args.tax_group
+#end if
 -keepUnclassified $tax_args.keepUnclassified
--LCA_cover $tax_args.LCA_cover
--LCA_frac $tax_args.LCA_frac
+#if str($tax_args.LCA_cover):
+    -LCA_cover $tax_args.LCA_cover
+#end if
+#if str($tax_args.LCA_frac):
+    -LCA_frac $tax_args.LCA_frac
+#end if
 -lulu $tax_args.lulu
 -buildPhylo $tax_args.buildPhylo
 
@@ -170,8 +204,10 @@ exit \$EXIT_VALUE
             </when>
         </conditional>
         <param argument="-map" type="data" format="tabular" optional="true" label="Mapping file (optional)" help="Needed to demultiplex the FASTQ files using sdm. If the FASTQ are already demultiplexed, this can be omitted." />
+        <param argument="-sdmopt" type="data" format="txt" optional="true" label="SDM option file (optional)" />
         <param argument="-platform" type="select" label="Sequencing platform">
-            <option value="miSeq" selected="true">miSeq</option>
+            <option value="" selected="true">(Default)</option>
+            <option value="miSeq">miSeq</option>
             <option value="hiSeq">hiSeq</option>
             <option value="454">454</option>
             <option value="PacBio">PacBio</option>
@@ -195,7 +231,7 @@ exit \$EXIT_VALUE
                 </param>
             </when>
             <when value="history">
-                <param name="ref_file" type="data" format="fasta" label="FASTA reference genome" />
+                <param name="ref_file" type="data" format="fasta,fasta.gz" label="FASTA reference genome" />
             </when>
         </conditional>
         <section name="clu_args" title="Clustering Options">
@@ -223,12 +259,13 @@ exit \$EXIT_VALUE
             </conditional>
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
             <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
-                <option value="0" selected="true">OTU chimera checks</option>
+                <option value="" selected="true">(Default)</option>
+                <option value="0">OTU chimera checks</option>
                 <option value="1">No chimera check at all</option>
                 <option value="2">Disable deNovo chimera check</option>
                 <option value="3">Disable ref based chimera check</option>
             </param>
-            <param argument="-chim_skew" type="integer" min="0" value="2" label="Skew in chimeric fragment abundance" />
+            <param argument="-chim_skew" type="integer" min="0" value="" optional="true" label="Skew in chimeric fragment abundance" />
         </section>
         <section name="tax_args" title="Taxonomy Options">
             <conditional name="aligner_cond">
@@ -243,7 +280,7 @@ exit \$EXIT_VALUE
                     <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP"/>
                 </when>
                 <when value="1">
-                    <expand macro="refDB_macro" />
+                    <expand macro="refDB_macro" ref_fasta_formats="fasta" />
                 </when>
                 <when value="2">
                     <expand macro="refDB_macro" />
@@ -257,8 +294,9 @@ exit \$EXIT_VALUE
             </conditional>
             <conditional name="amplicon_cond">
                 <param argument="-amplicon_type" type="select" label="Amplicon type">
+                    <option value="" selected="true">(Default)</option>
                     <option value="LSU">LSU Large subunit (23S/28S)</option>
-                    <option value="SSU" selected="true">SSU small subunit (16S/18S)</option>
+                    <option value="SSU">SSU small subunit (16S/18S)</option>
                     <option value="ITS">ITS internal transcribed spacer</option>
                     <option value="ITS1">ITS1</option>
                     <option value="ITS2">ITS2</option>
@@ -274,12 +312,13 @@ exit \$EXIT_VALUE
                 </when>
             </conditional>
             <param argument="-tax_group" type="select" label="Tax group">
-                <option value="bacteria" selected="true">bacterial 16S rDNA annnotation</option>
+                <option value="" selected="true">(Default)</option>
+                <option value="bacteria">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
-            <param argument="-LCA_cover" type="float" min="0" max="1" value="0.9" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
-            <param argument="-LCA_frac" type="float" min="0" max="1" value="0.9" label="Minimum fraction of reads with identical taxonomy"/>
+            <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
+            <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy"/>
             <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
