@@ -1,4 +1,4 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.01">
+<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy1" profile="20.01">
     <description>fast OTU processing pipeline</description>
     <macros>
         <token name="@VERSION@">2.07</token>
@@ -179,7 +179,7 @@ lotus2
 
 ; EXIT_VALUE=\$? ;
 
-zip -r output.zip output/
+zip -8 -r -v output.zip output/
 &&
 exit \$EXIT_VALUE
     ]]></command>
