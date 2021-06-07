@@ -28,7 +28,7 @@
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
         </xml>
         <xml name="id_macro">
-            <param argument="-id" type="float" min="0.9" max="1" value="" optional="true" label="Clustering threshold for OTUs" />
+            <param argument="-id" type="float" min="0.9" max="1" value="" optional="true" label="Clustering threshold for OTUs (optional)" />
         </xml>
         <xml name="ITSx_macro">
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
@@ -213,10 +213,10 @@ exit \$EXIT_VALUE
             <option value="PacBio">PacBio</option>
         </param>
         <param argument="-barcode" type="data" format="fastqsanger" optional="true" label="Barcode (MID) sequences (optional)" help="FASTQ file with barcodes (in the processed mi/hiSeq format), if provided by the sequencer" />
-        <param argument="-forwardPrimer" type="text" value="" label="Forward primer used to amplify DNA region" help="E.g. 16S primer fwd" />
-        <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region" help="E.g. 16S primer rev" />
+        <param argument="-forwardPrimer" type="text" value="" label="Forward primer used to amplify DNA region (optional)" help="E.g. 16S primer fwd" />
+        <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region (optional)" help="E.g. 16S primer rev" />
         <conditional name="offtarget_cond">
-            <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
+            <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome (optional)" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
                 <option value="no" selected="true">Disabled</option>
                 <option value="cached">Use a built-in genome</option>
                 <option value="history">Use a genome from history</option>
@@ -247,7 +247,7 @@ exit \$EXIT_VALUE
                     <expand macro="id_macro" />
                 </when>
                 <when value="2">
-                    <param argument="-swarm_distance" type="integer" min="1" value="1" label="Clustering threshold for OTUs when using swarm clustering" />
+                    <param argument="-swarm_distance" type="integer" min="1" value="1" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
                 </when>
                 <when value="3">
                     <expand macro="id_macro" />
@@ -277,7 +277,7 @@ exit \$EXIT_VALUE
                     <option value="4">VSEARCH LCA against custom reference database</option>
                 </param>
                 <when value="0">
-                    <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP"/>
+                    <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP (optional)"/>
                 </when>
                 <when value="1">
                     <expand macro="refDB_macro" ref_fasta_formats="fasta" />
@@ -286,7 +286,7 @@ exit \$EXIT_VALUE
                     <expand macro="refDB_macro" />
                 </when>
                 <when value="3">
-                    <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for UTAX"/>
+                    <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for UTAX (optional)"/>
                 </when>
                 <when value="4">
                     <expand macro="refDB_macro" />
@@ -317,8 +317,8 @@ exit \$EXIT_VALUE
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
-            <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB"/>
-            <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy"/>
+            <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB (optional)"/>
+            <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy (optional)"/>
             <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
