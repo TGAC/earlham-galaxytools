@@ -271,10 +271,7 @@ exit \$EXIT_VALUE
             <conditional name="aligner_cond">
                 <param argument="-taxAligner" type="select" label="Taxonomy aligner for taxonomic profiling of OTUs">
                     <option value="0" selected="true">RDPclassifier (max likelihood)</option>
-                    <option value="1">Blast LCA against custom reference database</option>
                     <option value="2">LAMBDA LCA against custom reference database</option>
-                    <option value="3">UTAX likelihood corrected</option>
-                    <option value="4">VSEARCH LCA against custom reference database</option>
                 </param>
                 <when value="0">
                     <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" label="Confidence threshold for RDP (optional)"/>
