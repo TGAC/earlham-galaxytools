@@ -41,49 +41,21 @@
     <command detect_errors="exit_code"><![CDATA[
 #import os.path
 #import re
-#def symlink_basename($f, $f_ext):
-    #set $fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
-    #if $fn.endswith('.gz'):
-        #set $fn = $fn[:-3]
-    #end if
-    #if $f_ext.startswith('fastq'):
-        #set $exts_to_drop = ('.fq', '.fastq', '.fastqsanger')
-    #elif $f_ext.startswith('fasta'):
-        #set $exts_to_drop = ('.fa', '.fasta', '.fna')
-    #else
-        #set $exts_to_drop = []
-    #end if
-    #for $ext in $exts_to_drop:
-        #if $fn.endswith($ext):
-            #set $fn = $fn[:-len($ext)]
-            #break
-        #end if
-    #end for
-$fn#slurp
+#def symlink_basename($f):
+    #set $fn = re.sub('[^\w\-_.]', '_', $f.name)
+${fn}#slurp
 #end def
 
 mkdir input
 &&
 #if $inputs.paired_or_single == 'single':
     #for $f in $inputs.input:
-        #set $ext = $f.ext.replace('sanger', '')
-        ln -s '$f' 'input/${symlink_basename($f, $ext)}.${ext}' &&
-    #end for
-#elif $inputs.paired_or_single == 'paired':
-    #for i, f in enumerate($inputs.left_input):
-        #set ext = $f.ext.replace('sanger', '')
-        ln -s '$f' 'input/input${i}.1.${ext}' &&
-    #end for
-    #for $i, $f in enumerate($inputs.right_input):
-        #set $ext = $f.ext.replace('sanger', '')
-        ln -s '$f' 'input/input${i}.2.${ext}' &&
+        ln -s '$f' 'input/${symlink_basename($f)}' &&
     #end for
 #else:
     #for $f in $inputs.pair_input:
-        #set $ext = $f.forward.ext.replace('sanger', '')
-        ln -s '$f.forward' 'input/${symlink_basename($f, $ext)}.1.${ext}' &&
-        #set $ext = $f.reverse.ext.replace('sanger', '')
-        ln -s '$f.reverse' 'input/${symlink_basename($f, $ext)}.2.${ext}' &&
+        ln -s '$f.forward' 'input/${symlink_basename($f.forward.dataset)}' &&
+        ln -s '$f.reverse' 'input/${symlink_basename($f.reverse.dataset)}' &&
     #end for
 #end if
 
@@ -94,9 +66,8 @@ mkdir input
 #end if
 
 #if not $map:
-    lotus2 -create_map mapping.txt -i input/ &&
-    cat mapping.txt &&
-    #set map = 'mapping.txt'
+    cat '$generated_mapping' &&
+    #set map = $generated_mapping
 #end if
 
 lotus2
@@ -192,7 +163,25 @@ zip -8 -r -v output.zip output/
 &&
 exit \$EXIT_VALUE
     ]]></command>
-
+    <configfiles>
+        <configfile name="generated_mapping"><![CDATA[#slurp
+#import re
+#def symlink_basename($f):
+    #set $fn = re.sub('[^\w\-_.]', '_', $f.name)
+${fn}#slurp
+#end def
+#SampleID	fastqFile	SequencingRun
+#if $inputs.paired_or_single == 'single':
+    #for $i, $f in enumerate($inputs.input):
+SMPL${i}	${symlink_basename($f)}	a
+    #end for
+#else:
+    #for $i, $f in enumerate($inputs.pair_input):
+SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.dataset)}	a
+    #end for
+#end if
+]]></configfile>
+    </configfiles>
     <inputs>
         <conditional name="inputs">
             <param name="paired_or_single" type="select" label="Single- or Paired-end data?">
