@@ -41,14 +41,14 @@
     <command detect_errors="exit_code"><![CDATA[
 #import os.path
 #import re
-#def symlink_basename($f):
+#def symlink_basename($f, $f_ext):
     #set $fn = re.sub('[^\w\-_.]', '_', $f.element_identifier)
     #if $fn.endswith('.gz'):
         #set $fn = $fn[:-3]
     #end if
-    #if $f.ext.startswith('fastqsanger'):
+    #if $f_ext.startswith('fastq'):
         #set $exts_to_drop = ('.fq', '.fastq', '.fastqsanger')
-    #elif $f.ext.startswith('fasta'):
+    #elif $f_ext.startswith('fasta'):
         #set $exts_to_drop = ('.fa', '.fasta', '.fna')
     #else
         #set $exts_to_drop = []
@@ -67,7 +67,7 @@ mkdir input
 #if $inputs.paired_or_single == 'single':
     #for $f in $inputs.input:
         #set $ext = $f.ext.replace('sanger', '')
-        ln -s '$f' 'input/${symlink_basename(f)}.${ext}' &&
+        ln -s '$f' 'input/${symlink_basename($f, $ext)}.${ext}' &&
     #end for
 #elif $inputs.paired_or_single == 'paired':
     #for i, f in enumerate($inputs.left_input):
@@ -81,14 +81,15 @@ mkdir input
 #else:
     #for $f in $inputs.pair_input:
         #set $ext = $f.forward.ext.replace('sanger', '')
-        ln -s '$f.forward' 'input/${symlink_basename(f)}.1.${ext}' &&
+        ln -s '$f.forward' 'input/${symlink_basename($f, $ext)}.1.${ext}' &&
         #set $ext = $f.reverse.ext.replace('sanger', '')
-        ln -s '$f.reverse' 'input/${symlink_basename(f)}.2.${ext}' &&
+        ln -s '$f.reverse' 'input/${symlink_basename($f, $ext)}.2.${ext}' &&
     #end for
 #end if
 
 #if $tax_args.aligner_cond.taxAligner not in ('0', '3') and $tax_args.aligner_cond.refDB_cond.refDB == 'history':
-    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta) + '.' + $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
+    #set $ext = $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
+    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta, $ext) + '.' + $ext
     ln -s '$tax_args.aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
 #end if
 
@@ -186,9 +187,9 @@ exit \$EXIT_VALUE
 
     <inputs>
         <conditional name="inputs">
-            <param name="paired_or_single" type="select" label="Paired or Single-end data?">
+            <param name="paired_or_single" type="select" label="Single- or Paired-end data?">
                 <option value="single" selected="true">Single-end</option>
-                <option value="paired_collection">Paired-end collection</option>
+                <option value="paired_collection">Paired-end list</option>
             </param>
             <when value="single">
                 <param name="input" type="data" format="fastqsanger,fastqsanger.gz" multiple="true" label="Single-end reads" />
@@ -301,6 +302,9 @@ exit \$EXIT_VALUE
                     <option value="ITS1">ITS1</option>
                     <option value="ITS2">ITS2</option>
                 </param>
+                <when value="" />
+                <when value="LSU" />
+                <when value="SSU" />
                 <when value="ITS">
                     <expand macro="ITSx_macro" />
                 </when>
@@ -348,13 +352,22 @@ exit \$EXIT_VALUE
             <output name="mapping" file="mapping.txt" />
         </test>
         <test>
-            <param name="paired_or_single" value="single"/>
-            <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
-            <param name="mapping" value="mapping.txt" />
+            <param name="paired_or_single" value="paired_collection"/>
+            <param name="pair_input">
+                <collection type="list:paired">
+                    <element name="Anh_sample">
+                        <collection type="paired">
+                            <element name="forward" value="Anh_sample1.fastq.gz" ftype="fastqsanger.gz" />
+                            <element name="reverse" value="Anh_sample2.fastq.gz" ftype="fastqsanger.gz" />
+                        </collection>
+                    </element>
+                </collection>
+            </param>
+            <param name="mapping" value="mapping_paired.txt" />
             <param name="platform" value="454" />
             <param name="clustering" value="3" />
-            <output name="otu" file="OTU.txt" compare="sim_size" />
-            <output name="otu_fna" file="OTU.fna" compare="sim_size" />
+            <output name="otu" file="OTU_paired.txt" compare="sim_size" />
+            <output name="otu_fna" file="OTU_paired.fna" compare="sim_size" />
         </test>
     </tests>
 
