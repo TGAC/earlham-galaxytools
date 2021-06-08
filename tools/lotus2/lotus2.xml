@@ -216,7 +216,7 @@ exit \$EXIT_VALUE
         <param argument="-forwardPrimer" type="text" value="" label="Forward primer used to amplify DNA region (optional)" help="E.g. 16S primer fwd" />
         <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region (optional)" help="E.g. 16S primer rev" />
         <conditional name="offtarget_cond">
-            <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome (optional)" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
+            <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
                 <option value="no" selected="true">Disabled</option>
                 <option value="cached">Use a built-in genome</option>
                 <option value="history">Use a genome from history</option>
