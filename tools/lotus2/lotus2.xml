@@ -162,7 +162,7 @@ lotus2
     -amplicon_type $tax_args.amplicon_cond.amplicon_type
 #end if
 #if $tax_args.amplicon_cond.amplicon_type in ('ITS', 'ITS1', 'ITS2'):
-    -ITSx $tax_args.amplicon_cond.ITSx_macro
+    -ITSx $tax_args.amplicon_cond.ITSx
 #end if
 
 #if $tax_args.tax_group != '':
