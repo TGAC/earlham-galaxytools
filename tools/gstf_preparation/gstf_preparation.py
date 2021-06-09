@@ -313,6 +313,7 @@ def remove_id_version(s, force=False):
     else:
         return s
 
+
 def fetch_genomes(conn):
     """
     Fetches all the genomes from database
@@ -358,7 +359,7 @@ def populate_synteny(conn, sytenic_region_id, gene_id, species_name, order_numbe
     cur = conn.cursor()
 
     cur.execute('INSERT INTO sytenic_region (sytenic_region_id, gene_id, species_name, order_number) VALUES (?, ?, ?, ?)',
-                    (sytenic_region_id, gene_id, species_name, order_number))
+                (sytenic_region_id, gene_id, species_name, order_number))
 
     conn.commit()
 
