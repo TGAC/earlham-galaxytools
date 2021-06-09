@@ -320,8 +320,9 @@ def fetch_genomes(conn):
     cur = conn.cursor()
 
     cur.execute('SELECT DISTINCT species FROM gene')
-    
+
     return cur.fetchall()
+
 
 def fetch_references(conn, genome):
     """
@@ -332,8 +333,9 @@ def fetch_references(conn, genome):
 
     cur.execute('SELECT DISTINCT seq_region_name FROM gene where species=?',
                 (genome, ))
-    
+
     return cur.fetchall()
+
 
 def fetch_genes_by_order(conn, genome, ref):
     """
@@ -344,8 +346,9 @@ def fetch_genes_by_order(conn, genome, ref):
 
     cur.execute('SELECT gene_id FROM gene where species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
                 (genome, ref, ))
-    
+
     return cur.fetchall()
+
 
 def populate_synteny(conn, sytenic_region_id, gene_id, species_name, order_number):
     """
@@ -359,9 +362,7 @@ def populate_synteny(conn, sytenic_region_id, gene_id, species_name, order_numbe
 
     conn.commit()
 
-    
     return cur.fetchall()
-
 
 
 def __main__():
@@ -537,22 +538,17 @@ def __main__():
                 else:
                     entry.print(output_fasta_file)
 
-    genomes  = fetch_genomes(conn)
-    print(genomes)
+    genomes = fetch_genomes(conn)
 
     for genome in genomes:
-        print(genome[0])
-        sytenic_region_id = 1;
+        sytenic_region_id = 1
         refs = fetch_references(conn, genome[0])
         for ref in refs:
-            print(ref[0])
             genes = fetch_genes_by_order(conn, genome[0], ref[0])
 
             order_number = 1
-            
+
             for gene in genes:
-                print(gene[0])
-                print(conn, sytenic_region_id, gene[0], order_number)
                 populate_synteny(conn, sytenic_region_id, gene[0], genome[0], order_number)
                 order_number = order_number + 1
 
