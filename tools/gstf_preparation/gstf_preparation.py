@@ -92,6 +92,12 @@ def create_tables(conn):
         FROM transcript JOIN gene
         USING (gene_id)''')
 
+    cur.execute('''CREATE TABLE sytenic_region (
+        sytenic_region_id VARCHAR NOT NULL,
+        gene_id VARCHAR NOT NULL,
+        species_name VARCHAR NOT NULL,
+        order_number INTEGER NOT NULL)''')
+
     conn.commit()
 
 
@@ -307,6 +313,56 @@ def remove_id_version(s, force=False):
     else:
         return s
 
+def fetch_genomes(conn):
+    """
+    Fetches all the genomes from database
+    """
+    cur = conn.cursor()
+
+    cur.execute('SELECT DISTINCT species FROM gene')
+    
+    return cur.fetchall()
+
+def fetch_references(conn, genome):
+    """
+    Fetches all the refenreces for species
+    """
+
+    cur = conn.cursor()
+
+    cur.execute('SELECT DISTINCT seq_region_name FROM gene where species=?',
+                (genome, ))
+    
+    return cur.fetchall()
+
+def fetch_genes_by_order(conn, genome, ref):
+    """
+    Fetches all the refenreces for species
+    """
+
+    cur = conn.cursor()
+
+    cur.execute('SELECT gene_id FROM gene where species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
+                (genome, ref, ))
+    
+    return cur.fetchall()
+
+def populate_synteny(conn, sytenic_region_id, gene_id, species_name, order_number):
+    """
+    Fetches all the refenreces for species
+    """
+
+    cur = conn.cursor()
+
+    cur.execute('INSERT INTO sytenic_region (sytenic_region_id, gene_id, species_name, order_number) VALUES (?, ?, ?, ?)',
+                    (sytenic_region_id, gene_id, species_name, order_number))
+
+    conn.commit()
+
+    
+    return cur.fetchall()
+
+
 
 def __main__():
     parser = optparse.OptionParser()
@@ -480,6 +536,27 @@ def __main__():
                     entry.print(filtered_fasta_file)
                 else:
                     entry.print(output_fasta_file)
+
+    genomes  = fetch_genomes(conn)
+    print(genomes)
+
+    for genome in genomes:
+        print(genome[0])
+        sytenic_region_id = 1;
+        refs = fetch_references(conn, genome[0])
+        for ref in refs:
+            print(ref[0])
+            genes = fetch_genes_by_order(conn, genome[0], ref[0])
+
+            order_number = 1
+            
+            for gene in genes:
+                print(gene[0])
+                print(conn, sytenic_region_id, gene[0], order_number)
+                populate_synteny(conn, sytenic_region_id, gene[0], genome[0], order_number)
+                order_number = order_number + 1
+
+            sytenic_region_id = sytenic_region_id + 1
 
     conn.close()
 
