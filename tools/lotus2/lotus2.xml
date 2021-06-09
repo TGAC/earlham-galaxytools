@@ -41,8 +41,24 @@
     <command detect_errors="exit_code"><![CDATA[
 #import os.path
 #import re
-#def symlink_basename($f):
+#def symlink_basename($f, strip_ext=False):
     #set $fn = re.sub('[^\w\-_.]', '_', $f.name)
+    #if strip_ext:
+        #if $fn.endswith('.gz'):
+            #set $fn = $fn[:-3]
+        #end if
+        #if $f.ext.startswith('fasta'):
+            #set $exts_to_drop = ('.fa', '.fasta', '.fna')
+        #else:
+            #set $exts_to_drop = []
+        #end if
+        #for $ext in $exts_to_drop:
+            #if $fn.endswith($ext):
+                #set $fn = $fn[:-len($ext)]
+                #break
+            #end if
+        #end for
+    #end if
 ${fn}#slurp
 #end def
 
@@ -61,7 +77,7 @@ mkdir input
 
 #if $tax_args.aligner_cond.taxAligner not in ('0', '3') and $tax_args.aligner_cond.refDB_cond.refDB == 'history':
     #set $ext = $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
-    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta, $ext) + '.' + $ext
+    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta, strip_ext=True) + '.' + $ext
     ln -s '$tax_args.aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
 #end if
 
