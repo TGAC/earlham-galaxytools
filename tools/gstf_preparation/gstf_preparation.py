@@ -351,7 +351,7 @@ def fetch_genes_by_order(conn, genome, ref):
     return cur.fetchall()
 
 
-def populate_synteny(conn, syntenic_region_id, gene_id, species_name, order_number):
+def populate_synteny(conn, syntenic_region_id, gene_id, species, order_number):
     """
     Fetches all the refenreces for species
     """
