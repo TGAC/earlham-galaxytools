@@ -547,13 +547,8 @@ def __main__():
         for ref in refs:
             genes = fetch_genes_by_order(conn, genome[0], ref[0])
 
-            order_number = 1
-
-            for gene in genes:
-                populate_synteny(conn, syntenic_region_id, gene[0], genome[0], order_number)
-                order_number = order_number + 1
-
-            syntenic_region_id = syntenic_region_id + 1
+            for order_number, gene in enumerate(genes, start=1):
+                populate_synteny(conn, syntenic_region_id, gene['gene_id'], species, order_number)
 
     conn.close()
 
