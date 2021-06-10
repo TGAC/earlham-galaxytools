@@ -539,13 +539,10 @@ def __main__():
                 else:
                     entry.print(output_fasta_file)
 
-    genomes = fetch_genomes(conn)
-
-    for genome in genomes:
-        syntenic_region_id = 1
-        refs = fetch_references(conn, genome[0])
-        for ref in refs:
-            genes = fetch_genes_by_order(conn, genome[0], ref[0])
+    for syntenic_region_id, genome in enumerate(fetch_genomes(conn), start=1):
+    	species = genome['species']
+        for row in fetch_seq_region_names(conn, species):
+            genes = fetch_genes_by_order(conn, species, row['seq_region_name'])
 
             for order_number, gene in enumerate(genes, start=1):
                 populate_synteny(conn, syntenic_region_id, gene['gene_id'], species, order_number)
