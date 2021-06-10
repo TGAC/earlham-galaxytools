@@ -7,7 +7,7 @@ This tutorial uses GeneSeqToFamily a Galaxy workflow published by Thanki et al. 
 GeneSeqToFamily workflow can be downloaded from Galaxy ToolShed or from GitHub and then can be inported into local Galaxy or [public instance](usegalaxy.eu).
 
 
-# Importing dataset
+# Importing input data
 
 ### Hands-on: Data upload
 1. Make sure you have an empty analysis history. Give it a name.
