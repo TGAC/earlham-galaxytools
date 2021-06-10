@@ -72,7 +72,7 @@ I	WormBase	CDS	15103	15160	.	+	0	ID=CDS:Y74C9A.2b.4;Parent=transcript:Y74C9A.2b.
 I	WormBase	CDS	16473	16585	.	+	2	ID=CDS:Y74C9A.2b.4;Parent=transcript:Y74C9A.2b.4;protein_id=Y74C9A.2b.4
 I	WormBase	exon	16473	16842	.	+	.	Parent=transcript:Y74C9A.2b.4;Name=Y74C9A.2a.1.e3;constitutive=0;ensembl_end_phase=-1;ensembl_phase=1;exon_id=Y74C9A.2a.1.e3;rank=4
 I	WormBase	three_prime_UTR	16586	16842	.	+	.	Parent=transcript:Y74C9A.2b.4
-I	WormBase	mRNA	11505	16842	.	+	.	ID=transcript:Y74C9A.2a.3;Parent=gene:WBGene00022276;Name=Y74C9A.2a.3;biotype=pseudogene;transcript_id=Y74C9A.2a.3
+I	WormBase	mRNA	11505	16842	.	+	.	ID=transcript:Y74C9A.2a.3;Parent=gene:WBGene00022276;Name=Y74C9A.2a.3;biotype=protein_coding;transcript_id=Y74C9A.2a.3
 I	WormBase	exon	11505	11561	.	+	.	Parent=transcript:Y74C9A.2a.3;Name=Y74C9A.2a.3.e1;constitutive=0;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=Y74C9A.2a.3.e1;rank=1
 I	WormBase	five_prime_UTR	11505	11561	.	+	.	Parent=transcript:Y74C9A.2a.3
 I	WormBase	five_prime_UTR	11623	11640	.	+	.	Parent=transcript:Y74C9A.2a.3
