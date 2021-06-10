@@ -358,8 +358,8 @@ def populate_synteny(conn, syntenic_region_id, gene_id, species, order_number):
 
     cur = conn.cursor()
 
-    cur.execute('INSERT INTO syntenic_region (syntenic_region_id, gene_id, species_name, order_number) VALUES (?, ?, ?, ?)',
-                (syntenic_region_id, gene_id, species_name, order_number))
+    cur.execute('INSERT INTO syntenic_region (syntenic_region_id, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
+                (syntenic_region_id, gene_id, species, order_number))
 
     conn.commit()
 
