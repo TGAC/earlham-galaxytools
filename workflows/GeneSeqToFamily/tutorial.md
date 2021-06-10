@@ -1,6 +1,6 @@
 # Introduction
 
-This tutorial uses GeneSeqToFamily a Galaxy workflow published by Thanki et al. (2018). The goal of this workflow was to investigate “Discovery and Visualisation of Homologous Genes and Gene Families Using Galaxy”
+This tutorial explains how to proficiently use the GeneSeqToFamily Galaxy workflow, published in the paper Thanki et al. (2018) "GeneSeqToFamily: a Galaxy workflow to find gene families based on the Ensembl Compara GeneTrees pipeline", https://doi.org/10.1093/gigascience/giy005
 
 ## GeneSeqToFamily workflow
 
