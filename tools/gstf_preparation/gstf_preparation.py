@@ -316,7 +316,7 @@ def remove_id_version(s, force=False):
 
 def fetch_genomes(conn):
     """
-    Fetches all the genomes from database
+    Fetch all the genomes from the database.
     """
     cur = conn.cursor()
 
