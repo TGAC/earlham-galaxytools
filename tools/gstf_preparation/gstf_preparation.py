@@ -325,7 +325,7 @@ def fetch_genomes(conn):
     return cur.fetchall()
 
 
-def fetch_references(conn, genome):
+def fetch_seq_region_names(conn, genome):
     """
     Fetches all the refenreces for species
     """
