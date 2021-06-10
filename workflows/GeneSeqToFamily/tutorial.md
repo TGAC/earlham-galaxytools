@@ -62,7 +62,7 @@ GeneSeqToFamily preparation is an open-source tool that converts genomic informa
 * Select CDS file generated using GeneSeqToFamily preparation tool
 * Select Gene Feature information, SQLite generated using GeneSeqToFamily preparation tool
 * Select species tree, 
-  * Species tree can be generated using ete_species_tree generator
+  * Species tree can be generated using the `ete_species_tree` generator tool
 * Run the workflow
 
 
