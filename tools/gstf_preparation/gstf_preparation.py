@@ -327,7 +327,7 @@ def fetch_genomes(conn):
 
 def fetch_seq_region_names(conn, genome):
     """
-    Fetches all the refenreces for species
+    Fetches all the sequence region names for a genome.
     """
 
     cur = conn.cursor()
