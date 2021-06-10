@@ -92,8 +92,8 @@ def create_tables(conn):
         FROM transcript JOIN gene
         USING (gene_id)''')
 
-    cur.execute('''CREATE TABLE sytenic_region (
-        sytenic_region_id VARCHAR NOT NULL,
+    cur.execute('''CREATE TABLE syntenic_region (
+        syntenic_region_id VARCHAR NOT NULL,
         gene_id VARCHAR NOT NULL,
         species_name VARCHAR NOT NULL,
         order_number INTEGER NOT NULL)''')
@@ -351,15 +351,15 @@ def fetch_genes_by_order(conn, genome, ref):
     return cur.fetchall()
 
 
-def populate_synteny(conn, sytenic_region_id, gene_id, species_name, order_number):
+def populate_synteny(conn, syntenic_region_id, gene_id, species_name, order_number):
     """
     Fetches all the refenreces for species
     """
 
     cur = conn.cursor()
 
-    cur.execute('INSERT INTO sytenic_region (sytenic_region_id, gene_id, species_name, order_number) VALUES (?, ?, ?, ?)',
-                (sytenic_region_id, gene_id, species_name, order_number))
+    cur.execute('INSERT INTO syntenic_region (syntenic_region_id, gene_id, species_name, order_number) VALUES (?, ?, ?, ?)',
+                (syntenic_region_id, gene_id, species_name, order_number))
 
     conn.commit()
 
@@ -542,7 +542,7 @@ def __main__():
     genomes = fetch_genomes(conn)
 
     for genome in genomes:
-        sytenic_region_id = 1
+        syntenic_region_id = 1
         refs = fetch_references(conn, genome[0])
         for ref in refs:
             genes = fetch_genes_by_order(conn, genome[0], ref[0])
@@ -550,10 +550,10 @@ def __main__():
             order_number = 1
 
             for gene in genes:
-                populate_synteny(conn, sytenic_region_id, gene[0], genome[0], order_number)
+                populate_synteny(conn, syntenic_region_id, gene[0], genome[0], order_number)
                 order_number = order_number + 1
 
-            sytenic_region_id = sytenic_region_id + 1
+            syntenic_region_id = syntenic_region_id + 1
 
     conn.close()
 
