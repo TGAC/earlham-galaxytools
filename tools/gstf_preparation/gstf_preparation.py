@@ -540,7 +540,7 @@ def __main__():
                     entry.print(output_fasta_file)
 
     for syntenic_region_id, genome in enumerate(fetch_genomes(conn), start=1):
-    	species = genome['species']
+        species = genome['species']
         for row in fetch_seq_region_names(conn, species):
             genes = fetch_genes_by_order(conn, species, row['seq_region_name'])
 
