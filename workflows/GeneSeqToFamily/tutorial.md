@@ -49,7 +49,7 @@ GeneSeqToFamily preparation is an open-source tool that converts genomic informa
 * Select JSON and/or GFFs files
 * Add specific species name (in-case of GFFs)
 * Select All Fasta Files 
-* Keep Longest CDS per gene: Yes
+* Which transcripts to keep: Only canonical transcripts (or longest CDS per gene)
 * Change the header line of the FASTA sequences to the >TranscriptId_species format: Yes
 * Comma-separated list of region IDs (e.g. chromosomes or scaffolds) for which FASTA sequences should be filtered:
 * Run tool
