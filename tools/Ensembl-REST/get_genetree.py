@@ -31,7 +31,7 @@ options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
 
-server = 'http://rest.ensembl.org'
+server = 'https://rest.ensembl.org'
 
 if options.id_type == 'gene_id':
     ext = 'genetree/member/id'

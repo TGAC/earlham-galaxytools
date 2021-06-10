@@ -23,7 +23,7 @@ options, args = parser.parse_args()
 if options.input is None:
     raise Exception('-i option must be specified')
 
-server = 'http://rest.ensembl.org'
+server = 'https://rest.ensembl.org'
 ext = 'sequence/id'
 
 headers = {'Content-Type': 'text/x-fasta', 'Accept': 'text/x-fasta'}
@@ -36,7 +36,7 @@ with open(options.input) as f:
             break
         data = {'ids': ids}
         r = requests.post(urljoin(server, ext), params=params, headers=headers,
-                          data=json.dumps(data))
+                          data=json.dumps(data), allow_redirects=False)
 
         if not r.ok:
             r.raise_for_status()
