@@ -44,7 +44,7 @@ To convert uploaded data into the format acceptable by GeneSeqToFamily workflow:
 ## GeneSeqToFamily preparation 
 GeneSeqToFamily preparation is an open-source tool that converts genomic information in GFF/JSON format to SQLite format for easy access during the workflow, it also adds species information in Fasta header.
 
-### Hands-on: GeneSeqToFamily preparation : Run GeneSeqToFamily preparation on the imported GFF/JSON and Fasta files
+### Hands-on: GeneSeqToFamily preparation : Run GeneSeqToFamily preparation on the imported GFF/JSON and FASTA files
 1. GeneSeqToFamily preparation 
 * Select JSON and/or GFFs files
 * Add specific species name (in-case of GFFs)
