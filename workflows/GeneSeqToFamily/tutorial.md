@@ -42,7 +42,7 @@ By default, when data is imported via its link, Galaxy names it with its URL.
 To convert uploaded data into the format acceptable by GeneSeqToFamily workflow:
 
 ## GeneSeqToFamily preparation 
-GeneSeqToFamily preparation is an open-source tool that converts genomic information in GFF/JSON format to SQLite format for easy access during the workflow, it also adds species information in Fasta header.
+GeneSeqToFamily preparation is a Galaxy tool that converts genomic information from GFF/JSON format to SQLite format for easy access during the workflow. It can also add species information to the header line of the FASTA sequences.
 
 ### Hands-on: GeneSeqToFamily preparation : Run GeneSeqToFamily preparation on the imported GFF/JSON and FASTA files
 1. GeneSeqToFamily preparation 
