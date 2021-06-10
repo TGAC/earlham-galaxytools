@@ -345,7 +345,7 @@ def fetch_genes_by_order(conn, genome, ref):
 
     cur = conn.cursor()
 
-    cur.execute('SELECT gene_id FROM gene where species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
+    cur.execute('SELECT gene_id FROM gene WHERE species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
                 (genome, ref, ))
 
     return cur.fetchall()
