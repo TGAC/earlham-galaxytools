@@ -332,7 +332,7 @@ def fetch_references(conn, genome):
 
     cur = conn.cursor()
 
-    cur.execute('SELECT DISTINCT seq_region_name FROM gene where species=?',
+    cur.execute('SELECT DISTINCT seq_region_name FROM gene WHERE species=?',
                 (genome, ))
 
     return cur.fetchall()
