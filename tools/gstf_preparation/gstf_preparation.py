@@ -541,11 +541,12 @@ def __main__():
 
     for genome in fetch_genomes(conn):
         species = genome['species']
-        for syntenic_region_id, row in enumerate(fetch_seq_region_names(conn, species), start=1):
-            genes = fetch_genes_by_order(conn, species, row['seq_region_name'])
+        for row in fetch_seq_region_names(conn, species):
+            seq_region_name = row['seq_region_name']
+            genes = fetch_genes_by_order(conn, species, seq_region_name)
 
             for order_number, gene in enumerate(genes, start=1):
-                populate_synteny(conn, syntenic_region_id, gene['gene_id'], species, order_number)
+                populate_synteny(conn, seq_region_name, gene['gene_id'], species, order_number)
 
     conn.close()
 
