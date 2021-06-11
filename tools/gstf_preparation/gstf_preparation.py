@@ -353,7 +353,7 @@ def fetch_genes_by_order(conn, genome, ref):
 
 def populate_synteny(conn, syntenic_region_name, gene_id, species, order_number):
     """
-    Fetches all the refenreces for species
+    Insert a new entry in the syntenic_region table.
     """
 
     cur = conn.cursor()
