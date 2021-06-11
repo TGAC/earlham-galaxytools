@@ -93,7 +93,7 @@ def create_tables(conn):
         USING (gene_id)''')
 
     cur.execute('''CREATE TABLE syntenic_region (
-        syntenic_region_id VARCHAR NOT NULL,
+        syntenic_region_name VARCHAR NOT NULL,
         gene_id VARCHAR NOT NULL REFERENCES gene(gene_id),
         species VARCHAR NOT NULL,
         order_number INTEGER NOT NULL)''')
@@ -351,15 +351,15 @@ def fetch_genes_by_order(conn, genome, ref):
     return cur.fetchall()
 
 
-def populate_synteny(conn, syntenic_region_id, gene_id, species, order_number):
+def populate_synteny(conn, syntenic_region_name, gene_id, species, order_number):
     """
     Fetches all the refenreces for species
     """
 
     cur = conn.cursor()
 
-    cur.execute('INSERT INTO syntenic_region (syntenic_region_id, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
-                (syntenic_region_id, gene_id, species, order_number))
+    cur.execute('INSERT INTO syntenic_region (syntenic_region_name, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
+                (syntenic_region_name, gene_id, species, order_number))
 
     conn.commit()
 
