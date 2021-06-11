@@ -94,7 +94,7 @@ def create_tables(conn):
 
     cur.execute('''CREATE TABLE syntenic_region (
         syntenic_region_id VARCHAR NOT NULL,
-        gene_id VARCHAR NOT NULL,
+        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id),
         species VARCHAR NOT NULL,
         order_number INTEGER NOT NULL)''')
 
