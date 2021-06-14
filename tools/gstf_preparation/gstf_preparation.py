@@ -353,17 +353,20 @@ def fetch_genes_by_order(conn, genome, ref):
 
 def populate_synteny(conn, syntenic_region_name, gene_id, species, order_number):
     """
-    Insert a new entry in the syntenic_region table.
+    Populates the syntenic_region table.
     """
 
     cur = conn.cursor()
-
-    cur.execute('INSERT INTO syntenic_region (syntenic_region_name, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
+    
+    for genome in fetch_genomes(conn):
+        species = genome['species']
+        for row in fetch_seq_region_names(conn, species):
+            seq_region_name = row['seq_region_name']
+            genes = fetch_genes_by_order(conn, species, seq_region_name)
+            for order_number, gene in enumerate(genes, start=1):
+                cur.execute('INSERT INTO syntenic_region (seq_region_name, gene['gene_id'], species, order_number) VALUES (?, ?, ?, ?)',
                 (syntenic_region_name, gene_id, species, order_number))
-
     conn.commit()
-
-    return cur.fetchall()
 
 
 def __main__():
@@ -539,14 +542,7 @@ def __main__():
                 else:
                     entry.print(output_fasta_file)
 
-    for genome in fetch_genomes(conn):
-        species = genome['species']
-        for row in fetch_seq_region_names(conn, species):
-            seq_region_name = row['seq_region_name']
-            genes = fetch_genes_by_order(conn, species, seq_region_name)
-
-            for order_number, gene in enumerate(genes, start=1):
-                populate_synteny(conn, seq_region_name, gene['gene_id'], species, order_number)
+    populate_synteny()
 
     conn.close()
 
