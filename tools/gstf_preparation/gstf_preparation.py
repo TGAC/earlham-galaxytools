@@ -364,7 +364,7 @@ def populate_synteny(conn):
             seq_region_name = row['seq_region_name']
             genes = fetch_genes_by_order(conn, species, seq_region_name)
             for order_number, gene in enumerate(genes, start=1):
-                cur.execute('INSERT INTO syntenic_region (seq_region_name, gene['gene_id'], species, order_number) VALUES (?, ?, ?, ?)',
+                cur.execute('INSERT INTO syntenic_region (seq_region_name, gene["gene_id"], species, order_number) VALUES (?, ?, ?, ?)',
                             (syntenic_region_name, gene_id, species, order_number))
     conn.commit()
 
