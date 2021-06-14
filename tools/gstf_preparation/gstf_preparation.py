@@ -351,13 +351,13 @@ def fetch_genes_by_order(conn, genome, ref):
     return cur.fetchall()
 
 
-def populate_synteny(conn, syntenic_region_name, gene_id, species, order_number):
+def populate_synteny(conn):
     """
     Populates the syntenic_region table.
     """
 
     cur = conn.cursor()
-    
+
     for genome in fetch_genomes(conn):
         species = genome['species']
         for row in fetch_seq_region_names(conn, species):
@@ -365,7 +365,7 @@ def populate_synteny(conn, syntenic_region_name, gene_id, species, order_number)
             genes = fetch_genes_by_order(conn, species, seq_region_name)
             for order_number, gene in enumerate(genes, start=1):
                 cur.execute('INSERT INTO syntenic_region (seq_region_name, gene['gene_id'], species, order_number) VALUES (?, ?, ?, ?)',
-                (syntenic_region_name, gene_id, species, order_number))
+                            (syntenic_region_name, gene_id, species, order_number))
     conn.commit()
 
 
@@ -542,7 +542,7 @@ def __main__():
                 else:
                     entry.print(output_fasta_file)
 
-    populate_synteny()
+    populate_synteny(conn)
 
     conn.close()
 
