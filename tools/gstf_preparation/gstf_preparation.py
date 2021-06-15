@@ -350,10 +350,15 @@ def populate_synteny(conn):
         species = genome['species']
         for row in fetch_seq_region_names(conn, species):
             seq_region_name = row['seq_region_name']
-            genes = fetch_genes_by_order(conn, species, seq_region_name)
-            for order_number, gene in enumerate(genes, start=1):
-                cur.execute('INSERT INTO syntenic_region (syntenic_region_name, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
-                            (seq_region_name, gene["gene_id"], species, order_number))
+            cur.execute(
+                'SELECT gene_id FROM gene WHERE species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
+                (species, seq_region_name)
+            )
+            for order_number, gene in enumerate(cur, start=1):
+                cur2.execute(
+                    'INSERT INTO syntenic_region (syntenic_region_name, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
+                    (seq_region_name, gene["gene_id"], species, order_number)
+                )
     conn.commit()
 
 
