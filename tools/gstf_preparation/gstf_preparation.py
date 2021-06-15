@@ -338,19 +338,6 @@ def fetch_seq_region_names(conn, genome):
     return cur.fetchall()
 
 
-def fetch_genes_by_order(conn, genome, ref):
-    """
-    Fetches all the refenreces for species
-    """
-
-    cur = conn.cursor()
-
-    cur.execute('SELECT gene_id FROM gene WHERE species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
-                (genome, ref, ))
-
-    return cur.fetchall()
-
-
 def populate_synteny(conn):
     """
     Populates the syntenic_region table.
