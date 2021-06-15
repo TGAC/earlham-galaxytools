@@ -357,6 +357,7 @@ def populate_synteny(conn):
     """
 
     cur = conn.cursor()
+    cur2 = conn.cursor()
 
     for genome in fetch_genomes(conn):
         species = genome['species']
