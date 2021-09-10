@@ -7,10 +7,9 @@ Usage:
 
 python hcluster_sg_parser.py [-m <N>] [-M <N>] <file> <discarded_out>
 """
-import os
 import optparse
+import os
 import sys
-
 
 
 def main():
