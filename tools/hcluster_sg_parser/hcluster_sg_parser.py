@@ -36,8 +36,8 @@ def main():
                         discarded_max_out.write(id_list)
                     else:
                         outfile = cluster_id + '_output.txt'
-                        if options.dir != "":
-                            outfile = options.dir + "/" + cluster_id + '_output.txt'
+                        if options.dir:
+                            outfile = os.path.join(options.dir, outfile)
                         with open(outfile, 'w') as f:
                             f.write(id_list)
 
