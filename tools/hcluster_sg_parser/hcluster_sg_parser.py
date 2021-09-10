@@ -19,7 +19,7 @@ def main():
     parser.add_option('-d', '--dir', type='string', help="Absolute or relative path to output directory. If the directory does not exist, it will be created")
     options, args = parser.parse_args()
 
-    if options.dir != "" and not os.path.exists(options.dir):
+    if options.dir and not os.path.exists(options.dir):
         os.mkdir(options.dir)
     with open(args[2], 'w') as discarded_max_out:
         with open(args[1], 'w') as discarded_min_out:
