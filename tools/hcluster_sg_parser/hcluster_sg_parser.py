@@ -5,7 +5,7 @@ When a minimum and/or maximum number of cluster elements are specified, the IDs 
 
 Usage:
 
-python hcluster_sg_parser.py [-m <N>] [-M <N>] <file> <discarded_out>
+python hcluster_sg_parser.py [-m <N>] [-M <N>] <file> <discarded_min_out> <discarded_max_out>
 """
 import optparse
 import os
