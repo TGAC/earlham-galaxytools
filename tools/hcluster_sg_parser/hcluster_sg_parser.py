@@ -16,7 +16,7 @@ def main():
     parser = optparse.OptionParser()
     parser.add_option('-m', '--min', type='int', default=0, help='Minimum number of cluster elements')
     parser.add_option('-M', '--max', type='int', default=sys.maxsize, help='Maximum number of cluster elements')
-    parser.add_option('-d', '--dir', type='string', default="", help="Absolute or relative path to output directory. If directory does not exist it will be created")
+    parser.add_option('-d', '--dir', type='string', help="Absolute or relative path to output directory. If the directory does not exist, it will be created")
     options, args = parser.parse_args()
 
     if options.dir != "" and not os.path.exists(options.dir):
