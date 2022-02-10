@@ -251,15 +251,12 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
         <section name="clu_args" title="Clustering Options">
             <conditional name="clu_cond">
                 <param argument="-clustering" type="select" label="Clustering algorithm">
-                    <option value="1">UPARSE</option>
                     <option value="2">swarm</option>
                     <option value="3">cd-hit</option>
                     <option value="6">unoise3</option>
                     <option value="7" selected="true">dada2</option>
+                    <option value="8">vsearch</option>
                 </param>
-                <when value="1">
-                    <expand macro="id_macro" />
-                </when>
                 <when value="2">
                     <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
                 </when>
@@ -269,6 +266,8 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <when value="6">
                 </when>
                 <when value="7">
+                </when>
+                <when value="8">
                 </when>
             </conditional>
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
