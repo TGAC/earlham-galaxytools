@@ -173,7 +173,9 @@ lotus2
 #end if
 -lulu $tax_args.lulu
 -buildPhylo $tax_args.buildPhylo
-
+#if $tax_args.taxExcludeGrep:
+    -taxExcludeGrep '$tax_args.taxExcludeGrep'
+#end if
 ; EXIT_VALUE=\$? ;
 
 zip -8 -r -v output.zip output/
@@ -341,6 +343,14 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <option value="0">Disable</option>
                 <option value="1" selected="true">Use fasttree2</option>
                 <option value="2">Use iqtree2</option>
+            </param>
+            <param argument="-taxExcludeGrep" type="text" value="" label="Taxonomic groups to exclude, as a regular expression" help="OTUs matching this regular expression will be assigned as unknown, and by default removed">
+                <sanitizer>
+                    <valid initial="default">
+                        <add value="|" />
+                        <add value="$" />
+                    </valid>
+                </sanitizer>
             </param>
         </section>
     </inputs>
