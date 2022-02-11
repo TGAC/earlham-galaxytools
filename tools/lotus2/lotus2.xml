@@ -1,7 +1,7 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.01">
+<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.09.2</token>
+        <token name="@VERSION@">2.19</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
@@ -110,6 +110,7 @@ lotus2
 #if $offtarget_cond.offtargetDB != 'no':
     -offtargetDB '$offtarget_cond.ref_file'
 #end if
+-useMini4map $useMini4map
 
 -clustering $clu_args.clu_cond.clustering
 #if $clu_args.clu_cond.clustering in ('1', '3'):
@@ -172,7 +173,9 @@ lotus2
 #end if
 -lulu $tax_args.lulu
 -buildPhylo $tax_args.buildPhylo
-
+#if $tax_args.taxExcludeGrep:
+    -taxExcludeGrep '$tax_args.taxExcludeGrep'
+#end if
 ; EXIT_VALUE=\$? ;
 
 zip -8 -r -v output.zip output/
@@ -248,18 +251,16 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <param name="ref_file" type="data" format="fasta,fasta.gz" label="FASTA reference genome" />
             </when>
         </conditional>
+        <param argument="-useMini4map" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use minimap2 instead of VSEARCH to map back reads to OTUs" />
         <section name="clu_args" title="Clustering Options">
             <conditional name="clu_cond">
                 <param argument="-clustering" type="select" label="Clustering algorithm">
-                    <option value="1">UPARSE</option>
                     <option value="2">swarm</option>
                     <option value="3">cd-hit</option>
                     <option value="6">unoise3</option>
                     <option value="7" selected="true">dada2</option>
+                    <option value="8">vsearch</option>
                 </param>
-                <when value="1">
-                    <expand macro="id_macro" />
-                </when>
                 <when value="2">
                     <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
                 </when>
@@ -269,6 +270,8 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <when value="6">
                 </when>
                 <when value="7">
+                </when>
+                <when value="8">
                 </when>
             </conditional>
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
@@ -292,18 +295,18 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <when value="0">
                     <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for RDP (optional)"/>
                 </when>
-                <when value="1">
+                <!-- <when value="1">
                     <expand macro="refDB_macro" ref_fasta_formats="fasta" />
-                </when>
+                </when> -->
                 <when value="2">
                     <expand macro="refDB_macro" />
                 </when>
-                <when value="3">
+                <!-- <when value="3">
                     <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for UTAX (optional)"/>
                 </when>
                 <when value="4">
                     <expand macro="refDB_macro" />
-                </when>
+                </when> -->
             </conditional>
             <conditional name="amplicon_cond">
                 <param argument="-amplicon_type" type="select" label="Amplicon type">
@@ -341,6 +344,14 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <option value="1" selected="true">Use fasttree2</option>
                 <option value="2">Use iqtree2</option>
             </param>
+            <param argument="-taxExcludeGrep" type="text" value="" label="Taxonomic groups to exclude, as a regular expression" help="OTUs matching this regular expression will be assigned as unknown, and by default removed">
+                <sanitizer>
+                    <valid initial="default">
+                        <add value="|" />
+                        <add value="$" />
+                    </valid>
+                </sanitizer>
+            </param>
         </section>
     </inputs>
 
@@ -355,29 +366,43 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
 
     <tests>
         <test>
-            <param name="paired_or_single" value="single"/>
-            <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
+            <conditional name="inputs">
+                <param name="paired_or_single" value="single"/>
+                <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
+            </conditional>
             <param name="platform" value="454" />
-            <param name="clustering" value="3" />
+            <section name="clu_args">
+                <conditional name="clu_cond">
+                    <param name="clustering" value="3" />
+                </conditional>
+                <param name="derepMin" value="1" />
+            </section>
             <output name="otu" file="OTU.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU.fna" compare="sim_size" />
             <output name="mapping" file="mapping.txt" />
         </test>
         <test>
-            <param name="paired_or_single" value="paired_collection"/>
-            <param name="pair_input">
-                <collection type="list:paired">
-                    <element name="Anh_sample">
-                        <collection type="paired">
-                            <element name="forward" value="Anh_sample1.fastq.gz" ftype="fastqsanger.gz" />
-                            <element name="reverse" value="Anh_sample2.fastq.gz" ftype="fastqsanger.gz" />
-                        </collection>
-                    </element>
-                </collection>
-            </param>
-            <param name="mapping" value="mapping_paired.txt" />
+            <conditional name="inputs">
+                <param name="paired_or_single" value="paired_collection"/>
+                <param name="pair_input">
+                    <collection type="list:paired">
+                        <element name="Anh_sample">
+                            <collection type="paired">
+                                <element name="forward" value="Anh_sample1.fastq.gz" ftype="fastqsanger.gz" />
+                                <element name="reverse" value="Anh_sample2.fastq.gz" ftype="fastqsanger.gz" />
+                            </collection>
+                        </element>
+                    </collection>
+                </param>
+            </conditional>
+            <param name="map" value="mapping_paired.txt" />
             <param name="platform" value="454" />
-            <param name="clustering" value="3" />
+            <section name="clu_args">
+                <conditional name="clu_cond">
+                    <param name="clustering" value="3" />
+                </conditional>
+                <param name="derepMin" value="1" />
+            </section>
             <output name="otu" file="OTU_paired.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU_paired.fna" compare="sim_size" />
         </test>
