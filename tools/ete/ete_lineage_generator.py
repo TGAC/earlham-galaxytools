@@ -41,7 +41,14 @@ def process_taxid(ncbi, taxid, ranks, RANK_IDX, lower=False):
     RANK_IDX: mapping from rank names to indices (distance to root/leaf?)
     lower: use lower taxa for filling "NA"s
     """
-    lineage_taxids = ncbi.get_lineage(taxid)
+    try:
+        lineage_taxids = ncbi.get_lineage(taxid)
+    except ValueError:
+        sys.stderr.write("[%s] could not determine lineage!\n" % taxid)
+        return
+    if lineage_taxids is None:
+        sys.stderr.write("[%s] could not determine lineage!\n" % taxid)
+        return
     lineage_ranks = ncbi.get_rank(lineage_taxids)
     lineage_names = ncbi.get_taxid_translator(lineage_taxids, try_synonyms=True)
     if lower:
@@ -121,6 +128,8 @@ of.write("\t%s\n" % ("\t".join(RANKS)))
 with open(options.input_species_filename) as f:
     for line in f.readlines():
         line = line.strip().replace('_', ' ')
+        if line == "":
+            continue
         try:
             taxid = int(line)
         except ValueError:
