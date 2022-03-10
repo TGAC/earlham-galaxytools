@@ -1,4 +1,4 @@
-<tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@VERSION@+galaxy1">
+<tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@VERSION@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
