@@ -3,7 +3,7 @@
     <macros>
         <import>ete_macros.xml</import>
         <xml name="homologies_macro" token_label="" token_help="">
-            <param name="homologies" type="select" multiple="true" optional="false" display="checkboxes" label="@LABEL@" help="@HELP@">
+            <param name="homologies" type="select" multiple="true" optional="false" label="@LABEL@" help="@HELP@">
                 <option value="one-to-one" selected="true">one-to-one</option>
                 <option value="one-to-many" selected="true">one-to-many</option>
                 <option value="many-to-one" selected="true">many-to-one</option>

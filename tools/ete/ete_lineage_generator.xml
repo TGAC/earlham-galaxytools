@@ -1,4 +1,4 @@
-<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@+galaxy1">
     <description>from a list of species/taxids using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -119,6 +119,19 @@ $includeid
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
             <param name="includeid" value="--includeid" />
             <output name="outputFile" file="lineage-wid.txt" />
+        </test>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species_ids.txt" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
+            <output name="outputFile">
+                <assert_contents>
+                    <has_line line="9606&#009;Eukaryota&#009;Chordata&#009;Mammalia&#009;Euarchontoglires&#009;Hominoidea&#009;Homo&#009;Homo sapiens"/>
+                    <has_line line="0&#009;NA&#009;NA&#009;NA&#009;NA&#009;NA&#009;NA&#009;NA"/>
+                </assert_contents>
+            </output>
+            <assert_stderr>
+                <has_line line="[0] could not determine lineage!"/>
+            </assert_stderr>
         </test>
     </tests>
     <help><![CDATA[
