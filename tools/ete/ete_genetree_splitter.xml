@@ -12,24 +12,37 @@
 python '$__tool_directory__/ete_genetree_splitter.py'
 --genetree '$genetreeFile'
 --gene_node $gene_node
---split $splitter
+--split $splitting_conditional.splitter
 #if $gainlose_conditional.gainlose == "True"
     --speciestree '$gainlose_conditional.speciesFile'
     --species_format $gainlose_conditional.species_format
     --gainlose
 #end if
+#if $splitting_conditional.splitter == "species"
+    --ingroup '$splitting_conditional.ingroup'
+    --outgroup '$splitting_conditional.outgroup'
+#end if
 --output_format $output_format
     ]]></command>
     <inputs>
         <param name="genetreeFile" type="data" format="nhx" label="GeneTree file" help="GeneTree in nhx format" />
-         <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
+        <param name="gene_node" type="select" label="Select Gene node format" help="Select Gene node format from one of the option">
             <option value="0" selected="true">gene_species</option>
             <option value="1">species_gene</option>
         </param>
-        <param name="splitter" type="select" label="GeneTree splitting algorithm">
-            <option value="dups">Split by Duplication</option>
-            <option value="treeko">Split using TreeKO algorithm</option>
-        </param>
+        <conditional name="splitting_conditional">
+            <param name="splitter" type="select" label="GeneTree splitting algorithm">
+                <option value="dups">Split by Duplication</option>
+                <option value="treeko">Split using TreeKO algorithm</option>
+                <option value="species">Split using In-group and Out-group species</option>
+            </param>
+            <when value="dups" />
+            <when value="treeko" />
+            <when value="species">
+                <param name="ingroup" type="text" label="In-group species list" help="Comma separated species list without whitespaces or special characters" />
+                <param name="outgroup" type="text" label="Out-group species list" help="Comma separated species list without whitespaces or special characters" />
+            </when>
+        </conditional>
         <conditional name="gainlose_conditional">
             <param name="gainlose" type="select" label="Find out gene gain/lose">
                 <option value="True">Yes</option>
@@ -112,6 +125,21 @@ python '$__tool_directory__/ete_genetree_splitter.py'
                 <element name="2" file="32_genetree.nhx" ftype="nhx" />
                 <element name="3" file="33_genetree.nhx" ftype="nhx" />
                 <element name="4" file="34_genetree.nhx" ftype="nhx" />
+            </output_collection>
+        </test>
+
+        <test>
+            <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
+            <param name="gene_node" value="0"/>
+            <param name="splitter" value="species"/>
+            <param name="ingroup" value="pantroglodytes,homosapiens,rattusnorvegicus,musmusculus,canisfamiliaris" />
+            <param name="outgroup" value="susscrofa" />
+            <param name="output_format" value="9" />
+            <output_collection name="genetrees_lists" type="list" count="5">
+                <element name="1" file="41_genetree.nhx" ftype="nhx" />
+                <element name="2" file="42_genetree.nhx" ftype="nhx" />
+                <element name="3" file="43_genetree.nhx" ftype="nhx" />
+                <element name="4" file="44_genetree.nhx" ftype="nhx" />
             </output_collection>
         </test>
     </tests>
