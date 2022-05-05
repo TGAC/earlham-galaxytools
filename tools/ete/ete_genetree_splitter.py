@@ -3,9 +3,10 @@ from __future__ import print_function
 import optparse
 import os
 
-from ete3 import PhyloTree, Tree
+from ete3 import PhyloTree
 
 cluster_id = 0
+
 
 def main():
     usage = "usage: %prog --genetree <genetree-file> --speciestree <speciestree-file> [options]"
@@ -19,9 +20,9 @@ def main():
     parser.add_option('--gainlose', action='store_true', default=False, help='Find out gene gain/lose')
     parser.add_option('--split', type='choice', choices=['dups', 'treeko', 'species'], dest="split", default='dups', help='Choose GeneTree splitting algorithms')
     parser.add_option('--output_format', type='int', default=9, help='GeneTree output format (0-9)')
-    parser.add_option('-d', '--dir', type='string', default="", help="Absolute or relative path to output directory. If directory does not exist it will be created") 
+    parser.add_option('-d', '--dir', type='string', default="", help="Absolute or relative path to output directory. If directory does not exist it will be created")
     global options
-    
+
     options, args = parser.parse_args()
 
     if options.dir != "" and not os.path.exists(options.dir):
@@ -32,7 +33,7 @@ def main():
 
     if os.stat(options.genetree).st_size == 0:
         exit()
- 
+
     with open(options.genetree, 'r') as f:
         contents = f.read()
 
@@ -69,7 +70,7 @@ def main():
         for cluster_id, node in enumerate(genetree.split_by_dups(), 1):
             outfile = str(cluster_id) + '_genetree.nhx'
             if options.dir != "":
-                outfile = options.dir+"/"+str(cluster_id) + '_genetree.nhx'
+                outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
             with open(outfile, 'w') as f:
                 f.write(node.write(format=options.output_format))
     elif options.split == "treeko":
@@ -80,27 +81,27 @@ def main():
             cluster_id = cluster_id + 1
             outfile = str(cluster_id) + '_genetree.nhx'
             if options.dir != "":
-                outfile = options.dir+"/"+str(cluster_id) + '_genetree.nhx'
+                outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
             with open(outfile, 'w') as f:
                 f.write(spt.write(format=options.output_format))
     elif options.split == "species":
-        
+
         ingroup = options.ingroup.split(",")
         outgroup = options.outgroup.split(",")
         split_tree_by_species(genetree, ingroup, outgroup)
 
 
 def split_tree_by_species(tree, ingroup, outgroup):
-    
+
     global cluster_id
-    
+
     if len(outgroup) > 0:
         outgroup_bool = check_outgroup(tree, outgroup)
     else:
         outgroup_bool = True
-    
+
     ingroup_bool = check_ingroup(tree, ingroup)
-    
+
     if outgroup_bool and ingroup_bool:
         child1, child2 = tree.children
         split_tree_by_species(child1, ingroup, outgroup)
@@ -109,56 +110,54 @@ def split_tree_by_species(tree, ingroup, outgroup):
         cluster_id = cluster_id + 1
         outfile = str(cluster_id) + '_genetree.nhx'
         if options.dir != "":
-            outfile = options.dir+"/"+str(cluster_id) + '_genetree.nhx'
+            outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
         with open(outfile, 'w') as f:
             f.write(tree.write(format=options.output_format))
-    
-    
-    
+
+
 def check_outgroup(tree, outgroup):
     species = get_species(tree)
-    
-    count = 0 
-    
+
+    count = 0
+
     for out in outgroup:
         if species.count(out) > 1:
             count = count + 1
-    
-    if count >= len(outgroup)/2:
+
+    if count >= len(outgroup) / 2:
         return True
     else:
         return False
-        
-        
+
+
 def check_ingroup(tree, ingroup):
     species = get_species(tree)
-    
-    count = 0 
-    
+
+    count = 0
+
     for ing in ingroup:
         if species.count(ing) > 1:
             count = count + 1
-    
-    if count > 0 and len(ingroup)/count >= 0.8:
+
+    if count > 0 and len(ingroup) / count >= 0.8:
         return True
     else:
         return False
-    
-    
+
+
 def parse_sp_name(node_name):
     return node_name.split("_")[-1]
-    
-    
+
+
 def get_species(node):
     leaves_list = node.get_leaf_names()
     # Genetree nodes are required to be in gene_species format
     leaves_list = [_ for _ in leaves_list if '_' in _]
 
     species_list = [_.split("_")[-1] for _ in leaves_list]
-    
+
     return species_list
 
 
 if __name__ == "__main__":
     main()
-
