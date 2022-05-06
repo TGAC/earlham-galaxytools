@@ -32,7 +32,7 @@ def main():
         parser.error("--genetree option must be specified, GeneTree in nhx format")
 
     if os.stat(options.genetree).st_size == 0:
-        exit()
+        sys.exit()
 
     with open(options.genetree, 'r') as f:
         contents = f.read()
