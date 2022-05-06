@@ -39,8 +39,8 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <when value="dups" />
             <when value="treeko" />
             <when value="species">
-                <param name="ingroup" type="text" label="In-group species list" help="Comma separated species list without whitespaces or special characters" />
-                <param name="outgroup" type="text" label="Out-group species list" help="Comma separated species list without whitespaces or special characters" />
+                <param name="ingroup" type="text" label="In-group species list" help="Comma-separated species list without whitespaces or special characters" />
+                <param name="outgroup" type="text" label="Out-group species list" help="Comma-separated species list without whitespaces or special characters" />
             </when>
         </conditional>
         <conditional name="gainlose_conditional">
