@@ -125,10 +125,7 @@ def check_outgroup(tree, outgroup):
         if species.count(out) > 1:
             count = count + 1
 
-    if count >= len(outgroup) / 2:
-        return True
-    else:
-        return False
+    return count >= len(outgroup) / 2
 
 
 def check_ingroup(tree, ingroup):
@@ -140,10 +137,7 @@ def check_ingroup(tree, ingroup):
         if species.count(ing) > 1:
             count = count + 1
 
-    if count > 0 and len(ingroup) / count >= 0.8:
-        return True
-    else:
-        return False
+    return count > 0 and len(ingroup) / count >= 0.8
 
 
 def parse_sp_name(node_name):
