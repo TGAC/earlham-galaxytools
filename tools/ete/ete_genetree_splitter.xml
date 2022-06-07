@@ -120,7 +120,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <param name="gene_node" value="0"/>
             <param name="splitter" value="treeko"/>
             <param name="output_format" value="9" />
-            <output_collection name="genetrees_lists" type="list" count="5">
+            <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="31_genetree.nhx" ftype="nhx" />
                 <element name="2" file="32_genetree.nhx" ftype="nhx" />
                 <element name="3" file="33_genetree.nhx" ftype="nhx" />
@@ -135,7 +135,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
             <param name="ingroup" value="pantroglodytes,homosapiens,rattusnorvegicus,musmusculus,canisfamiliaris" />
             <param name="outgroup" value="susscrofa" />
             <param name="output_format" value="9" />
-            <output_collection name="genetrees_lists" type="list" count="5">
+            <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="41_genetree.nhx" ftype="nhx" />
                 <element name="2" file="42_genetree.nhx" ftype="nhx" />
                 <element name="3" file="43_genetree.nhx" ftype="nhx" />

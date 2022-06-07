@@ -6,8 +6,6 @@ import sys
 
 from ete3 import PhyloTree
 
-cluster_id = 0
-
 
 def main():
     usage = "usage: %prog --genetree <genetree-file> --speciestree <speciestree-file> [options]"
@@ -22,11 +20,10 @@ def main():
     parser.add_option('--split', type='choice', choices=['dups', 'treeko', 'species'], dest="split", default='dups', help='Choose GeneTree splitting algorithms')
     parser.add_option('--output_format', type='int', default=9, help='GeneTree output format (0-9)')
     parser.add_option('-d', '--dir', type='string', default="", help="Absolute or relative path to output directory. If directory does not exist it will be created")
-    global options
 
     options, args = parser.parse_args()
 
-    if options.dir != "" and not os.path.exists(options.dir):
+    if options.dir and not os.path.exists(options.dir):
         os.makedirs(options.dir)
 
     if options.genetree is None:
@@ -37,9 +34,6 @@ def main():
 
     with open(options.genetree, 'r') as f:
         contents = f.read()
-
-    global cluster_id
-    cluster_id = 0
 
     # Remove empty NHX features that can be produced by TreeBest but break ete3
     contents = contents.replace('[&&NHX]', '')
@@ -53,7 +47,6 @@ def main():
 
     # reconcile species tree with gene tree to help find out gene gain/lose
     if options.gainlose:
-
         if options.speciestree is None:
             parser.error("--speciestree option must be specified, species tree in nhx format")
 
@@ -68,52 +61,48 @@ def main():
 
     if options.split == "dups":
         # splits tree by duplication events which returns the list of all subtrees resulting from splitting current tree by its duplication nodes.
-        for cluster_id, node in enumerate(genetree.split_by_dups(), 1):
-            outfile = str(cluster_id) + '_genetree.nhx'
-            if options.dir != "":
-                outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
+        for cluster_id, node in enumerate(genetree.split_by_dups(), start=1):
+            outfile = '{}_genetree.nhx'.format(cluster_id)
+            if options.dir:
+                outfile = os.path.join(options.dir, outfile)
             with open(outfile, 'w') as f:
                 f.write(node.write(format=options.output_format))
     elif options.split == "treeko":
         # splits tree using the TreeKO algorithm.
         ntrees, ndups, sptrees = genetree.get_speciation_trees()
 
-        for spt in sptrees:
-            cluster_id = cluster_id + 1
-            outfile = str(cluster_id) + '_genetree.nhx'
-            if options.dir != "":
-                outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
+        for cluster_id, spt in enumerate(sptrees, start=1):
+            outfile = '{}_genetree.nhx'.format(cluster_id)
+            if options.dir:
+                outfile = os.path.join(options.dir, outfile)
             with open(outfile, 'w') as f:
                 f.write(spt.write(format=options.output_format))
     elif options.split == "species":
-
         ingroup = options.ingroup.split(",")
         outgroup = options.outgroup.split(",")
+        cluster_id = 0
+
+        def split_tree_by_species(tree, ingroup, outgroup):
+            nonlocal cluster_id
+
+            if len(outgroup) > 0:
+                outgroup_bool = check_outgroup(tree, outgroup)
+            else:
+                outgroup_bool = True
+
+            if outgroup_bool and check_ingroup(tree, ingroup):
+                child1, child2 = tree.children
+                split_tree_by_species(child1, ingroup, outgroup)
+                split_tree_by_species(child2, ingroup, outgroup)
+            else:
+                cluster_id += 1
+                outfile = '{}_genetree.nhx'.format(cluster_id)
+                if options.dir:
+                    outfile = os.path.join(options.dir, outfile)
+                with open(outfile, 'w') as f:
+                    f.write(tree.write(format=options.output_format))
+
         split_tree_by_species(genetree, ingroup, outgroup)
-
-
-def split_tree_by_species(tree, ingroup, outgroup):
-
-    global cluster_id
-
-    if len(outgroup) > 0:
-        outgroup_bool = check_outgroup(tree, outgroup)
-    else:
-        outgroup_bool = True
-
-    ingroup_bool = check_ingroup(tree, ingroup)
-
-    if outgroup_bool and ingroup_bool:
-        child1, child2 = tree.children
-        split_tree_by_species(child1, ingroup, outgroup)
-        split_tree_by_species(child2, ingroup, outgroup)
-    else:
-        cluster_id = cluster_id + 1
-        outfile = str(cluster_id) + '_genetree.nhx'
-        if options.dir != "":
-            outfile = options.dir + "/" + str(cluster_id) + '_genetree.nhx'
-        with open(outfile, 'w') as f:
-            f.write(tree.write(format=options.output_format))
 
 
 def check_outgroup(tree, outgroup):
