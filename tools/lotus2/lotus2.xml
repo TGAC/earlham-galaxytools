@@ -338,7 +338,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB (optional)"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy (optional)"/>
-            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
+            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
                 <option value="1" selected="true">Use fasttree2</option>
@@ -377,6 +377,9 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 </conditional>
                 <param name="derepMin" value="1" />
             </section>
+            <section name="tax_args">
+                <param name="lulu" value="false" />
+            </section>
             <output name="otu" file="OTU.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU.fna" compare="sim_size" />
             <output name="mapping" file="mapping.txt" />
@@ -402,6 +405,9 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                     <param name="clustering" value="3" />
                 </conditional>
                 <param name="derepMin" value="1" />
+            </section>
+            <section name="tax_args">
+                <param name="lulu" value="false" />
             </section>
             <output name="otu" file="OTU_paired.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU_paired.fna" compare="sim_size" />
