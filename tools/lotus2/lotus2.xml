@@ -1,7 +1,7 @@
 <tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.19</token>
+        <token name="@VERSION@">2.21</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
