@@ -417,7 +417,9 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
     <help><![CDATA[
 If you have separate FASTA and quality files, these can be combined in a FASTQ file using the "Combine FASTA and QUAL into FASTQ" tool.
 
-Documentation can be found at `<http://lotus2.earlham.ac.uk/>`_.
+.. class:: infomark
+
+The full LotuS2 **documentation** can be found at `<http://lotus2.earlham.ac.uk/>`_.
     ]]></help>
     <citations>
         <citation type="doi">10.1101/2021.12.24.474111</citation>
