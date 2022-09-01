@@ -48,7 +48,7 @@ def main():
                 if len(leaf_parts) != 2:
                     raise Exception("Leaf node '%s' is not in gene_species format" % leaves[i])
 
-            leaves_species = [_[1] for _ in leaves_parts]
+            leaves_species = [_[-1] for _ in leaves_parts]
             species_counter = collections.Counter(leaves_species)
 
             # Assign to ref_species the first element of species_list which
@@ -61,8 +61,8 @@ def main():
 
             # Find the gene of the (first) leaf node for the ref_species
             for leaf_parts in leaves_parts:
-                if leaf_parts[1] == ref_species:
-                    species_counter['gene'] = leaf_parts[0]
+                if leaf_parts[-1] == ref_species:
+                    species_counter['gene'] = leaf_parts[:-1]
                     break
 
             table.append(species_counter)
