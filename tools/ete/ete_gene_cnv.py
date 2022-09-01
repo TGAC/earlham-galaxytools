@@ -62,7 +62,7 @@ def main():
             # Find the gene of the (first) leaf node for the ref_species
             for leaf_parts in leaves_parts:
                 if leaf_parts[-1] == ref_species:
-                    species_counter['gene'] = leaf_parts[:-1]
+                    species_counter['gene'] = "_".join(leaf_parts[:-1])
                     break
 
             table.append(species_counter)
