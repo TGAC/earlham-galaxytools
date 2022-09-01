@@ -45,7 +45,7 @@ def main():
 
             leaves_parts = [_.split("_") for _ in leaves]
             for i, leaf_parts in enumerate(leaves_parts):
-                if len(leaf_parts) != 2:
+                if len(leaf_parts) < 2:
                     raise Exception("Leaf node '%s' is not in gene_species format" % leaves[i])
 
             leaves_species = [_[-1] for _ in leaves_parts]
