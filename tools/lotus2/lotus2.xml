@@ -27,9 +27,6 @@
             </conditional>
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
         </xml>
-        <xml name="id_macro">
-            <param argument="-id" type="float" min="0.9" max="1" value="" optional="true" label="Clustering threshold for OTUs (optional)" />
-        </xml>
         <xml name="ITSx_macro">
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
         </xml>
@@ -264,7 +261,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
             </when>
             <when value="3">
-                <expand macro="id_macro" />
+                <param argument="-id" type="float" min="0.9" max="1" value="0.97" optional="true" label="Clustering threshold for OTUs" />
             </when>
             <when value="6">
             </when>
