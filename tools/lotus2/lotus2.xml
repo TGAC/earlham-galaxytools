@@ -222,19 +222,16 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
         <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region (optional)" help="E.g. 16S primer rev" />
         <conditional name="clu_cond">
             <param argument="-clustering" type="select" label="Clustering algorithm">
+                <option value="7" selected="true">DADA2</option>
                 <option value="2">swarm</option>
-                <option value="3">cd-hit</option>
-                <option value="6">unoise3</option>
-                <option value="7" selected="true">dada2</option>
-                <option value="8">vsearch</option>
+                <option value="3">CD-HIT</option>
+                <option value="8">VSEARCH</option>
             </param>
             <when value="2">
                 <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
             </when>
             <when value="3">
                 <param argument="-id" type="float" min="0.9" max="1" value="0.97" optional="true" label="Clustering threshold for OTUs" />
-            </when>
-            <when value="6">
             </when>
             <when value="7">
             </when>
@@ -245,7 +242,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             <param argument="-taxAligner" type="select" label="Taxonomy aligner for taxonomic profiling of OTUs">
                 <option value="0" selected="true">RDPclassifier (max likelihood)</option>
                 <!-- <option value="1">Blast LCA against custom reference database</option> -->
-                <option value="2">LAMBDA LCA against custom reference database</option>
+                <option value="2">LAMBDA, LCA against custom reference database</option>
                 <!-- <option value="4">VSEARCH LCA against custom reference database</option> -->
             </param>
             <when value="0">
