@@ -1,7 +1,7 @@
 <tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.19</token>
+        <token name="@VERSION@">2.21</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
@@ -26,9 +26,6 @@
                 </when>
             </conditional>
             <param argument="-useBestBlastHitOnly" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use the best Blast hit only" help="Do not use LCA (lowest common ancestor) to determine the most likely taxonomic level (not recommended)" />
-        </xml>
-        <xml name="id_macro">
-            <param argument="-id" type="float" min="0.9" max="1" value="" optional="true" label="Clustering threshold for OTUs (optional)" />
         </xml>
         <xml name="ITSx_macro">
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
@@ -75,10 +72,10 @@ mkdir input
     #end for
 #end if
 
-#if $tax_args.aligner_cond.taxAligner not in ('0', '3') and $tax_args.aligner_cond.refDB_cond.refDB == 'history':
-    #set $ext = $tax_args.aligner_cond.refDB_cond.ref_fasta.ext
-    #set $ref_fasta_symlink = $symlink_basename($tax_args.aligner_cond.refDB_cond.ref_fasta, strip_ext=True) + '.' + $ext
-    ln -s '$tax_args.aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
+#if $aligner_cond.taxAligner not in ('0', '3') and $aligner_cond.refDB_cond.refDB == 'history':
+    #set $ext = $aligner_cond.refDB_cond.ref_fasta.ext
+    #set $ref_fasta_symlink = $symlink_basename($aligner_cond.refDB_cond.ref_fasta, strip_ext=True) + '.' + $ext
+    ln -s '$aligner_cond.refDB_cond.ref_fasta' '$ref_fasta_symlink' &&
 #end if
 
 #if not $map:
@@ -92,14 +89,14 @@ lotus2
 -tmpDir tmp_folder
 -threads "\${GALAXY_SLOTS:-1}"
 -map '$map'
-#if $sdmopt:
-    -sdmopt '$sdmopt'
+#if $other_opts.sdmopt:
+    -sdmopt '$other_opts.sdmopt'
 #end if
-#if $platform != '':
-    -platform $platform
+#if $other_opts.platform != '':
+    -platform $other_opts.platform
 #end if
-#if $barcode:
-    -barcode '$barcode'
+#if $other_opts.barcode:
+    -barcode '$other_opts.barcode'
 #end if
 #if $forwardPrimer:
     -forwardPrimer '$forwardPrimer'
@@ -107,19 +104,19 @@ lotus2
 #if $reversePrimer:
     -reversePrimer '$reversePrimer'
 #end if
-#if $offtarget_cond.offtargetDB != 'no':
-    -offtargetDB '$offtarget_cond.ref_file'
+#if $other_opts.offtarget_cond.offtargetDB != 'no':
+    -offtargetDB '$other_opts.offtarget_cond.ref_file'
 #end if
--useMini4map $useMini4map
+-useMini4map $other_opts.useMini4map
 
--clustering $clu_args.clu_cond.clustering
-#if $clu_args.clu_cond.clustering in ('1', '3'):
-    #if str($clu_args.clu_cond.id):
-        -id $clu_args.clu_cond.id
+-clustering $clu_cond.clustering
+#if $clu_cond.clustering in ('1', '3'):
+    #if str($clu_cond.id):
+        -id $clu_cond.id
     #end if
-#elif $clu_args.clu_cond.clustering == '2':
-    #if str($clu_args.clu_cond.swarm_distance):
-        -swarm_distance $clu_args.clu_cond.swarm_distance
+#elif $clu_cond.clustering == '2':
+    #if str($clu_cond.swarm_distance):
+        -swarm_distance $clu_cond.swarm_distance
     #end if
 #end if
 #if $clu_args.derepMin:
@@ -133,26 +130,26 @@ lotus2
     -chim_skew $clu_args.chim_skew
 #end if
 
--taxAligner $tax_args.aligner_cond.taxAligner
-#if $tax_args.aligner_cond.taxAligner == '0':
-    #if str($tax_args.aligner_cond.rdp_thr):
-        -rdp_thr $tax_args.aligner_cond.rdp_thr
+-taxAligner $aligner_cond.taxAligner
+#if $aligner_cond.taxAligner == '0':
+    #if str($aligner_cond.rdp_thr):
+        -rdp_thr $aligner_cond.rdp_thr
     #end if
-#elif $tax_args.aligner_cond.taxAligner == '3':
-    #if str($tax_args.aligner_cond.utax_thr):
-        -utax_thr $tax_args.aligner_cond.utax_thr
+#elif $aligner_cond.taxAligner == '3':
+    #if str($aligner_cond.utax_thr):
+        -utax_thr $aligner_cond.utax_thr
     #end if
 #else:
-    #if $tax_args.aligner_cond.refDB_cond.refDB == 'cached':
-        #if $tax_args.aligner_cond.refDB_cond.ref_db != '':
-            -refDB $tax_args.aligner_cond.refDB_cond.ref_db
-            -greengenesSpecies $tax_args.aligner_cond.refDB_cond.greengenesSpecies
+    #if $aligner_cond.refDB_cond.refDB == 'cached':
+        #if $aligner_cond.refDB_cond.ref_db != '':
+            -refDB $aligner_cond.refDB_cond.ref_db
+            -greengenesSpecies $aligner_cond.refDB_cond.greengenesSpecies
         #end if
     #else:
         -refDB '$ref_fasta_symlink'
-        -tax4refDB '$tax_args.aligner_cond.refDB_cond.tax4refDB'
+        -tax4refDB '$aligner_cond.refDB_cond.tax4refDB'
     #end if
-    -useBestBlastHitOnly $tax_args.aligner_cond.useBestBlastHitOnly
+    -useBestBlastHitOnly $aligner_cond.useBestBlastHitOnly
 #end if
 #if $tax_args.amplicon_cond.amplicon_type != '':
     -amplicon_type $tax_args.amplicon_cond.amplicon_type
@@ -221,59 +218,50 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             </when>
         </conditional>
         <param argument="-map" type="data" format="tabular" optional="true" label="Mapping file (optional)" help="Needed to demultiplex the FASTQ files using sdm. If the FASTQ are already demultiplexed, this can be omitted." />
-        <param argument="-sdmopt" type="data" format="txt" optional="true" label="SDM option file (optional)" />
-        <param argument="-platform" type="select" label="Sequencing platform">
-            <option value="" selected="true">(Default)</option>
-            <option value="miSeq">miSeq</option>
-            <option value="hiSeq">hiSeq</option>
-            <option value="454">454</option>
-            <option value="PacBio">PacBio</option>
-        </param>
-        <param argument="-barcode" type="data" format="fastqsanger" optional="true" label="Barcode (MID) sequences (optional)" help="FASTQ file with barcodes (in the processed mi/hiSeq format), if provided by the sequencer" />
         <param argument="-forwardPrimer" type="text" value="" label="Forward primer used to amplify DNA region (optional)" help="E.g. 16S primer fwd" />
         <param argument="-reversePrimer" type="text" value="" label="Reverse primer used to amplify DNA region (optional)" help="E.g. 16S primer rev" />
-        <conditional name="offtarget_cond">
-            <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
-                <option value="no" selected="true">Disabled</option>
-                <option value="cached">Use a built-in genome</option>
-                <option value="history">Use a genome from history</option>
+        <conditional name="clu_cond">
+            <param argument="-clustering" type="select" label="Clustering algorithm">
+                <option value="7" selected="true">DADA2</option>
+                <option value="2">swarm</option>
+                <option value="3">CD-HIT</option>
+                <option value="8">VSEARCH</option>
             </param>
-            <when value="no" />
-            <when value="cached">
-                <param name="ref_file" type="select" label="Using reference genome" help="Select genome from the list">
-                    <options from_data_table="all_fasta">
-                        <filter type="sort_by" column="2" />
-                        <validator type="no_options" message="No reference genomes are available" />
-                    </options>
-                </param>
+            <when value="2">
+                <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
             </when>
-            <when value="history">
-                <param name="ref_file" type="data" format="fasta,fasta.gz" label="FASTA reference genome" />
+            <when value="3">
+                <param argument="-id" type="float" min="0.9" max="1" value="0.97" optional="true" label="Clustering threshold for OTUs" />
+            </when>
+            <when value="7">
+            </when>
+            <when value="8">
             </when>
         </conditional>
-        <param argument="-useMini4map" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use minimap2 instead of VSEARCH to map back reads to OTUs" />
-        <section name="clu_args" title="Clustering Options">
-            <conditional name="clu_cond">
-                <param argument="-clustering" type="select" label="Clustering algorithm">
-                    <option value="2">swarm</option>
-                    <option value="3">cd-hit</option>
-                    <option value="6">unoise3</option>
-                    <option value="7" selected="true">dada2</option>
-                    <option value="8">vsearch</option>
-                </param>
-                <when value="2">
-                    <param argument="-swarm_distance" type="integer" min="1" value="1" optional="true" label="Clustering threshold for OTUs when using swarm clustering (optional)" />
-                </when>
-                <when value="3">
-                    <expand macro="id_macro" />
-                </when>
-                <when value="6">
-                </when>
-                <when value="7">
-                </when>
-                <when value="8">
-                </when>
-            </conditional>
+        <conditional name="aligner_cond">
+            <param argument="-taxAligner" type="select" label="Taxonomy aligner for taxonomic profiling of OTUs">
+                <option value="0" selected="true">RDPclassifier (max likelihood)</option>
+                <!-- <option value="1">Blast LCA against custom reference database</option> -->
+                <option value="2">LAMBDA, LCA against custom reference database</option>
+                <!-- <option value="4">VSEARCH LCA against custom reference database</option> -->
+            </param>
+            <when value="0">
+                <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for RDP (optional)"/>
+            </when>
+            <!-- <when value="1">
+                <expand macro="refDB_macro" ref_fasta_formats="fasta" />
+            </when> -->
+            <when value="2">
+                <expand macro="refDB_macro" />
+            </when>
+            <!-- <when value="3">
+                <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for UTAX (optional)"/>
+            </when>
+            <when value="4">
+                <expand macro="refDB_macro" />
+            </when> -->
+        </conditional>
+        <section name="clu_args" title="Other Clustering Options">
             <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
             <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
                 <option value="" selected="true">(Default)</option>
@@ -284,30 +272,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             </param>
             <param argument="-chim_skew" type="integer" min="0" value="" optional="true" label="Skew in chimeric fragment abundance" />
         </section>
-        <section name="tax_args" title="Taxonomy Options">
-            <conditional name="aligner_cond">
-                <param argument="-taxAligner" type="select" label="Taxonomy aligner for taxonomic profiling of OTUs">
-                    <option value="0" selected="true">RDPclassifier (max likelihood)</option>
-                    <!-- <option value="1">Blast LCA against custom reference database</option> -->
-                    <option value="2">LAMBDA LCA against custom reference database</option>
-                    <!-- <option value="4">VSEARCH LCA against custom reference database</option> -->
-                </param>
-                <when value="0">
-                    <param argument="-rdp_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for RDP (optional)"/>
-                </when>
-                <!-- <when value="1">
-                    <expand macro="refDB_macro" ref_fasta_formats="fasta" />
-                </when> -->
-                <when value="2">
-                    <expand macro="refDB_macro" />
-                </when>
-                <!-- <when value="3">
-                    <param argument="-utax_thr" type="float" min="0" max="1" value="0.8" optional="true" label="Confidence threshold for UTAX (optional)"/>
-                </when>
-                <when value="4">
-                    <expand macro="refDB_macro" />
-                </when> -->
-            </conditional>
+        <section name="tax_args" title="Other Taxonomy Options">
             <conditional name="amplicon_cond">
                 <param argument="-amplicon_type" type="select" label="Amplicon type">
                     <option value="" selected="true">(Default)</option>
@@ -338,7 +303,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB (optional)"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy (optional)"/>
-            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
+            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
                 <option value="1" selected="true">Use fasttree2</option>
@@ -352,6 +317,37 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                     </valid>
                 </sanitizer>
             </param>
+        </section>
+        <section name="other_opts" title="Other options">
+            <param argument="-sdmopt" type="data" format="txt" optional="true" label="SDM option file (optional)" />
+            <param argument="-platform" type="select" label="Sequencing platform">
+                <option value="" selected="true">(Default)</option>
+                <option value="miSeq">miSeq</option>
+                <option value="hiSeq">hiSeq</option>
+                <option value="454">454</option>
+                <option value="PacBio">PacBio</option>
+            </param>
+            <param argument="-barcode" type="data" format="fastqsanger" optional="true" label="Barcode (MID) sequences (optional)" help="FASTQ file with barcodes (in the processed mi/hiSeq format), if provided by the sequencer" />
+            <conditional name="offtarget_cond">
+                <param argument="-offtargetDB" type="select" label="Remove likely contaminant OTUs/ASVs based on alignment to host genome" help="Useful for low-bacterial biomass samples to remove possible host genome contaminations">
+                    <option value="no" selected="true">Disabled</option>
+                    <option value="cached">Use a built-in genome</option>
+                    <option value="history">Use a genome from history</option>
+                </param>
+                <when value="no" />
+                <when value="cached">
+                    <param name="ref_file" type="select" label="Using reference genome" help="Select genome from the list">
+                        <options from_data_table="all_fasta">
+                            <filter type="sort_by" column="2" />
+                            <validator type="no_options" message="No reference genomes are available" />
+                        </options>
+                    </param>
+                </when>
+                <when value="history">
+                    <param name="ref_file" type="data" format="fasta,fasta.gz" label="FASTA reference genome" />
+                </when>
+            </conditional>
+            <param argument="-useMini4map" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use minimap2 instead of VSEARCH to map back reads to OTUs" />
         </section>
     </inputs>
 
@@ -370,12 +366,17 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <param name="paired_or_single" value="single"/>
                 <param name="input" value="Anh_sample1.fastq.gz,Anh_sample2.fastq.gz" ftype="fastqsanger.gz"/>
             </conditional>
-            <param name="platform" value="454" />
+            <conditional name="clu_cond">
+                <param name="clustering" value="3" />
+            </conditional>
             <section name="clu_args">
-                <conditional name="clu_cond">
-                    <param name="clustering" value="3" />
-                </conditional>
                 <param name="derepMin" value="1" />
+            </section>
+            <section name="tax_args">
+                <param name="lulu" value="false" />
+            </section>
+            <section name="other_opts">
+                <param name="platform" value="454" />
             </section>
             <output name="otu" file="OTU.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU.fna" compare="sim_size" />
@@ -396,12 +397,17 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 </param>
             </conditional>
             <param name="map" value="mapping_paired.txt" />
-            <param name="platform" value="454" />
+            <conditional name="clu_cond">
+                <param name="clustering" value="3" />
+            </conditional>
             <section name="clu_args">
-                <conditional name="clu_cond">
-                    <param name="clustering" value="3" />
-                </conditional>
                 <param name="derepMin" value="1" />
+            </section>
+            <section name="tax_args">
+                <param name="lulu" value="false" />
+            </section>
+            <section name="other_opts">
+                <param name="platform" value="454" />
             </section>
             <output name="otu" file="OTU_paired.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU_paired.fna" compare="sim_size" />
@@ -411,9 +417,12 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
     <help><![CDATA[
 If you have separate FASTA and quality files, these can be combined in a FASTQ file using the "Combine FASTA and QUAL into FASTQ" tool.
 
-Documentation can be found at `<http://lotus2.earlham.ac.uk/>`_.
+.. class:: infomark
+
+The full LotuS2 **documentation** can be found at `<http://lotus2.earlham.ac.uk/>`_.
     ]]></help>
     <citations>
-        <citation type="doi">10.1101/2021.12.24.474111</citation>
+        <citation type="doi">10.1186/s40168-022-01365-1</citation>
+        <citation type="doi">10.1186/s40168-021-01012-1</citation>
     </citations>
 </tool>

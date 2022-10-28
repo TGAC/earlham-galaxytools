@@ -2,7 +2,7 @@ name: Galaxy Tool Linting and Tests for push and PR
 on: [push, pull_request]
 env:
   GALAXY_REPO: https://github.com/galaxyproject/galaxy
-  GALAXY_RELEASE: release_20.09
+  GALAXY_RELEASE: release_22.05
   MAX_CHUNKS: 4
 jobs:
   # the setup job does two things:
@@ -22,7 +22,7 @@ jobs:
       chunk_list: ${{ steps.get-chunks.outputs.chunk_list }}
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: ['3.7']
     steps:
     - name: Print github context properties
       run: |
@@ -33,20 +33,20 @@ jobs:
         echo 'base_ref: ${{ github.base_ref }}'
         echo 'event.before: ${{ github.event.before }}'
         echo 'event.after: ${{ github.event.after }}'
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
       run: echo "::set-output name=galaxy_head_sha::$(git ls-remote ${{ env.GALAXY_REPO }} refs/heads/${{ env.GALAXY_RELEASE }} | cut -f1)"
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy_head_sha }}
     - name: Cache .planemo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -62,7 +62,7 @@ jobs:
       run: |
         touch tool.xml
         PIP_QUIET=1 planemo test --galaxy_python_version ${{ matrix.python-version }} --no_conda_auto_init --galaxy_source $GALAXY_REPO --galaxy_branch $GALAXY_RELEASE
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     # The range of commits to check for changes is:
@@ -89,7 +89,7 @@ jobs:
       run: planemo ci_find_repos --changed_in_commit_range $COMMIT_RANGE --exclude packages --exclude deprecated --exclude_from .tt_skip --output changed_repositories.list
     - name: Show repo list
       run: cat changed_repositories.list
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Workflow artifacts
         path: changed_repositories.list
@@ -124,22 +124,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: ['3.7']
     steps:
     # checkout the repository
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: Workflow artifacts
         path: ../workflow_artifacts/
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -173,22 +173,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7]
+        python-version: ['3.7']
     steps:
     # checkout the repository to master
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: Workflow artifacts
         path: ../workflow_artifacts/
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -207,22 +207,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        r-version: [4.0.1]
+        r-version: ['release']
     steps:
     # checkout the repository to master
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: Workflow artifacts
         path: ../workflow_artifacts/
-    - uses: r-lib/actions/setup-r@master
+    - uses: r-lib/actions/setup-r@v2
       with:
         r-version: ${{ matrix.r-version }}
     - name: Cache R packages
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ env.R_LIBS_USER }}
         key: r_cache_${{ matrix.r-version }}
@@ -236,7 +236,7 @@ jobs:
     - name: lintr
       run: |
         library(lintr)
-        linters <- with_defaults(line_length_linter = NULL, object_usage_linter = NULL)
+        linters <- linters_with_defaults(line_length_linter = NULL, object_usage_linter = NULL)
         con <- file("../workflow_artifacts/changed_repositories.list", "r")
         status <- 0
         while (TRUE) {
@@ -249,7 +249,7 @@ jobs:
             status <- 1
             for (l in lnt) {
               rel_path <- paste(repo, l$filename, sep="/")
-              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message), stderr())
+              write(paste(paste(rel_path, l$line_number, l$column_number, sep=":"), l$message, paste("(", l$line, ")")), stderr())
             }
           }
         }
@@ -267,7 +267,7 @@ jobs:
       fail-fast: false
       matrix:
         chunk: ${{ fromJson(needs.setup.outputs.chunk_list) }}
-        python-version: [3.7]
+        python-version: ['3.7']
     services:
       postgres:
         image: postgres:11
@@ -280,24 +280,24 @@ jobs:
     steps:
     # checkout the repository
     # and use it as the current working directory
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: Workflow artifacts
         path: ../workflow_artifacts/
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy_head_sha }}
     - name: Cache .planemo
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -337,7 +337,7 @@ jobs:
       run: |
         mkdir upload
         mv tool_test_output.json tool_test_output.html upload/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: 'Tool test output ${{ matrix.chunk  }}'
         path: upload
@@ -352,18 +352,18 @@ jobs:
     needs: [setup, test]
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: ['3.7']
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         path: artifacts
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -380,7 +380,7 @@ jobs:
       run: |
         mkdir upload
         mv tool_test_output.json tool_test_output.html upload/
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: 'All tool test results'
         path: upload
@@ -397,22 +397,22 @@ jobs:
     needs: [setup, lint, flake8, lintr, combine_outputs]
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: ['3.7']
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && github.repository_owner == 'TGAC'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: Workflow artifacts
         path: ../workflow_artifacts/
     - name: Cache .cache/pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-pip
       with:
         path: ~/.cache/pip
