@@ -1,4 +1,4 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@" profile="20.09">
+<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy1" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
         <token name="@VERSION@">2.21</token>
@@ -82,6 +82,8 @@ mkdir input
     cat '$generated_mapping' &&
     #set map = $generated_mapping
 #end if
+
+set +e &&
 
 lotus2
 -i input/
