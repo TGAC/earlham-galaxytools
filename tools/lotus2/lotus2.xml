@@ -264,7 +264,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             </when> -->
         </conditional>
         <section name="clu_args" title="Other Clustering Options">
-            <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See http://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
+            <param argument="-derepMin" type="text" value="" label="Minimum size of dereplicated raw reads (optional)" help="E.g. 4:1,4:2,3:3 . See https://lotus2.earlham.ac.uk/images/Derep_options.pdf for how to specify this parameter. If not specified, LotuS2 will select an appropriate default for the chosen clustering algorithm." />
             <param argument="-deactivateChimeraCheck" type="select" label="Chimera check">
                 <option value="" selected="true">(Default)</option>
                 <option value="0">OTU chimera checks</option>
@@ -412,7 +412,7 @@ If you have separate FASTA and quality files, these can be combined in a FASTQ f
 
 .. class:: infomark
 
-The full LotuS2 **documentation** can be found at `<http://lotus2.earlham.ac.uk/>`_.
+The full LotuS2 **documentation** can be found at `<https://lotus2.earlham.ac.uk/>`_.
     ]]></help>
     <citations>
         <citation type="doi">10.1186/s40168-022-01365-1</citation>
