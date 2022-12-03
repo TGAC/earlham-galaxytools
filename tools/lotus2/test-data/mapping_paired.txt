@@ -1,2 +1,2 @@
 #SampleID	fastqFile	SequencingRun
-SMPL0	Anh_sample1.fastq.gz,Anh_sample2.fastq.gz	a
+SMPL0	Arabidopsis_R1.fastqsanger.gz,Arabidopsis_R2.fastqsanger.gz	a

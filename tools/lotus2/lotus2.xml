@@ -1,7 +1,7 @@
 <tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy2" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.21</token>
+        <token name="@VERSION@">2.23</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
@@ -305,7 +305,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB (optional)"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy (optional)"/>
-            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Use LULU to merge OTUs based on their occurrence" />
+            <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use LULU to merge OTUs based on their occurrence" />
             <param argument="-buildPhylo" type="select" label="Build OTU phylogeny">
                 <option value="0">Disable</option>
                 <option value="1" selected="true">Use fasttree2</option>
@@ -391,25 +391,16 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                     <collection type="list:paired">
                         <element name="Anh_sample">
                             <collection type="paired">
-                                <element name="forward" value="Anh_sample1.fastq.gz" ftype="fastqsanger.gz" />
-                                <element name="reverse" value="Anh_sample2.fastq.gz" ftype="fastqsanger.gz" />
+                                <element name="forward" value="Arabidopsis_R1.fastqsanger.gz" ftype="fastqsanger.gz" />
+                                <element name="reverse" value="Arabidopsis_R2.fastqsanger.gz" ftype="fastqsanger.gz" />
                             </collection>
                         </element>
                     </collection>
                 </param>
             </conditional>
-            <param name="map" value="mapping_paired.txt" />
-            <conditional name="clu_cond">
-                <param name="clustering" value="3" />
-            </conditional>
-            <section name="clu_args">
-                <param name="derepMin" value="1" />
-            </section>
+            <param name="map" value="mapping_paired.txt" ftype="tabular" />
             <section name="tax_args">
-                <param name="lulu" value="false" />
-            </section>
-            <section name="other_opts">
-                <param name="platform" value="454" />
+                <param name="lulu" value="true" />
             </section>
             <output name="otu" file="OTU_paired.txt" compare="sim_size" />
             <output name="otu_fna" file="OTU_paired.fna" compare="sim_size" />
