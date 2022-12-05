@@ -99,7 +99,7 @@ python '$__tool_directory__/get_genetree.py'
     <tests>
         <test>
             <param name="input_type" value="gene_id" />
-            <param name="input" value="ENSGALP00000027524" />
+            <param name="input" value="ENSGALP00010009242" />
             <param name="output_format_selector" value="json" />
             <param name="sequence_selector" value="protein" />
             <param name="aligned" value="0" />
@@ -115,12 +115,12 @@ python '$__tool_directory__/get_genetree.py'
         </test>
         <test>
             <param name="input_type" value="gene_id" />
-            <param name="input" value="ENSGALP00000027524" />
+            <param name="input" value="ENSGALP00010009242" />
             <param name="output_format_selector" value="nh" />
             <param name="nh_format" value="simple" />
             <output name="output" ftype="nhx">
                 <assert_contents>
-                    <has_text text="ENSGALP00000027524" />
+                    <has_text text="ENSGALP00010009242" />
                     <has_text text="ENSP00000369497" />
                 </assert_contents>
             </output>
