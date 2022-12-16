@@ -24,7 +24,7 @@ python '$__tool_directory__/ete_species_tree_generator.py'
         <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species name or taxid per line" />
         <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
         <conditional name="output_format">
-            <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if specie tree to be used in TreeBest">
+            <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if the species tree is to be used in TreeBest">
                 <option value="yes">Yes</option>
                 <option value="no" selected="true">No</option>
             </param>

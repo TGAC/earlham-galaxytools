@@ -6,7 +6,7 @@ from ete3 import NCBITaxa
 
 parser = optparse.OptionParser()
 parser.add_option('-s', '--species', dest="input_species_filename",
-                  help='List of species names of taxids in text format one species in each line')
+                  help='List of species names or taxids in text format, one species per line')
 parser.add_option('-d', '--database', dest="database", default=None,
                   help='ETE sqlite data base to use (default: ~/.etetoolkit/taxa.sqlite)')
 parser.add_option('-o', '--output', dest="output", help='output file name (default: stdout)')
@@ -21,18 +21,18 @@ if options.input_species_filename is None:
 ncbi = NCBITaxa(dbfile=options.database)
 
 # determine taxids and species names in the input file
-names = []
-taxids = []
+names = set()
+taxids = set()
 with open(options.input_species_filename) as f:
     for species in f:
         species = species.strip().replace('_', ' ')
         try:
-            taxids.append(int(species))
+            taxids.add(int(species))
         except ValueError:
-            names.append(species)
+            names.add(species)
 # translate all species names to taxids
 name2taxid = ncbi.get_name_translator(names)
-taxids += {name2taxid[n][0] for n in names}
+taxids.update({name2taxid[n][0] for n in names})
 
 # get topology and set the scientific name as output
 tree = ncbi.get_topology(taxids)
@@ -44,7 +44,6 @@ if options.treebest == "yes":
         leaf.name = leaf.name.replace(" ", "") + "*"
 
 newickTree = tree.write(format=int(options.format))
-# print(type(tree))
 if options.treebest == "yes":
     newickTree = newickTree.rstrip(';')
     newickTree = newickTree + "root;"
