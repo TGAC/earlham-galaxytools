@@ -29,7 +29,7 @@ Nomascus leucogenys	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Noma
 Pongo abelii	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Pongo	Pongo abelii
 Gorilla gorilla gorilla	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Gorilla	Gorilla gorilla
 Pan troglodytes	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Pan	Pan troglodytes
-Homo sapiens	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Homo	Homo sapiens
+9606	Eukaryota	Chordata	Mammalia	Euarchontoglires	Hominoidea	Homo	Homo sapiens
 Sorex araneus	Eukaryota	Chordata	Mammalia	Laurasiatheria	Soricidae	Sorex	Sorex araneus
 Erinaceus europaeus	Eukaryota	Chordata	Mammalia	Laurasiatheria	Erinaceidae	Erinaceus	Erinaceus europaeus
 Pteropus vampyrus	Eukaryota	Chordata	Mammalia	Laurasiatheria	Pteropodidae	Pteropus	Pteropus vampyrus
