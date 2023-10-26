@@ -31,6 +31,13 @@
             <param argument="-ITSx" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use ITSx to only retain OTUs fitting to ITS1/ITS2 hmm models" />
         </xml>
     </macros>
+    <xml name="biotools">
+        <xrefs>
+            <xref type="bio.tools">
+                lotus2
+            </xref>
+        </xrefs>
+    </xml>
     <requirements>
         <requirement type="package" version="@VERSION@">lotus2</requirement>
     </requirements>
