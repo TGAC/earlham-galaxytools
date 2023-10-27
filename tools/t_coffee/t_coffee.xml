@@ -87,7 +87,7 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
             <option value="t_coffee_msa">t_coffee_msa</option>
             <option value="kalign_msa">kalign_msa</option>
         </param>
-        <param name="outputs" type="select" multiple="true" optional="false" display="checkboxes" label="Output formats">
+        <param name="outputs" type="select" multiple="true" optional="false" label="Output formats">
             <option value="clustalw_aln">clustalw_aln</option>
             <option value="dnd" selected="true">dnd</option>
             <option value="fasta_aln">fasta_aln</option>
@@ -183,7 +183,7 @@ This tool is a wrapper for the T-Coffee multiple sequence alignment suite. The i
 
 This wrapper offers selected advanced T-Coffee options like the selection of the alignment methods to use: ''Pairwise Structual Method'', ''Multiple Sequence Alignment Methods'' or ''Pairwise Sequence Alignment Methods''.
 
-The T-Coffee documentation can be found at http://www.tcoffee.org/Projects/tcoffee/ .
+The T-Coffee documentation can be found at https://tcoffee.org/Projects/tcoffee/index.html .
 
 **Example**
 
