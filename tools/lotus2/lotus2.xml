@@ -1,7 +1,7 @@
-<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy2" profile="20.09">
+<tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy0" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.23</token>
+        <token name="@VERSION@">2.28.1</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
@@ -11,14 +11,15 @@
                 <when value="cached">
                     <param argument="-ref_db" type="select" label="Using reference database" help="Select database from the list">
                         <option value="" selected="true">(Default)</option>
+                        <option value="KSGP">Bacteria, Archaea, Eukaryotes SSU (KSGP)</option>
                         <option value="SLV">Silva LSU (23/28S) or SSU (16/18S) (SLV)</option>
-                        <option value="GG">Greengenes (GG)</option>
-                        <option value="UNITE">ITS focused on fungi (UNITE)</option>
-                        <option value="PR2">SSU focused on Protists (PR2)</option>
-                        <option value="beetax">Bee gut specific database and tax names (beetax)</option>
-                        <option value="HITdb">Human gut microbiota (HITdb)</option>
+                        <option value="GG2">GreenGenes2 SSU (GG2)</option>
+                        <option value="UNITE">ITS fungi specific (UNITE)</option>
+                        <option value="PR2">LSU spezialized on Ocean environmentas (PR2)</option>
+                        <option value="beetax">Bee gut specific SSU (beetax)</option>
+                        <option value="HITdb">Human gut specific SSU (HITdb)</option>
                     </param>
-                    <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" />
+                    <param argument="-greengenesSpecies" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Create greengenes output labels instead of OTU" help="To be used with greengenes specific programs such as BugBase." />
                 </when>
                 <when value="history">
                     <param name="ref_fasta" type="data" format="@REF_FASTA_FORMATS@" label="Taxonomy reference sequences" help="In FASTA format" />
@@ -39,8 +40,18 @@
     </requirements>
     <version_command>lotus2 --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
-#import os.path
 #import re
+
+LOTUS2_DIR=\$(dirname "\$(realpath "\$(which lotus2)")") &&
+if [ ! -e "\$LOTUS2_DIR/DB" ]; then
+    {
+        echo "LotuS2 databases missing in \$LOTUS2_DIR, these needs to be installed with:" &&
+        echo "perl autoInstall.pl -condaDBinstall" &&
+        echo "We currently recommend to use a conda environment instead of a biocontainer to prevent this problem.";
+    } >&2 &&
+    exit 1;
+fi &&
+
 #def symlink_basename($f, strip_ext=False):
     #set $fn = re.sub('[^\w\-_.]', '_', $f.name)
     #if strip_ext:
@@ -305,7 +316,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
                 <option value="bacteria">bacterial 16S rDNA annnotation</option>
                 <option value="fungi">fungal 18S/23S/ITS annotation</option>
             </param>
-            <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (i.e. no match in RDP/Blast database) in OTU and taxa abundance matrix calculations" />
+            <param argument="-keepUnclassified" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Keep unclassified OTUs" help="Includes unclassified OTUs (no Phylum assignment) in OTU and taxa abundance matrix calculations" />
             <param argument="-LCA_cover" type="float" min="0" max="1" value="" optional="true" label="Minimum horizontal coverage of an OTU sequence against ref DB (optional)"/>
             <param argument="-LCA_frac" type="float" min="0" max="1" value="" optional="true" label="Minimum fraction of reads with identical taxonomy (optional)"/>
             <param argument="-lulu" type="boolean" truevalue="1" falsevalue="0" checked="true" label="Use LULU to merge OTUs based on their occurrence" />
