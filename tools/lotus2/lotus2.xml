@@ -120,7 +120,9 @@ lotus2
 #if $reversePrimer:
     -reversePrimer '$reversePrimer'
 #end if
-#if $other_opts.offtarget_cond.offtargetDB != 'no':
+#if $other_opts.offtarget_cond.offtargetDB == 'cached':
+    -offtargetDB '$other_opts.offtarget_cond.ref_file.fields.path'
+#elif $other_opts.offtarget_cond.offtargetDB == 'history':
     -offtargetDB '$other_opts.offtarget_cond.ref_file'
 #end if
 -useMini4map $other_opts.useMini4map
