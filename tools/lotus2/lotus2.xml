@@ -1,7 +1,7 @@
 <tool id="lotus2" name="LotuS2" version="@VERSION@+galaxy0" profile="20.09">
     <description>fast OTU processing pipeline</description>
     <macros>
-        <token name="@VERSION@">2.28.1</token>
+        <token name="@VERSION@">2.30</token>
         <xml name="refDB_macro" token_ref_fasta_formats="fasta,fasta.gz">
             <conditional name="refDB_cond">
                 <param argument="-refDB" type="select" label="Taxonomy reference database">
@@ -260,7 +260,7 @@ SMPL${i}	${symlink_basename($f.forward.dataset)},${symlink_basename($f.reverse.d
             <param argument="-taxAligner" type="select" label="Taxonomy aligner for taxonomic profiling of OTUs">
                 <option value="0" selected="true">RDPclassifier (max likelihood)</option>
                 <!-- <option value="1">Blast LCA against custom reference database</option> -->
-                <option value="2">LAMBDA, LCA against custom reference database</option>
+                <option value="2">Lambda, LCA against custom reference database</option>
                 <!-- <option value="4">VSEARCH LCA against custom reference database</option> -->
             </param>
             <when value="0">
