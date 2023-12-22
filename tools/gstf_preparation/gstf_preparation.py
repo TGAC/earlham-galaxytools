@@ -92,6 +92,12 @@ def create_tables(conn):
         FROM transcript JOIN gene
         USING (gene_id)''')
 
+    cur.execute('''CREATE TABLE syntenic_region (
+        species VARCHAR NOT NULL,
+        syntenic_region_name VARCHAR NOT NULL,
+        gene_id VARCHAR NOT NULL REFERENCES gene(gene_id),
+        order_number INTEGER NOT NULL)''')
+
     conn.commit()
 
 
@@ -308,6 +314,54 @@ def remove_id_version(s, force=False):
         return s
 
 
+def fetch_genomes(conn):
+    """
+    Fetch all the genomes from the database.
+    """
+    cur = conn.cursor()
+
+    cur.execute('SELECT DISTINCT species FROM gene')
+
+    return cur.fetchall()
+
+
+def fetch_seq_region_names(conn, genome):
+    """
+    Fetches all the sequence region names for a genome.
+    """
+
+    cur = conn.cursor()
+
+    cur.execute('SELECT DISTINCT seq_region_name FROM gene WHERE species=?',
+                (genome, ))
+
+    return cur.fetchall()
+
+
+def populate_synteny(conn):
+    """
+    Populates the syntenic_region table.
+    """
+
+    cur = conn.cursor()
+    cur2 = conn.cursor()
+
+    for genome in fetch_genomes(conn):
+        species = genome['species']
+        for row in fetch_seq_region_names(conn, species):
+            seq_region_name = row['seq_region_name']
+            cur.execute(
+                'SELECT gene_id FROM gene WHERE species=? AND seq_region_name=? ORDER BY seq_region_start ASC',
+                (species, seq_region_name)
+            )
+            for order_number, gene in enumerate(cur, start=1):
+                cur2.execute(
+                    'INSERT INTO syntenic_region (syntenic_region_name, gene_id, species, order_number) VALUES (?, ?, ?, ?)',
+                    (seq_region_name, gene["gene_id"], species, order_number)
+                )
+    conn.commit()
+
+
 def __main__():
     parser = optparse.OptionParser()
     parser.add_option('--gff3', action='append', default=[], help='GFF3 file to convert, in SPECIES:FILENAME format. Use multiple times to add more files')
@@ -480,6 +534,8 @@ def __main__():
                     entry.print(filtered_fasta_file)
                 else:
                     entry.print(output_fasta_file)
+
+    populate_synteny(conn)
 
     conn.close()
 
