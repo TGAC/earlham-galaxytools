@@ -29,7 +29,7 @@ Nomascus leucogenys	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	
 Pongo abelii	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Ponginae	NA	NA	Pongo	NA	NA	NA	Pongo abelii	NA	NA	NA
 Gorilla gorilla gorilla	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Gorilla	NA	NA	NA	Gorilla gorilla	Gorilla gorilla gorilla	NA	NA
 Pan troglodytes	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Pan	NA	NA	NA	Pan troglodytes	NA	NA	NA
-Homo sapiens	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Homo	NA	NA	NA	Homo sapiens	NA	NA	NA
+9606	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Euarchontoglires	Primates	Haplorrhini	Simiiformes	Catarrhini	Hominoidea	Hominidae	Homininae	NA	NA	Homo	NA	NA	NA	Homo sapiens	NA	NA	NA
 Sorex araneus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Insectivora	NA	NA	NA	NA	Soricidae	Soricinae	NA	NA	Sorex	NA	NA	NA	Sorex araneus	NA	NA	NA
 Erinaceus europaeus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Insectivora	NA	NA	NA	NA	Erinaceidae	Erinaceinae	NA	NA	Erinaceus	NA	NA	NA	Erinaceus europaeus	NA	NA	NA
 Pteropus vampyrus	Eukaryota	Metazoa	NA	NA	Chordata	Craniata	NA	Mammalia	NA	NA	NA	Laurasiatheria	Chiroptera	Megachiroptera	NA	NA	NA	Pteropodidae	Pteropodinae	NA	NA	Pteropus	NA	NA	NA	Pteropus vampyrus	NA	NA	NA
