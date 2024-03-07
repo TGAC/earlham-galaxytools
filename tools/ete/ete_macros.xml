@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <macros>
     <token name="@VERSION@">3.1.2</token>
+    <xml name="bio_tools">
+        <xrefs>
+            <xref type="bio.tools">ete</xref>
+        </xrefs>
+    </xml>
     <xml name="requirements">
         <requirements>
             <requirement type="package" version="@VERSION@">ete3</requirement>
