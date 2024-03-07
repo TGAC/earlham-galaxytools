@@ -3,6 +3,7 @@
     <macros>
         <import>ete_macros.xml</import>
     </macros>
+    <expand macro="bio_tools"/>
     <expand macro="requirements" />
     <command detect_errors="exit_code"><![CDATA[
 ete3 mod -t
