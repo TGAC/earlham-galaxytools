@@ -1,6 +1,9 @@
 <tool id="treebest_best" name="TreeBeST best" version="1.9.2.post0">
     <description>Generate a phylogenetic tree using CDS alignment and species tree</description>
-     <requirements>
+    <xrefs>
+        <xref type="bio.tools">treebest</xref>
+    </xrefs>
+    <requirements>
         <requirement type="package" version="1.9.2.post0">treebest</requirement>
     </requirements>
     <stdio>
