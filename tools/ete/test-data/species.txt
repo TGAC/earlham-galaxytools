@@ -28,7 +28,7 @@ Nomascus leucogenys
 Pongo abelii
 Gorilla gorilla gorilla
 Pan troglodytes
-Homo sapiens
+9606
 Sorex araneus
 Erinaceus europaeus
 Pteropus vampyrus
