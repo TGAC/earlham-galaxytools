@@ -105,7 +105,7 @@ python '$__tool_directory__/gstf_preparation.py'
             <output name="output_db" file="test4.sqlite" compare="sim_size" delta="30000" />
             <output name="output_fasta" file="test4.fasta" />
         </test>
-        <test>
+        <test expect_num_outputs="3">
             <param name="json" ftype="json" value="gene.json" />
             <param name="fasta_inputs" ftype="fasta" value="CDS.fasta" />
             <param name="filter" value="coding" />
@@ -165,5 +165,6 @@ The following features are parsed: **gene**, **mRNA**, **transcript**, **exon**,
 If a value in the **ID** and **Parent** attribute contains a colon, everything up to the first colon will be discarded.
     ]]></help>
     <citations>
+        <citation type="doi">https://doi.org/10.1093/gigascience/giy005</citation>
     </citations>
 </tool>

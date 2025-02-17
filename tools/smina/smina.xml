@@ -1,5 +1,5 @@
 <tool id="smina" name="smina" version="1.0">
-    <description>Scoring and Minimization with AutoDock Vina</description>
+    <description>Scoring and Minimization</description>
     <requirements>
         <requirement type="package" version="2017.11.9">smina</requirement>
     </requirements>
@@ -168,7 +168,7 @@ $misc.addH
         </data>
     </outputs>
     <tests>
-        <test>
+        <test expect_num_outputs="2">
             <param name="receptor" value="protein.pdbqt" />
             <param name="ligand" value="ligand.pdbqt" />
             <param name="center_x" value="11" />

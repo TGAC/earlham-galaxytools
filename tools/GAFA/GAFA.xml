@@ -41,5 +41,6 @@ N.B.: The tool will modify the sequence identifiers found in the "Protein alignm
 ]]>
     </help>
     <citations>
+        <citation type="doi">https://doi.org/10.1093/gigascience/giy005</citation>
     </citations>
 </tool>

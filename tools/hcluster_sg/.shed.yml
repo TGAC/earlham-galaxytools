@@ -2,6 +2,9 @@ categories:
 - Phylogenetics
 description: Hierarchically clustering on a sparse graph
 homepage_url: https://github.com/douglasgscofield/hcluster
+long_description: |
+  Generic tool for hierarchical or single-linkage clustering on a sparse graph.
+  Used by the Ensembl Compara GeneTrees pipeline.
 name: hcluster_sg
 owner: earlhaminst
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/hcluster_sg

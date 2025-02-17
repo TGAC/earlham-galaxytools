@@ -1,6 +1,10 @@
+categories:
+- Computational chemistry
+description: Scoring and Minimization with smina
+homepage_url: https://sourceforge.net/projects/smina/
+long_description: |
+  smina is a fork of Autodock Vina that is customized to better support scoring
+  function development and high-performance energy minimization.
 name: smina
 owner: earlhaminst
-description: smina is a fork of Autodock Vina (https://vina.scripps.edu/) that focuses on improving scoring and minimization
-homepage_url: https://sourceforge.net/projects/smina/
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/smina/
-categories: [Computational chemistry]

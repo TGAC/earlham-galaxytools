@@ -66,10 +66,13 @@ $c_conditional.c
         </test>
     </tests>
     <help><![CDATA[
-Simple wrapper for `hcluster_sg`_.
+`hcluster_sg`_ is a generic tool for hierarchical or single-linkage clustering on a sparse graph.
+Used by the `Ensembl Compara GeneTrees`_ pipeline.
 
 .. _hcluster_sg: https://github.com/douglasgscofield/hcluster
+.. _Ensembl Compara GeneTrees: https://www.ensembl.org/info/genome/compara/homology_method.html
     ]]></help>
     <citations>
+        <citation type="doi">https://doi.org/10.1093/gigascience/giy005</citation>
     </citations>
 </tool>

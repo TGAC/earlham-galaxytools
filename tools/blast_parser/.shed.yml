@@ -1,9 +1,12 @@
+categories:
+- Phylogenetics
+description: |
+  Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
 homepage_url: https://github.com/TGAC/earlham-galaxytools/
+long_description: |
+  Convert 12- or 24-column BLAST output into 3-column format (qseqid, sseqid,
+  round(-1 * log10(evalue)/2)) usable as input for the hcluster_sg tool.
 name: blast_parser
 owner: earlhaminst
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/blast_parser
-description: |
-  Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
-categories:
-- Phylogenetics
 type: unrestricted

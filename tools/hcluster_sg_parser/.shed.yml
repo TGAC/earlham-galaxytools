@@ -2,6 +2,9 @@ categories:
 - Phylogenetics
 description: Converts hcluster_sg 3-column output into lists of ids
 homepage_url: https://github.com/TGAC/earlham-galaxytools/
+long_description: |
+  A simple parser to convert the hcluster_sg output into lists of IDs, one list
+  for each cluster.
 name: hcluster_sg_parser
 owner: earlhaminst
 remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/hcluster_sg_parser
