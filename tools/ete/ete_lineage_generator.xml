@@ -138,7 +138,7 @@ $includeid
     <help><![CDATA[
 Generates a table with lineage information for a list of species (also taxids and arbitrary taxons are accepted) using the `ETE Toolkit`_.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
 
 **Input**
 

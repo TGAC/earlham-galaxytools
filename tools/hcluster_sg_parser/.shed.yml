@@ -4,5 +4,5 @@ description: Converts hcluster_sg 3-column output into lists of ids
 homepage_url: https://github.com/TGAC/earlham-galaxytools/
 name: hcluster_sg_parser
 owner: earlhaminst
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/hcluster_sg_parser
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/hcluster_sg_parser
 type: unrestricted

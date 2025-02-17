@@ -1,9 +1,9 @@
 categories:
 - Phylogenetics
 description: Analyse phylogenetic trees using the ETE Toolkit
-homepage_url: http://etetoolkit.org/
+homepage_url: https://etetoolkit.org/
 long_description: Generate a species tree from a list of species using the ETE Toolkit
 name: ete
 owner: earlhaminst
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/ete
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/ete
 type: unrestricted

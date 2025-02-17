@@ -37,7 +37,7 @@ python '$__tool_directory__/ete_init_taxdb.py'
     <help><![CDATA[
 Generates the ETE sqlite data base from the NCBI taxdump.tar.gz using the `ETE Toolkit`_.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
 
 **Input**
 

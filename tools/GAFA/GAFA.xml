@@ -37,7 +37,7 @@ Aequatus is an open-source homology browser developed with novel rendering appro
 
 N.B.: The tool will modify the sequence identifiers found in the "Protein alignments" dataset by removing everything from the first underscore to the end of the string.
 
-.. _Aequatus: http://aequatus.earlham.ac.uk
+.. _Aequatus: https://github.com/TGAC/Aequatus
 ]]>
     </help>
     <citations>

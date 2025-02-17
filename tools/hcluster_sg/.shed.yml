@@ -4,5 +4,5 @@ description: Hierarchically clustering on a sparse graph
 homepage_url: https://github.com/douglasgscofield/hcluster
 name: hcluster_sg
 owner: earlhaminst
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/hcluster_sg
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/hcluster_sg
 type: unrestricted

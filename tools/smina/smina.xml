@@ -189,7 +189,7 @@ $misc.addH
 Description
 ************
 
-`smina <https://sourceforge.net/projects/smina/>`_ is a fork of `AutoDock Vina <http://vina.scripps.edu/>`_ that is customized to better support scoring function development and high-performance energy minimization. smina is maintained by David Koes at the University of Pittsburgh and is not directly affiliated with the AutoDock project.
+`smina <https://sourceforge.net/projects/smina/>`_ is a fork of `AutoDock Vina <https://vina.scripps.edu/>`_ that is customized to better support scoring function development and high-performance energy minimization. smina is maintained by David Koes at the University of Pittsburgh and is not directly affiliated with the AutoDock project.
     ]]></help>
     <citations>
         <citation type="doi">10.1021/ci300604z</citation>

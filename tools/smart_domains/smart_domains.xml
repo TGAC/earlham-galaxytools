@@ -87,7 +87,7 @@ Written by Ivica Letunic <ivica@letunic.com>
 
 Modified by Anil Thanki <Anil.Thanki@earlham.ac.uk> to parse output in JSON and tabular format to adapt in Galaxy
 
-.. _SMART: http://smart.embl.de/
+.. _SMART: https://smart.embl.de/
     ]]></help>
     <citations>
         <citation type="doi">10.1073/pnas.95.11.5857</citation>

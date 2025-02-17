@@ -115,7 +115,7 @@ $output_opt
     <help><![CDATA[
 Simple wrapper for `Gblocks`_. Selection of conserved blocks from multiple alignments for their use in phylogenetic analysis.
 
-.. _Gblocks: http://molevol.cmima.csic.es/castresana/Gblocks.html
+.. _Gblocks: https://www.biologiaevolutiva.org/jcastresana/Gblocks/Gblocks_documentation.html
     ]]></help>
     <citations>
         <citation type="doi">10.1093/oxfordjournals.molbev.a026334</citation>

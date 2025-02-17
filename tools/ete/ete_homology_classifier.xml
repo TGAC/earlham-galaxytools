@@ -64,7 +64,7 @@ python '$__tool_directory__/ete_homology_classifier.py'
     <![CDATA[
 Classify and filter Homology from single GeneTree by utilising the `ETE Toolkit`_.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
 
 **Output format:**
 
