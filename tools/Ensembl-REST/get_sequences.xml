@@ -1,8 +1,11 @@
-<tool id="get_sequences" name="Get sequences by Ensembl ID" version="0.1.2">
+<tool id="get_sequences" name="Get sequences by Ensembl ID" version="1.0.0">
     <description>using REST API</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
     <requirements>
-        <requirement type="package" version="2.12.4">requests</requirement>
-        <requirement type="package" version="1.10.0">six</requirement>
+        <requirement type="package" version="3.13">python</requirement>
+        <requirement type="package" version="2.32.3">requests</requirement>
     </requirements>
     <command detect_errors="exit_code">
 <![CDATA[
@@ -57,6 +60,5 @@ Uses the `"POST sequence/id"`_ API endpoint.
 .. _"POST sequence/id": https://rest.ensembl.org/documentation/info/sequence_id_post
 ]]>
     </help>
-    <citations>
-    </citations>
+    <expand macro="citations" />
 </tool>

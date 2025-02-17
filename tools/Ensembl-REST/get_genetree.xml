@@ -1,6 +1,7 @@
-<tool id="get_genetree" name="Get gene tree by Ensembl ID" version="0.1.2">
+<tool id="get_genetree" name="Get gene tree by Ensembl ID" version="1.0.0">
     <description>using REST API</description>
     <macros>
+        <import>macros.xml</import>
         <xml name="sequence_conditional">
             <conditional name="sequence">
                 <param name="sequence_selector" type="select" label="Sequence type" help="The type of sequences to bring back. If 'None', no sequence is returned">
@@ -21,13 +22,16 @@
         </xml>
     </macros>
     <requirements>
-        <requirement type="package" version="2.12.4">requests</requirement>
-        <requirement type="package" version="1.10.0">six</requirement>
+        <requirement type="package" version="3.13">python</requirement>
+        <requirement type="package" version="2.32.3">requests</requirement>
     </requirements>
     <command detect_errors="exit_code">
 <![CDATA[
-python '$__tool_directory__/get_genetree.py'
---id_type $input_type
+python3 '$__tool_directory__/get_genetree.py'
+--id_type ${input_type_conditional.input_type}
+#if $input_type_conditional.input_type == "gene_id"
+    --species ${input_type_conditional.species}
+#end if
 -i '$input'
 --format ${output_format.output_format_selector}
 #if $output_format.output_format_selector == 'json'
@@ -49,10 +53,18 @@ python '$__tool_directory__/get_genetree.py'
     </command>
 
     <inputs>
-         <param name="input_type" type="select" label="Input type">
-            <option value="gene_id" selected="true">Ensembl gene ID</option>
-            <option value="gene_tree_id">Ensembl genetree ID</option>
-        </param>
+        <conditional name="input_type_conditional">
+            <param name="input_type" type="select" label="Input type">
+                <option value="gene_id" selected="true">Ensembl gene ID</option>
+                <option value="gene_tree_id">Ensembl genetree ID</option>
+            </param>
+            <when value="gene_id">
+                <param name="species" type="text" label="Species name/alias">
+                    <validator type="empty_field" />
+                </param>
+            </when>
+            <when value="gene_tree_id" />
+        </conditional>
         <param name="input" type="text" label="Ensembl ID">
             <validator type="empty_field" />
         </param>
@@ -98,7 +110,10 @@ python '$__tool_directory__/get_genetree.py'
 
     <tests>
         <test>
-            <param name="input_type" value="gene_id" />
+            <conditional name="input_type_conditional">
+                <param name="input_type" value="gene_id" />
+                <param name="species" value="Chicken" />
+            </conditional>
             <param name="input" value="ENSGALP00010009242" />
             <param name="output_format_selector" value="json" />
             <param name="sequence_selector" value="protein" />
@@ -114,7 +129,10 @@ python '$__tool_directory__/get_genetree.py'
             </output>
         </test>
         <test>
-            <param name="input_type" value="gene_id" />
+            <conditional name="input_type_conditional">
+                <param name="input_type" value="gene_id" />
+                <param name="species" value="Chicken" />
+            </conditional>
             <param name="input" value="ENSGALP00010009242" />
             <param name="output_format_selector" value="nh" />
             <param name="nh_format" value="simple" />
@@ -126,7 +144,9 @@ python '$__tool_directory__/get_genetree.py'
             </output>
         </test>
         <test>
-            <param name="input_type" value="gene_tree_id" />
+            <conditional name="input_type_conditional">
+                <param name="input_type" value="gene_tree_id" />
+            </conditional>
             <param name="input" value="ENSGT00390000003602" />
             <param name="output_format_selector" value="json" />
             <param name="sequence_selector" value="protein" />
@@ -142,7 +162,9 @@ python '$__tool_directory__/get_genetree.py'
             </output>
         </test>
         <test>
-            <param name="input_type" value="gene_tree_id" />
+            <conditional name="input_type_conditional">
+                <param name="input_type" value="gene_tree_id" />
+            </conditional>
             <param name="input" value="ENSGT00390000003602" />
             <param name="output_format_selector" value="phyloxml" />
             <param name="sequence_selector" value="protein" />
@@ -164,12 +186,11 @@ python '$__tool_directory__/get_genetree.py'
 
 Retrieve a gene tree from Ensembl using its REST API.
 
-Uses the `"GET genetree/id"`_ and `"GET genetree/member/id"`_ API endpoint.
+Uses the `"GET genetree/id/:id"`_ and `"GET genetree/member/id/:species/:id"`_ API endpoints.
 
-.. _"GET genetree/id": https://rest.ensembl.org/documentation/info/genetree
-.. _"GET genetree/member/id": https://rest.ensembl.org/documentation/info/genetree_member_id
+.. _"GET genetree/id/:id": https://rest.ensembl.org/documentation/info/genetree
+.. _"GET genetree/member/id/:species/:id": https://rest.ensembl.org/documentation/info/genetree_species_member_id
 ]]>
     </help>
-    <citations>
-    </citations>
+    <expand macro="citations" />
 </tool>
