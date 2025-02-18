@@ -14,7 +14,7 @@ if options.database is None:
 if options.taxdump is not None:
     taxdump = options.taxdump
 else:
-    urlretrieve("http://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", "taxdump.tar.gz")
+    urlretrieve("https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", "taxdump.tar.gz")
     taxdump = "taxdump.tar.gz"
 
 # will remove a taxdump.tar.gz file at the end

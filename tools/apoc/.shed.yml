@@ -1,8 +1,9 @@
-name: apoc
-owner: earlhaminst
-description: Large-scale structural comparison of protein pockets
-homepage_url: http://cssb.biology.gatech.edu/APoc
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/apoc/
 categories:
 - Computational chemistry
+description: Large-scale structural comparison of protein pockets
+homepage_url: https://sites.gatech.edu/cssb/apoc/
+long_description: Compare protein pockets using APoc (Alignment of Pockets)
+name: apoc
+owner: earlhaminst
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/apoc/
 type: unrestricted

@@ -1,8 +1,9 @@
 categories:
 - Text Manipulation
 description: Replace chromosome names
+homepage_url: https://github.com/dpryan79/ChromosomeMappings/
 long_description: Replace chromosome names in a tabular dataset using a mapping table.
 name: replace_chromosome_names
 owner: earlhaminst
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/replace_chromosome_names/
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/replace_chromosome_names/
 type: unrestricted

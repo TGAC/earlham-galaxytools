@@ -147,7 +147,7 @@ python '$__tool_directory__/ete_genetree_splitter.py'
     <help><![CDATA[
 Split GeneTrees from single GeneTree by duplication event using the `ETE Toolkit`_.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
 
 **Output format:**
 

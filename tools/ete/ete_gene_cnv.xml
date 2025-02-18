@@ -28,7 +28,7 @@ python '$__tool_directory__/ete_gene_cnv.py'
     <help><![CDATA[
 Find copy number for genes from GeneTree by utilising the `ETE Toolkit`_. Input can be single GeneTree or multiple GeneTree in a file with one GeneTree per line.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
     ]]></help>
     <expand macro="citations" />
 </tool>

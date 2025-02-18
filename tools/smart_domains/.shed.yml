@@ -2,9 +2,9 @@
 categories:
 - Sequence Analysis
 description: SMART domains
-homepage_url: http://smart.embl.de/
+homepage_url: https://smart.embl.de/
 name: smart_domains
 owner: earlhaminst
 long_description: Search domains in protein sequences using SMART
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/smart_domains
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/smart_domains
 type: unrestricted

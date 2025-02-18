@@ -2,9 +2,9 @@
 categories:
 - Metagenomics
 description: LotuS2 OTU processing pipeline
-homepage_url: http://lotus2.earlham.ac.uk/
+homepage_url: https://lotus2.earlham.ac.uk/
 name: lotus2
 owner: earlhaminst
 long_description: LotuS2 is a complete amplicon pipeline and quality filter to cluster sequences into operational taxonomic units (OTUs).
-remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/master/tools/lotus2
+remote_repository_url: https://github.com/TGAC/earlham-galaxytools/tree/main/tools/lotus2
 type: unrestricted
