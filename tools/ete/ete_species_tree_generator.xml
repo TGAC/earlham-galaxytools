@@ -66,7 +66,7 @@ python '$__tool_directory__/ete_species_tree_generator.py'
     <help><![CDATA[
 Generate a species tree from a list of species using the `ETE Toolkit`_.
 
-.. _ETE Toolkit: http://etetoolkit.org/
+.. _ETE Toolkit: https://etetoolkit.org/
 
 **Output format:**
 

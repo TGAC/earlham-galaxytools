@@ -72,5 +72,6 @@ When a minimum and/or maximum number of cluster elements are specified, the IDs 
 ]]>
     </help>
     <citations>
+        <citation type="doi">https://doi.org/10.1093/gigascience/giy005</citation>
     </citations>
 </tool>

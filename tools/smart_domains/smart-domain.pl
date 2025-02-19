@@ -14,15 +14,15 @@ my $json = JSON->new->allow_nonref;
 
 =head1 NAME
 
-SMART_batch  -  submit sequences from a FASTA file to SMART
+smart-domain  -  submit sequences from a FASTA file to SMART
 
 =head1 SYNOPSIS
 
-B<SMART_batch.pl> I<options>
+B<smart-domain.pl> I<options>
 
 =head1 DESCRIPTION
 
-Use B<SMART_batch.pl> to submit multiple protein sequences from a FASTA file into the SMART analysis queue. Results are saved into plain text files.
+Use B<smart-domain.pl> to submit multiple protein sequences from a FASTA file into the SMART analysis queue. Results are saved into plain text files.
 
 =head1 GENERAL OPTIONS
 
@@ -54,11 +54,11 @@ Default is txt.
 
 =item B<--includePfam>
 
-Include Pfam domains in the search. (http://pfam.sanger.ac.uk/)
+Include Pfam domains in the search. (https://www.ebi.ac.uk/interpro/)
 
 =item B<--includeSignalP>
 
-Include signal peptide predictions. (http://www.cbs.dtu.dk/services/SignalP/)
+Include signal peptide predictions. (https://services.healthtech.dtu.dk/services/SignalP-5.0/)
 
 =item B<--includeRepeats>
 
@@ -70,15 +70,15 @@ Include predictions of internal protein disorder. (http://dis.embl.de/)
 
 =item B<--includeSchnipsel>
 
-Include predictions of outlier homologues and homologues of known structures. (http://smart.embl.de/help/smart_glossary.shtml#outlier)
+Include predictions of outlier homologues and homologues of known structures. (https://smart.embl.de/help/smart_glossary.shtml#outlier)
 
 =back
 
 
 =head1 SEE ALSO
 
- SMART Home page : http://smart.embl.de
- SMART FAQ       : http://smart.embl.de/help/FAQ.shtml
+ SMART Home page : https://smart.embl.de
+ SMART FAQ       : https://smart.embl.de/help/FAQ.shtml
 
 =head1 AUTHORS
 
@@ -88,8 +88,8 @@ Include predictions of outlier homologues and homologues of known structures. (h
 
 =cut
 
-my $submit_url = "http://smart.embl.de/smart/show_motifs.pl";
-my $job_status_url = "http://smart.embl.de/smart/job_status.pl";
+my $submit_url = "https://smart.embl.de/smart/show_motifs.pl";
+my $job_status_url = "https://smart.embl.de/smart/job_status.pl";
 my $output_format = "txt";
 my ($show_help, $input_file, $output_directory, $do_pfam, $do_signalp, $do_rep, $do_disembl, $do_schnipsel);
 my $op_r = GetOptions (

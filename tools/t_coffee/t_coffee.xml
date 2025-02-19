@@ -156,15 +156,39 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
             <param name="method01" value="sap_pair,mustang_pair,TMalign_pair" />
             <param name="method02" value="mafft_msa,clustalw_msa,dialigntx_msa,poa_msa,probcons_msa,muscle_msa,t_coffee_msa,kalign_msa" />
             <param name="outputs" value="clustalw_aln,dnd,fasta_aln,fasta_seq,msf_aln,phylip,pir_aln,pir_seq,score_ascii,score_html" />
-            <output name="clustalw_aln" file="output3.clustal" />
+            <output name="clustalw_aln">
+                <assert_contents>
+                    <has_size size="44953" delta="1000" />
+                </assert_contents>
+            </output>
             <output name="dnd" file="output3.nhx" />
-            <output name="fasta_aln" file="output3.fasta_aln" />
+            <output name="fasta_aln">
+                <assert_contents>
+                    <has_size size="21797" delta="500" />
+                </assert_contents>
+            </output>
             <output name="fasta_seq" file="output3.fasta_seq" />
-            <output name="msf_aln" file="output3.msf" />
-            <output name="phylip" file="output3.phylip" />
-            <output name="pir_aln" file="output3.pir_aln" />
+            <output name="msf_aln">
+                <assert_contents>
+                    <has_size size="41823" delta="1000" />
+                </assert_contents>
+            </output>
+            <output name="phylip">
+                <assert_contents>
+                    <has_size size="27310" delta="600" />
+                </assert_contents>
+            </output>
+            <output name="pir_aln">
+                <assert_contents>
+                    <has_size size="21827" delta="500" />
+                </assert_contents>
+            </output>
             <output name="pir_seq" file="output3.pir_seq" />
-            <output name="score_ascii" file="output3.txt" />
+            <output name="score_ascii">
+                <assert_contents>
+                    <has_size size="42613" delta="1000" />
+                </assert_contents>
+            </output>
             <output name="score_html">
                 <assert_contents>
                     <has_text text="ENSMUST00000091" />

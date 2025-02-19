@@ -37,7 +37,7 @@ exit_code = 0
 for dp, dn, de in zip(dataset_paths, dataset_names, dataset_exts):
     """
     Copied from get_valid_filename from django
-    https://github.com/django/django/blob/master/django/utils/text.py
+    https://github.com/django/django/blob/main/django/utils/text.py
     """
     dn_de = "%s.%s" % (dn, de)
     dn_de_safe = re.sub(r'(?u)[^-\w.]', '', dn_de.strip().replace(' ', '_'))

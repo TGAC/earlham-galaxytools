@@ -111,7 +111,7 @@ The 'best' command builds the best gene tree from a species tree and a CDS align
 
 Note that TreeBeST first determines the topology of resultant tree with a complex procedure, and then performs a hundred times of resampling with an improved neighbour-joining algorithm. Branch lengths are finally estimated with the standard ML method under the HKY model.
 
-.. _TreeBeST: http://treesoft.sourceforge.net/treebest.shtml
+.. _TreeBeST: https://treesoft.sourceforge.net/treebest.shtml
 ]]>
     </help>
     <citations>
