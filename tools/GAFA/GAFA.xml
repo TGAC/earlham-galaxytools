@@ -1,8 +1,11 @@
-<tool id="gafa" name="Gene Align and Family Aggregator" version="0.3.1">
+<tool id="gafa" name="Gene Align and Family Aggregator" version="0.4.0">
     <description>generates an SQLite database that can be visualised with Aequatus</description>
+    <requirements>
+        <requirement type="package" version="3.13">python</requirement>
+    </requirements>
     <command detect_errors="exit_code">
 <![CDATA[
-python '$__tool_directory__/GAFA.py'
+python3 '$__tool_directory__/GAFA.py'
 #for $dataset in $treeFile:
     -t '$dataset'
 #end for

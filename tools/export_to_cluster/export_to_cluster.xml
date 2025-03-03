@@ -1,9 +1,10 @@
-<tool id="export_to_cluster" name="Export datasets to cluster" version="0.0.2">
+<tool id="export_to_cluster" name="Export datasets to cluster" version="0.1.0">
     <requirements>
+        <requirement type="package" version="3.13">python</requirement>
         <requirement type="set_environment">EXPORT_DIR_PREFIX</requirement>
     </requirements>
     <command detect_errors="aggressive"><![CDATA[
-python '$__tool_directory__/export_to_cluster.py' -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
+python3 '$__tool_directory__/export_to_cluster.py' -d '$export_dir' -p "\$EXPORT_DIR_PREFIX"
 #for $d in $datasets
     '${d}' '${d.hid}: ${d.element_identifier}' '${d.ext}'
 #end for

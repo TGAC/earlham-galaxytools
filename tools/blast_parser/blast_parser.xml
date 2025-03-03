@@ -1,10 +1,13 @@
-<tool id="blast_parser" name="BLAST parser" version="0.1.2">
+<tool id="blast_parser" name="BLAST parser" version="0.2.0">
     <description>
         Convert 12- or 24-column BLAST output into 3-column hcluster_sg input
     </description>
+    <requirements>
+        <requirement type="package" version="3.13">python</requirement>
+    </requirements>
     <command detect_errors="exit_code">
 <![CDATA[
-python '$__tool_directory__/blast_parser.py'
+python3 '$__tool_directory__/blast_parser.py'
 -i '$input'
 -o '$output'
 #if $reciprocal
