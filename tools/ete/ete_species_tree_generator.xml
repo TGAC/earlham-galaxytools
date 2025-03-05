@@ -1,4 +1,4 @@
-<tool id="ete_species_tree_generator" name="ETE species tree generator" version="@VERSION@">
+<tool id="ete_species_tree_generator" name="ETE species tree generator" version="@VERSION@+galaxy1">
     <description>from a list of species using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -22,10 +22,10 @@ python '$__tool_directory__/ete_species_tree_generator.py'
 -t $output_format.treebest
     ]]></command>
     <inputs>
-        <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species per line" />
+        <param name="speciesFile" type="data" format="txt" label="Species file" help="List with one species name or taxid per line" />
         <param name="database" type="data" format="sqlite" label="(ETE3) Taxonomy Database" help="The sqlite formatted Taxonomy used by ETE3 (which is derived from NCBI taxonomy)" />
         <conditional name="output_format">
-            <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if specie tree to be used in TreeBest">
+            <param name="treebest" type="select" label="Use in TreeBest" help="Select yes if the species tree is to be used in TreeBest">
                 <option value="yes">Yes</option>
                 <option value="no" selected="true">No</option>
             </param>
@@ -54,11 +54,27 @@ python '$__tool_directory__/ete_species_tree_generator.py'
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="treebest" value="yes" />
+            <conditional name="output_format">
+                <param name="treebest" value="yes" />
+            </conditional>
             <output name="outputFile">
                 <assert_contents>
                     <has_text text="(Homosapiens*,Pantroglodytes*,Gorillagorillagorilla*)" />
                     <has_text text=")root;" />
+                </assert_contents>
+            </output>
+        </test>
+        <test>
+            <param name="speciesFile" ftype="txt" value="species.txt" />
+            <param name="database" ftype="sqlite" value="taxdump.sqlite" />
+            <conditional name="output_format">
+                <param name="treebest" value="no" />
+                <param name="format_selector" value="8"/>
+            </conditional>
+            <output name="outputFile">
+                <assert_contents>
+                    <has_text text="(Homo sapiens,Pan troglodytes,Gorilla gorilla gorilla)Homininae" />
+                    <has_text text="Neopterygii);" />
                 </assert_contents>
             </output>
         </test>

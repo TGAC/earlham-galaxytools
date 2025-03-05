@@ -29,7 +29,7 @@ Nomascus leucogenys	Metazoa	Hylobatidae
 Pongo abelii	Metazoa	Hominidae
 Gorilla gorilla gorilla	Metazoa	Hominidae
 Pan troglodytes	Metazoa	Hominidae
-Homo sapiens	Metazoa	Hominidae
+9606	Metazoa	Hominidae
 Sorex araneus	Metazoa	Soricidae
 Erinaceus europaeus	Metazoa	Erinaceidae
 Pteropus vampyrus	Metazoa	Pteropodidae
