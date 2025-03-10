@@ -1,4 +1,4 @@
-<tool id="ete_lineage_generator" name="ETE lineage generator" version="@VERSION@+galaxy1">
+<tool id="ete_lineage_generator" name="ETE lineage generator" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>from a list of species/taxids using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -88,37 +88,53 @@ $includeid
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="compress" value="" />
-            <param name="levels" value="full" />
+            <conditional name="compresscond">
+                <param name="compress" value="" />
+            </conditional>
+            <conditional name="ranks">
+                <param name="levels" value="full" />
+            </conditional>
             <output name="outputFile" file="lineage.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="compress" value="-c" />
-            <param name="levels" value="primary" />
+            <conditional name="compresscond">
+                <param name="compress" value="-c" />
+            </conditional>
+            <conditional name="ranks">
+                <param name="levels" value="primary" />
+            </conditional>
             <output name="outputFile" file="lineage-compress.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="compress" value="-c" />
-            <param name="levels" value="primary" />
-            <param name="lower" value="-l" />
+            <conditional name="compresscond">
+                <param name="compress" value="-c" />
+                <param name="lower" value="true" />
+            </conditional>
+            <conditional name="ranks">
+                <param name="levels" value="primary" />
+            </conditional>
             <output name="outputFile" file="lineage-compress-lower.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="compress" value="" />
-            <param name="levels" value="manual" />
-            <param name="manualranks" value="kingdom,family" />
+            <conditional name="compresscond">
+                <param name="compress" value="" />
+            </conditional>
+            <conditional name="ranks">
+                <param name="levels" value="manual" />
+                <param name="manualranks" value="kingdom,family" />
+            </conditional>
             <output name="outputFile" file="lineage-full.txt" />
         </test>
         <test>
             <param name="speciesFile" ftype="txt" value="species.txt" />
             <param name="database" ftype="sqlite" value="taxdump.sqlite" />
-            <param name="includeid" value="--includeid" />
+            <param name="includeid" value="true" />
             <output name="outputFile" file="lineage-wid.txt" />
         </test>
         <test>

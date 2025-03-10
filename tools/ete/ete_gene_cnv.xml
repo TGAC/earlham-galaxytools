@@ -1,4 +1,4 @@
-<tool id="ete_gene_csv_finder" name="Gene Copy Number Finder" version="@VERSION@">
+<tool id="ete_gene_csv_finder" name="Gene Copy Number Finder" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>

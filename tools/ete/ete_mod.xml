@@ -1,4 +1,4 @@
-<tool id="ete3_mod" name="ETE mod" version="@VERSION@">
+<tool id="ete3_mod" name="ETE mod" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>manipulates tree topology by rooting, pruning or sorting branches</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -73,32 +73,32 @@ $standardize
         <test>
             <param name="input_trees" ftype="nhx" value="tree1.nhx" />
             <param name="prune" value="A,C" />
-            <param name="prune_preserve_lengths" value="--prune_preserve_lengths" />
+            <param name="prune_preserve_lengths" value="true" />
             <output name="output_tree" file="tree1_pruneACpreserve.nhx" />
         </test>
         <test>
             <param name="input_trees" ftype="nhx" value="tree1.nhx" />
-            <param name="unroot" value="--unroot" />
+            <param name="unroot" value="true" />
             <output name="output_tree" file="tree1_unroot.nhx" />
         </test>
         <test>
             <param name="input_trees" ftype="nhx" value="tree2.nhx" />
-            <param name="sort_branches" value="--sort_branches" />
+            <param name="sort_branches" value="true" />
             <output name="output_tree" file="tree2_sort.nhx" />
         </test>
         <test>
             <param name="input_trees" ftype="nhx" value="tree1.nhx" />
-            <param name="ladderize" value="--ladderize" />
+            <param name="ladderize" value="true" />
             <output name="output_tree" file="tree1_ladder.nhx" />
         </test>
         <test>
             <param name="input_trees" ftype="nhx" value="tree1_unroot.nhx" />
-            <param name="resolve_polytomies" value="--resolve_polytomies" />
+            <param name="resolve_polytomies" value="true" />
             <output name="output_tree" file="tree1_unroot_resolve.nhx" />
         </test>
         <test>
             <param name="input_trees" ftype="nhx" value="tree3.nhx" />
-            <param name="standardize" value="--standardize" />
+            <param name="standardize" value="true" />
             <output name="output_tree" file="tree3_stand.nhx" />
         </test>
     </tests>
