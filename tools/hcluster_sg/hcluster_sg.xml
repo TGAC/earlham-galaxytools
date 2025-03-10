@@ -61,7 +61,9 @@ $c_conditional.c
         </test>
         <test>
             <param name="inputFile" ftype="tabular" value="exam-1.txt" />
-            <param name="c" value="-c" />
+            <conditional name="c_conditional">
+                <param name="c" value="-c" />
+            </conditional>
             <output name="outputFile" file="hcluster_sg2.txt" />
         </test>
     </tests>
