@@ -1,4 +1,4 @@
-<tool id="gafa" name="Gene Align and Family Aggregator" version="0.4.0">
+<tool id="gafa" name="Gene Align and Family Aggregator" version="0.4.1" profile="18.09">
     <description>generates an SQLite database that can be visualised with Aequatus</description>
     <requirements>
         <requirement type="package" version="3.13">python</requirement>
