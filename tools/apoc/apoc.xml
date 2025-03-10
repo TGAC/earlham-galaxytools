@@ -112,10 +112,14 @@ $scoring_option.c
     </outputs>
     <tests>
         <test>
-            <param name="template_source_select" value="pdbfile" />
-            <param name="pdbfile1" value="apoc/1ha3A.pdb" ftype="pdb" />
-            <param name="query_source_select" value="pdbfile" />
-            <param name="pdbfile2" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <conditional name="templates_source">
+                <param name="template_source_select" value="pdbfile" />
+                <param name="pdbfile1" value="apoc/1ha3A.pdb" ftype="pdb" />
+            </conditional>
+            <conditional name="query_source">
+                <param name="query_source_select" value="pdbfile" />
+                <param name="pdbfile2" value="apoc/3ec1A.pdb" ftype="pdb" />
+            </conditional>
             <output name="output_apoc">
                 <assert_contents>
                     <has_text_matching expression="PDB\s*files\s*loaded" />
@@ -123,13 +127,17 @@ $scoring_option.c
             </output>
         </test>
         <test>
-            <param name="template_source_select" value="list" />
-            <param name="lt" value="apoc/templ.lst" />
-            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
-            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
-            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
-            <param name="query_source_select" value="pdbfile" />
-            <param name="pdbfile2" value="apoc/1yr8A.pdb" ftype="pdb" />
+            <conditional name="templates_source">
+                <param name="template_source_select" value="list" />
+                <param name="lt" value="apoc/templ.lst" />
+                <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+                <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+                <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            </conditional>
+            <conditional name="query_source">
+                <param name="query_source_select" value="pdbfile" />
+                <param name="pdbfile2" value="apoc/1yr8A.pdb" ftype="pdb" />
+            </conditional>
             <output name="output_apoc">
                 <assert_contents>
                     <has_text_matching expression="PDB\s*files\s*loaded" />
@@ -137,14 +145,18 @@ $scoring_option.c
             </output>
         </test>
         <test>
-            <param name="template_source_select" value="list" />
-            <param name="lt" value="apoc/templ.lst" />
-            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
-            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
-            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
-            <param name="query_source_select" value="pdbfile" />
-            <param name="pdbfile2" value="apoc/1ha3A.pdb" ftype="pdb" />
-            <param name="pq" value="1ha3_GDP_A_406" />
+            <conditional name="templates_source">
+                <param name="template_source_select" value="list" />
+                <param name="lt" value="apoc/templ.lst" />
+                <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+                <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+                <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            </conditional>
+            <conditional name="query_source">
+                <param name="query_source_select" value="pdbfile" />
+                <param name="pdbfile2" value="apoc/1ha3A.pdb" ftype="pdb" />
+                <param name="pq" value="1ha3_GDP_A_406" />
+            </conditional>
             <output name="output_apoc">
                 <assert_contents>
                     <has_text_matching expression="PDB\s*files\s*loaded" />
@@ -152,14 +164,18 @@ $scoring_option.c
             </output>
         </test>
         <test>
-            <param name="template_source_select" value="list" />
-            <param name="lt" value="apoc/templ.lst" />
-            <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
-            <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
-            <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
-            <param name="query_source_select" value="list" />
-            <param name="lq" value="apoc/query.lst" />
-            <param name="query_0|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            <conditional name="templates_source">
+                <param name="template_source_select" value="list" />
+                <param name="lt" value="apoc/templ.lst" />
+                <param name="template_0|input" value="apoc/1ha3A.pdb" ftype="pdb" />
+                <param name="template_1|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+                <param name="template_2|input" value="apoc/1yr8A.pdb" ftype="pdb" />
+            </conditional>
+            <conditional name="query_source">
+                <param name="query_source_select" value="list" />
+                <param name="lq" value="apoc/query.lst" />
+                <param name="query_0|input" value="apoc/3ec1A.pdb" ftype="pdb" />
+            </conditional>
             <output name="output_apoc">
                 <assert_contents>
                     <has_text_matching expression="PDB\s*files\s*loaded" />

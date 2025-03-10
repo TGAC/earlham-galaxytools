@@ -98,7 +98,7 @@ $output_opt
     <tests>
         <test expect_num_outputs="3">
             <param name="inputFile" ftype="fasta" value="nad3.fasta" />
-            <param name="-t" value="p" />
+            <param name="t" value="p" />
             <param name="outputs" value="-s,-p" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
             <output name="Results_and_parameters_file" file="Gblocks_Results_And_Parameters_on_data_95_html.html" />
@@ -106,7 +106,7 @@ $output_opt
         </test>
         <test expect_num_outputs="2">
             <param name="inputFile" ftype="fasta" value="nad3.fasta" />
-            <param name="-t" value="p" />
+            <param name="t" value="p" />
             <param name="outputs" value="-s" />
             <output name="outputFile" file="Gblocks_on_data_95.txt" />
             <output name="Selected_blocks" file="Gblocks_Selected_Blocks_on_data_95.txt" />

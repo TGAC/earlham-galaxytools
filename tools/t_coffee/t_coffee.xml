@@ -134,24 +134,30 @@ t_coffee '$input' $method_opt $output_opt -n_core \${GALAXY_SLOTS:-1} -run_name 
     </outputs>
     <tests>
         <test expect_num_outputs="1">
-            <param name="filter_fasta" value="no" />
-            <param name="input" value="input.fasta" ftype="fasta" />
+            <conditional name="input_type">
+                <param name="filter_fasta" value="no" />
+                <param name="input" value="input.fasta" ftype="fasta" />
+            </conditional>
             <param name="method02" value="clustalw_msa" />
             <param name="outputs" value="fasta_aln" />
             <output name="fasta_aln" file="output1.fasta" />
         </test>
         <test expect_num_outputs="1">
-            <param name="filter_fasta" value="yes" />
-            <param name="fasta_input" value="input.fasta" ftype="fasta" />
-            <param name="identifiers" value="ids.txt" ftype="txt" />
+            <conditional name="input_type">
+                <param name="filter_fasta" value="yes" />
+                <param name="fasta_input" value="input.fasta" ftype="fasta" />
+                <param name="identifiers" value="ids.txt" ftype="txt" />
+            </conditional>
             <param name="method02" value="clustalw_msa" />
             <param name="outputs" value="fasta_aln" />
             <output name="fasta_aln" file="output2.fasta" />
         </test>
         <!-- Test all non-builtin methods and all outputs -->
         <test expect_num_outputs="10">
-            <param name="filter_fasta" value="no" />
-            <param name="input" value="input.fasta" ftype="fasta" />
+            <conditional name="input_type">
+                <param name="filter_fasta" value="no" />
+                <param name="input" value="input.fasta" ftype="fasta" />
+            </conditional>
             <param name="method03" value="clustalw_pair,t_coffee_pair" />
             <param name="method01" value="sap_pair,mustang_pair,TMalign_pair" />
             <param name="method02" value="mafft_msa,clustalw_msa,dialigntx_msa,poa_msa,probcons_msa,muscle_msa,t_coffee_msa,kalign_msa" />

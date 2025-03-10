@@ -115,10 +115,14 @@ python3 '$__tool_directory__/get_genetree.py'
                 <param name="species" value="Chicken" />
             </conditional>
             <param name="input" value="ENSGALP00010009242" />
-            <param name="output_format_selector" value="json" />
-            <param name="sequence_selector" value="protein" />
-            <param name="aligned" value="0" />
-            <param name="cigar" value="0" />
+            <conditional name="output_format">
+                <param name="output_format_selector" value="json" />
+                <conditional name="sequence">
+                    <param name="sequence_selector" value="protein" />
+                    <param name="aligned" value="0" />
+                    <param name="cigar" value="0" />
+                </conditional>
+            </conditional>
             <output name="output" ftype="json">
                 <assert_contents>
                     <has_text text="tree" />
@@ -134,8 +138,10 @@ python3 '$__tool_directory__/get_genetree.py'
                 <param name="species" value="Chicken" />
             </conditional>
             <param name="input" value="ENSGALP00010009242" />
-            <param name="output_format_selector" value="nh" />
-            <param name="nh_format" value="simple" />
+            <conditional name="output_format">
+                <param name="output_format_selector" value="nh" />
+                <param name="nh_format" value="simple" />
+            </conditional>
             <output name="output" ftype="nhx">
                 <assert_contents>
                     <has_text text="ENSGALP00010009242" />
@@ -148,10 +154,14 @@ python3 '$__tool_directory__/get_genetree.py'
                 <param name="input_type" value="gene_tree_id" />
             </conditional>
             <param name="input" value="ENSGT00390000003602" />
-            <param name="output_format_selector" value="json" />
-            <param name="sequence_selector" value="protein" />
-            <param name="aligned" value="0" />
-            <param name="cigar" value="0" />
+            <conditional name="output_format">
+                <param name="output_format_selector" value="json" />
+                <conditional name="sequence">
+                    <param name="sequence_selector" value="protein" />
+                    <param name="aligned" value="0" />
+                    <param name="cigar" value="0" />
+                </conditional>
+            </conditional>
             <output name="output" ftype="json">
                 <assert_contents>
                     <has_text text="tree" />
@@ -166,9 +176,13 @@ python3 '$__tool_directory__/get_genetree.py'
                 <param name="input_type" value="gene_tree_id" />
             </conditional>
             <param name="input" value="ENSGT00390000003602" />
-            <param name="output_format_selector" value="phyloxml" />
-            <param name="sequence_selector" value="protein" />
-            <param name="aligned" value="0" />
+            <conditional name="output_format">
+                <param name="output_format_selector" value="phyloxml" />
+                <conditional name="sequence">
+                    <param name="sequence_selector" value="protein" />
+                    <param name="aligned" value="0" />
+                </conditional>
+            </conditional>
             <output name="output" ftype="phyloxml">
                 <assert_contents>
                     <has_text text="Euteleostomi" />

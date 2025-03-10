@@ -57,10 +57,12 @@ $plotparm.pdf_height
         <test>
             <param name="count_matrix" value="count.matrix"/>
             <param name="stats_matrix" value="stats.data"/>
-            <param name="log_fc" value="1"/>
-            <param name="log_cpm" value="2"/>
-            <param name="pvalue" value="0.05"/>
-            <param name="fdr" value="0.1"/>
+            <section name="filter">
+                <param name="log_fc" value="1"/>
+                <param name="log_cpm" value="2"/>
+                <param name="pvalue" value="0.05"/>
+                <param name="fdr" value="0.1"/>
+            </section>
             <output name="haetamappdf" file="heatmap.pdf" ftype="pdf" compare="sim_size"/>
         </test>
     </tests>

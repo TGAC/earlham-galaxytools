@@ -1,4 +1,4 @@
-<tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@VERSION@">
+<tool id="ete_homology_classifier" name="Homology Classifier and Filter" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -50,13 +50,17 @@ python '$__tool_directory__/ete_homology_classifier.py'
     <tests>
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
-            <param name="out_format" value="tabular"/>
-            <param name="homologies" value="one-to-one,one-to-many,many-to-one,many-to-many,paralogs" />
+            <conditional name="format_type">
+                <param name="out_format" value="tabular"/>
+                <param name="homologies" value="one-to-one,one-to-many,many-to-one,many-to-many,paralogs" />
+            </conditional>
             <output name="homology" file="11_homology.tabular" />
         </test>
         <test>
             <param name="genetreeFile" ftype="nhx" value="11_genetree.nhx" />
-            <param name="out_format" value="csv"/>
+            <conditional name="format_type">
+                <param name="out_format" value="csv"/>
+            </conditional>
             <output name="homology" file="11_homology.csv" />
         </test>
     </tests>

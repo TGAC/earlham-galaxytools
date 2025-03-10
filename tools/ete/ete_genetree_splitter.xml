@@ -1,4 +1,4 @@
-<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@VERSION@+galaxy1">
+<tool id="ete_genetree_splitter" name="ETE GeneTree splitter" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@">
     <description>from a genetree using the ETE Toolkit</description>
     <macros>
         <import>ete_macros.xml</import>
@@ -91,7 +91,9 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value="dups"/>
+            <conditional name="splitting_conditional">
+                <param name="splitter" value="dups"/>
+            </conditional>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="11_genetree.nhx" ftype="nhx" />
@@ -103,10 +105,14 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value="dups"/>
-            <param name="gainlose" value="True" />
-            <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
-            <param name="species_format" value="8" />
+            <conditional name="splitting_conditional">
+                <param name="splitter" value="dups"/>
+            </conditional>
+            <conditional name="gainlose_conditional">
+                <param name="gainlose" value="True" />
+                <param name="speciesFile" ftype="nhx" value="speciestree.nhx" />
+                <param name="species_format" value="8" />
+            </conditional>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="5">
                 <element name="1" file="21_genetree.nhx" ftype="nhx" />
@@ -119,7 +125,9 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value="treeko"/>
+            <conditional name="splitting_conditional">
+                <param name="splitter" value="treeko"/>
+            </conditional>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="31_genetree.nhx" ftype="nhx" />
@@ -132,9 +140,11 @@ python '$__tool_directory__/ete_genetree_splitter.py'
         <test>
             <param name="genetreeFile" ftype="nhx" value="genetree.nhx" />
             <param name="gene_node" value="0"/>
-            <param name="splitter" value="species"/>
-            <param name="ingroup" value="pantroglodytes,homosapiens,rattusnorvegicus,musmusculus,canisfamiliaris" />
-            <param name="outgroup" value="susscrofa" />
+            <conditional name="splitting_conditional">
+                <param name="splitter" value="species"/>
+                <param name="ingroup" value="pantroglodytes,homosapiens,rattusnorvegicus,musmusculus,canisfamiliaris" />
+                <param name="outgroup" value="susscrofa" />
+            </conditional>
             <param name="output_format" value="9" />
             <output_collection name="genetrees_lists" type="list" count="4">
                 <element name="1" file="41_genetree.nhx" ftype="nhx" />
