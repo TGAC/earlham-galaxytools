@@ -92,8 +92,12 @@ $aln
             <param name="species_tree" ftype="nhx" value="species.nhx" />
             <param name="aln" ftype="fasta" value="dna_alignment.fasta" />
             <param name="F" value="11" />
-            <param name="k_selector" value="yes" />
-            <param name="a_selector" value="yes" />
+            <conditional name="k">
+                <param name="k_selector" value="yes" />
+            </conditional>
+            <conditional name="a">
+                <param name="a_selector" value="yes" />
+            </conditional>
             <param name="d" value="0.15" />
             <param name="l" value="0.10" />
             <param name="L" value="0.20" />
