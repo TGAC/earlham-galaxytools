@@ -169,26 +169,30 @@ $misc.addH
     </outputs>
     <tests>
         <test expect_num_outputs="2">
-            <param name="receptor" value="protein.pdbqt" />
-            <param name="ligand" value="ligand.pdbqt" />
-            <param name="center_x" value="11" />
-            <param name="center_y" value="90.5" />
-            <param name="center_z" value="57.5" />
-            <param name="size_x" value="22" />
-            <param name="size_y" value="24" />
-            <param name="size_z" value="28" />
-            <param name="log" value="True" />
-            <param name="seed" value="1000" />
-            <param name="num_modes" value="5" />
+            <section name="input">
+                <param name="receptor" value="protein.pdbqt" />
+                <param name="ligand" value="ligand.pdbqt" />
+            </section>
+            <section name="search_space">
+                <param name="center_x" value="11" />
+                <param name="center_y" value="90.5" />
+                <param name="center_z" value="57.5" />
+                <param name="size_x" value="22" />
+                <param name="size_y" value="24" />
+                <param name="size_z" value="28" />
+            </section>
+            <section name="output_sect">
+                <param name="log" value="True" />
+            </section>
+            <section name="misc">
+                <param name="seed" value="1000" />
+                <param name="num_modes" value="5" />
+            </section>
             <output name="output" file="ligand_out.pdbqt" />
             <output name="output_log" file="output_smina" />
         </test>
     </tests>
     <help><![CDATA[
-************
-Description
-************
-
 `smina <https://sourceforge.net/projects/smina/>`_ is a fork of `AutoDock Vina <https://autodock-vina.readthedocs.io>`_ that is customized to better support scoring function development and high-performance energy minimization. smina is maintained by David Koes at the University of Pittsburgh and is not directly affiliated with the AutoDock project.
     ]]></help>
     <citations>
