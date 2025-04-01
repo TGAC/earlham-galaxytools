@@ -1,5 +1,10 @@
 <tool id="t_coffee" name="T-Coffee" version="@TOOL_VERSION@">
     <description>multiple sequence alignment</description>
+    <xml name="biotools">
+        <xrefs>
+            <xref type="bio.tools">t_coffee</xref>
+        </xrefs>
+    </xml>
     <macros>
         <token name="@TOOL_VERSION@">13.45.0.4846264</token>
     </macros>
